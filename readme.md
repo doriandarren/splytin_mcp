@@ -73,3 +73,20 @@ pipreqs . --force                               # Ejecutar
 
 ```
 
+
+## Libraries gen
+
+```sh
+
+pip3 install questionary                                      # Console / Terminal
+pip3 install colorama                                         # Console / Terminal
+pip3 install requests                                         # Conexion API
+pip3 install schedule                                         # Cronjobs
+pip3 install inflect                                          # Pluralize
+
+pip install sqlalchemy psycopg2-binary alembic python-dotenv  # DB
+pip install pymysql                                           # DB
+
+
+```
+
