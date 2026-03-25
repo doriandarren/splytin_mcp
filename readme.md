@@ -33,7 +33,7 @@ python3 mcp_server.py
 ### Smoke test local
 
 ```sh
-python3 test_mcp.py
+python3 tests/test_mcp.py
 ```
 
 ### Notas
@@ -46,25 +46,24 @@ python3 test_mcp.py
 
 ```sh
 ## Entorno virtual MacOs
-- python3 -m venv .venv
-- source .venv/bin/activate                     # Activar entorno
-- deactive                                      # Desactivar entorno
+python3 -m venv .venv
+source .venv/bin/activate                     # Activar entorno
+deactivate                                    # Desactivar entorno
 
 ## Entorno virtual Windows
-- py -m venv .venv                      # Windows
-- .\.venv\Scripts\activate                           # Windows
-- py -m pip install --upgrade pip      # Windows
-- deactivate                                    # Desactivar
-- py -m pip xxx                                 # Usar este comando para intrucciones
+py -m venv .venv                               # Windows
+.\.venv\Scripts\activate                       # Windows
+py -m pip install --upgrade pip                # Windows
+deactivate                                     # Desactivar
+py -m pip xxx                                  # Usar este comando para instrucciones
 
 ## Actualizar
-pip3 install --upgrade pip
+python3 -m pip install --upgrade pip
 
 
 ## Instala los requerimientos:
 pip list
-pip3 freeze > requirements.txt                  # Crear archivo requerimientos -> Respaldo / Export
-pip3 install -r requirements.txt                # Instalar requerimientos Restore / Import
+python3 -m pip install -r requirements.txt      # Instalar requerimientos
 
 # Si No se tiene el archivo: requirements.txt
 pip install pipreqs                             # Install

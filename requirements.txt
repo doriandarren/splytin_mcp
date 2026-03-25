@@ -1,0 +1,15 @@
+certifi==2026.2.25
+charset-normalizer==3.4.6
+idna==3.11
+inflect==7.5.0
+more-itertools==10.8.0
+mysql-connector-python==9.6.0
+prompt_toolkit==3.0.52
+python-dotenv==1.2.2
+questionary==2.1.1
+requests==2.32.5
+schedule==1.2.2
+typeguard==4.5.1
+typing_extensions==4.15.0
+urllib3==2.6.3
+wcwidth==0.6.0

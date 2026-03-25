@@ -1,7 +1,13 @@
+from pathlib import Path
+import sys
+
+ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT))
+
 from gen.services import create_python_django_project_service
 
 # Para ejecutar 
-# python3 test_django.py
+# python3 tests/test_django.py
 
 print("ANTES")
 

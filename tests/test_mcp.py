@@ -1,6 +1,9 @@
 import json
+from pathlib import Path
 import subprocess
 import sys
+
+ROOT = Path(__file__).resolve().parents[1]
 
 
 def send(proc: subprocess.Popen, payload: dict) -> None:
@@ -18,12 +21,12 @@ def recv(proc: subprocess.Popen) -> dict:
 
 
 proc = subprocess.Popen(
-    [sys.executable, "mcp_server.py"],
+    [sys.executable, str(ROOT / "mcp_server.py")],
     stdin=subprocess.PIPE,
     stdout=subprocess.PIPE,
     stderr=subprocess.PIPE,
     text=True,
-    cwd=".",
+    cwd=str(ROOT),
 )
 
 try:
