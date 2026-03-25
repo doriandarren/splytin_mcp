@@ -30,14 +30,14 @@ class CapturedToolError(Exception):
         self.trace = trace
 
 
-def _read_message() -> dict[str, Any] | None:
+def _read_message() -> tuple[dict[str, Any] | None, bool]:
     line = sys.stdin.readline()
     if not line:
-        return None
+        return None, True
     line = line.strip()
     if not line:
-        return None
-    return json.loads(line)
+        return None, False
+    return json.loads(line), False
 
 
 def _send(message: dict[str, Any]) -> None:
@@ -221,7 +221,9 @@ def _handle_tools_call(message_id: Any, params: dict[str, Any]) -> dict[str, Any
 def main() -> int:
     while True:
         try:
-            message = _read_message()
+            message, should_exit = _read_message()
+            if should_exit:
+                return 0
             if message is None:
                 continue
 

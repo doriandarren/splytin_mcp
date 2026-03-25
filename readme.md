@@ -2,7 +2,7 @@
 
 ## MCP
 
-Este repositorio ya incluye un servidor MCP por `stdio` en [`mcp_server.py`](/Users/dorian/PythonProjects/mcp/mcp_server.py).
+Este repositorio ya incluye un servidor MCP por `stdio` en [`mcp_server.py`](/Users/dorian/PythonProjects/splytin_mcp/mcp_server.py).
 
 ### Ejecutar
 
@@ -24,10 +24,16 @@ python3 mcp_server.py
   "mcpServers": {
     "project-generator": {
       "command": "python3",
-      "args": ["/Users/dorian/PythonProjects/mcp/mcp_server.py"]
+      "args": ["/Users/dorian/PythonProjects/splytin_mcp/mcp_server.py"]
     }
   }
 }
+```
+
+### Smoke test local
+
+```sh
+python3 test_mcp.py
 ```
 
 ### Notas
@@ -74,30 +80,4 @@ pip3 install schedule                           # CronJobs
 
 ## Si no funciona VSCode:
 ( Cmd + Shift + P ) -> luego "Python: Select Interpreter" elegir ".venv/bin/python"
-```
-
-
-## Django
-
-```sh
-pip3 install django
-
-django-admin shell                                      # Shell de django
-
-## BY PROJECT
-django-admin startproject nombre_proyecto               # Crear PROJECT
-django-admin startproject nombre_proyecto .             # Crear PROJECT - No crea carpeta duplicada
-
-## BY APP
-python3 manage.py startapp companies apps/companies     # Crear app
-python3 manage.py startapp nombre_app                   # Crear app
-
-python manage.py migrate
-
-
-# Crear el superuser
-python3 manage.py createsuperuser
-
-python3 manage.py runserver                             # Levantar el servidor
-python3 manage.py runserver 8001
 ```
