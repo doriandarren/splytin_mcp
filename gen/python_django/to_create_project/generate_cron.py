@@ -32,7 +32,7 @@ def update_settings(full_path, project_name_format, app_name):
     
     str = f"""\n# CronJobs
 CRONJOBS = [
-    ("*/1 * * * *", "core.cron.cron.hello_cron"),                      # cada minuto (para probar)
+    ("*/1 * * * *", "core.cron.cron.start"),                      # cada minuto (para probar)
 ]
     """
     
@@ -56,7 +56,7 @@ def create_core_cron(full_path):
 
     content = f'''from django.utils import timezone
 
-def hello_cron():
+def start():
     print(f"[CRON] hello_cron ejecutado: {{timezone.now()}}")
 '''
 
