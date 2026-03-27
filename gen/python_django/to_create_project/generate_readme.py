@@ -93,21 +93,25 @@ python3 manage.py runserver 8001
 
 ```
 
-## Django - django_crontab
+## Django + Celery + Beat + Redis
 
 ```sh
+# importante instalar Redis y tenerlo corriendo en el puerto 6379
 
-## En settings.py y Tener el archivo core/cron/hello_cron.py:
-CRONJOBS = [
-    ('*/1 * * * *', 'core.cron.hello_cron'),
-]
+celery -A celery_app worker -l info
+celery -A celery_app beat -l info --scheduler django_celery_beat.schedulers:DatabaseScheduler
+python manage.py runserver
 
-## Comandos
-python3 manage.py crontab add                   ## Agregar los jobs instalados
-python3 manage.py crontab show                  ## Ver los jobs instalados
-python3 manage.py crontab remove                ## Quitar todos los jobs de django-crontab
+# Dar permisos:
+chmod +x start_celery.sh
 
-python3 manage.py crontab run <PID>             ## Ejecutar manualmente los jobs
+# Arrancar:
+./start_delery.sh
+
+# Logs:
+cat logs/django.log
+cat logs/celery_worker.log
+cat logs/celery_beat.log
 
 ```
 

@@ -92,7 +92,6 @@ def create_python_django_project_service(
     generate_simplejwt(full_path, project_name_format, app_name, venv_python)
     generate_code_file_init(full_path)
     generate_cors(full_path, project_name_format, app_name, venv_python)
-    generate_cron(full_path, project_name_format, app_name, venv_python)
     generate_file_helpers(full_path)
     generate_http(full_path)
     generate_message_channel(full_path)
@@ -100,6 +99,7 @@ def create_python_django_project_service(
     generate_page_home(full_path, project_name_format, app_name)
     generate_module_users(full_path, project_name_format, app_name)
     generate_module_devs(full_path, project_name_format, app_name)
+    generate_cron(full_path, project_name_format, app_name, venv_python)
 
     return {
         "generator": "python_django_project",
