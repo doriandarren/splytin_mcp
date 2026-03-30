@@ -2,14 +2,14 @@ import os
 from gen.helpers.helper_print import print_message, GREEN, CYAN, run_command
 from gen.python_django.helpers.helper_file import helper_append_content, helper_update_list
 
-def generate_cron(full_path, project_name_format, app_name, venv_python):
+def generate_cron(full_path, project_name_format, app_main, venv_python):
     """
     Genera el archivo
     """    
     install_cron(full_path, venv_python)
-    update_settings(full_path, project_name_format, app_name)
+    update_settings(full_path, project_name_format, app_main)
     create_file_init(full_path)
-    create_file_celery(full_path, project_name_format, app_name)
+    create_file_celery(full_path, project_name_format, app_main)
     create_file_cron_devs(full_path)
 
 
@@ -21,11 +21,11 @@ def install_cron(full_path, venv_python):
     
 
     
-def update_settings(full_path, project_name_format, app_name):
+def update_settings(full_path, project_name_format, app_main):
     
     helper_update_list(
         full_path, 
-        f"{app_name}/settings.py", 
+        f"{app_main}/settings.py", 
         "INSTALLED_APPS", 
         f"'django_celery_beat',                           # required for celery beat"
     )    
@@ -53,7 +53,7 @@ CELERY_TASK_SERIALIZER = "json"
     
     helper_append_content(
         full_path, 
-        f"{app_name}/settings.py", 
+        f"{app_main}/settings.py", 
         str
     )
     
@@ -85,7 +85,7 @@ __all__ = ("app",)
    
    
     
-def create_file_celery(full_path, project_name_format, app_name):
+def create_file_celery(full_path, project_name_format, app_main):
     """
     Genera el archivo init
     """
@@ -99,9 +99,9 @@ def create_file_celery(full_path, project_name_format, app_name):
     content = f'''import os
 from celery import Celery
 
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "{app_name}.settings")
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "{app_main}.settings")
 
-app = Celery("{app_name}")
+app = Celery("{app_main}")
 app.config_from_object("django.conf:settings", namespace="CELERY")
 app.autodiscover_tasks()
 '''

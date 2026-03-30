@@ -4,13 +4,13 @@ from gen.python_django.helpers.helper_file import helper_add_import, helper_appe
 
 
 
-def generate_postgres(full_path, project_name_format, app_name, venv_python):
+def generate_postgres(full_path, project_name_format, app_main, venv_python):
     """
     Genera el archivo
     """
     install_dependencies(full_path, venv_python)
     generate_docker_file(full_path, project_name_format)    
-    replace_settings(full_path, project_name_format, app_name)
+    replace_settings(full_path, project_name_format, app_main)
     
 
 
@@ -62,7 +62,7 @@ volumes:
 
 
 
-def replace_settings(full_path, project_name_format, app_name):
+def replace_settings(full_path, project_name_format, app_main):
     
     new_databases = f'''
 #####################################
@@ -80,7 +80,7 @@ def replace_settings(full_path, project_name_format, app_name):
 #}}
     '''
 
-    relative_path = f"{app_name}/settings.py"
+    relative_path = f"{app_main}/settings.py"
     
     ok = helper_add_import(full_path, relative_path, "import os")
     ok = helper_append_content(full_path, relative_path, content_to_append=new_databases, end_line=84)
@@ -93,7 +93,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'"""
     
     helper_append_content(
         full_path,
-        f"{app_name}/settings.py", 
+        f"{app_main}/settings.py", 
         str
     )
     

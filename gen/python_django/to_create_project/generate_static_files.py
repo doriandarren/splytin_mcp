@@ -4,16 +4,16 @@ from gen.python_django.helpers.helper_file import helper_append_content, helper_
 
 
 
-def generate_static_files(full_path, app_name):
+def generate_static_files(full_path, app_main):
     """
     Genera el archivo
     """
-    create_static_files(full_path, app_name)
+    create_static_files(full_path, app_main)
     create_folder(full_path)
 
 
 
-def create_static_files(full_path, app_name):
+def create_static_files(full_path, app_main):
     
     str = f"""STATIC_ROOT = BASE_DIR / "staticfiles"
 MEDIA_URL = '/uploads/'
@@ -22,7 +22,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'uploads')
     
     helper_append_content(
         full_path,
-        f"{app_name}/settings.py",
+        f"{app_main}/settings.py",
         str
     )
     

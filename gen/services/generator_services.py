@@ -27,7 +27,7 @@ def _normalize_columns(columns: str | list[dict[str, Any]]) -> list[dict[str, An
 def create_python_django_project_service(
     project_name: str,
     project_path: str,
-    app_name: str = "main",
+    app_main: str = "main",
 ) -> dict[str, Any]:
     from gen.helpers.helper_string import normalize_project_name
     from gen.python_django.helpers.helper_virtual_env import get_venv_python
@@ -76,36 +76,37 @@ def create_python_django_project_service(
     full_path = _full_path(project_path, project_name)
     project_name_format = normalize_project_name(project_name)
 
-    generate_python_django_by_command_line(full_path, project_name_format, app_name)
+    generate_python_django_by_command_line(full_path, project_name_format, app_main)
     generate_gitignore(full_path)
-    generate_passenger_wsgi(full_path, app_name)
+    generate_passenger_wsgi(full_path, app_main)
     generate_readme(full_path, project_name)
     generate_todo_md(full_path, project_name)
 
     venv_python = get_venv_python(full_path)
 
-    generate_django(full_path, project_name_format, app_name, venv_python)
-    generate_env(full_path, project_name_format, app_name, venv_python)
-    generate_static_files(full_path, app_name)
-    generate_postgres(full_path, project_name_format, app_name, venv_python)
-    generate_api_doc(full_path, project_name_format, app_name, venv_python)
-    generate_simplejwt(full_path, project_name_format, app_name, venv_python)
+    generate_django(full_path, project_name_format, app_main, venv_python)
+    generate_env(full_path, project_name_format, app_main, venv_python)
+    generate_static_files(full_path, app_main)
+    generate_postgres(full_path, project_name_format, app_main, venv_python)
+    generate_api_doc(full_path, project_name_format, app_main, venv_python)
+    generate_simplejwt(full_path, project_name_format, app_main, venv_python)
     generate_code_file_init(full_path)
-    generate_cors(full_path, project_name_format, app_name, venv_python)
+    generate_cors(full_path, project_name_format, app_main, venv_python)
     generate_file_helpers(full_path)
     generate_http(full_path)
     generate_message_channel(full_path)
     generate_core_models(full_path)
-    generate_page_home(full_path, project_name_format, app_name)
-    generate_module_users(full_path, project_name_format, app_name)
-    generate_module_devs(full_path, project_name_format, app_name)
-    generate_cron(full_path, project_name_format, app_name, venv_python)
+    generate_page_home(full_path, project_name_format, app_main)
+    generate_module_users(full_path, project_name_format, app_main)
+    generate_module_devs(full_path, project_name_format, app_main)
+    generate_cron(full_path, project_name_format, app_main, venv_python)
+    
 
     return {
         "generator": "python_django_project",
         "project_name": project_name,
         "project_name_format": project_name_format,
-        "app_name": app_name,
+        "app_name": app_main,
         "full_path": full_path,
     }
 

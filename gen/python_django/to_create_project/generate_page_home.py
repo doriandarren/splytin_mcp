@@ -5,36 +5,26 @@ from gen.helpers.helper_print import print_message, GREEN, CYAN
 
 
 
-def generate_page_home(full_path, project_name_format, app_name):
-    update_setting(full_path, app_name)
+def generate_page_home(full_path, project_name_format, app_main):
+    update_setting(full_path, app_main)
     create_file_html(full_path)
-    update_urls(full_path, project_name_format, app_name)
-    
+    update_urls(full_path, project_name_format, app_main)
     
     
 
-
-
-def update_setting(full_path, app_name):
+def update_setting(full_path, app_main):
     
     str = f"        'DIRS': [BASE_DIR / \"templates\"],"
     
     helper_update_line(
         full_path,
-        f"{app_name}/settings.py",
+        f"{app_main}/settings.py",
         f"        'DIRS': [],",
         str
     )
     
-    print_message(f"Se ha actualizado el archivo {app_name}/settings.py", GREEN)
+    print_message(f"Se ha actualizado el archivo {app_main}/settings.py", GREEN)
     
-     
-    
-
-
-
-
-
 
 
 def create_file_html(full_path):
@@ -122,14 +112,14 @@ def create_file_html(full_path):
         
         
 
-def update_urls(full_path, project_name_format, app_name):
+def update_urls(full_path, project_name_format, app_main):
     
     
     str = f"from django.urls import path, include\nfrom django.views.generic import TemplateView"
     
     helper_update_line(
         full_path,
-        f"{app_name}/urls.py",
+        f"{app_main}/urls.py",
         f"from django.urls import path, include",
         str
     )
@@ -138,16 +128,16 @@ def update_urls(full_path, project_name_format, app_name):
 
     helper_update_list(
         full_path,
-        f"{app_name}/urls.py",
+        f"{app_main}/urls.py",
         "urlpatterns = [",
         f"    # Home"
     )
     
     helper_update_list(
         full_path, 
-        f"{app_name}/urls.py", 
+        f"{app_main}/urls.py", 
         "urlpatterns = [", 
         f"    path(\"\", TemplateView.as_view(template_name=\"index.html\"), name=\"home\")"
     )
     
-    print_message(f"Se ha actualizado el archivo {app_name}/urls.py", GREEN)
+    print_message(f"Se ha actualizado el archivo {app_main}/urls.py", GREEN)

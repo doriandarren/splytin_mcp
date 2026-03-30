@@ -1,7 +1,7 @@
 import os
 from gen.helpers.helper_print import print_message, GREEN, CYAN
 
-def generate_passenger_wsgi(full_path, app_name):
+def generate_passenger_wsgi(full_path, app_main):
     """
     Genera el archivo
     """
@@ -23,7 +23,7 @@ PROJECT_DIR = Path(__file__).resolve().parent
 
 sys.path.insert(0, str(PROJECT_DIR))
 
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "{app_name}.settings")
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "{app_main}.settings")
 
 from django.core.wsgi import get_wsgi_application
 application = get_wsgi_application()

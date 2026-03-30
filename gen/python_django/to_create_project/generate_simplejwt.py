@@ -2,9 +2,9 @@ import os
 from gen.helpers.helper_print import print_message, GREEN, CYAN, run_command
 from gen.python_django.helpers.helper_file import helper_add_import, helper_append_content, helper_update_list
 
-def generate_simplejwt(full_path, project_name_format, app_name, venv_python):
+def generate_simplejwt(full_path, project_name_format, app_main, venv_python):
     install_simplejwt(full_path, venv_python)
-    add_settings(full_path, app_name)
+    add_settings(full_path, app_main)
 
 
 
@@ -17,9 +17,9 @@ def install_simplejwt(full_path, venv_python):
 
 
 
-def add_settings(full_path, app_name):
+def add_settings(full_path, app_main):
     
-    helper_add_import(full_path, f"{app_name}/settings.py", "import datetime")
+    helper_add_import(full_path, f"{app_main}/settings.py", "import datetime")
     
     
     str = f"""\n# Simple JWT
@@ -33,7 +33,7 @@ REST_FRAMEWORK = {{
     
     helper_append_content(
         full_path, 
-        f"{app_name}/settings.py", 
+        f"{app_main}/settings.py", 
         str
     )
     
@@ -45,7 +45,7 @@ REST_FRAMEWORK = {{
     
     helper_append_content(
         full_path, 
-        f"{app_name}/settings.py",
+        f"{app_main}/settings.py",
         str
     )
     

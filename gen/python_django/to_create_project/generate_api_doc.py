@@ -6,13 +6,13 @@ from gen.python_django.helpers.helper_file import helper_update_line, helper_upd
 
 
 
-def generate_api_doc(full_path, project_name_format, app_name, venv_python):
+def generate_api_doc(full_path, project_name_format, app_main, venv_python):
     """
     Genera el archivo
     """
     install_django(full_path, venv_python)
-    update_settings(full_path, app_name)
-    update_urls(full_path, project_name_format, app_name)
+    update_settings(full_path, app_main)
+    update_urls(full_path, project_name_format, app_main)
     
     
 
@@ -22,7 +22,7 @@ def install_django(full_path, venv_python):
     print_message("drf-yasg instalado correctamente.", GREEN)
     
 
-def update_settings(full_path, app_name):
+def update_settings(full_path, app_main):
     # helper_update_list(
     #     full_path, 
     #     f"{app_name}/settings.py", 
@@ -32,7 +32,7 @@ def update_settings(full_path, app_name):
     
     helper_update_list(
         full_path, 
-        f"{app_name}/settings.py", 
+        f"{app_main}/settings.py", 
         "INSTALLED_APPS", 
         f"'drf_yasg',                         # required for serving swagger")
     
@@ -40,7 +40,7 @@ def update_settings(full_path, app_name):
 
 
 
-def update_urls(full_path, project_name_format, app_name):
+def update_urls(full_path, project_name_format, app_main):
     
     str = f"from django.urls import path, include\n## Docs \nfrom django.urls import re_path\nfrom rest_framework import permissions\nfrom drf_yasg.views import get_schema_view\nfrom drf_yasg import openapi"
     
@@ -61,7 +61,7 @@ def update_urls(full_path, project_name_format, app_name):
     # Update from
     helper_update_line(
         full_path,
-        f"{app_name}/urls.py",
+        f"{app_main}/urls.py",
         f"from django.urls import path",
         str
     )
@@ -71,28 +71,28 @@ def update_urls(full_path, project_name_format, app_name):
     # Update urlpatterns
     helper_update_list(
         full_path,
-        f"{app_name}/urls.py",
+        f"{app_main}/urls.py",
         "urlpatterns = [",
         f"    # Docs"
     )
     
     helper_update_list(
         full_path,
-        f"{app_name}/urls.py",
+        f"{app_main}/urls.py",
         "urlpatterns = [",
         f"    path('swagger<format>/', schema_view.without_ui(cache_timeout=0), name='schema-json'),"
     )
     
     helper_update_list(
         full_path,
-        f"{app_name}/urls.py",
+        f"{app_main}/urls.py",
         "urlpatterns = [",
         f"    path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),"
     )
     
     helper_update_list(
         full_path,
-        f"{app_name}/urls.py",
+        f"{app_main}/urls.py",
         "urlpatterns = [",
         f"    path('redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),"
     )

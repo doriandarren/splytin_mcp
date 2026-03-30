@@ -4,7 +4,7 @@ from gen.helpers.helper_print import print_message, GREEN, CYAN, run_command
 from gen.python_django.helpers.helper_virtual_env import get_venv_python
 
 
-def generate_by_command_line(full_path, project_name_format, app_name):
+def generate_by_command_line(full_path, project_name_format, app_main):
     create_folder(full_path)
 
     # Crear entorno virtual

@@ -2,12 +2,12 @@ import os
 from gen.helpers.helper_print import print_message, GREEN, CYAN, run_command
 from gen.python_django.helpers.helper_file import helper_append_content, helper_replace_block, helper_update_list
 
-def generate_cors(full_path, project_name_format, app_name, venv_python):
+def generate_cors(full_path, project_name_format, app_main, venv_python):
     """
     Genera el archivo
     """
     install_cors(full_path, venv_python)
-    update_settings(full_path, project_name_format, app_name)
+    update_settings(full_path, project_name_format, app_main)
     
     
     
@@ -18,11 +18,11 @@ def install_cors(full_path, venv_python):
     print_message("django-cors-headers instalado correctamente.", GREEN)
     
 
-def update_settings(full_path, project_name_format, app_name):
+def update_settings(full_path, project_name_format, app_main):
     
     helper_update_list(
         full_path, 
-        f"{app_name}/settings.py", 
+        f"{app_main}/settings.py", 
         "INSTALLED_APPS", 
         f"'corsheaders',                      # required for cors"
     )
@@ -31,14 +31,14 @@ def update_settings(full_path, project_name_format, app_name):
     
     helper_update_list(
         full_path, 
-        f"{app_name}/settings.py", 
+        f"{app_main}/settings.py", 
         "MIDDLEWARE", 
         f"'corsheaders.middleware.CorsMiddleware',                            # required for cors"
     ) 
     
     helper_replace_block(
         full_path,
-        f"{app_name}/settings.py",
+        f"{app_main}/settings.py",
         "ALLOWED_HOSTS",
         f"ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '{project_name_format}.com']"
     )
@@ -46,19 +46,19 @@ def update_settings(full_path, project_name_format, app_name):
     
     helper_append_content(
         full_path, 
-        f"{app_name}/settings.py", 
+        f"{app_main}/settings.py", 
         "\n## CORS"
     )
     
     helper_append_content(
         full_path, 
-        f"{app_name}/settings.py", 
+        f"{app_main}/settings.py", 
         "CORS_ORIGIN_ALLOW_ALL = True"
     )
    
     helper_append_content(
         full_path, 
-        f"{app_name}/settings.py", 
+        f"{app_main}/settings.py", 
         "CORS_ALLOW_CREDENTIALS = True"
     )
     

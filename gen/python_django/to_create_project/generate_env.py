@@ -3,10 +3,10 @@ from gen.helpers.helper_print import print_message, GREEN, CYAN, run_command
 from gen.python_django.helpers.helper_file import helper_add_import, helper_append_content, helper_replace_block
 
 
-def generate_env(full_path, project_name_format, app_name, venv_python):
+def generate_env(full_path, project_name_format, app_main, venv_python):
     
     install_env(full_path, venv_python)
-    update_settings(full_path, app_name)
+    update_settings(full_path, app_main)
     
     create_env(full_path, project_name_format)
     create_env_example(full_path, project_name_format)

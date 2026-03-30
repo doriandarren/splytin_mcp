@@ -14,7 +14,7 @@ print("ANTES")
 result = create_python_django_project_service(
     project_name="demo-django",
     project_path="/tmp",
-    app_name="main"
+    app_main="main"
 )
 
 print("DESPUÉS")

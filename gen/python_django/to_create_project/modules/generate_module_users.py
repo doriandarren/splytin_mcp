@@ -6,14 +6,14 @@ from gen.helpers.helper_print import print_message, GREEN, CYAN
 
 
 
-def generate_module_users(full_path, project_name_format, app_name):
-    create_module_users(full_path, project_name_format, app_name)
-    update_setting_auth_user_model(full_path, project_name_format, app_name)
-    update_model(full_path, project_name_format, app_name)
-    create_seeder(full_path, project_name_format, app_name)
+def generate_module_users(full_path, project_name_format, app_main):
+    create_module_users(full_path, project_name_format, app_main)
+    update_setting_auth_user_model(full_path, project_name_format, app_main)
+    update_model(full_path, project_name_format, app_main)
+    create_seeder(full_path, project_name_format, app_main)
     
     
-def create_module_users(full_path, project_name_format, app_name):
+def create_module_users(full_path, project_name_format, app_main):
     
     print_message(f"Generando el modulo de Users", CYAN)
     singular_name = "User"
@@ -22,21 +22,21 @@ def create_module_users(full_path, project_name_format, app_name):
     input_menu_checkbox = ['api_route', 'api_serializer', 'api_wiewset', 'api_model', 'api_service']
     formatColumns = parse_columns_input(columns)
     
-    standard_module_crud_python_django(full_path, app_name, singular_name, plural_name, formatColumns, input_menu_checkbox)
+    standard_module_crud_python_django(full_path, app_main, singular_name, plural_name, formatColumns, input_menu_checkbox)
 
 
 
-def update_setting_auth_user_model(full_path, project_name_format, app_name):
+def update_setting_auth_user_model(full_path, project_name_format, app_main):
     
     helper_append_content(
         full_path,
-        f"{app_name}/settings.py",
+        f"{app_main}/settings.py",
         "\n# USERS"
     )
     
     helper_append_content(
         full_path,
-        f"{app_name}/settings.py",
+        f"{app_main}/settings.py",
         "AUTH_USER_MODEL = 'users.User'"
     )
 
@@ -44,7 +44,7 @@ def update_setting_auth_user_model(full_path, project_name_format, app_name):
       
 
 
-def update_model(full_path, project_name_format, app_name):
+def update_model(full_path, project_name_format, app_main):
     """
     Genera el archivo
     """
@@ -75,7 +75,7 @@ class User(AbstractUser):
 
 
 
-def create_seeder(full_path, project_name_format, app_name):
+def create_seeder(full_path, project_name_format, app_main):
     """
     Genera el archivo
     """
