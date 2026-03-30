@@ -18,7 +18,7 @@ def generate_readme(full_path, project_name):
 ```sh
 python3 manage.py makemigrations                # Migraciones
 python3 manage.py migrate                       # Aplicar migraciones
-python3 manage.py seed_user                     # Seeder
+python3 manage.py seed_users                    # Seeder
 python3 manage.py runserver                     # Ejecutar servidor
 ```
 

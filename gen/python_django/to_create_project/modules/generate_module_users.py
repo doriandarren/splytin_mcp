@@ -94,7 +94,7 @@ def create_seeder(full_path, project_name_format, app_name):
     
 
     # Content
-    content = r'''from django.core.management.base import BaseCommand
+    content = f'''from django.core.management.base import BaseCommand
 from django.contrib.auth import get_user_model
 
 
@@ -103,14 +103,18 @@ class Command(BaseCommand):
 
     def handle(self, *args, **kwargs):
         User = get_user_model()
-
-        username = "dorian"
-        email = "dorian@gmail.com"
-        password = "123456"
+        
+        self.create_user("admin", "admin@{project_name_format}.com", "Tailandia2026")
+        self.create_user("manager", "manager@{project_name_format}.com", "Tailandia2026")
+        self.create_user("user", "user@{project_name_format}.com", "Tailandia2026")
+        
+        
+    def create_user(self, username, email, password):
+        User = get_user_model()
 
         if User.objects.filter(username=username).exists():
-            self.stdout.write(self.style.WARNING(f"El usuario '{username}' ya existe."))
-            return
+            self.stdout.write(self.style.WARNING(f"El usuario '{{username}}' ya existe."))
+            return None
 
         user = User.objects.create_user(
             username=username,
@@ -118,7 +122,9 @@ class Command(BaseCommand):
             password=password,
         )
 
-        self.stdout.write(self.style.SUCCESS(f"Usuario creado correctamente: {user.username}"))
+        self.stdout.write(self.style.SUCCESS(f"Usuario creado correctamente: {{user.username}}"))
+        return user
+
 '''
 
     try:
