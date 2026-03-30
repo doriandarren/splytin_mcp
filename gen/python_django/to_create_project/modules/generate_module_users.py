@@ -100,30 +100,54 @@ from django.contrib.auth import get_user_model
 
 
 class Command(BaseCommand):
-    help = "Crea un usuario por defecto"
+    help = "Crea o actualiza usuarios por defecto"
 
     def handle(self, *args, **kwargs):
-        self.create_user("admin", "admin@{project_name_format}.com", "Tailandia2026")
-        self.create_user("manager", "manager@{project_name_format}.com", "Tailandia2026")
-        self.create_user("user", "user@{project_name_format}.com", "Tailandia2026")
-        
-        
-    def create_user(self, username, email, password):
-        User = get_user_model()
-
-        if User.objects.filter(username=username).exists():
-            self.stdout.write(self.style.WARNING(f"El usuario '{{username}}' ya existe."))
-            return None
-
-        user = User.objects.create_user(
-            username=username,
-            email=email,
-            password=password,
+        self.create_user(
+            username="admin",
+            email="admin@{project_name_format}.com",
+            password="Tailandia2026",
+            is_staff=True,
+            is_superuser=True,
         )
 
-        self.stdout.write(self.style.SUCCESS(f"Usuario creado correctamente: {{user.username}}"))
-        return user
+        self.create_user(
+            username="manager",
+            email="manager@{project_name_format}.com",
+            password="Tailandia2026",
+            is_staff=True,
+            is_superuser=False,
+        )
 
+        self.create_user(
+            username="user",
+            email="user@{project_name_format}.com",
+            password="Tailandia2026",
+            is_staff=True,
+            is_superuser=False,
+        )
+
+    def create_user(self, username, email, password, is_staff=False, is_superuser=False):
+        User = get_user_model()
+
+        user, created = User.objects.get_or_create(
+            username=username,
+            defaults={"email": email},
+        )
+
+        user.email = email
+        user.is_active = True
+        user.is_staff = is_staff
+        user.is_superuser = is_superuser
+        user.set_password(password)
+        user.save()
+
+        if created:
+            self.stdout.write(self.style.SUCCESS(f"Usuario creado: {{user.username}}"))
+        else:
+            self.stdout.write(self.style.WARNING(f"Usuario actualizado: {{user.username}}"))
+
+        return user
 '''
 
     try:
