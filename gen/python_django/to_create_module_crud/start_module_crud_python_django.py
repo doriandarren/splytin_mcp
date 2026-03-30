@@ -18,7 +18,6 @@ def start_module_crud_python_django():
     full_path_default = "/Users/dorian/PythonProjects/python.generator"
     
     
-    
     app_main_default = "main"
     
     singular_name_default = "AgendaUnloading"

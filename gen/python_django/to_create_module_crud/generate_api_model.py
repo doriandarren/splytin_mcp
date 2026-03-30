@@ -14,14 +14,14 @@ def get_str_field(columns):
     return "self.id"
 
 
-def map_column_type(column):
+def map_column_type(column, plural_name_snake):
     column_type = column.get("type")
 
     if column.get("is_fk"):
         related_table = column.get("related_table", "")
         related_model = column.get("related_model", "")
         field_name = column["name"].replace("_id", "")
-        return field_name, f'models.ForeignKey("{related_model}", on_delete=models.CASCADE)'
+        return field_name, f'models.ForeignKey("{related_table}.{related_model}", on_delete=models.CASCADE, related_name="{plural_name_snake}")'
 
     if column_type == "string":
         return column["name"], "models.CharField(max_length=255)"
@@ -62,7 +62,7 @@ def generate_api_model(
     fields = []
     
     for column in columns:
-        field_name, field_definition = map_column_type(column)
+        field_name, field_definition = map_column_type(column, plural_name_snake)
         fields.append(f"    {field_name} = {field_definition}")
     
     fields_str = "\n".join(fields)

@@ -18,7 +18,7 @@ def generate_readme(full_path, project_name):
 ```sh
 python3 manage.py makemigrations                # Migraciones
 python3 manage.py migrate                       # Aplicar migraciones
-python3 manage.py createsuperuser               # Crear superuser
+python3 manage.py seed_user                     # Seeder
 python3 manage.py runserver                     # Ejecutar servidor
 ```
 
@@ -61,6 +61,18 @@ pip3 install schedule                           # CronJobs
 ( Cmd + Shift + P ) -> luego "Python: Select Interpreter" elegir ".venv/bin/python"
 ```
 
+
+## Commands
+
+```sh
+python3 manage.py seed_user                     # Crear superuser
+
+python manage.py clear_migracions --dry-run     # Muestra las migraciones
+python manage.py clear_migracions               # Elimina las migraciones
+
+```
+
+
 ## Docker
 
 ```sh
@@ -90,6 +102,9 @@ python manage.py migrate
 
 python3 manage.py runserver                     # Levantar el servidor
 python3 manage.py runserver 8001
+
+python3 manage.py seed_user                             # Seeder
+python3 manage.py createsuperuser                       # Consola Crear superuser
 
 ```
 
@@ -123,14 +138,6 @@ cat logs/celery_beat.log
 opc: 1
 >>> timezone.now()
 
-```
-
-## Eliminar Migraciones de Django (Parecido a rollback)
-
-```sh
-cd ruta/de/tu/proyecto
-find ./apps -path "*/migrations/*.py" -not -name "__init__.py"
-find ./apps -path "*/migrations/*.pyc"
 ```
 
 '''

@@ -1,3 +1,7 @@
+def snake_to_pascal(value: str) -> str:
+    return "".join(word.capitalize() for word in value.split("_"))
+
+
 def parse_columns_input(input_columns: str):
     """
     Convierte un string tipo:
@@ -5,7 +9,7 @@ def parse_columns_input(input_columns: str):
     en una lista de diccionarios bien formados.
     """
 
-    allowed_types = {"string", "integer", "float", "decimal", "boolean", "fk", "date", "datetime", "email", "timestamp"}
+    allowed_types = {"string", "text", "integer", "float", "decimal", "boolean", "fk", "date", "datetime", "email", "timestamp"}
 
     columns = []
 
@@ -30,7 +34,7 @@ def parse_columns_input(input_columns: str):
                 base = base[:-3]
 
             col["related_table"] = base + "s"
-            col["related_model"] = base.capitalize()
+            col["related_model"] = snake_to_pascal(base)
 
         columns.append(col)
 
