@@ -1,6 +1,6 @@
 import os
 from gen.helpers.helper_columns import parse_columns_input
-from gen.python_django.helpers.helper_file import helper_append_content, helper_update_line, helper_update_list
+from gen.python_django.helpers.helper_file import helper_append_content, helper_create_init_file, helper_update_line, helper_update_list
 from gen.python_django.to_create_module_crud.standard_module_crud_python_django import standard_module_crud_python_django
 from gen.helpers.helper_print import print_message, GREEN, CYAN
 
@@ -9,10 +9,8 @@ from gen.helpers.helper_print import print_message, GREEN, CYAN
 def generate_module_users(full_path, project_name_format, app_name):
     create_module_users(full_path, project_name_format, app_name)
     update_setting_auth_user_model(full_path, project_name_format, app_name)
-    
     update_model(full_path, project_name_format, app_name)
-    
-    
+    create_seeder(full_path, project_name_format, app_name)
     
     
 def create_module_users(full_path, project_name_format, app_name):
@@ -75,5 +73,59 @@ class User(AbstractUser):
 
 
 
+
+def create_seeder(full_path, project_name_format, app_name):
+    """
+    Genera el archivo
+    """
+
+    folder_path = os.path.join(full_path, "apps", "users", "management", "commands")
+    file_path = os.path.join(folder_path, "seed_users.py")
+
+    os.makedirs(folder_path, exist_ok=True)
+    
+    # Crear el archivo __init__.py en la carpeta commands
+    helper_create_init_file(folder_path)
+    
+    
+    # Crear el archivo __init__.py en la carpeta management
+    folder_path_management = os.path.join(full_path, "apps", "users", "management")
+    helper_create_init_file(folder_path_management)
+    
+
+    # Content
+    content = r'''from django.core.management.base import BaseCommand
+from django.contrib.auth import get_user_model
+
+
+class Command(BaseCommand):
+    help = "Crea un usuario por defecto"
+
+    def handle(self, *args, **kwargs):
+        User = get_user_model()
+
+        username = "dorian"
+        email = "dorian@gmail.com"
+        password = "123456"
+
+        if User.objects.filter(username=username).exists():
+            self.stdout.write(self.style.WARNING(f"El usuario '{username}' ya existe."))
+            return
+
+        user = User.objects.create_user(
+            username=username,
+            email=email,
+            password=password,
+        )
+
+        self.stdout.write(self.style.SUCCESS(f"Usuario creado correctamente: {user.username}"))
+'''
+
+    try:
+        with open(file_path, "w") as f:
+            f.write(content)
+        print_message(f"Archivo generado: {file_path}", GREEN)
+    except Exception as e:
+        print_message(f"Error al generar el archivo {file_path}: {e}", CYAN)
 
 
