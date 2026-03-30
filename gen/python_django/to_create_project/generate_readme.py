@@ -11,7 +11,7 @@ def generate_readme(full_path, project_name):
 
     os.makedirs(folder_path, exist_ok=True)
 
-    content = f'''## {project_name}
+    content = r'''## {project_name}
 
 ## Script para ejecutar el proyecto
 
@@ -67,8 +67,8 @@ pip3 install schedule                           # CronJobs
 ```sh
 python3 manage.py seed_user                     # Crear superuser
 
-python manage.py clear_migracions --dry-run     # Muestra las migraciones
-python manage.py clear_migracions               # Elimina las migraciones
+python3 manage.py clear_migrations --dry-run     # Muestra las migraciones
+python3 manage.py clear_migrations               # Elimina las migraciones
 
 ```
 

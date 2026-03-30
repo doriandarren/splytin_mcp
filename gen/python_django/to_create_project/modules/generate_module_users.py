@@ -1,6 +1,6 @@
 import os
 from gen.helpers.helper_columns import parse_columns_input
-from gen.python_django.helpers.helper_file import helper_append_content
+from gen.python_django.helpers.helper_file import helper_append_content, helper_update_line, helper_update_list
 from gen.python_django.to_create_module_crud.standard_module_crud_python_django import standard_module_crud_python_django
 from gen.helpers.helper_print import print_message, GREEN, CYAN
 
@@ -12,11 +12,9 @@ def generate_module_users(full_path, project_name_format, app_name):
     
     update_model(full_path, project_name_format, app_name)
     
-    ## TODO Actializar el urls.py
     
     
-
-
+    
 def create_module_users(full_path, project_name_format, app_name):
     
     print_message(f"Generando el modulo de Users", CYAN)
@@ -27,7 +25,6 @@ def create_module_users(full_path, project_name_format, app_name):
     formatColumns = parse_columns_input(columns)
     
     standard_module_crud_python_django(full_path, app_name, singular_name, plural_name, formatColumns, input_menu_checkbox)
-    
 
 
 def update_setting_auth_user_model(full_path, project_name_format, app_name):
@@ -45,8 +42,7 @@ def update_setting_auth_user_model(full_path, project_name_format, app_name):
     )
 
     print_message("settings.py actualizado correctamente.", GREEN)
-    
-    
+      
 
 def update_model(full_path, project_name_format, app_name):
     """
@@ -76,3 +72,8 @@ class User(AbstractUser):
         print_message(f"Archivo generado: {file_path}", GREEN)
     except Exception as e:
         print_message(f"Error al generar el archivo {file_path}: {e}", CYAN)
+
+
+
+
+

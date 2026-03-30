@@ -38,7 +38,7 @@ def generate_api_serializer(
 from apps.{plural_name_snake}.models import {singular_name}
 
 
-class {singular_first_camel}Serializer(ModelSerializer):
+class {singular_name}Serializer(ModelSerializer):
 
     class Meta:
         model = {singular_name}

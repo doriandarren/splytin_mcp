@@ -31,7 +31,7 @@ def update_settings(full_path, project_name_format, app_name):
     )    
     
     
-    str = r"""\n# Celery
+    str = r"""# Celery
 CELERY_BROKER_URL = "redis://127.0.0.1:6379/0"
 CELERY_BEAT_SCHEDULER = "django_celery_beat.schedulers:DatabaseScheduler"
 CELERY_TIMEZONE = "Europe/Madrid"

@@ -1,11 +1,12 @@
 import os
-from gen.python_django.helpers.helper_file import helper_create_init_file
+from gen.python_django.helpers.helper_file import helper_create_init_file, helper_update_line, helper_update_list
 from gen.helpers.helper_print import print_message, GREEN, CYAN
 
 
 def generate_api_route(
         full_path,
         project_name,
+        app_main,
         singular_name,
         plural_name,
         singular_name_kebab,
@@ -52,3 +53,64 @@ router_{singular_name_snake}.register(
         print_message(f"Archivo generado: {file_path}", GREEN)
     except Exception as e:
         print_message(f"Error al generar el archivo {file_path}: {e}", CYAN)
+
+    
+    # Update urls.py
+    update_urls(full_path,
+        project_name,
+        app_main,
+        singular_name,
+        plural_name,
+        singular_name_kebab,
+        plural_name_kebab,
+        singular_name_snake,
+        plural_name_snake,
+        singular_first_camel,
+        plural_first_camel,
+    )
+
+
+
+
+
+def update_urls(
+    full_path,
+    project_name,
+    app_main,
+    singular_name,
+    plural_name,
+    singular_name_kebab,
+    plural_name_kebab,
+    singular_name_snake,
+    plural_name_snake,
+    singular_first_camel,
+    plural_first_camel,
+):
+    
+    str = f'from drf_yasg import openapi\nfrom apps.{plural_name_snake}.api.router import router_{singular_name_snake}'
+    
+    helper_update_line(
+        full_path,
+        f"{app_main}/urls.py",
+        f'from drf_yasg import openapi',
+        str
+    )
+    
+
+    helper_update_list(
+        full_path,
+        f"{app_main}/urls.py",
+        "urlpatterns = [",
+        f"    # {plural_name}"
+    )
+    
+    helper_update_list(
+        full_path, 
+        f"{app_main}/urls.py", 
+        "urlpatterns = [", 
+        f"    path('api/v1/', include(router_{singular_name_snake}.urls)),"
+    )
+    
+    print_message(f"Se ha actualizado el archivo {app_main}/urls.py", GREEN)
+
+

@@ -64,6 +64,7 @@ def standard_module_crud_python_django(full_path, app_main, singular_name, plura
         generate_api_route(
             full_path,
             project_name,
+            app_main,
             singular_name,
             plural_name,
             singular_name_kebab,
