@@ -25,6 +25,7 @@ def create_module_users(full_path, project_name_format, app_name):
     standard_module_crud_python_django(full_path, app_name, singular_name, plural_name, formatColumns, input_menu_checkbox)
 
 
+
 def update_setting_auth_user_model(full_path, project_name_format, app_name):
     
     helper_append_content(
@@ -41,6 +42,7 @@ def update_setting_auth_user_model(full_path, project_name_format, app_name):
 
     print_message("settings.py actualizado correctamente.", GREEN)
       
+
 
 def update_model(full_path, project_name_format, app_name):
     """
@@ -73,7 +75,6 @@ class User(AbstractUser):
 
 
 
-
 def create_seeder(full_path, project_name_format, app_name):
     """
     Genera el archivo
@@ -102,8 +103,6 @@ class Command(BaseCommand):
     help = "Crea un usuario por defecto"
 
     def handle(self, *args, **kwargs):
-        User = get_user_model()
-        
         self.create_user("admin", "admin@{project_name_format}.com", "Tailandia2026")
         self.create_user("manager", "manager@{project_name_format}.com", "Tailandia2026")
         self.create_user("user", "user@{project_name_format}.com", "Tailandia2026")

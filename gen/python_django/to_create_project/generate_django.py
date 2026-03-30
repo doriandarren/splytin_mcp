@@ -2,18 +2,18 @@ import os
 from gen.helpers.helper_print import print_message, GREEN, CYAN, run_command
 from gen.python_django.helpers.helper_file import helper_create_init_file, helper_update_list
 
-def generate_django(full_path, project_name_format, app_name, venv_python):
+def generate_django(full_path, project_name_format, app_main, venv_python):
     """
     Genera el archivo
     """
     install_django(full_path, venv_python)
     install_requests(full_path, venv_python)
     
-    create_app(full_path, app_name, venv_python)
-    create_commands(full_path, app_name, venv_python)
+    create_app(full_path, app_main, venv_python)
+    create_commands(full_path, app_main, venv_python)
     
     install_django_rest_framework(full_path, venv_python)
-    update_settings(full_path, app_name)
+    update_settings(full_path, app_main)
     
 
 
@@ -37,25 +37,25 @@ def install_django_rest_framework(full_path, venv_python):
     print_message("djangorestframework instalado correctamente.", GREEN)
 
 
-def create_app(full_path, app_name, venv_python):
-    print_message("Creando app Principal..." + app_name, CYAN)
+def create_app(full_path, app_main, venv_python):
+    print_message("Creando app Principal..." + app_main, CYAN)
 
     # Esto crea el proyecto dentro del directorio actual
-    run_command(f'"{venv_python}" -m django startproject {app_name} .', cwd=full_path)
+    run_command(f'"{venv_python}" -m django startproject {app_main} .', cwd=full_path)
 
-    print_message(f"App Principal: {app_name} creado correctamente.", GREEN)
-
-
+    print_message(f"App Principal: {app_main} creado correctamente.", GREEN)
 
 
 
-def create_commands(full_path, app_name, venv_python):
+
+
+def create_commands(full_path, app_main, venv_python):
     """
     Genera el archivo
     """
 
-    folder_path = os.path.join(full_path, app_name, "management", "commands")
-    file_path = os.path.join(folder_path, "clear_migration.py")
+    folder_path = os.path.join(full_path, app_main, "management", "commands")
+    file_path = os.path.join(folder_path, "clear_migrations.py")
 
     os.makedirs(folder_path, exist_ok=True)
 
@@ -64,7 +64,7 @@ def create_commands(full_path, app_name, venv_python):
 
 
     # Crea el archivo __init__.py en Management
-    folder_path_management = os.path.join(full_path, app_name, "management")
+    folder_path_management = os.path.join(full_path, app_main, "management")
     helper_create_init_file(folder_path_management)
 
 
@@ -176,13 +176,23 @@ class Command(BaseCommand):
         
 
 
-def update_settings(full_path, app_name):
+def update_settings(full_path, app_main):
     
+    # Agregar rest_framework a INSTALLED_APPS
     helper_update_list(
         full_path, 
-        f"{app_name}/settings.py", 
+        f"{app_main}/settings.py", 
         "INSTALLED_APPS", 
         f"'rest_framework',                   # required for DRF"
+    )
+    
+    
+    # Agregar main a INSTALLED_APPS
+    helper_update_list(
+        full_path, 
+        f"{app_main}/settings.py", 
+        "INSTALLED_APPS", 
+        f"'{app_main}',                             # Module main"
     )
     
 
