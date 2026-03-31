@@ -11,7 +11,7 @@ def generate_module_devs(full_path, project_name_format, app_main):
     
     ## Emails
     create_email_service(full_path, project_name_format, app_main)
-    append_settings(full_path, project_name_format, app_main)
+    append_settings(full_path, app_main)
     create_email_html(full_path, project_name_format, app_main)
 
 
