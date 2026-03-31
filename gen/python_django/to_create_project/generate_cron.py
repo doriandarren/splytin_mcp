@@ -7,10 +7,11 @@ def generate_cron(full_path, project_name_format, app_main, venv_python):
     Genera el archivo
     """    
     install_cron(full_path, venv_python)
-    update_settings(full_path, project_name_format, app_main)
+    update_settings(full_path, app_main)
     create_file_init(full_path)
-    create_file_celery(full_path, project_name_format, app_main)
+    create_file_celery(full_path, app_main)
     create_file_cron_devs(full_path)
+    create_file_sh(full_path)
 
 
 
@@ -21,7 +22,7 @@ def install_cron(full_path, venv_python):
     
 
     
-def update_settings(full_path, project_name_format, app_main):
+def update_settings(full_path, app_main):
     
     helper_update_list(
         full_path, 
@@ -85,7 +86,7 @@ __all__ = ("app",)
    
    
     
-def create_file_celery(full_path, project_name_format, app_main):
+def create_file_celery(full_path, app_main):
     """
     Genera el archivo init
     """
@@ -134,6 +135,40 @@ def start():
     now = timezone.now()
     print(f"Hola desde Celery: {now}")
     return f"Ejecutado en {now}"
+'''
+
+    try:
+        with open(file_path, "w") as f:
+            f.write(content)
+        print_message(f"Archivo generado: {file_path}", GREEN)
+    except Exception as e:
+        print_message(f"Error al generar el archivo {file_path}: {e}", CYAN)
+
+
+
+
+def create_file_sh(full_path):
+    """
+    Genera el archivo
+    """
+
+    folder_path = os.path.join(full_path)
+    file_path = os.path.join(folder_path, "start_celery.sh")
+
+    os.makedirs(folder_path, exist_ok=True)
+
+    content = r'''#!/bin/bash
+
+source .venv/bin/activate
+
+mkdir -p logs
+
+trap 'kill 0' SIGINT SIGTERM EXIT
+
+celery -A celery_app worker -l info > logs/celery_worker.log 2>&1 &
+celery -A celery_app beat -l info --scheduler django_celery_beat.schedulers:DatabaseScheduler > logs/celery_beat.log 2>&1 &
+
+wait
 '''
 
     try:

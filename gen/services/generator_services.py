@@ -3,6 +3,7 @@ from __future__ import annotations
 from typing import Any
 
 from gen.helpers.helper_columns import parse_columns_input
+from gen.python_django.to_create_project.pdf.generate_pdf import generate_pdf
 
 
 DEFAULT_DJANGO_COMPONENTS = [
@@ -100,6 +101,8 @@ def create_python_django_project_service(
     generate_module_users(full_path, project_name_format, app_main)
     generate_module_devs(full_path, project_name_format, app_main)
     generate_cron(full_path, project_name_format, app_main, venv_python)
+    
+    generate_pdf(full_path, project_name_format, app_main, venv_python)
     
 
     return {
