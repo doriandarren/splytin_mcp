@@ -2,17 +2,24 @@ import os
 from gen.helpers.helper_columns import parse_columns_input
 from gen.python_django.helpers.helper_file import helper_append_content, helper_create_init_file
 from gen.python_django.to_create_module_crud.standard_module_crud_python_django import standard_module_crud_python_django
-from gen.helpers.helper_print import print_message, GREEN, CYAN
+from gen.helpers.helper_print import print_message, GREEN, CYAN, run_command
 
 
-def generate_module_devs(full_path, project_name_format, app_main):
+def generate_module_devs(full_path, project_name_format, app_main, venv_python):
     create_module_devs(full_path, project_name_format, app_main)
     update_file_api_views(full_path, project_name_format, app_main)
     
     ## Emails
     create_email_service(full_path, project_name_format, app_main)
-    append_settings(full_path, project_name_format, app_main)
+    append_email_settings(full_path, project_name_format, app_main)
     create_email_html(full_path, project_name_format, app_main)
+
+
+    # PDF
+    install_pdf(full_path, venv_python)
+    create_pdf_service(full_path, project_name_format, app_main)
+    create_pdf_html(full_path, project_name_format, app_main)
+    
 
 
 
@@ -28,7 +35,6 @@ def create_module_devs(full_path, project_name_format, app_main):
     formatColumns = parse_columns_input(columns)
     
     standard_module_crud_python_django(full_path, app_main, singular_name, plural_name, formatColumns, input_menu_checkbox)
-    
 
 
 def update_file_api_views(full_path, project_name_format, app_main):
@@ -40,12 +46,15 @@ def update_file_api_views(full_path, project_name_format, app_main):
 
     os.makedirs(folder_path, exist_ok=True)
 
-    content = r'''from rest_framework import status
+    content = r'''from django.http import HttpResponse
+from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.viewsets import ViewSet
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from rest_framework.decorators import action
 
+from apps.devs.services.email_service import MailService
+from apps.devs.services.pdf_service import PdfService
 
 class DevApiViewSet(ViewSet):
     permission_classes = [IsAuthenticatedOrReadOnly]
@@ -69,10 +78,12 @@ class DevApiViewSet(ViewSet):
     
     @action(detail=False, methods=['get'], url_path='test_email')
     def invoke_email(self, request):
-        """ Envio de correo de prueba."""
+        """ EMAIL TEST 
+            Envio de correo de prueba
+        """
         try:
             
-            mail_service = SendMailService(
+            mail_service = MailService(
                 subject="Correo Prueba",
                 to_emails=["doriandarren1@gmail.com"],
             )
@@ -92,6 +103,53 @@ class DevApiViewSet(ViewSet):
                 {"error": str(e)},
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR
             )
+    
+    @action(detail=False, methods=['get'], url_path='test_pdf')
+    def invoke_pdf(self, request):
+        """ 
+            Generación de PDF de prueba.
+        """
+        
+        try:
+            
+            ## - Generar PDF y descargarlo
+            
+            # pdf_service = PdfService()
+            # pdf_bytes = pdf_service.generate_pdf({
+            #     "title": "PDF de prueba",
+            #     "body": "Hola, este es un PDF generado desde Django con wkhtmltopdf.",
+            # })
+            # response = HttpResponse(pdf_bytes, content_type="application/pdf")
+            # response["Content-Disposition"] = 'attachment; filename="prueba.pdf"'
+            # return response
+        
+        
+            ## - Guardar PDF en carpeta uploads/pdfs
+            
+            pdf_service = PdfService(
+                template_html="pdfs/test_pdf.html"
+            )
+
+            file_path = pdf_service.save(
+                filename="prueba.pdf",
+                context={
+                    "title": "PDF guardado",
+                    "body": "Hola, este PDF se ha guardado en la carpeta uploads/pdfs.",
+                }
+            )
+            
+            response = {
+                "message": "PDF generado y guardado correctamente",
+                "file_path": file_path,
+            }
+            return Response(response, status=status.HTTP_200_OK)
+        
+        except Exception as e:
+            return Response(
+                {"error": str(e)},
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR
+            )
+
 '''
 
     try:
@@ -103,18 +161,13 @@ class DevApiViewSet(ViewSet):
 
 
 
-
-
-
-
-
-
+## Email service
 def create_email_service(full_path, project_name_format, app_main):
     """
     Actualiza el archivo
     """
     folder_path = os.path.join(full_path, "apps", "devs", "services")
-    file_path = os.path.join(folder_path, "send_email_service.py")
+    file_path = os.path.join(folder_path, "email_service.py")
 
     os.makedirs(folder_path, exist_ok=True)
     
@@ -158,11 +211,8 @@ class SendMailService:
     except Exception as e:
         print_message(f"Error al generar el archivo {file_path}: {e}", CYAN)
 
-
-
-
     
-def append_settings(full_path, project_name_format, app_main):    
+def append_email_settings(full_path, project_name_format, app_main):    
     
     str = f"""\n# EMAIL SETTINGS
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
@@ -181,8 +231,7 @@ EMAIL_TIMEOUT = int(os.getenv("EMAIL_TIMEOUT", 30))
         f"{app_main}/settings.py", 
         str
     )
-    
-   
+
    
 def create_email_html(full_path, project_name_format, app_main):
     """
@@ -300,3 +349,185 @@ def create_email_html(full_path, project_name_format, app_main):
         print_message(f"Archivo generado: {file_path}", GREEN)
     except Exception as e:
         print_message(f"Error al generar el archivo {file_path}: {e}", CYAN)
+        
+        
+
+  
+## PDF service 
+
+def install_pdf(full_path, venv_python):
+    print_message("Instalando pdfkit...", CYAN)
+    run_command(f'"{venv_python}" -m pip install pdfkit', cwd=full_path)
+    print_message("pdfkit instalado correctamente.", GREEN)
+
+
+
+def create_pdf_service(full_path, project_name_format, app_main):
+    """
+    Genera el archivo
+    """
+
+    folder_path = os.path.join(full_path, "apps", "devs", "services")
+    file_path = os.path.join(folder_path, "pdf_service.py")
+
+    os.makedirs(folder_path, exist_ok=True)
+
+    content = r'''import os
+import pdfkit
+
+from django.conf import settings
+from django.template.loader import render_to_string
+
+
+class PdfService:
+
+    def __init__(
+        self,
+        template_html="pdfs/test_pdf.html",
+        wkhtmltopdf_path=None,
+        footer_text="EMPRESA",
+    ):
+        self.template_html = template_html
+        self.footer_text = footer_text
+        self.app_env = getattr(settings, "APP_ENV", "local")
+        self.wkhtmltopdf_path = wkhtmltopdf_path or self._detect_wkhtmltopdf_path()
+
+    def _detect_wkhtmltopdf_path(self):
+        paths = {
+            "local": "/usr/local/bin/wkhtmltopdf",
+            "staging": "/usr/bin/wkhtmltopdf",
+            "production": "/usr/bin/wkhtmltopdf",
+        }
+
+        path = paths.get(self.app_env)
+
+        if not path:
+            raise ValueError(f"APP_ENV no válido: {self.app_env}")
+
+        if not os.path.exists(path):
+            raise FileNotFoundError(
+                f"No se encontró wkhtmltopdf en la ruta configurada: {path}"
+            )
+
+        return path
+
+    def _get_config(self):
+        return pdfkit.configuration(wkhtmltopdf=self.wkhtmltopdf_path)
+
+    def _get_options(self):
+        return {
+            "encoding": "UTF-8",
+            "page-size": "A4",
+            "margin-top": "15mm",
+            "margin-right": "10mm",
+            "margin-bottom": "20mm",
+            "margin-left": "10mm",
+            "footer-font-size": "9",
+            "footer-spacing": "5",
+            "footer-left": self.footer_text,
+            "footer-right": "Página [page] de [topage]",
+            "enable-local-file-access": "",
+        }
+
+    def _render_html(self, context=None):
+        if context is None:
+            context = {}
+
+        return render_to_string(self.template_html, context)
+
+    def get_binary(self, context=None):
+        html_string = self._render_html(context)
+
+        pdf_binary = pdfkit.from_string(
+            html_string,
+            False,
+            configuration=self._get_config(),
+            options=self._get_options(),
+        )
+
+        return pdf_binary
+
+    def save(self, filename, context=None, folder="pdfs"):
+        html_string = self._render_html(context)
+
+        folder_path = os.path.join(settings.MEDIA_ROOT, folder)
+        os.makedirs(folder_path, exist_ok=True)
+
+        file_path = os.path.join(folder_path, filename)
+
+        pdfkit.from_string(
+            html_string,
+            file_path,
+            configuration=self._get_config(),
+            options=self._get_options(),
+        )
+
+        return file_path
+'''
+
+    try:
+        with open(file_path, "w") as f:
+            f.write(content)
+        print_message(f"Archivo generado: {file_path}", GREEN)
+    except Exception as e:
+        print_message(f"Error al generar el archivo {file_path}: {e}", CYAN)
+
+
+
+def create_pdf_html(full_path, project_name_format, app_main):
+    """
+    Genera el archivo
+    """
+
+    folder_path = os.path.join(full_path, "templates", "pdfs")
+    file_path = os.path.join(folder_path, "test_pdf.html")
+
+    os.makedirs(folder_path, exist_ok=True)
+
+    content = r'''<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ title }}</title>
+    <style>
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            color: #333;
+            font-size: 14px;
+            padding: 30px;
+        }
+
+        .container {
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            padding: 30px;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .body {
+            line-height: 1.7;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>{{ title }}</h1>
+        <div class="body">
+            {{ body|linebreaks }}
+        </div>
+    </div>
+</body>
+</html>
+'''
+
+    try:
+        with open(file_path, "w") as f:
+            f.write(content)
+        print_message(f"Archivo generado: {file_path}", GREEN)
+    except Exception as e:
+        print_message(f"Error al generar el archivo {file_path}: {e}", CYAN)
+        

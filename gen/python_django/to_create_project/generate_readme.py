@@ -88,6 +88,14 @@ docker compose up -d                            ## Se levanta de nuevo
 ```
 
 
+
+## Libraries
+
+```sh
+pip install pdfkit                              # Crear PDF
+```
+
+
 ## Django
 
 ```sh
