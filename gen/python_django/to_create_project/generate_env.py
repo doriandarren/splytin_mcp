@@ -67,7 +67,7 @@ def create_env(full_path, project_name_format):
 APP_ENV=local
 MESSAGE_CHANNEL_URL=
 
-# Debug
+# DEBUG
 DEBUG=true
 
 # DB
@@ -76,6 +76,16 @@ DB_USER={project_name_format}_user
 DB_PASSWORD={project_name_format}_pass
 DB_HOST=127.0.0.1
 DB_PORT=5432
+
+# EMAIL
+EMAIL_HOST=smtp.ionos.es
+EMAIL_PORT=587
+EMAIL_USE_TLS=True
+EMAIL_USE_SSL=False
+EMAIL_HOST_USER=webmaster@{project_name_format}.com
+EMAIL_HOST_PASSWORD=
+DEFAULT_FROM_EMAIL=webmaster@{project_name_format}.com
+EMAIL_TIMEOUT=30
 '''
 
     try:
@@ -101,7 +111,7 @@ def create_env_example(full_path, project_name_format):
 APP_ENV=local
 MESSAGE_CHANNEL_URL=
 
-# Debug
+# DEBUG
 DEBUG=true
 
 # DB
@@ -110,6 +120,16 @@ DB_USER=
 DB_PASSWORD=
 DB_HOST=127.0.0.1
 DB_PORT=5432
+
+# EMAIL
+EMAIL_HOST=smtp.ionos.es
+EMAIL_PORT=587
+EMAIL_USE_TLS=True
+EMAIL_USE_SSL=False
+EMAIL_HOST_USER=webmaster@{project_name_format}.com
+EMAIL_HOST_PASSWORD=
+DEFAULT_FROM_EMAIL=webmaster@{project_name_format}.com
+EMAIL_TIMEOUT=30
 '''
 
     try:

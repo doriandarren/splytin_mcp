@@ -42,12 +42,12 @@ def update_file_api_views(full_path, project_name_format, app_main):
 
     content = r'''from rest_framework import status
 from rest_framework.response import Response
-from rest_framework.viewsets import ModelViewSet
+from rest_framework.viewsets import ViewSet
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from rest_framework.decorators import action
 
 
-class DevApiViewSet(ModelViewSet):
+class DevApiViewSet(ViewSet):
     permission_classes = [IsAuthenticatedOrReadOnly]
     
     @action(detail=False, methods=['get'], url_path='test')
@@ -166,12 +166,14 @@ def append_settings(full_path, project_name_format, app_main):
     
     str = f"""\n# EMAIL SETTINGS
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
-EMAIL_HOST = "smtp.ionos.es"
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
-EMAIL_HOST_USER = "webmaster@{project_name_format}.com"
-EMAIL_HOST_PASSWORD = ""
-DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+EMAIL_HOST = os.getenv("EMAIL_HOST", "smtp.ionos.es")
+EMAIL_PORT = int(os.getenv("EMAIL_PORT", 587))
+EMAIL_USE_TLS = os.getenv("EMAIL_USE_TLS", "True") == "True"
+EMAIL_USE_SSL = os.getenv("EMAIL_USE_SSL", "False") == "True"
+EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER")
+EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD")
+DEFAULT_FROM_EMAIL = os.getenv("DEFAULT_FROM_EMAIL", EMAIL_HOST_USER)
+EMAIL_TIMEOUT = int(os.getenv("EMAIL_TIMEOUT", 30))
     """
     
     helper_append_content(
