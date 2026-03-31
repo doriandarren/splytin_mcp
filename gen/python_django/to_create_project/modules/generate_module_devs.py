@@ -1,6 +1,6 @@
 import os
 from gen.helpers.helper_columns import parse_columns_input
-from gen.python_django.helpers.helper_file import helper_append_content
+from gen.python_django.helpers.helper_file import helper_append_content, helper_create_init_file
 from gen.python_django.to_create_module_crud.standard_module_crud_python_django import standard_module_crud_python_django
 from gen.helpers.helper_print import print_message, GREEN, CYAN
 
@@ -11,7 +11,7 @@ def generate_module_devs(full_path, project_name_format, app_main):
     
     ## Emails
     create_email_service(full_path, project_name_format, app_main)
-    append_settings(full_path, app_main)
+    append_settings(full_path, project_name_format, app_main)
     create_email_html(full_path, project_name_format, app_main)
 
 
@@ -117,6 +117,8 @@ def create_email_service(full_path, project_name_format, app_main):
     file_path = os.path.join(folder_path, "send_email_service.py")
 
     os.makedirs(folder_path, exist_ok=True)
+    
+    helper_create_init_file(folder_path)
 
     content = r'''from django.conf import settings
 from django.core.mail import EmailMultiAlternatives
@@ -160,15 +162,15 @@ class SendMailService:
 
 
     
-def append_settings(full_path, app_main):    
+def append_settings(full_path, project_name_format, app_main):    
     
-    str = r"""# EMAIL SETTINGS
+    str = f"""# EMAIL SETTINGS
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 EMAIL_HOST = "smtp.ionos.es"
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = "webmaster@splytin.com"
-EMAIL_HOST_PASSWORD = "D1l@an-2013"
+EMAIL_HOST_USER = "webmaster@{project_name_format}.com"
+EMAIL_HOST_PASSWORD = ""
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
     """
     
@@ -189,7 +191,7 @@ def create_email_html(full_path, project_name_format, app_main):
 
     os.makedirs(folder_path, exist_ok=True)
     
-    project_name_upper = project_name_format.toUpperCase().replace(" ", "_")
+    project_name_upper = project_name_format.replace(" ", "_").upper()
 
     content = f'''<!DOCTYPE html>
 <html lang="es">
