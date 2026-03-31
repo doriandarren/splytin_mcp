@@ -66,6 +66,7 @@ pip3 install schedule                           # CronJobs
 
 ```sh
 python3 manage.py seed_user                     # Crear superuser
+python3 manage.py createsuperuser               # Consola Crear superuser
 
 python3 manage.py clear_migrations --dry-run     # Muestra las migraciones
 python3 manage.py clear_migrations               # Elimina las migraciones
