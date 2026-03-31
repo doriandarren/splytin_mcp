@@ -164,7 +164,7 @@ class SendMailService:
     
 def append_settings(full_path, project_name_format, app_main):    
     
-    str = f"""# EMAIL SETTINGS
+    str = f"""\n# EMAIL SETTINGS
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 EMAIL_HOST = "smtp.ionos.es"
 EMAIL_PORT = 587
