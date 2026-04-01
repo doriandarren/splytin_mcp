@@ -1,6 +1,8 @@
 import sys
 import os
 
+from gen.kotlin.main_kotlin import main_kotlin
+
 
 BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 if BASE_DIR not in sys.path:
@@ -28,6 +30,7 @@ def start():
             {"name": "React", "value": "react"},
             {"name": "React TS", "value": "react_ts"},
             {"name": "Python Django", "value": "python_django"},
+            {"name": "Kotlin", "value": "kotlin"},
             {"name": "Salir", "value": "salir"},
         ])
 
@@ -44,6 +47,8 @@ def start():
                 main_react_ts()
             case "python_django":
                 main_python_django()
+            case "kotlin":
+                main_kotlin()
             case "salir" | None:
                 break
             case _:
