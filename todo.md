@@ -1,5 +1,46 @@
 # TODOs
 
+
+# Kotlin
+
+```sh
+
+- hacer strings.xml
+
+- Edita gradle/libs.versions.toml:
+
+[versions]
+navigationCompose = "2.9.7"
+
+[libraries]
+androidx-navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "navigationCompose" }
+androidx-compose-material-icons-extended = { group = "androidx.compose.material", name = "material-icons-extended" }
+androidx-compose-material = { group = "androidx.compose.material", name = "material" }
+
+
+
+- Edita: app/build.gradle.kts:
+
+dependencies:
+implementation(libs.androidx.navigation.compose)
+implementation(libs.androidx.compose.material)
+
+
+
+- Modificar MainActivity.kt
+- Agregar AppNavigation.kt
+- Agregar HomeScreen.kt
+- Agregar LoginScreen.kt
+
+
+
+```
+
+
+
+
+
+
 ## Prompt
 
 ```sh
