@@ -2,6 +2,17 @@ def snake_to_pascal(value: str) -> str:
     return "".join(word.capitalize() for word in value.split("_"))
 
 
+def pluralize(word: str) -> str:
+    if word.endswith("y") and len(word) > 1 and word[-2].lower() not in "aeiou":
+        return word[:-1] + "ies"
+
+    if word.endswith(("s", "x", "z", "ch", "sh")):
+        return word + "es"
+
+    return word + "s"
+
+
+
 def parse_columns_input(input_columns: str):
     """
     Convierte un string tipo:
@@ -33,7 +44,7 @@ def parse_columns_input(input_columns: str):
             if base.endswith("_id"):
                 base = base[:-3]
 
-            col["related_table"] = base + "s"
+            col["related_table"] = pluralize(base)
             col["related_model"] = snake_to_pascal(base)
 
         columns.append(col)

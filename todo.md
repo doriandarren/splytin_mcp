@@ -24,13 +24,64 @@ androidx-compose-material = { group = "androidx.compose.material", name = "mater
 dependencies:
 implementation(libs.androidx.navigation.compose)
 implementation(libs.androidx.compose.material)
+implementation("com.squareup.retrofit2:retrofit:2.11.0")
+implementation("com.squareup.retrofit2:converter-gson:2.11.0")
+
+
+
+- Editar el AndroidManifest.xml:
+
+<uses-permission android:name="android.permission.INTERNET" />
+
+
 
 
 
 - Modificar MainActivity.kt
 - Agregar AppNavigation.kt
-- Agregar HomeScreen.kt
-- Agregar LoginScreen.kt
+
+
+
+
+- crear Core: 
+
+com.www.testgeneratorandroid.core.network
+-> RetrofitClient.kt
+
+
+- Modulo Auth:
+
+com.www.testgeneratorandroid.modules.auth.models
+-> LoginRequest.kt
+-> LoginResponse.kt
+-> AuthResponse.kt
+
+com.www.testgeneratorandroid.modules.auth.repositories
+-> AuthRepository.kt
+
+com.www.testgeneratorandroid.modules.auth.screens
+-> LoginScreen.kt
+
+com.www.testgeneratorandroid.modules.auth.services
+-> AuthApiService.kt
+
+
+
+
+
+
+
+com.www.testgeneratorandroid.ui.screens -> Agregar HomeScreen.kt y Agregar LoginScreen.kt
+
+
+com.www.testgeneratorandroid.data.models
+com.www.testgeneratorandroid.data.network
+com.www.testgeneratorandroid.data.repositories
+
+
+
+
+
 
 
 
