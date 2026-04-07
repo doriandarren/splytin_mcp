@@ -1,6 +1,7 @@
 import sys
 import os
 
+from gen.databases.main_database import main_database
 from gen.kotlin.main_kotlin import main_kotlin
 
 
@@ -24,6 +25,7 @@ def start():
 
     while True:
         opt = menu_list("Lenguajes", [
+            {"name": "Database", "value": "database"},
             {"name": "Import Diagrams", "value": "import_diagrams"},
             {"name": "Export Diagrams", "value": "export_diagrams"},
             {"name": "PHP", "value": "php"},
@@ -35,6 +37,8 @@ def start():
         ])
 
         match opt:
+            case "database":
+                main_database()
             case "export_diagrams":
                 main_export_diagrams()
             case "import_diagrams":

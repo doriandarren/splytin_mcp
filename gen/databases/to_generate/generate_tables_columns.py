@@ -1,7 +1,8 @@
 from gen.databases.settings.connection import get_connection
 from gen.helpers.helper_string import convert_word
-from gen.php.to_module_crud.standard_module_crud_php import generate
+
 from gen.helpers.helper_print import input_with_validation
+from gen.php.to_module_crud.standard_module_crud_php import standard_module_crud_php
 
 
 
@@ -63,7 +64,7 @@ def list_tables_and_columns_and_generate(host, user, password, database, port=33
             table_name_format = convert_word(table_name)
 
             # Llamar al generador
-            generate(
+            standard_module_crud_php(
                 "API",
                 full_path,
                 table_name_format['singular'],

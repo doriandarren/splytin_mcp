@@ -11,8 +11,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-if __name__ == "__main__":
-
+def main_database():
 
     print_header("DATABASE")
 

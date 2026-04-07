@@ -1,19 +1,19 @@
-import mysql.connector
+import pymysql
 
 def get_connection(host, user, password, database, port=3306):
     """
     Establishes and returns a connection to the MySQL database with given credentials.
     """
     try:
-        connection = mysql.connector.connect(
+        connection = pymysql.connect(
             host=host,
             port=port,
             user=user,
             password=password,
             database=database,
-            collation = "utf8mb4_general_ci",
+            charset="utf8mb4",
         )
         return connection
-    except mysql.connector.Error as err:
+    except pymysql.MySQLError as err:
         print(f"Connection error: {err}")
         return None
