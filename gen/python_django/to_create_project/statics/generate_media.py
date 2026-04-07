@@ -1,6 +1,6 @@
 import os
 from gen.python_django.helpers.helper_file import helper_add_import, helper_append_content
-from helpers.helper_print import print_message, GREEN, CYAN
+from gen.helpers.helper_print import print_message, GREEN, CYAN
 
 
 
