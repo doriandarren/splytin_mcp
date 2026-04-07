@@ -7,6 +7,7 @@ from helpers.helper_print import print_message, GREEN, CYAN
 def generate_logs(full_path, project_name_format, app_main, venv_python):
     create_file(full_path, project_name_format, app_main, venv_python)
     update_settings(full_path, project_name_format, app_main)
+    create_folder_logs(full_path, project_name_format, app_main)
 
 
 def create_file(full_path, project_name_format, app_main, venv_python):
@@ -14,7 +15,7 @@ def create_file(full_path, project_name_format, app_main, venv_python):
     Genera el archivo
     """
 
-    folder_path = os.path.join(full_path, "core", "helpers")
+    folder_path = os.path.join(full_path, "core", "logs")
     file_path = os.path.join(folder_path, "logging_handlers.py")
 
     os.makedirs(folder_path, exist_ok=True)
@@ -107,3 +108,10 @@ LOGGING = {
         f"{app_main}/settings.py", 
         str
     )
+    
+    
+    
+def create_folder_logs(full_path, project_name_format, app_main):
+    logs_folder_path = os.path.join(full_path, "logs")
+    os.makedirs(logs_folder_path, exist_ok=True)
+    

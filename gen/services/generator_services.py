@@ -4,6 +4,7 @@ from typing import Any
 
 from gen.helpers.helper_columns import parse_columns_input
 from gen.python_django.to_create_project.core.generate_logs import generate_logs
+from gen.python_django.to_create_project.statics.generate_media import generate_media
 
 
 DEFAULT_DJANGO_COMPONENTS = [
@@ -87,6 +88,7 @@ def create_python_django_project_service(
 
     generate_django(full_path, project_name_format, app_main, venv_python)
     generate_env(full_path, project_name_format, app_main, venv_python)
+    generate_media(full_path, project_name_format, app_main, venv_python)
     generate_static_files(full_path, app_main)
     generate_postgres(full_path, project_name_format, app_main, venv_python)
     generate_api_doc(full_path, project_name_format, app_main, venv_python)
