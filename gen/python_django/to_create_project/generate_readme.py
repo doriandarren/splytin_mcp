@@ -16,10 +16,12 @@ def generate_readme(full_path, project_name):
 ## Script para ejecutar el proyecto
 
 ```sh
-python3 manage.py check                         # Verificar configuraciones
+python3 manage.py check                         # Chequear dependencias
 python3 manage.py makemigrations                # Migraciones
 python3 manage.py migrate                       # Aplicar migraciones
-python3 manage.py seed_users                    # Seeder
+python manage.py collectstatic --noinput        # Recopilar archivos estaticos
+python3 manage.py seed_user                     # Crear superuser
+python3 manage.py seed_default                  # Crear Prompts
 python3 manage.py runserver                     # Ejecutar servidor
 ```
 
@@ -29,22 +31,15 @@ python3 manage.py runserver                     # Ejecutar servidor
 ## Entorno virtual MacOs
 - python3 -m venv .venv
 - source .venv/bin/activate                     # Activar entorno
-- deactive                                      # Desactivar entorno
+- deactive                                      # Desactivar entorno                               # Usar este comando para intrucciones
 
-## Entorno virtual Windows
-- py -m venv .venv                              # Windows
-- .\.venv\Scripts\\activate                     # Windows
-- py -m pip install --upgrade pip               # Windows
-- deactivate                                    # Desactivar
-- py -m pip xxx                                 # Usar este comando para intrucciones
-
-## Actualizar
-pip3 install --upgrade pip
+## Actualizar PIP
+pip install --upgrade pip
 
 
 ## Instala los requerimientos:
-pip3 freeze > requirements.txt                  # Crear archivo requerimientos -> Respaldo / Export
-pip3 install -r requirements.txt                # Instalar requerimientos Restore / Import
+pip freeze > requirements.txt                  # Crear archivo requerimientos -> Respaldo / Export
+pip install -r requirements.txt                # Instalar requerimientos Restore / Import
 
 ## Si No se tiene el archivo: requirements.txt
 pip install pipreqs                             # Install
@@ -52,10 +47,10 @@ pipreqs . --force                               # Ejecutar
 
 
 ## Instalar paquetes
-pip3 freeze                                     # Ver Paquetes instalados
+pip freeze                                     # Ver Paquetes instalados
 py -m pip freeze                                # Para Windows
-pip3 install requests                           # Conexion API
-pip3 install schedule                           # CronJobs
+pip install requests                           # Conexion API
+pip install schedule                           # CronJobs
 
 
 ## Si no funciona VSCode:
@@ -149,6 +144,32 @@ opc: 1
 >>> timezone.now()
 
 ```
+
+## By Plesk:
+
+```sh
+
+- Entorno virtual para el proyecto
+- Modificar ENV: cp .env.example .env
+- Ejecutar comandos readme.md - Script para iniciar el proyecto
+- Cambiar permisos:
+    chown -R xxx:pppp /var/www/vhosts/x.com/api.x.com
+    find /var/www/vhosts/x.com/api.x.com -type d -exec chmod 755 {} \;
+    find /var/www/vhosts/x.com/api.x.com -type f -exec chmod 644 {} \;
+    chmod +x manage.py
+    chmod +x start_celery.sh
+    chmod -R 775 logs
+    chmod -R 775 tmp
+
+- Conectar DB:
+    * Base datos SQLte: chmod 666 db.sqlite3
+    * Base datos PostgreSQL
+
+## Reiniciar app con Passenger
+touch tmp/restart.txt
+
+```
+
 
 '''
 
