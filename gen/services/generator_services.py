@@ -3,7 +3,7 @@ from __future__ import annotations
 from typing import Any
 
 from gen.helpers.helper_columns import parse_columns_input
-from gen.python_django.to_create_project.core.generate_logs import generate_logs
+from gen.python_django.to_create_project.core.generate_custom_logging import generate_custom_logging
 from gen.python_django.to_create_project.statics.generate_media import generate_media
 
 
@@ -103,7 +103,7 @@ def create_python_django_project_service(
     generate_module_users(full_path, project_name_format, app_main)
     generate_module_devs(full_path, project_name_format, app_main, venv_python)
     generate_cron(full_path, project_name_format, app_main, venv_python)
-    generate_logs(full_path, project_name_format, app_main, venv_python)
+    generate_custom_logging(full_path, project_name_format, app_main, venv_python)
         
 
     return {

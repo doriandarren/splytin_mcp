@@ -4,7 +4,7 @@ from gen.helpers.helper_print import print_message, GREEN, CYAN
 
 
 
-def generate_logs(full_path, project_name_format, app_main, venv_python):
+def generate_custom_logging(full_path, project_name_format, app_main, venv_python):
     create_file(full_path, project_name_format, app_main, venv_python)
     update_settings(full_path, project_name_format, app_main)
     create_folder_logs(full_path, project_name_format, app_main)
@@ -15,7 +15,7 @@ def create_file(full_path, project_name_format, app_main, venv_python):
     Genera el archivo
     """
 
-    folder_path = os.path.join(full_path, "core", "logs")
+    folder_path = os.path.join(full_path, "core", "custom_logging")
     file_path = os.path.join(folder_path, "logging_handlers.py")
 
     os.makedirs(folder_path, exist_ok=True)
@@ -85,7 +85,7 @@ LOGGING = {
     "handlers": {
         "file": {
             "level": "ERROR",
-            "class": "core.logs.logging_handlers.DailyFileHandler",
+            "class": "core.custom_logging.logging_handlers.DailyFileHandler",
             "log_dir": os.path.join(BASE_DIR, "logs"),
             "prefix": "django_log",
             "formatter": "verbose",

@@ -16,6 +16,7 @@ def generate_readme(full_path, project_name):
 ## Script para ejecutar el proyecto
 
 ```sh
+python3 manage.py check                         # Verificar configuraciones
 python3 manage.py makemigrations                # Migraciones
 python3 manage.py migrate                       # Aplicar migraciones
 python3 manage.py seed_users                    # Seeder

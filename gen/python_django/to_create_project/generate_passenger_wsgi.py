@@ -11,22 +11,43 @@ def generate_passenger_wsgi(full_path, app_main):
 
     os.makedirs(folder_path, exist_ok=True)
 
-    content = f'''import os
+    content = r'''import os
 import sys
+import traceback
 from pathlib import Path
 
-# Ruta a tu proyecto (ajústala)
 PROJECT_DIR = Path(__file__).resolve().parent
+LOG_FILE = PROJECT_DIR / "passenger_debug.log"
 
-# Si tu proyecto está en otra carpeta, pon la ruta real:
-# PROJECT_DIR = Path("/var/www/vhosts/TU_DOMINIO/httpdocs")
+with open(LOG_FILE, "a") as f:
+    f.write("START\n")
+    f.write(f"PROJECT_DIR={PROJECT_DIR}\n")
+    f.write(f"sys.executable={sys.executable}\n")
+    f.write(f"sys.path(before)={sys.path}\n")
 
-sys.path.insert(0, str(PROJECT_DIR))
+try:
+    sys.path.insert(0, str(PROJECT_DIR))
 
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "{app_main}.settings")
+    with open(LOG_FILE, "a") as f:
+        f.write(f"sys.path(after)={sys.path}\n")
 
-from django.core.wsgi import get_wsgi_application
-application = get_wsgi_application()
+    os.environ.setdefault("DJANGO_SETTINGS_MODULE", "main.settings")
+
+    with open(LOG_FILE, "a") as f:
+        f.write(f"DJANGO_SETTINGS_MODULE={os.environ.get('DJANGO_SETTINGS_MODULE')}\n")
+
+    from django.core.wsgi import get_wsgi_application
+    application = get_wsgi_application()
+
+    with open(LOG_FILE, "a") as f:
+        f.write("WSGI LOADED OK\n")
+
+except Exception:
+    with open(LOG_FILE, "a") as f:
+        f.write("ERROR START\n")
+        f.write(traceback.format_exc())
+        f.write("\nERROR END\n")
+    raise
 '''
 
     try:
