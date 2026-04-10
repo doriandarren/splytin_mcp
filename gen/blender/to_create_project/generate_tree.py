@@ -1,91 +1,13 @@
 import os
 from helpers.helper_print import print_message, GREEN, CYAN
 
-def generate_wall(full_path):
-    create_wall_lisa(full_path)
-    create_stone_wall_blocks(full_path)
-
-
-
-
-def create_wall_lisa(full_path):
+def generate_tree(full_path):
     """
     Genera el archivo
     """
 
-    folder_path = os.path.join(full_path, "wall")
-    file_path = os.path.join(folder_path, "wall_lisa.py")
-
-    os.makedirs(folder_path, exist_ok=True)
-
-    content = r'''import bpy
-
-def create_old_wall(name="SM_OldWall", location=(0,0,0)):
-    # Crear pared base
-    bpy.ops.mesh.primitive_plane_add(size=2, location=location)
-    wall = bpy.context.active_object
-    wall.name = name
-
-    # Subdividir para permitir displacement
-    bpy.ops.object.mode_set(mode='EDIT')
-    bpy.ops.mesh.subdivide(number_cuts=50)
-    bpy.ops.object.mode_set(mode='OBJECT')
-
-    # Crear material
-    mat = bpy.data.materials.new(name="WallMaterial")
-    mat.use_nodes = True
-
-    nodes = mat.node_tree.nodes
-    links = mat.node_tree.links
-
-    nodes.clear()
-
-    # Nodos
-    output = nodes.new(type='ShaderNodeOutputMaterial')
-    bsdf = nodes.new(type='ShaderNodeBsdfPrincipled')
-    tex = nodes.new(type='ShaderNodeTexImage')
-    disp = nodes.new(type='ShaderNodeDisplacement')
-
-    # Cargar imagen (CAMBIA ESTA RUTA)
-    tex.image = bpy.data.images.load("/ruta/a/tu/textura.jpg")
-
-    # Conexiones
-    links.new(tex.outputs['Color'], bsdf.inputs['Base Color'])
-    links.new(bsdf.outputs['BSDF'], output.inputs['Surface'])
-    links.new(tex.outputs['Color'], disp.inputs['Height'])
-    links.new(disp.outputs['Displacement'], output.inputs['Displacement'])
-
-    # Ajustes
-    disp.inputs['Scale'].default_value = 0.2
-
-    wall.data.materials.append(mat)
-
-    # Activar displacement real
-    bpy.context.scene.cycles.feature_set = 'EXPERIMENTAL'
-    mat.cycles.displacement_method = 'BOTH'
-
-    return wall
-
-create_old_wall()
-'''
-
-    try:
-        with open(file_path, "w") as f:
-            f.write(content)
-        print_message(f"Archivo generado: {file_path}", GREEN)
-    except Exception as e:
-        print_message(f"Error al generar el archivo {file_path}: {e}", CYAN)
-        
-        
-        
-        
-def create_stone_wall_blocks(full_path):
-    """
-    Genera el archivo
-    """
-
-    folder_path = os.path.join(full_path, "wall")
-    file_path = os.path.join(folder_path, "wall_texture.py")
+    folder_path = os.path.join(full_path, "tree")
+    file_path = os.path.join(folder_path, "tree.py")
 
     os.makedirs(folder_path, exist_ok=True)
 

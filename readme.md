@@ -59,13 +59,13 @@ py -m pip xxx                                  # Usar este comando para instrucc
 
 
 ## Actualizar
-pip3 install --upgrade pip
+pip install --upgrade pip
 
 
 ## Instala los requerimientos:
 pip list
-pip3 freeze > requirements.txt                  # Crear archivo requerimientos -> Respaldo / Export
-pip3 install -r requirements.txt                # Instalar requerimientos Restore / Import
+pip freeze > requirements.txt                  # Crear archivo requerimientos -> Respaldo / Export
+pip install -r requirements.txt                # Instalar requerimientos Restore / Import
 
 # Si No se tiene el archivo: requirements.txt
 pip install pipreqs                             # Install
@@ -77,11 +77,11 @@ pipreqs . --force                               # Ejecutar
 
 ```sh
 
-pip3 install questionary                                      # Console / Terminal
-pip3 install colorama                                         # Console / Terminal
-pip3 install requests                                         # Conexion API
-pip3 install schedule                                         # Cronjobs
-pip3 install inflect                                          # Pluralize
+pip install questionary                                      # Console / Terminal
+pip install colorama                                         # Console / Terminal
+pip install requests                                         # Conexion API
+pip install schedule                                         # Cronjobs
+pip install inflect                                          # Pluralize
 
 pip install sqlalchemy psycopg2-binary alembic python-dotenv  # DB
 pip install pymysql                                           # DB

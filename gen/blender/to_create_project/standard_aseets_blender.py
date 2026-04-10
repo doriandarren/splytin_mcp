@@ -1,4 +1,5 @@
 import os
+from gen.blender.to_create_project.generate_tree import generate_tree
 from gen.blender.to_create_project.generate_wall import generate_wall
 from helpers.helper_menu import pause
 from helpers.helper_print import camel_to_kebab, camel_to_snake
@@ -14,4 +15,5 @@ def standard_aseets_blender(full_path, input_menu_checkbox=None):
 
     if "assets" in input_menu_checkbox:
         generate_wall(full_path)
+        generate_tree(full_path)
         
