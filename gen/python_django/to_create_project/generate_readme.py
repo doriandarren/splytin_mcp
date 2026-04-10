@@ -33,6 +33,14 @@ python3 manage.py runserver                     # Ejecutar servidor
 - source .venv/bin/activate                     # Activar entorno
 - deactive                                      # Desactivar entorno                               # Usar este comando para intrucciones
 
+## Entorno virtual Windows
+py -m venv .venv                               # Windows
+.\.venv\Scripts\activate                       # Windows
+py -m pip install --upgrade pip                # Windows
+deactivate                                     # Desactivar
+py -m pip xxx                                  # Usar este comando para instrucciones
+
+
 ## Actualizar PIP
 pip install --upgrade pip
 

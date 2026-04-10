@@ -1,10 +1,6 @@
 import sys
 import os
 
-from gen.databases.main_database import main_database
-from gen.kotlin.main_kotlin import main_kotlin
-
-
 BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 if BASE_DIR not in sys.path:
     sys.path.insert(0, BASE_DIR)
@@ -17,14 +13,19 @@ from gen.react.main_react import main_react
 from gen.react_ts.main_react_ts import main_react_ts
 from gen.php.main_php import main_php
 from gen.python_django.main_python_django import main_python_django
+from gen.databases.main_database import main_database
+from gen.kotlin.main_kotlin import main_kotlin
+from gen.blender.main_blender import main_blender
 
 
 def start():
     clear_screen()
     print_header("Bienvenido al Sistema")
+    
 
     while True:
         opt = menu_list("Lenguajes", [
+            {"name": "Blender", "value": "blender"},
             {"name": "Database", "value": "database"},
             {"name": "Import Diagrams", "value": "import_diagrams"},
             {"name": "Export Diagrams", "value": "export_diagrams"},
@@ -53,6 +54,9 @@ def start():
                 main_python_django()
             case "kotlin":
                 main_kotlin()
+            case "blender":
+                full_path = os.path.dirname(__file__)
+                main_blender(full_path)
             case "salir" | None:
                 break
             case _:
