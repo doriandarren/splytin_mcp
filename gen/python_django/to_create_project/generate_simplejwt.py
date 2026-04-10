@@ -22,11 +22,14 @@ def add_settings(full_path, app_main):
     helper_add_import(full_path, f"{app_main}/settings.py", "import datetime")
     
     
-    str = f"""\n# Simple JWT
+    str = f"""\n# Simple JWT and Rest Framework
 REST_FRAMEWORK = {{
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
-    )
+    ),
+    "DEFAULT_RENDERER_CLASSES": [
+        "rest_framework.renderers.JSONRenderer",
+    ],
 }}
     """
     
