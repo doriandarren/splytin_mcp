@@ -23,6 +23,8 @@ __pycache__/
 # Virtualenvs
 env/
 venv/
+.venv
+.venv/
 ENV/
 VENV/
 venv.bak/

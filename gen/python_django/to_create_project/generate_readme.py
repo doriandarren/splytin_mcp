@@ -16,6 +16,16 @@ def generate_readme(full_path, project_name):
 ## Script para ejecutar el proyecto
 
 ```sh
+python3 -m venv .venv
+source .venv/bin/activate 
+pip install --upgrade pip
+pip install -r requirements.txt
+
+Crear raíz del proyecto: 
+- Archivo .env
+- Carpeta logs
+- Carpeta media
+
 python3 manage.py check                         # Chequear dependencias
 python3 manage.py makemigrations                # Migraciones
 python3 manage.py migrate                       # Aplicar migraciones
