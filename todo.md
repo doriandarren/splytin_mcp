@@ -1,4 +1,14 @@
-# TODOs
+# Pendintes:
+
+
+# Project
+
+```sh
+
+```
+
+
+
 
 
 # Kotlin
