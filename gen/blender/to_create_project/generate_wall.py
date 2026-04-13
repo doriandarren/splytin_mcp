@@ -2,19 +2,19 @@ import os
 from helpers.helper_print import print_message, GREEN, CYAN
 
 def generate_wall(full_path):
-    create_wall_lisa(full_path)
-    create_stone_wall_blocks(full_path)
+    create_wall_basic(full_path)
+    create_stone_wall_pro(full_path)
 
 
 
 
-def create_wall_lisa(full_path):
+def create_wall_basic(full_path):
     """
     Genera el archivo
     """
 
     folder_path = os.path.join(full_path, "wall")
-    file_path = os.path.join(folder_path, "wall_lisa.py")
+    file_path = os.path.join(folder_path, "wall_basic.py")
 
     os.makedirs(folder_path, exist_ok=True)
 
@@ -75,17 +75,18 @@ create_old_wall()
         print_message(f"Archivo generado: {file_path}", GREEN)
     except Exception as e:
         print_message(f"Error al generar el archivo {file_path}: {e}", CYAN)
+
+
+
+
         
-        
-        
-        
-def create_stone_wall_blocks(full_path):
+def create_stone_wall_pro(full_path):
     """
     Genera el archivo
     """
 
     folder_path = os.path.join(full_path, "wall")
-    file_path = os.path.join(folder_path, "wall_texture.py")
+    file_path = os.path.join(folder_path, "wall_pro.py")
 
     os.makedirs(folder_path, exist_ok=True)
 
