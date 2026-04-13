@@ -5,10 +5,14 @@
 
 ```sh
 
-Lista de objetos: 
-
 barriles de maderas
 barriles de aceros (gasolina)
+
+
+
+
+Lista de objetos:
+
 cajas de madera
 cajas rotas
 mesas
