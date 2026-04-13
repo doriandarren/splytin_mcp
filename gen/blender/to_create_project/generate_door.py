@@ -26,7 +26,7 @@ from mathutils import Vector
 # CONFIG
 # =========================================================
 
-DOOR_NAME = "DoorLeafWithKnob"
+DOOR_NAME = "DoorWithFrame"
 
 DOOR_WIDTH = 0.82
 DOOR_HEIGHT = 2.04
@@ -34,7 +34,7 @@ DOOR_THICKNESS = 0.04
 
 BASE_LOCATION = (0.0, 0.0, DOOR_HEIGHT / 2)
 
-# Distribución paneles
+# Paneles
 PANEL_MARGIN_X = 0.11
 PANEL_MARGIN_TOP = 0.14
 PANEL_MARGIN_BOTTOM = 0.20
@@ -69,15 +69,18 @@ NECK_LENGTH = 0.028
 SPINDLE_RADIUS = 0.005
 SPINDLE_EXTRA = 0.010
 
+# Marco
+FRAME_SIDE_WIDTH = 0.09
+FRAME_TOP_HEIGHT = 0.09
+FRAME_DEPTH = 0.06
+FRAME_GAP = 0.005
+
+FRAME_BEVEL_WIDTH = 0.0025
+FRAME_BEVEL_SEGMENTS = 2
+
 # =========================================================
 # UTILIDADES
 # =========================================================
-
-def cleanup_names(names):
-    for name in names:
-        obj = bpy.data.objects.get(name)
-        if obj:
-            bpy.data.objects.remove(obj, do_unlink=True)
 
 def deselect_all():
     for obj in bpy.context.selected_objects:
@@ -389,43 +392,79 @@ def create_realistic_knob():
 
     parts = []
 
-    # Rosetas
     parts.append(create_rosette("KnobFrontRosette", (x, front_rosette_y, z)))
     parts.append(create_rosette("KnobBackRosette", (x, back_rosette_y, z)))
 
-    # Cuellos
     parts.append(create_neck("KnobFrontNeck", (x, front_neck_y, z), NECK_LENGTH))
     parts.append(create_neck("KnobBackNeck", (x, back_neck_y, z), NECK_LENGTH))
 
-    # Cuerpos
     parts.append(create_knob_body("KnobFrontBody", (x, front_knob_y, z)))
     parts.append(create_knob_body("KnobBackBody", (x, back_knob_y, z)))
 
-    # Barra interior
     parts.append(create_spindle("KnobSpindle", (x, 0.0, z), spindle_depth))
 
     knob = join_objects(parts, "DoorKnobRealistic")
     return knob
 
 # =========================================================
+# MARCO
+# =========================================================
+
+def create_frame_piece(name, location, dimensions):
+    bpy.ops.mesh.primitive_cube_add(location=location)
+    obj = bpy.context.object
+    obj.name = name
+    obj.dimensions = dimensions
+    apply_transform(obj)
+    return obj
+
+def create_door_frame():
+    outer_width = DOOR_WIDTH + FRAME_SIDE_WIDTH * 2 + FRAME_GAP * 2
+    outer_height = DOOR_HEIGHT + FRAME_TOP_HEIGHT + FRAME_GAP * 2
+
+    frame_y = FRAME_DEPTH / 2 - ((FRAME_DEPTH - DOOR_THICKNESS) / 2)
+
+    left_x = BASE_LOCATION[0] - DOOR_WIDTH / 2 - FRAME_GAP - FRAME_SIDE_WIDTH / 2
+    right_x = BASE_LOCATION[0] + DOOR_WIDTH / 2 + FRAME_GAP + FRAME_SIDE_WIDTH / 2
+
+    center_z = BASE_LOCATION[2]
+    top_z = BASE_LOCATION[2] + DOOR_HEIGHT / 2 + FRAME_GAP + FRAME_TOP_HEIGHT / 2
+    bottom_z = BASE_LOCATION[2] - DOOR_HEIGHT / 2 - FRAME_GAP - FRAME_TOP_HEIGHT / 2
+
+    left = create_frame_piece(
+        "DoorFrameLeft",
+        (left_x, frame_y, center_z),
+        (FRAME_SIDE_WIDTH, FRAME_DEPTH, outer_height)
+    )
+
+    right = create_frame_piece(
+        "DoorFrameRight",
+        (right_x, frame_y, center_z),
+        (FRAME_SIDE_WIDTH, FRAME_DEPTH, outer_height)
+    )
+
+    top = create_frame_piece(
+        "DoorFrameTop",
+        (BASE_LOCATION[0], frame_y, top_z),
+        (outer_width, FRAME_DEPTH, FRAME_TOP_HEIGHT)
+    )
+
+    bottom = create_frame_piece(
+        "DoorFrameBottom",
+        (BASE_LOCATION[0], frame_y, bottom_z),
+        (outer_width, FRAME_DEPTH, FRAME_TOP_HEIGHT)
+    )
+
+    frame = join_objects([left, right, top, bottom], "DoorFrame")
+    return frame
+
+# =========================================================
 # MAIN
 # =========================================================
 
-def build_door_with_realistic_knob():
-    cleanup_names([
-        DOOR_NAME,
-        "DoorKnobRealistic",
-        "KnobFrontRosette",
-        "KnobBackRosette",
-        "KnobFrontNeck",
-        "KnobBackNeck",
-        "KnobFrontBody",
-        "KnobBackBody",
-        "KnobSpindle",
-    ])
-
+def build_door_with_frame():
     mat_door = create_material(
-        "Mat_DoorLeafWithKnob",
+        "Mat_DoorLeafWithFrame",
         (0.95, 0.92, 0.87, 1.0),
         roughness=0.42,
         metallic=0.0
@@ -438,7 +477,14 @@ def build_door_with_realistic_knob():
         metallic=0.35
     )
 
-    # Puerta
+    mat_frame = create_material(
+        "Mat_DoorFrame",
+        (0.96, 0.94, 0.90, 1.0),
+        roughness=0.45,
+        metallic=0.0
+    )
+
+    # Hoja
     door = create_door_leaf()
     create_panel_relief_both_sides(door)
     add_bevel(door, BEVEL_WIDTH, BEVEL_SEGMENTS)
@@ -448,13 +494,17 @@ def build_door_with_realistic_knob():
     knob = create_realistic_knob()
     add_bevel(knob, 0.0012, 2)
     assign_material(knob, mat_knob)
-
-    # Emparentar pomo a la puerta
     knob.parent = door
 
-    print("Puerta con pomo realista en ambos lados creada correctamente.")
+    # Marco
+    frame = create_door_frame()
+    add_bevel(frame, FRAME_BEVEL_WIDTH, FRAME_BEVEL_SEGMENTS)
+    assign_material(frame, mat_frame)
 
-build_door_with_realistic_knob()
+    print("Puerta con marco y pomo creada correctamente.")
+
+# Ejecutar
+build_door_with_frame()
 '''
 
     try:

@@ -5,6 +5,43 @@
 
 ```sh
 
+Lista de objetos: 
+
+barriles de maderas
+barriles de aceros (gasolina)
+cajas de madera
+cajas rotas
+mesas
+sillas
+bancos
+estanterías
+armarios
+puertas viejas apoyadas
+
+faroles
+velas
+botellas
+libros
+platos
+jarras
+sacos
+cubos
+
+árboles
+troncos cortados
+rocas
+vallas de madera
+postes
+señales
+
+lámparas
+faroles colgantes
+antorchas
+interruptores (opcional)
+cables
+
+
+
 ```
 
 
