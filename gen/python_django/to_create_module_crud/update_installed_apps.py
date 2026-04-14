@@ -4,10 +4,10 @@ from gen.helpers.helper_print import print_message, GREEN, CYAN
 
 
 
-def update_installed_apps(full_path, app_main, plural_name_snake, venv_python, manage_py_path):
+def update_installed_apps(full_path, app_main, singular_name, plural_name_snake, venv_python, manage_py_path):
     
     helper_update_list(
         full_path, 
         f"{app_main}/settings.py", 
         "INSTALLED_APPS", 
-        f"'apps.{plural_name_snake}',                         # Module")
+        f"'apps.{plural_name_snake}',                         # Module {singular_name}")

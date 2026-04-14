@@ -43,6 +43,7 @@ def standard_module_crud_python_django(full_path, app_main, singular_name, plura
     update_installed_apps(
         full_path, 
         app_main, 
+        singular_name,
         plural_name_snake,
         manage_py_path, 
         venv_python

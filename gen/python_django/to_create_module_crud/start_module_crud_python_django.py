@@ -15,7 +15,8 @@ def start_module_crud_python_django():
     ]
     
     #full_path_default = "/Users/dorian/PythonProjects/app1.com"
-    full_path_default = "/Users/dorian/PythonProjects/python.generator"
+    # full_path_default = "/Users/dorian/PythonProjects/python.generator"
+    full_path_default = "/Users/dorian/PythonProjects/python.splytin.com"
     
     
     app_main_default = "main"

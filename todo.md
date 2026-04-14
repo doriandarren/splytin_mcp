@@ -152,46 +152,53 @@ Para que entiendas el conexto que necesito. Tengo una carpeta en la raíz del pr
 router.py:
 
 from rest_framework.routers import DefaultRouter
-from apps.ai_text_generation_prompts.api.views import AiTextGenerationPromptApiViewSet
+from apps.ai_prompt_categories.api.views import AiPromptCategoryApiViewSet
 
 # example
-router_ai_text_generation_prompt = DefaultRouter()
+router_ai_prompt_category = DefaultRouter()
 
 # examples
-router_ai_text_generation_prompt.register(
-    prefix='ai_text_generation_prompts',
-    basename='ai_text_generation_prompts',
-    viewset=AiTextGenerationPromptApiViewSet
+router_ai_prompt_category.register(
+    prefix='ai_prompt_categories',
+    basename='ai_prompt_categories',
+    viewset=AiPromptCategoryApiViewSet
 )
-
 
 serializers.py:
 
 from rest_framework.serializers import ModelSerializer
-from apps.ai_text_generation_prompts.models import AiTextGenerationPrompt
+from apps.ai_prompt_categories.models import AiPromptCategory
 
-
-class aiTextGenerationPromptSerializer(ModelSerializer):
-
+class AiPromptCategorySerializer(ModelSerializer):
     class Meta:
-        model = AiTextGenerationPrompt
+        model = AiPromptCategory
         ## fields = "__all__"
-        fields = ['id', 'system_role','system_message','user_role','user_message','is_processed']
+        fields = [
+            'id', 
+            'name',
+            'description',
+            'slug',
+            'created_at',
+            'updated_at',
+            'created_by',
+            'updated_by',
+        ]
 
 views.py:
 
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
-#from django_filters.rest_framework import DjangoFilterBackend
+from apps.ai_prompt_categories.api.serializers import AiPromptCategorySerializer
+from apps.ai_prompt_categories.models import AiPromptCategory
 
-from apps.ai_text_generation_prompts.api.serializers import AiTextGenerationPromptSerializer
-from apps.ai_text_generation_prompts.models import AiTextGenerationPrompt
-
-
-class AiTextGenerationPromptApiViewSet(ModelViewSet):
+class AiPromptCategoryApiViewSet(ModelViewSet):
     permission_classes = [IsAuthenticatedOrReadOnly]
-    serializer_class = AiTextGenerationPromptSerializer
-    queryset = AiTextGenerationPrompt.objects.all()
+    serializer_class = AiPromptCategorySerializer
+    queryset = AiPromptCategory.objects.all()
+
+
+
+
 
 ```
 
