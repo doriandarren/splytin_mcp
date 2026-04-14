@@ -19,7 +19,7 @@ def start_module_react():
     
     # default_path = "/Users/dorian/ReactProjects/app1.com"
     # default_path = "/Users/dorian/ReactProjects/GlobalFleet/erp.globalfleet.es"
-    default_path = "/Users/dorian/ReactProjects/Avanza/prices.avanzaoil.eu"
+    default_path = "/Users/milena/workspaces/workSpaceReact/blog.splytin.com"
 
     fullt_path = input_with_validation("Carpeta Proyecto", default_path)
     singular_name = input_with_validation("Nombre singular", "AgendaUnloading")
