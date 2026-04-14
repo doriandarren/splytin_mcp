@@ -30,6 +30,17 @@ python3 mcp_server.py
 }
 ```
 
+```json
+{
+  "mcpServers": {
+    "project-generator": {
+      "command": "python3",
+      "args": ["/Users/milena/workspaces/WorkSpacePython/PROJECTS/splytin_mcp"]
+    }
+  }
+}
+```
+
 ### Smoke test local
 
 ```sh
