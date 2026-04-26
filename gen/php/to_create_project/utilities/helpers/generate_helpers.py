@@ -973,6 +973,26 @@ class HelperAmount
     {
         return round(floatval($vat) / 100, 4);
     }
+    
+    /**
+     * Formatea una cantidad numérica con separador de miles y decimales.
+     *
+     * Ejemplo:
+     * format_amount(1438.97); // 1.438,97
+     * format_amount(1438.97, 2, '€'); // 1.438,97 €
+     *
+     * @param float|int|string $value Cantidad a formatear.
+     * @param int $decimals Número de decimales.
+     * @param string|null $currency Símbolo o texto de moneda opcional.
+     *
+     * @return string
+     */
+    public static function format_amount($value, $decimals = 2, $currency = null)
+    {
+        $formatted = number_format((float)$value, $decimals, ',', '.');
+
+        return $currency ? $formatted . ' ' . $currency : $formatted;
+    }
 
 }
 """
