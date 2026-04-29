@@ -3,11 +3,44 @@ from gen.export_diagrams.main_export_diagrams import create_export_diagrams_by_l
 from gen.helpers.helper_string import convert_word
 
 
-def list_tables_and_columns(host, user, password, database, port=3306, input_tables=None):
-    """
-    Retrieves and displays all tables along with their columns in the database.
+def get_foreign_keys(cursor, database, table_name):
+    query = """
+        SELECT
+            kcu.COLUMN_NAME,
+            kcu.REFERENCED_TABLE_NAME,
+            kcu.REFERENCED_COLUMN_NAME,
+            kcu.CONSTRAINT_NAME
+        FROM information_schema.KEY_COLUMN_USAGE kcu
+        WHERE kcu.TABLE_SCHEMA = %s
+          AND kcu.TABLE_NAME = %s
+          AND kcu.REFERENCED_TABLE_NAME IS NOT NULL
     """
 
+    cursor.execute(query, (database, table_name))
+    result = cursor.fetchall()
+
+    foreign_keys = []
+
+    for fk in result:
+        if isinstance(fk, dict):
+            foreign_keys.append({
+                "column": fk["COLUMN_NAME"],
+                "referenced_table": fk["REFERENCED_TABLE_NAME"],
+                "referenced_column": fk["REFERENCED_COLUMN_NAME"],
+                "constraint_name": fk["CONSTRAINT_NAME"],
+            })
+        else:
+            foreign_keys.append({
+                "column": fk[0],
+                "referenced_table": fk[1],
+                "referenced_column": fk[2],
+                "constraint_name": fk[3],
+            })
+
+    return foreign_keys
+
+
+def list_tables_and_columns(host, user, password, database, port=3306, input_tables=None):
     connection = get_connection(host, user, password, database, port)
 
     if connection is None:
@@ -15,22 +48,17 @@ def list_tables_and_columns(host, user, password, database, port=3306, input_tab
         return
 
     cursor = connection.cursor()
-    
     list_tables = []
-    
 
     try:
-        # Obtener todas las tablas
         cursor.execute("SHOW TABLES")
         result = cursor.fetchall()
 
-        # Compatibilidad con PyMySQL usando DictCursor o cursor normal
         tables = {
             list(table.values())[0] if isinstance(table, dict) else table[0]
             for table in result
         }
 
-        # Si el usuario especificó tablas, filtrar solo esas
         if input_tables:
             input_tables_set = set(input_tables)
             tables_to_list = tables.intersection(input_tables_set)
@@ -41,46 +69,56 @@ def list_tables_and_columns(host, user, password, database, port=3306, input_tab
             print("❌ No se encontraron las tablas especificadas.")
             return
 
-        # Recorrer y procesar cada tabla seleccionada
         for table_name in tables_to_list:
-            
+
             cursor.execute(f"DESCRIBE `{table_name}`")
             columns = cursor.fetchall()
-            
-            clean_columns = []
 
-            # Compatibilidad con PyMySQL usando DictCursor o cursor normal
+            foreign_keys = get_foreign_keys(cursor, database, table_name)
+            fk_columns = {fk["column"] for fk in foreign_keys}
+
+            #clean_columns = []
             filtered_columns = []
-            for column in columns:
-                column_name = column["Field"] if isinstance(column, dict) else column[0]
-                
-                if column_name not in {"id", "created_at", "updated_at", "deleted_at"}:
-                    filtered_columns.append(column_name)
-                    clean_columns.append(column_name)
 
-            # Convertir nombre de tabla a singular/plural
+
+            for column in columns:
+                if isinstance(column, dict):
+                    column_name = column["Field"]
+                    column_type = column["Type"]
+                else:
+                    column_name = column[0]
+                    column_type = column[1]
+
+                if column_name not in {"id", "created_at", "updated_at", "deleted_at"}:
+                    #clean_columns.append(column_name)
+
+                    if column_name in fk_columns:
+                        filtered_columns.append(f"{column_name}:fk")
+                    else:
+                        filtered_columns.append(f"{column_name}:{column_type}")
+
+
+
             table_name_format = convert_word(table_name)
-            
-            
+
             obj_main = {
                 "table_name": table_name,
-                "columns": clean_columns
+                "columns": filtered_columns,
+                "foreign_keys": foreign_keys
             }
+
             list_tables.append(obj_main)
             
+            
 
-            # Mostrar el resultado
             print(
                 f"[{table_name}] {table_name_format['singular']} *** "
                 f"{table_name_format['plural']} : {' '.join(filtered_columns)}"
             )
-            
-        
+
         print("\n** Tablas y columnas listadas exitosamente. **\n")
-        
+
         create_export_diagrams_by_list(list_tables, database)
-        
-        
 
     except Exception as e:
         print(f"❌ Error: {e}")

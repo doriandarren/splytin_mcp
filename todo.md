@@ -3,6 +3,8 @@
 
 - Python django: agregar logica de users esta creado en el proyecto de: python.splytin.com ...IMPORTANTE...
 
+- En php: crear y modificar en vez de repositorio por service
+
 
 
 # Project
@@ -190,3 +192,5 @@ class AiPromptCategoryApiViewSet(ModelViewSet):
     queryset = AiPromptCategory.objects.all()
 
 ```
+
+
