@@ -36,15 +36,15 @@ use Illuminate\\Http\\Request;
 use Illuminate\\Support\\Facades\\Auth;
 use App\\Http\\Controllers\\Controller;
 use App\\Models\\{namespace}\\{plural_name}\\{singular_name};
-use App\\Repositories\\{namespace}\\{plural_name}\\{singular_name}Repository;
+use App\\Services\\{namespace}\\{plural_name}\\{singular_name}Service;
 
 class {singular_name}DestroyController extends Controller
 {{
-    private {singular_name}Repository $repository;
+    private {singular_name}Service $service;
 
     public function __construct()
     {{
-        $this->repository = new {singular_name}Repository();
+        $this->service = new {singular_name}Service();
     }}
 
     /**
@@ -61,13 +61,13 @@ class {singular_name}DestroyController extends Controller
 
         if($this->isAdmin(Auth::user()->roles)){{
 
-            $data = $this->repository->destroy(${singular_name_snake}->id);
+            $data = $this->service->destroy(${singular_name_snake}->id);
 
             return $this->respondWithData('{singular_name} deleted', $data);
 
         }}else{{
 
-            $data = $this->repository->destroy(${singular_name_snake}->id);
+            $data = $this->service->destroy(${singular_name_snake}->id);
 
             return $this->respondWithData('{singular_name} deleted', $data);
 

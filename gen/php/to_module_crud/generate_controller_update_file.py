@@ -48,15 +48,15 @@ use Illuminate\\Validation\\Rule;
 use Illuminate\\Support\\Facades\\Auth;
 use App\\Http\\Controllers\\Controller;
 use App\\Models\\{namespace}\\{plural_name}\\{singular_name};
-use App\\Repositories\\{namespace}\\{plural_name}\\{singular_name}Repository;
+use App\\Services\\{namespace}\\{plural_name}\\{singular_name}Service;
 
 class {singular_name}UpdateController extends Controller
 {{
-    private {singular_name}Repository $repository;
+    private {singular_name}Service $service;
 
     public function __construct()
     {{
-        $this->repository = new {singular_name}Repository();
+        $this->service = new {singular_name}Service();
     }}
 
     /**
@@ -83,7 +83,7 @@ class {singular_name}UpdateController extends Controller
                 return $this->respondWithError('Error', $validator->errors());
             }}
 
-            $data = $this->repository->update(${singular_name_snake}->id, $request->all());
+            $data = $this->service->update(${singular_name_snake}->id, $request->all());
             return $this->respondWithData('{singular_name} updated', $data);
 
         }}else{{
@@ -98,7 +98,7 @@ class {singular_name}UpdateController extends Controller
                 return $this->respondWithError('Error', $validator->errors());
             }}
 
-            $data = $this->repository->update(${singular_name_snake}->id, $request->all());
+            $data = $this->service->update(${singular_name_snake}->id, $request->all());
 
             return $this->respondWithData('{singular_name} updated', $data);
 

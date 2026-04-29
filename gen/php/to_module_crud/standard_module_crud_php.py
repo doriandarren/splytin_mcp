@@ -2,7 +2,6 @@ import os
 from gen.helpers.helper_menu import pause
 from gen.helpers.helper_print import camel_to_kebab, camel_to_snake
 from gen.php.to_module_crud.generate_model_file import generate_model_file
-from gen.php.to_module_crud.generate_repository_file import generate_repository_file
 from gen.php.to_module_crud.generate_routes_file import generate_routes_file
 from gen.php.to_module_crud.generate_migration_file import generate_migration_file
 from gen.php.to_module_crud.generate_controller_list_file import generate_controller_list_file
@@ -13,6 +12,7 @@ from gen.php.to_module_crud.generate_controller_destroy_file import generate_con
 from gen.php.to_module_crud.generate_seeder_file import generate_seeder_file
 from gen.php.to_module_crud.generate_factory_file import generate_factory_file
 from gen.php.to_module_crud.generate_postman_file import generate_postman_file
+from gen.php.to_module_crud.generate_service_file import generate_service_file
 
 
 def standard_module_crud_php(namespace, ruta, singular_name, plural_name, columns, input_menu_checkbox=None):
@@ -20,13 +20,13 @@ def standard_module_crud_php(namespace, ruta, singular_name, plural_name, column
     # Input Default
     if input_menu_checkbox is None:
         input_menu_checkbox = ["model", "controller_list", "controller_show", "controller_store", "controller_update",
-                               "controller_destroy", "repository", "routes", "migration", "seeder", "factory", "postman"]
+                               "controller_destroy", "service", "routes", "migration", "seeder", "factory", "postman"]
 
 
     ##TODO refactorizar esto a cada uno de las rutas
 
     path_model = "Models/" + namespace + "/" + plural_name
-    path_repository = "Repositories/" + namespace + "/" + plural_name
+    path_services = "Services/" + namespace + "/" + plural_name
     path_controller = "Http/Controllers/" + namespace + "/" + plural_name
     path_migration = "database/migrations/"
     path_routes = "routes/"
@@ -65,8 +65,8 @@ def standard_module_crud_php(namespace, ruta, singular_name, plural_name, column
             generate_controller_destroy_file(ruta, namespace, path_controller, singular_name, plural_name,
                                              singular_name_kebab, plural_name_kebab, singular_name_snake, plural_name_snake, columns)
 
-        if "repository" in input_menu_checkbox:
-            generate_repository_file(ruta, namespace, path_repository, singular_name,
+        if "service" in input_menu_checkbox:
+            generate_service_file(ruta, namespace, path_services, singular_name,
                                      plural_name, singular_name_snake, plural_name_snake, columns)
 
         if "routes" in input_menu_checkbox:

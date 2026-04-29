@@ -50,15 +50,15 @@ use Illuminate\\Http\\Request;
 use Illuminate\\Support\\Facades\\Auth;
 use Illuminate\\Support\\Facades\\Validator;
 use App\\Http\\Controllers\\Controller;
-use App\\Repositories\\{namespace}\\{plural_name}\\{singular_name}Repository;
+use App\\Services\\{namespace}\\{plural_name}\\{singular_name}Service;
 
 class {singular_name}StoreController extends Controller
 {{
-    private {singular_name}Repository $repository;
+    private {singular_name}Service $service;
 
     public function __construct()
     {{
-        $this->repository = new {singular_name}Repository();
+        $this->service = new {singular_name}Service();
     }}
 
     /**
@@ -84,11 +84,11 @@ class {singular_name}StoreController extends Controller
             if($validator->fails()){{
                 return $this->respondWithError('Error', $validator->errors());
             }}
-            ${ first_letter_lower(singular_name)} = $this->repository->set{singular_name}(
+            ${ first_letter_lower(singular_name)} = $this->service->set{singular_name}(
                 {', '.join([f'$request->{column["name"]}' for column in columns])}
             );
 
-            $data = $this->repository->store(${first_letter_lower(singular_name)});
+            $data = $this->service->store(${first_letter_lower(singular_name)});
             return $this->respondWithData('{singular_name} created', $data);
 
         }} else if($this->isManager(Auth::user()->roles)){{
@@ -104,11 +104,11 @@ class {singular_name}StoreController extends Controller
             if($validator->fails()){{
                 return $this->respondWithError('Error', $validator->errors());
             }}
-            ${first_letter_lower(singular_name)} = $this->repository->set{singular_name}(
+            ${first_letter_lower(singular_name)} = $this->service->set{singular_name}(
                 {', '.join([f'$request->{column["name"]}' for column in columns])}
             );
 
-            $data = $this->repository->store(${first_letter_lower(singular_name)});
+            $data = $this->service->store(${first_letter_lower(singular_name)});
             return $this->respondWithData('{singular_name} created', $data);
 
         }} else {{
@@ -124,11 +124,11 @@ class {singular_name}StoreController extends Controller
             if($validator->fails()){{
                 return $this->respondWithError('Error', $validator->errors());
             }}
-            ${first_letter_lower(singular_name)} = $this->repository->set{singular_name}(
+            ${first_letter_lower(singular_name)} = $this->service->set{singular_name}(
                 {', '.join([f'$request->{column["name"]}' for column in columns])}
             );
 
-            $data = $this->repository->store(${first_letter_lower(singular_name)});
+            $data = $this->service->store(${first_letter_lower(singular_name)});
             return $this->respondWithData('{singular_name} created', $data);
         }}
     }}

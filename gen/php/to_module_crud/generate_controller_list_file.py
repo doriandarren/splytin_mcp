@@ -48,15 +48,15 @@ use Illuminate\\Http\\JsonResponse;
 use Illuminate\\Http\\Request;
 use Illuminate\\Support\\Facades\\Auth;
 use App\\Http\\Controllers\\Controller;
-use App\\Repositories\\{namespace}\\{plural_name}\\{singular_name}Repository;
+use App\\Services\\{namespace}\\{plural_name}\\{singular_name}Service;
 
 class {singular_name}ListController extends Controller
 {{
-    private {singular_name}Repository $repository;
+    private {singular_name}Service $service;
 
     public function __construct()
     {{
-        $this->repository = new {singular_name}Repository();
+        $this->service = new {singular_name}Service();
     }}
 
     /**
@@ -76,11 +76,11 @@ class {singular_name}ListController extends Controller
         $data = [];
         
         if ($this->isAdmin(Auth::user()->roles)) {{
-            $data = $this->repository->list($filters);
+            $data = $this->service->list($filters);
         }} elseif ($this->isManager(Auth::user()->roles)) {{
-            $data = $this->repository->listByRoleManager($filters);
+            $data = $this->service->listByRoleManager($filters);
         }} elseif ($this->isUser(Auth::user()->roles)) {{
-            $data = $this->repository->listByRoleUser($filters);
+            $data = $this->service->listByRoleUser($filters);
         }}
         
         return $this->respondWithData('{plural_name} list', $data);

@@ -36,15 +36,15 @@ use Illuminate\\Support\\Facades\\Auth;
 use Illuminate\\Http\\JsonResponse;
 use App\\Http\\Controllers\\Controller;
 use App\\Models\\{namespace}\\{plural_name}\\{singular_name};
-use App\\Repositories\\{namespace}\\{plural_name}\\{singular_name}Repository;
+use App\\Services\\{namespace}\\{plural_name}\\{singular_name}Service;
 
 class {singular_name}ShowController extends Controller
 {{
-    private {singular_name}Repository $repository;
+    private {singular_name}Service $service;
 
     public function __construct()
     {{
-        $this->repository = new {singular_name}Repository();
+        $this->service = new {singular_name}Service();
     }}
 
     /**
@@ -57,13 +57,13 @@ class {singular_name}ShowController extends Controller
     public function __invoke({singular_name} ${singular_name_snake}): JsonResponse
     {{
         if($this->isAdmin(Auth::user()->roles)){{
-            $data = $this->repository->show(${singular_name_snake}->id);
+            $data = $this->service->show(${singular_name_snake}->id);
             return $this->respondWithData('{singular_name} show', $data);
         }} else if($this->isManager(Auth::user()->roles)){{
-            $data = $this->repository->showByRoleManager(${singular_name_snake}->id);
+            $data = $this->service->showByRoleManager(${singular_name_snake}->id);
             return $this->respondWithData('{singular_name} show', $data);
         }} else {{
-            $data = $this->repository->showByRoleUser(${singular_name_snake}->id);
+            $data = $this->service->showByRoleUser(${singular_name_snake}->id);
             return $this->respondWithData('{singular_name} show', $data);
         }}
     }}
