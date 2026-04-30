@@ -1,16 +1,9 @@
 # TODO Pendientes:
 
-- En php: crear y modificar en vez de repositorio por service... CAMBIADO pero hay que revisar****
-- Cambiar y revisar el POSTMAN
-
-
-
+- En php: crear y modificar en vez de repositorio por service... CAMBIADO pero hay que revisar\*\*\*\*
+- Cambiar y revisar el POSTMAN... cambiar valores dorian.gonzalez@globaltank.eu
 
 - Python django: agregar logica de users esta creado en el proyecto de: python.splytin.com ...IMPORTANTE...
-
-
-
-
 
 # Project
 
@@ -139,11 +132,6 @@ com.www.testgeneratorandroid.data.repositories
 
 ```
 
-
-
-
-
-
 ## Prompt Python Django API
 
 ```sh
@@ -198,5 +186,3 @@ class AiPromptCategoryApiViewSet(ModelViewSet):
     queryset = AiPromptCategory.objects.all()
 
 ```
-
-
