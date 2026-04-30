@@ -300,7 +300,8 @@ def create_php_project_service(
     )
 
     full_path = _full_path(project_path, project_name)
-
+    
+    
     generate_php_by_command_line(full_path)
     generate_snappy(full_path)
     generate_fpdf_merge(full_path)

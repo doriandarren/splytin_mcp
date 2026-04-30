@@ -1,124 +1,121 @@
 import os
+from gen.helpers.helper_columns import parse_columns_input
 from gen.helpers.helper_print import print_message, GREEN, CYAN
 
-from gen.php.to_create_project.shared.abilities.generate_controller_abilities import generate_controller_abilities
-from gen.php.to_create_project.shared.abilities.generate_factory_abilities import generate_factory_abilities
-from gen.php.to_create_project.shared.abilities.generate_repository_abilities import generate_repository_abilities
-from gen.php.to_create_project.shared.abilities.generate_model_abilities import generate_model_abilities
-from gen.php.to_create_project.shared.abilities.generate_route_abilities import generate_route_abilities
-from gen.php.to_create_project.shared.abilities.generate_seeder_abilities import generate_seeder_abilities
-from gen.php.to_create_project.shared.ability_groups.generate_factory_ability_groups import generate_factory_ability_groups
-from gen.php.to_create_project.shared.ability_groups.generate_route_ability_groups import generate_route_ability_groups
-from gen.php.to_create_project.shared.ability_groups.generate_seeder_ability_groups import generate_seeder_ability_groups
-from gen.php.to_create_project.shared.ability_groups.generate_controller_ability_groups import generate_controller_ability_groups
-from gen.php.to_create_project.shared.ability_groups.generate_model_ability_groups import generate_model_ability_groups
-from gen.php.to_create_project.shared.ability_groups.generate_repository_ability_groups import generate_repository_ability_groups
-from gen.php.to_create_project.shared.ability_users.generate_controller_ability_users import generate_controller_ability_users
-from gen.php.to_create_project.shared.ability_users.generate_model_ability_users import generate_model_ability_users
-from gen.php.to_create_project.shared.ability_users.generate_repository_ability_users import generate_repository_ability_users
-from gen.php.to_create_project.shared.ability_users.generate_factory_ability_users import generate_factory_ability_users
-from gen.php.to_create_project.shared.ability_users.generate_route_ability_users import generate_route_ability_users
-from gen.php.to_create_project.shared.ability_users.generate_seeder_ability_users import generate_seeder_ability_users
-from gen.php.to_create_project.shared.countries.generate_controller_countries import generate_controller_countries
-from gen.php.to_create_project.shared.countries.generate_model_countries import generate_model_countries
-from gen.php.to_create_project.shared.countries.generate_repository_countries import generate_repository_countries
-from gen.php.to_create_project.shared.countries.generate_factory_countries import generate_factory_countries
-from gen.php.to_create_project.shared.countries.generate_route_countries import generate_route_countries
-from gen.php.to_create_project.shared.countries.generate_seeder_countries import generate_seeder_countries
 from gen.php.to_create_project.shared.generate_migrations.generate_ability_groups_table import generate_ability_groups_table
 from gen.php.to_create_project.shared.generate_migrations.generate_countries_table import generate_countries_table
 from gen.php.to_create_project.shared.generate_migrations.generate_roles_table import generate_roles_table
 from gen.php.to_create_project.shared.generate_migrations.update_create_users_table import update_create_users_table
-from gen.php.to_create_project.shared.role_users.generate_controller_role_users import generate_controller_role_users
-from gen.php.to_create_project.shared.role_users.generate_model_role_users import generate_model_role_users
-from gen.php.to_create_project.shared.role_users.generate_factory_role_users import generate_factory_role_users
-from gen.php.to_create_project.shared.role_users.generate_repository_role_users import generate_repository_role_users
-from gen.php.to_create_project.shared.role_users.generate_route_role_users import generate_route_role_users
-from gen.php.to_create_project.shared.role_users.generate_seeder_role_users import generate_seeder_role_users
-from gen.php.to_create_project.shared.roles.generate_controller_roles import generate_controller_roles
-from gen.php.to_create_project.shared.roles.generate_model_roles import generate_model_roles
-from gen.php.to_create_project.shared.roles.generate_repository_roles import generate_repository_roles
-from gen.php.to_create_project.shared.roles.generate_factory_roles import generate_factory_roles
-from gen.php.to_create_project.shared.roles.generate_seeder_roles import generate_seeder_roles
-from gen.php.to_create_project.shared.roles.generate_route_roles import generate_route_roles
 from gen.php.to_create_project.shared.update_database_seeders.update_database_seeders import update_database_seeder
-from gen.php.to_create_project.shared.user_statuses.generate_controller_user_statuses import generate_controller_user_statuses
-from gen.php.to_create_project.shared.user_statuses.generate_model_user_statuses import generate_model_user_statuses
-from gen.php.to_create_project.shared.user_statuses.generate_repository_user_statuses import generate_repository_user_statuses
-from gen.php.to_create_project.shared.user_statuses.generate_factory_user_statuses import generate_factory_user_statuses
-from gen.php.to_create_project.shared.user_statuses.generate_route_user_statuses import generate_route_user_statuses
-from gen.php.to_create_project.shared.user_statuses.generate_seeder_user_statuses import generate_seeder_user_statuses
 from gen.php.to_create_project.shared.user_roles_abilities.generate_seeder_user_roles_abilities import generate_seeder_user_roles_abilities
+from gen.php.to_module_crud.standard_module_crud_php import standard_module_crud_php
 
 
 
 
 def generate_shared(full_path):
-
+    
+    ## By all:
+    input_menu_checkbox = [
+        "model",
+        "controller_list",
+        "controller_show",
+        "controller_store",
+        "controller_update",
+        "controller_destroy",
+        "service",
+        "routes",
+        # "migration",
+        "seeder",
+        "factory",
+        "postman",
+    ]
+    
+    
     # Abilities
-    generate_controller_abilities(full_path)
-    generate_model_abilities(full_path)
-    generate_repository_abilities(full_path)
-    generate_factory_abilities(full_path)
-    generate_seeder_abilities(full_path)
-    generate_route_abilities(full_path)
-
-
+    namespace = "SHARED"
+    singular_name = "Ability"
+    plural_name = "Abilities"
+    input_columns = "ability_group_id:fk name label"
+    
+    columns = parse_columns_input(input_columns)
+    
+    standard_module_crud_php(namespace, full_path, singular_name, plural_name, columns, input_menu_checkbox)
+    
+    
+    
     # Abilities Groups
-    generate_controller_ability_groups(full_path)
-    generate_model_ability_groups(full_path)
-    generate_repository_ability_groups(full_path)
-    generate_factory_ability_groups(full_path)
-    generate_seeder_ability_groups(full_path)
-    generate_route_ability_groups(full_path)
-
-
+    namespace = "SHARED"
+    singular_name = "AbilityGroup"
+    plural_name = "AbilityGroups"
+    input_columns = "name"
+    
+    columns = parse_columns_input(input_columns)
+    
+    standard_module_crud_php(namespace, full_path, singular_name, plural_name, columns, input_menu_checkbox)
+    
+    
+    
     # Abilities Users
-    generate_controller_ability_users(full_path)
-    generate_model_ability_users(full_path)
-    generate_repository_ability_users(full_path)
-    generate_factory_ability_users(full_path)
-    generate_seeder_ability_users(full_path)
-    generate_route_ability_users(full_path)
-
-
+    namespace = "SHARED"
+    singular_name = "AbilityUser"
+    plural_name = "AbilityUsers"
+    input_columns = "ability_group_id:fk user_id:fk"
+    
+    columns = parse_columns_input(input_columns)
+    
+    standard_module_crud_php(namespace, full_path, singular_name, plural_name, columns, input_menu_checkbox)
+    
+    
     # Countries
-    generate_controller_countries(full_path)
-    generate_model_countries(full_path)
-    generate_repository_countries(full_path)
-    generate_factory_countries(full_path)
-    generate_seeder_countries(full_path)
-    generate_route_countries(full_path)
-
-
+    namespace = "SHARED"
+    singular_name = "Country"
+    plural_name = "Countries"
+    input_columns = "common_name iso_name code_alpha_2 code_alpha_3 numerical_code phone_code"
+    
+    columns = parse_columns_input(input_columns)
+    
+    standard_module_crud_php(namespace, full_path, singular_name, plural_name, columns, input_menu_checkbox)
+    
+    
+    
     # Role Users
-    generate_controller_role_users(full_path)
-    generate_model_role_users(full_path)
-    generate_factory_role_users(full_path)
-    generate_seeder_role_users(full_path)
-    generate_repository_role_users(full_path)
-    generate_route_role_users(full_path)
-
-
+    namespace = "SHARED"
+    singular_name = "RoleUser"
+    plural_name = "RoleUsers"
+    input_columns = "role_id:fk user_id:fk"
+    
+    columns = parse_columns_input(input_columns)
+    
+    standard_module_crud_php(namespace, full_path, singular_name, plural_name, columns, input_menu_checkbox)
+    
+    
+    
     # Role
-    generate_controller_roles(full_path)
-    generate_model_roles(full_path)
-    generate_repository_roles(full_path)
-    generate_factory_roles(full_path)
-    generate_seeder_roles(full_path)
-    generate_route_roles(full_path)
-
-
+    namespace = "SHARED"
+    singular_name = "Role"
+    plural_name = "Roles"
+    input_columns = "name description"
+    
+    columns = parse_columns_input(input_columns)
+    
+    standard_module_crud_php(namespace, full_path, singular_name, plural_name, columns, input_menu_checkbox)
+    
+    
 
     # User Statuses
-    generate_controller_user_statuses(full_path)
-    generate_model_user_statuses(full_path)
-    generate_repository_user_statuses(full_path)
-    generate_factory_user_statuses(full_path)
-    generate_seeder_user_statuses(full_path)
-    generate_route_user_statuses(full_path)
-
-
+    namespace = "SHARED"
+    singular_name = "UserStatus"
+    plural_name = "UserStatuses"
+    input_columns = "name"
+    
+    columns = parse_columns_input(input_columns)
+    
+    standard_module_crud_php(namespace, full_path, singular_name, plural_name, columns, input_menu_checkbox)
+    
+    
+    
+    
     # UserRolesAbilities
     generate_seeder_user_roles_abilities(full_path)
 
