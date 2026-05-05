@@ -11,7 +11,7 @@ def generate_readme(full_path, project_name):
 
     os.makedirs(folder_path, exist_ok=True)
 
-    content = r'''## {project_name}
+    content = r'''## __PROJECT_NAME__
 
 ## Script para ejecutar el proyecto
 
@@ -22,7 +22,7 @@ pip install --upgrade pip
 pip install -r requirements.txt
 
 Crear raíz del proyecto: 
-- Archivo .env
+- Archivo .env -> chmod 600 /var/www/vhosts/splytin.com/python.splytin.com/.env
 - Carpeta logs
 - Carpeta media
 
@@ -188,8 +188,12 @@ touch tmp/restart.txt
 
 ```
 
-
 '''
+
+
+    content = content.replace("__PROJECT_NAME__", project_name)
+
+    
 
     try:
         with open(file_path, "w") as f:

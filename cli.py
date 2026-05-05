@@ -21,7 +21,6 @@ from gen.blender.main_blender import main_blender
 def start():
     clear_screen()
     print_header("Bienvenido al Sistema")
-    
 
     while True:
         opt = menu_list("Lenguajes", [
@@ -29,7 +28,7 @@ def start():
             {"name": "Database", "value": "database"},
             {"name": "Import Diagrams", "value": "import_diagrams"},
             {"name": "Export Diagrams", "value": "export_diagrams"},
-            {"name": "PHP", "value": "php"},
+            {"name": "Laravel", "value": "laravel"},
             {"name": "React", "value": "react"},
             {"name": "React TS", "value": "react_ts"},
             {"name": "Python Django", "value": "python_django"},
@@ -44,7 +43,7 @@ def start():
                 main_export_diagrams()
             case "import_diagrams":
                 main_import_diagrams()
-            case "php":
+            case "laravel":
                 main_laravel()
             case "react":
                 main_react()
