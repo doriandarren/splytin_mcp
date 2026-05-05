@@ -11,7 +11,7 @@ from gen.export_diagrams.main_export_diagrams import main_export_diagrams
 from gen.import_diagrams.main_import_diagrams import main_import_diagrams
 from gen.react.main_react import main_react
 from gen.react_ts.main_react_ts import main_react_ts
-from gen.php_laravel.main_php import main_php
+from gen.php_laravel.main_laravel import main_laravel
 from gen.python_django.main_python_django import main_python_django
 from gen.databases.main_database import main_database
 from gen.kotlin.main_kotlin import main_kotlin
@@ -45,7 +45,7 @@ def start():
             case "import_diagrams":
                 main_import_diagrams()
             case "php":
-                main_php()
+                main_laravel()
             case "react":
                 main_react()
             case "react_ts":

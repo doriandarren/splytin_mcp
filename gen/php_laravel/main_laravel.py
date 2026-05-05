@@ -11,12 +11,12 @@ from gen.php_laravel.to_module_crud.start_module_php import start_module_php
 from gen.php_laravel.to_create_project.start_project_php import start_project_php
 from gen.php_laravel.to_delete_module.start_module_delete_php import start_module_delete_php
 
-def main_php():
+def main_laravel():
     """Menú principal para generar código (proyectos / módulos)."""
 
     while True:
         clear_screen()
-        print_header("main_php")
+        print_header("LARAVEL - PHP")
 
         str_input = menu_list(
             "¿Qué quieres crear?: ",
@@ -50,4 +50,4 @@ def main_php():
 
 
 if __name__ == "__main__":
-    main_php()
+    main_laravel()
