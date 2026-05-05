@@ -2,7 +2,7 @@ from gen.databases.settings.connection import get_connection
 from gen.helpers.helper_string import convert_word
 
 from gen.helpers.helper_print import input_with_validation
-from gen.php.to_module_crud.standard_module_crud_php import standard_module_crud_php
+from gen.php_laravel.to_module_crud.standard_module_crud_php import standard_module_crud_php
 
 
 

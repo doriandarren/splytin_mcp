@@ -243,59 +243,59 @@ def create_php_project_service(
     project_name: str,
     project_path: str,
 ) -> dict[str, Any]:
-    from gen.php.to_create_project.auth.generate_module_auth import (
+    from gen.php_laravel.to_create_project.auth.generate_module_auth import (
         generate_module_auth as generate_php_module_auth,
     )
-    from gen.php.to_create_project.batch_processes.generate_batch_processes import (
+    from gen.php_laravel.to_create_project.batch_processes.generate_batch_processes import (
         generate_batch_processes,
     )
-    from gen.php.to_create_project.dashboards.generate_dashboard import (
+    from gen.php_laravel.to_create_project.dashboards.generate_dashboard import (
         generate_dashboard,
     )
-    from gen.php.to_create_project.dev.generate_execute_controller import (
+    from gen.php_laravel.to_create_project.dev.generate_execute_controller import (
         generate_execute_controller,
     )
-    from gen.php.to_create_project.dev.generate_route_test import generate_route_test
-    from gen.php.to_create_project.dev.generate_test_controller import (
+    from gen.php_laravel.to_create_project.dev.generate_route_test import generate_route_test
+    from gen.php_laravel.to_create_project.dev.generate_test_controller import (
         generate_test_controller,
     )
-    from gen.php.to_create_project.excel.generate_maatwebsite_excel import (
+    from gen.php_laravel.to_create_project.excel.generate_maatwebsite_excel import (
         generate_maatwebsite_excel,
     )
-    from gen.php.to_create_project.fpdf_merge.generate_fpdf_merge import (
+    from gen.php_laravel.to_create_project.fpdf_merge.generate_fpdf_merge import (
         generate_fpdf_merge,
     )
-    from gen.php.to_create_project.generate_base_controller import (
+    from gen.php_laravel.to_create_project.generate_base_controller import (
         generate_base_controller,
     )
-    from gen.php.to_create_project.generate_by_command_line import (
+    from gen.php_laravel.to_create_project.generate_by_command_line import (
         generate_by_command_line as generate_php_by_command_line,
     )
-    from gen.php.to_create_project.generate_enums import generate_enums
-    from gen.php.to_create_project.images.generate_company_logos import (
+    from gen.php_laravel.to_create_project.generate_enums import generate_enums
+    from gen.php_laravel.to_create_project.images.generate_company_logos import (
         generate_company_logos,
     )
-    from gen.php.to_create_project.scripts.generate_shared_postman_collections import (
+    from gen.php_laravel.to_create_project.scripts.generate_shared_postman_collections import (
         generate_shared_postman_collections,
     )
-    from gen.php.to_create_project.shared.generate_shared import generate_shared
-    from gen.php.to_create_project.snappy.generate_snappy import generate_snappy
-    from gen.php.to_create_project.updates.update_app_php import update_app_php
-    from gen.php.to_create_project.updates.update_bootstrap_app_php import (
+    from gen.php_laravel.to_create_project.shared.generate_shared import generate_shared
+    from gen.php_laravel.to_create_project.snappy.generate_snappy import generate_snappy
+    from gen.php_laravel.to_create_project.updates.update_app_php import update_app_php
+    from gen.php_laravel.to_create_project.updates.update_bootstrap_app_php import (
         update_bootstrap_app_php,
     )
-    from gen.php.to_create_project.updates.update_gitignore import update_gitignore
-    from gen.php.to_create_project.updates.update_model_user_php import (
+    from gen.php_laravel.to_create_project.updates.update_gitignore import update_gitignore
+    from gen.php_laravel.to_create_project.updates.update_model_user_php import (
         update_model_user,
     )
-    from gen.php.to_create_project.updates.update_readme import update_readme
-    from gen.php.to_create_project.updates.update_route_api_php import (
+    from gen.php_laravel.to_create_project.updates.update_readme import update_readme
+    from gen.php_laravel.to_create_project.updates.update_route_api_php import (
         update_route_api_php,
     )
-    from gen.php.to_create_project.updates.update_welcome_blade import (
+    from gen.php_laravel.to_create_project.updates.update_welcome_blade import (
         update_welcome_blade,
     )
-    from gen.php.to_create_project.utilities.generate_utilities import (
+    from gen.php_laravel.to_create_project.utilities.generate_utilities import (
         generate_utilities,
     )
 

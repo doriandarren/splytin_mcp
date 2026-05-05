@@ -1,7 +1,7 @@
 import xml.etree.ElementTree as ET
 from gen.helpers.helper_print import capitalize_camel_case, input_with_validation
 from gen.helpers.helper_string import convert_word
-from gen.php.to_module_crud.standard_module_crud_php import standard_module_crud_php
+from gen.php_laravel.to_module_crud.standard_module_crud_php import standard_module_crud_php
 from gen.react.to_create_module_crud.standard_module_crud_react import standard_module_crud_react
 
 

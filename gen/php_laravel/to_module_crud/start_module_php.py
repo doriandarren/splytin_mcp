@@ -1,7 +1,7 @@
 from gen.helpers.helper_columns import parse_columns_input
 from gen.helpers.helper_menu import menu_checkbox, pause
 from gen.helpers.helper_print import input_with_validation
-from gen.php.to_module_crud.standard_module_crud_php import standard_module_crud_php
+from gen.php_laravel.to_module_crud.standard_module_crud_php import standard_module_crud_php
 
 
 def start_module_php():

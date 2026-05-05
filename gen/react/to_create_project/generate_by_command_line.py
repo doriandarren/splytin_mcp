@@ -42,7 +42,7 @@ def create_project(full_path: str):
 
     print_message("Creando el proyecto React con Vite...", CYAN)
     run_command(
-        f"printf 'n\\n' | npx create-vite@latest {project_name} --template react",
+        f"npx --yes create-vite@latest {project_name} --template react",
         cwd=project_dir
     )
 
@@ -62,10 +62,14 @@ def install_packages(full_path: str, packages: list[tuple[str, str]], label: str
     if label:
         print_message(f"Instalando: {label}", CYAN)
 
-    for pkg, nice_name in packages:
-        print_message(f"Instalando {nice_name} ({pkg})...", CYAN)
-        run_command(f"npm install {pkg}", cwd=full_path)
-        print_message(f"{nice_name} instalado correctamente.", GREEN)
+    pkgs = [pkg for pkg, _ in packages]
+    if not pkgs:
+        return
+
+    pretty = ", ".join(nice_name for _, nice_name in packages)
+    print_message(f"Instalando paquetes: {pretty}", CYAN)
+    run_command(f"npm install {' '.join(pkgs)}", cwd=full_path)
+    print_message("Paquetes instalados.", GREEN)
 
 
 def delete_app_and_index_css(full_path: str):
