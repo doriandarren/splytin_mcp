@@ -74,7 +74,7 @@ use Illuminate\Database\QueryException;
                 $msg = $e->getMessage() . ' File: ' . $e->getFile() . ' Line: ' . $e->getLine();
                 MessageChannel::send($msg, 'Error BadMethodCallException', true);
                 return HandlerResponse::respondWithError('Error Bad method call', 500, [[
-                    'e' => $e->getMessage(),
+                    'e' => 'Error bad method call',
                 ]]);
             }
             return null;
@@ -86,7 +86,7 @@ use Illuminate\Database\QueryException;
                 $msg = $e->getMessage() . ' File: ' . $e->getFile() . ' Line: ' . $e->getLine();
                 MessageChannel::send($msg, 'Error ErrorException', true);
                 return HandlerResponse::respondWithError('Error exception', 500, [[
-                    'e' => $e->getMessage(),
+                    'e' => 'Error Exception',
                 ]]);
             }
             return null;
@@ -97,7 +97,7 @@ use Illuminate\Database\QueryException;
             if ($request->is('api/*')) {
                 MessageChannel::send($e->getMessage(), 'Error QueryException', true);
                 return HandlerResponse::respondWithError('Error Query Exception', 500, [[
-                    'e' => $e->getMessage()
+                    'e' => 'Error Query Exception'
                 ]]);
             }
             return null;
@@ -106,10 +106,16 @@ use Illuminate\Database\QueryException;
         // NotFoundHttpException
         $exceptions->render(function (NotFoundHttpException $e, Request $request) {
             if ($request->is('api/*')) {
-                $msg = $e->getMessage() ?: 'Error Not found';
+                $ip = $request->ip();
+                $method = $request->method();
+                $url = $request->fullUrl();
+                $userAgent = $request->userAgent();
+
+                $msg = "IP: {$ip}\nMethod: {$method}\nURL: {$url}\nUser-Agent: {$userAgent}\nError: " . ($e->getMessage() ?: 'Error Not found');
+
                 MessageChannel::send($msg, 'Error NotFoundHttpException', true);
                 return HandlerResponse::respondWithError('Error Not found', 404, [[
-                    'e' => $msg
+                    'e' => 'Error Not found'
                 ]]);
             }
             return null;
@@ -120,7 +126,7 @@ use Illuminate\Database\QueryException;
             if ($request->is('api/*')) {
                 MessageChannel::send($e->getMessage(), 'Error AccessDeniedHttpException', true);
                 return HandlerResponse::respondWithError('Error Access denied', 403, [[
-                    'e' => $e->getMessage()
+                    'e' => 'Error Access denied'
                 ]]);
             }
             return null;
@@ -132,7 +138,7 @@ use Illuminate\Database\QueryException;
                 $msg = $e->getMessage() ?: 'Error Method not allowed';
                 MessageChannel::send($msg, 'Error MethodNotAllowedHttpException', true);
                 return HandlerResponse::respondWithError('Error Method not allowed', 405, [[
-                    'e' => $msg
+                    'e' => 'Error Method not allowed'
                 ]]);
             }
             return null;

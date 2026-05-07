@@ -30,7 +30,7 @@ python3 manage.py check                         # Chequear dependencias
 python3 manage.py makemigrations                # Migraciones
 python3 manage.py migrate                       # Aplicar migraciones
 python manage.py collectstatic --noinput        # Recopilar archivos estaticos
-python3 manage.py seed_user                     # Crear superuser
+python3 manage.py seed_users                    # Crear superuser
 python3 manage.py seed_default                  # Crear Prompts
 python3 manage.py runserver                     # Ejecutar servidor
 ```
