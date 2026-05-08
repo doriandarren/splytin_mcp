@@ -7,7 +7,7 @@ def start_project_python_django():
     
     # Defaults
     default_path = "/Users/dorian/PythonProjects"
-    default_project_name = "app1.com"
+    default_project_name = "api.app.com"
     default_app_name = "main"
 
     # Inputs

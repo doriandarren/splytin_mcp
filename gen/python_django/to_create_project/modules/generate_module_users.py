@@ -6,11 +6,11 @@ from gen.helpers.helper_print import print_message, GREEN, CYAN
 
 
 
-def generate_module_users(full_path, project_name_format, app_main):
+def generate_module_users(full_path, project_name, project_name_format, app_main, domain_name):
     create_module_users(full_path, project_name_format, app_main)
     update_setting_auth_user_model(full_path, project_name_format, app_main)
     update_model(full_path, project_name_format, app_main)
-    create_seeder(full_path, project_name_format, app_main)
+    create_seeder(full_path, domain_name)
     
     
 def create_module_users(full_path, project_name_format, app_main):
@@ -75,7 +75,7 @@ class User(AbstractUser):
 
 
 
-def create_seeder(full_path, project_name_format, app_main):
+def create_seeder(full_path, domain_name):
     """
     Genera el archivo
     """
@@ -105,7 +105,7 @@ class Command(BaseCommand):
     def handle(self, *args, **kwargs):
         self.create_user(
             username="admin",
-            email="admin@{project_name_format}.com",
+            email="admin@{domain_name}",
             password="Tailandia2026",
             is_staff=True,
             is_superuser=True,
@@ -113,7 +113,7 @@ class Command(BaseCommand):
 
         self.create_user(
             username="manager",
-            email="manager@{project_name_format}.com",
+            email="manager@{domain_name}",
             password="Tailandia2026",
             is_staff=True,
             is_superuser=False,
@@ -121,7 +121,7 @@ class Command(BaseCommand):
 
         self.create_user(
             username="user",
-            email="user@{project_name_format}.com",
+            email="user@{domain_name}",
             password="Tailandia2026",
             is_staff=True,
             is_superuser=False,
