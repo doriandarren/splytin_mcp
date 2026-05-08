@@ -7,6 +7,7 @@ from gen.python_django.helpers import helper_domain
 from gen.python_django.to_create_project.core.generate_custom_logging import generate_custom_logging
 from gen.python_django.to_create_project.generate_postman import generate_postman
 from gen.python_django.to_create_project.generate_requirements_txt import generate_requirements_txt
+from gen.python_django.to_create_project.modules.generate_module_auth import generate_module_auth
 from gen.python_django.to_create_project.statics.generate_media import generate_media
 
 
@@ -105,6 +106,10 @@ def create_python_django_project_service(
     generate_message_channel(full_path)
     generate_core_models(full_path)
     generate_page_home(full_path, project_name_format, app_main)
+    
+    generate_module_auth(full_path, project_name, project_name_format, app_main, domain_name)
+    
+    
     generate_module_users(full_path, project_name, project_name_format, app_main, domain_name)
     generate_module_devs(full_path, project_name_format, app_main, venv_python)
     generate_cron(full_path, project_name_format, app_main, venv_python)

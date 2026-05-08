@@ -13,6 +13,18 @@ from gen.python_django.to_create_module_crud.update_installed_apps import update
 
 
 def standard_module_crud_python_django(full_path, app_main, singular_name, plural_name, columns, input_menu_checkbox=None):
+    """
+    Crea el modulo
+    
+    EX:
+    - full_path: /Users/dorian/PythonProjects/python.splytin.com
+    - app_main: main 
+    - singular_name: AgendaUnloading 
+    - plural_name: AgendaUnloadings 
+    - columns: [{'name': 'user_id', 'type': 'fk', 'raw_type': 'fk', 'is_fk': True, 'related_table': 'users', 'related_model': 'User'}, {'name': 'name', 'type': 'string', 'raw_type': 'string', 'is_fk': False}, {'name': 'age', 'type': 'integer', 'raw_type': 'integer', 'is_fk': False}, {'name': 'description', 'type': 'string', 'raw_type': 'string', 'is_fk': False}] 
+    - input_menu_checkbox: ['api_route', 'api_serializer', 'api_wiewset', 'api_model', 'api_service']
+    
+    """
 
     # Input Default
     if input_menu_checkbox is None:
@@ -37,6 +49,11 @@ def standard_module_crud_python_django(full_path, app_main, singular_name, plura
     # Load virtualenv
     venv_python = get_venv_python(full_path)
     manage_py_path = os.path.join(full_path, "manage.py")
+    
+    
+    
+    
+    
     
     
     # Update installed apps
