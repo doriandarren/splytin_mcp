@@ -107,11 +107,14 @@ def create_python_django_project_service(
     generate_core_models(full_path)
     generate_page_home(full_path, project_name_format, app_main)
     
-    generate_module_auth(full_path, project_name, project_name_format, app_main, domain_name)
-    
-    
     generate_module_users(full_path, project_name, project_name_format, app_main, domain_name)
+    
+    generate_module_auth(full_path)
+    
+    
     generate_module_devs(full_path, project_name_format, app_main, venv_python)
+    
+    
     generate_cron(full_path, project_name_format, app_main, venv_python)
     generate_custom_logging(full_path, project_name_format, app_main, venv_python)
     generate_postman(full_path, project_name, domain_name)

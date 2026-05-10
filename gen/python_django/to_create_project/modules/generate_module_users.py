@@ -18,11 +18,10 @@ def create_module_users(full_path, project_name_format, app_main):
     print_message(f"Generando el modulo de Users", CYAN)
     singular_name = "User"
     plural_name = "Users"
-    columns = "email password"
-    input_menu_checkbox = ['api_route', 'api_serializer', 'api_wiewset', 'api_model', 'api_service']
-    formatColumns = parse_columns_input(columns)
+    input_menu_checkbox=["api_route", "api_serializer", "api_wiewset", "api_model", "api_service"]
+    columns = parse_columns_input("email password")
     
-    standard_module_crud_python_django(full_path, app_main, singular_name, plural_name, formatColumns, input_menu_checkbox)
+    standard_module_crud_python_django(full_path, app_main, singular_name, plural_name, columns, input_menu_checkbox)
 
 
 

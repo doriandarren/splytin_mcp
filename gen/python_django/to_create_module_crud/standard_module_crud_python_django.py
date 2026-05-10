@@ -28,7 +28,7 @@ def standard_module_crud_python_django(full_path, app_main, singular_name, plura
 
     # Input Default
     if input_menu_checkbox is None:
-        input_menu_checkbox = ["api_route", "api_serializer", "api_wiewset"]
+        input_menu_checkbox = ["api_route", "api_serializer", "api_wiewset", "api_model", "api_service"]
 
     # Convertir nombres
     singular_name_kebab = camel_to_kebab(singular_name)
@@ -49,9 +49,6 @@ def standard_module_crud_python_django(full_path, app_main, singular_name, plura
     # Load virtualenv
     venv_python = get_venv_python(full_path)
     manage_py_path = os.path.join(full_path, "manage.py")
-    
-    
-    
     
     
     
