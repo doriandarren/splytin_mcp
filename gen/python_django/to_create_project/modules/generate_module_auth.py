@@ -2,7 +2,7 @@ import os
 from gen.helpers.helper_columns import parse_columns_input
 from gen.python_django.helpers.helper_file import helper_update_line
 from gen.python_django.to_create_module_crud.standard_module_crud_python_django import standard_module_crud_python_django
-from helpers.helper_print import print_message, GREEN, CYAN
+from helpers.helper_print import dd, print_message, GREEN, CYAN
 
 
 
@@ -29,9 +29,6 @@ def generate_module_auth(full_path):
     
     
     standard_module_crud_python_django(full_path, app_main, singular_name, plural_name, columns, input_menu_checkbox)
-    
-    
-    ## TODO actualizar el archivo de routes
     
     update_router(full_path)
     update_user_views(full_path)
@@ -147,10 +144,13 @@ def update_main_urls(full_path, app_main):
     """
     Genera el archivo
     """
-
     helper_update_line(
         full_path,
         f"{app_main}/urls.py",
-        f"path('api/v1/', include(router_authentication.urls)),",
-        f"path('api/v1/', include('apps.authentications.api.router')),"
+        f"    path('api/v1/', include(router_authentication.urls)),",
+        f"    path('api/v1/', include('apps.authentications.api.router')),"
     )
+    
+    print_message(f"Se ha actualizado el archivo {app_main}/urls.py", GREEN)
+    
+    

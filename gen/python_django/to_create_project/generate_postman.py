@@ -44,7 +44,7 @@ def generate_postman(full_path, project_name, domain_name):
 									]
 								},
 								"url": {
-									"raw": "{{base_url}}auth/password/email",
+									"raw": "{{base_url}}auth/password/email/",
 									"host": [
 										"{{base_url}}auth"
 									],
@@ -77,7 +77,7 @@ def generate_postman(full_path, project_name, domain_name):
 									]
 								},
 								"url": {
-									"raw": "{{base_url}}auth/password/restore",
+									"raw": "{{base_url}}auth/password/restore/",
 									"host": [
 										"{{base_url}}auth"
 									],
@@ -134,7 +134,7 @@ def generate_postman(full_path, project_name, domain_name):
 							]
 						},
 						"url": {
-							"raw": "{{base_url}}auth/login",
+							"raw": "{{base_url}}auth/login/",
 							"host": [
 								"{{base_url}}auth"
 							],
@@ -172,7 +172,7 @@ def generate_postman(full_path, project_name, domain_name):
 							"formdata": []
 						},
 						"url": {
-							"raw": "{{base_url}}auth/user",
+							"raw": "{{base_url}}auth/user/",
 							"host": [
 								"{{base_url}}auth"
 							],
@@ -209,7 +209,7 @@ def generate_postman(full_path, project_name, domain_name):
 							"formdata": []
 						},
 						"url": {
-							"raw": "{{base_url}}auth/logout",
+							"raw": "{{base_url}}auth/logout/",
 							"host": [
 								"{{base_url}}auth"
 							],
@@ -238,7 +238,7 @@ def generate_postman(full_path, project_name, domain_name):
 							"raw": ""
 						},
 						"url": {
-							"raw": "{{base_url}}dev/test",
+							"raw": "{{base_url}}dev/test/",
 							"host": [
 								"{{base_url}}dev"
 							],
@@ -272,7 +272,7 @@ def generate_postman(full_path, project_name, domain_name):
 							}
 						],
 						"url": {
-							"raw": "{{base_url}}dashboards/list",
+							"raw": "{{base_url}}dashboards/list/",
 							"host": [
 								"{{base_url}}dashboards"
 							],
