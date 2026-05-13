@@ -70,7 +70,11 @@ def create_export_diagrams(table, user_columns):
 
 
 
-def create_export_diagrams_by_list(list_tables, database = 'database_diagram_generated.drawio'):
+def create_export_diagrams_by_list(
+    list_tables, 
+    database = 'database_diagram_generated.drawio', 
+    assets_dir_param = None
+):
     parent_id = "WIyWlLk6GJQsqaUBKTNV-1"
 
     mxfile = ET.Element("mxfile", {
@@ -186,8 +190,13 @@ def create_export_diagrams_by_list(list_tables, database = 'database_diagram_gen
     
     filename = f"{database}.drawio"
     
-    base_dir = os.path.dirname(os.path.abspath(__file__))
-    assets_dir = os.path.join(base_dir, "assets")
+    if assets_dir_param:
+        assets_dir = os.path.join(assets_dir_param)
+    else:    
+        base_dir = os.path.dirname(os.path.abspath(__file__))
+        assets_dir = os.path.join(base_dir, "assets")
+    
+    
     os.makedirs(assets_dir, exist_ok=True)
 
     output_filename = os.path.join(assets_dir, filename)

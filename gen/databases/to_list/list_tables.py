@@ -1,5 +1,8 @@
+import os
+
 from gen.databases.settings.connection import get_connection
 from gen.export_diagrams.main_export_diagrams import create_export_diagrams_by_list
+from gen.helpers.helper_print import dd
 from gen.helpers.helper_string import convert_word
 
 
@@ -114,11 +117,18 @@ def list_tables_and_columns(host, user, password, database, port=3306, input_tab
             print(
                 f"[{table_name}] {table_name_format['singular']} *** "
                 f"{table_name_format['plural']} : {' '.join(filtered_columns)}"
+                "\n"
             )
 
         print("\n** Tablas y columnas listadas exitosamente. **\n")
+        
+        
+        
+        base_dir = os.path.dirname(os.path.abspath(__file__))
+        parent_dir = os.path.dirname(base_dir)
+        assets_dir = os.path.join(parent_dir, "assets")
 
-        create_export_diagrams_by_list(list_tables, database)
+        create_export_diagrams_by_list(list_tables, database, assets_dir)
 
     except Exception as e:
         print(f"❌ Error: {e}")
