@@ -21,9 +21,9 @@ def main_database():
     password = ""
 
     generator_type = input_with_validation("[1]Listar | [2]Generar: ")
-    input_db_type = input_with_validation("Basedatos: [1]Local | [2]Docker(3307) | [3]Docker(3308): ")
+    input_db_type = input_with_validation("Basedatos: [1] Local | [2] Docker(3307) | [3] Docker(3308): ")
     database_name = input_with_validation("Nombre Basedatos", default_value=database_default)
-    input_tables = input("Nombre(s) Tabla(s) [separado por espacio / vacio todos]: ")
+    input_tables = input("Nombre Tablas [separado por espacio | blanco todos]: ")
     print("\n\n")
 
 
