@@ -217,7 +217,7 @@ class EmailTokenObtainPairSerializer(TokenObtainPairSerializer):
 
         return {{
             "refresh": str(refresh),
-            "access": str(refresh.access_token),
+            "token": str(refresh.access_token),
             "user": {{
                 "id": user.id,
                 "username": user.username,
