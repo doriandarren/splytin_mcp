@@ -7,10 +7,14 @@ from gen.helpers.helper_print import print_message, GREEN, CYAN
 
 
 def generate_module_users(full_path, project_name, project_name_format, app_main, domain_name):
+    
     create_module_users(full_path, project_name_format, app_main)
     update_setting_auth_user_model(full_path, project_name_format, app_main)
     update_model(full_path, project_name_format, app_main)
     create_seeder(full_path, domain_name)
+    update_serializer(full_path)
+    
+    
     
     
 def create_module_users(full_path, project_name_format, app_main):
@@ -74,6 +78,44 @@ class User(AbstractUser):
 
 
 
+
+def update_serializer(full_path):
+    """
+    Genera el archivo
+    """
+
+    folder_path = os.path.join(full_path, "apps", "users", "api")
+    file_path = os.path.join(folder_path, "serializers.py")
+
+    os.makedirs(folder_path, exist_ok=True)
+
+    content = f'''from rest_framework.serializers import ModelSerializer
+from apps.users.models import User
+
+
+class UserSerializer(ModelSerializer):
+
+    class Meta:
+        model = User
+        fields = [
+            'id',
+            'email',
+            'first_name',
+            'last_name',
+            'is_active',
+            'is_staff',
+        ]
+'''
+
+    try:
+        with open(file_path, "w") as f:
+            f.write(content)
+        print_message(f"Archivo generado: {file_path}", GREEN)
+    except Exception as e:
+        print_message(f"Error al generar el archivo {file_path}: {e}", CYAN)
+
+
+
 def create_seeder(full_path, domain_name):
     """
     Genera el archivo
@@ -106,6 +148,8 @@ class Command(BaseCommand):
             username="admin",
             email="admin@{domain_name}",
             password="Tailandia2026",
+            first_name="Admin",
+            last_name="Admin",
             is_staff=True,
             is_superuser=True,
         )
@@ -114,6 +158,8 @@ class Command(BaseCommand):
             username="manager",
             email="manager@{domain_name}",
             password="Tailandia2026",
+            first_name="Manager",
+            last_name="Manager",
             is_staff=True,
             is_superuser=False,
         )
@@ -122,11 +168,13 @@ class Command(BaseCommand):
             username="user",
             email="user@{domain_name}",
             password="Tailandia2026",
+            first_name="User",
+            last_name="User",
             is_staff=True,
             is_superuser=False,
         )
 
-    def create_user(self, username, email, password, is_staff=False, is_superuser=False):
+    def create_user(self, username, email, password, first_name, last_name, is_staff=False, is_superuser=False):
         User = get_user_model()
 
         user, created = User.objects.get_or_create(
@@ -135,6 +183,8 @@ class Command(BaseCommand):
         )
 
         user.email = email
+        user.first_name = first_name
+        user.last_name = last_name
         user.is_active = True
         user.is_staff = is_staff
         user.is_superuser = is_superuser

@@ -4,6 +4,7 @@ from typing import Any
 
 from gen.helpers.helper_columns import parse_columns_input
 from gen.python_django.helpers import helper_domain
+from gen.python_django.to_create_project.core.generate_api_response import generate_api_response
 from gen.python_django.to_create_project.core.generate_custom_logging import generate_custom_logging
 from gen.python_django.to_create_project.generate_postman import generate_postman
 from gen.python_django.to_create_project.generate_requirements_txt import generate_requirements_txt
@@ -115,6 +116,7 @@ def create_python_django_project_service(
     generate_custom_logging(full_path, project_name_format, app_main, venv_python)
     generate_postman(full_path, project_name, domain_name)
     generate_requirements_txt(full_path, venv_python)
+    generate_api_response(full_path)
         
 
     return {
