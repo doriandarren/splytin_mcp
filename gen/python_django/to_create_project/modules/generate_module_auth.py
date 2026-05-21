@@ -148,7 +148,7 @@ class CurrentUserView(BaseAPIView):
 class LogoutView(BaseAPIView):
     permission_classes = [IsAuthenticated]
 
-    def post(self, request):
+    def get(self, request):
         return self.respond_with_data(
             message="Logout successfully"
         )

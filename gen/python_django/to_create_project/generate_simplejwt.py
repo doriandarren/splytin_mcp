@@ -52,4 +52,9 @@ REST_FRAMEWORK = {{
         str
     )
     
+    
+    
+    
+    
+    
     print_message("Simple JWT configurado correctamente.", GREEN)
