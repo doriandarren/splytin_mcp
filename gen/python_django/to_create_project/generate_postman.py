@@ -162,7 +162,7 @@ def generate_postman(full_path, project_name, domain_name):
 							},
 							{
 								"key": "Authorization",
-								"value": "Bearer {{token_api}}",
+								"value": "Token {{token_api}}",
 								"type": "text",
 								"uuid": "28341df2-dcf3-4211-bcfa-9def40c0c15c"
 							}
@@ -199,7 +199,7 @@ def generate_postman(full_path, project_name, domain_name):
 							},
 							{
 								"key": "Authorization",
-								"value": "Bearer {{token_api}}",
+								"value": "Token {{token_api}}",
 								"type": "text",
 								"uuid": "ceb2cd55-8f07-4f33-b225-aa776f852e8e"
 							}
@@ -268,7 +268,7 @@ def generate_postman(full_path, project_name, domain_name):
 							},
 							{
 								"key": "Authorization",
-								"value": "Bearer {{token_api}}"
+								"value": "Token {{token_api}}"
 							}
 						],
 						"url": {
