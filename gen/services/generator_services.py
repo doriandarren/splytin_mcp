@@ -66,9 +66,6 @@ def create_python_django_project_service(
     )
     from gen.python_django.to_create_project.generate_postgres import generate_postgres
     from gen.python_django.to_create_project.generate_readme import generate_readme
-    from gen.python_django.to_create_project.generate_simplejwt import (
-        generate_simplejwt,
-    )
     from gen.python_django.to_create_project.generate_static_files import (
         generate_static_files,
     )
@@ -99,7 +96,6 @@ def create_python_django_project_service(
     generate_static_files(full_path, app_main)
     generate_postgres(full_path, project_name_format, app_main, venv_python)
     generate_api_doc(full_path, project_name_format, app_main, venv_python)
-    generate_simplejwt(full_path, project_name_format, app_main, venv_python)
     generate_code_file_init(full_path)
     generate_cors(full_path, project_name_format, app_main, venv_python)
     generate_file_helpers(full_path)

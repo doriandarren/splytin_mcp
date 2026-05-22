@@ -135,9 +135,6 @@ def helper_replace_block(full_path, relative_path, var_name, new_block):
     return replaced
 
 
-
-
-
 ## ---------------------------------------
 ## ---- Add IMPORTS
 ## ---------------------------------------
@@ -381,3 +378,25 @@ def helper_update_line(full_path, relative_path, old_line: str, new_line: str):
 
     return replaced
 
+
+
+
+## ---------------------------------------
+## ---- Nuevo LINE -> USAR ESTE
+## ---------------------------------------
+def helper_insert_after_line(full_path, file_path, search_line, new_line):
+    path = os.path.join(full_path, file_path)
+
+    with open(path, "r", encoding="utf-8") as file:
+        content = file.read()
+
+    if new_line in content:
+        return
+
+    content = content.replace(
+        search_line,
+        search_line + "\n" + new_line
+    )
+
+    with open(path, "w", encoding="utf-8") as file:
+        file.write(content)

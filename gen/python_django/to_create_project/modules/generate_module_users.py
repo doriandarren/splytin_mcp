@@ -61,6 +61,13 @@ def update_model(full_path, project_name_format, app_main):
 from django.db import models
 
 class User(AbstractUser):
+    
+    email = models.EmailField(unique=True)
+
+    USERNAME_FIELD = "email"
+    REQUIRED_FIELDS = ["username"]
+    
+    
     class Meta:
         verbose_name = "User"
         verbose_name_plural = "Users"
