@@ -16,10 +16,10 @@ def generate_postman(full_path, project_name, domain_name):
 	"info": {
 		"_postman_id": "c45bcd65-d68b-4fbe-a0b6-b87a5632cbff",
 		"name": "API",
-		"description": "Api Rest Full \n\nApi URL:\n\n[https://__PROJECT_NAME__/api/v1/](https://__PROJECT_NAME__/api/v1/)\n\nEstructura principales de ENDPOINT para la gestión:\n\n- base_url/list\n- base_url/list-paginate\n- base_url/list/paginate?filter=cosoltrans\n- base_url/show/id\n- base_url/store\n- base_url/update\n- base_url/destroy",
+		"description": "Api Rest Full \n\nApi URL:\n\n[https://__PROJECT_NAME__/api/v1/](https://__PROJECT_NAME__/api/v1/)\n\nEstructura principales de ENDPOINT para la gestión:\n\n- base_url/list\n- base_url/list-paginate\n- base_url/list/paginate?filter=company\n- base_url/show/id\n- base_url/store\n- base_url/update\n- base_url/destroy",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "5599797",
-		"_collection_link": "https://warped-satellite-11290.postman.co/workspace/GlobalFleet~ae865b4b-fd0c-416a-bcd9-0c9108578f23/collection/5599797-c45bcd65-d68b-4fbe-a0b6-b87a5632cbff?action=share&source=collection_link&creator=5599797"
+		"_collection_link": "https://warped-satellite-11290.postman.co/workspace/__DOMAIN_NAME__~ae865b4b-fd0c-416a-bcd9-0c9108578f23/collection/5599797-c45bcd65-d68b-4fbe-a0b6-b87a5632cbff?action=share&source=collection_link&creator=5599797"
 	},
 	"item": [
 		{
@@ -50,7 +50,8 @@ def generate_postman(full_path, project_name, domain_name):
 									],
 									"path": [
 										"password",
-										"email"
+										"email",
+										""
 									]
 								}
 							},
@@ -83,7 +84,8 @@ def generate_postman(full_path, project_name, domain_name):
 									],
 									"path": [
 										"password",
-										"restore"
+										"restore",
+										""
 									]
 								}
 							},
@@ -139,7 +141,8 @@ def generate_postman(full_path, project_name, domain_name):
 								"{{base_url}}auth"
 							],
 							"path": [
-								"login"
+								"login",
+								""
 							]
 						},
 						"description": "This HTTP POST request is used to authenticate and login a user. The request is sent to the endpoint `{{base_url}}auth/login`.\n\nThe request does not require any specific parameters to be passed in the body or as query parameters.\n\nThe response received after a successful login has a status code of 201. The response body contains the following properties:\n\n- `message`: A string that may contain additional information or a success message.\n- `token`: A string representing the authentication token for the logged-in user.\n- `token_type`: A string representing the type of the authentication token.\n- `success`: A boolean value indicating whether the login was successful or not.\n- `status_code`: An integer representing the status code of the response.\n    \n\nPlease note that the actual values of the `message`, `token`, and `token_type` properties may vary based on the specific implementation of the authentication system.\n\nTo use this endpoint, send an HTTP POST request to `{{base_url}}auth/login` without any request parameters. The response will contain the authentication token if the login is successful.\n\nExample:\n\n```\nPOST {{base_url}}auth/login\n\n ```\n\nResponse:\n\n```\nStatus: 201\n{\n  \"message\": \"\",\n  \"token\": \"\",\n  \"token_type\": \"\",\n  \"success\": true,\n  \"status_code\": 0\n}\n\n ```"
@@ -177,7 +180,8 @@ def generate_postman(full_path, project_name, domain_name):
 								"{{base_url}}auth"
 							],
 							"path": [
-								"user"
+								"user",
+								""
 							]
 						}
 					},
@@ -214,7 +218,8 @@ def generate_postman(full_path, project_name, domain_name):
 								"{{base_url}}auth"
 							],
 							"path": [
-								"logout"
+								"logout",
+								""
 							]
 						}
 					},
@@ -243,7 +248,8 @@ def generate_postman(full_path, project_name, domain_name):
 								"{{base_url}}dev"
 							],
 							"path": [
-								"test"
+								"test",
+								""
 							]
 						}
 					},
@@ -277,7 +283,8 @@ def generate_postman(full_path, project_name, domain_name):
 								"{{base_url}}dashboards"
 							],
 							"path": [
-								"list"
+								"list",
+								""
 							]
 						}
 					},
