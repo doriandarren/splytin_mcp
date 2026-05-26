@@ -1,13 +1,17 @@
 import os
 from gen.helpers.helper_columns import parse_columns_input
-from gen.python_django.helpers.helper_file import helper_append_content, helper_create_init_file
+from gen.python_django.helpers.helper_file import helper_append_content, helper_create_init_file, helper_update_line
 from gen.python_django.to_create_module_crud.standard_module_crud_python_django import standard_module_crud_python_django
 from gen.helpers.helper_print import print_message, GREEN, CYAN, run_command
 
 
 def generate_module_devs(full_path, project_name_format, app_main, venv_python):
+    
     create_module_devs(full_path, project_name_format, app_main)
     update_file_api_views(full_path, project_name_format, app_main)
+    update_router(full_path)
+    
+    
     
     ## Emails
     create_email_service(full_path, project_name_format, app_main)
@@ -46,37 +50,30 @@ def update_file_api_views(full_path, project_name_format, app_main):
 
     os.makedirs(folder_path, exist_ok=True)
 
-    content = r'''from django.http import HttpResponse
-from rest_framework import status
-from rest_framework.response import Response
-from rest_framework.viewsets import ViewSet
+    content = r'''from core.api.api_response import BaseAPIView
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
-from rest_framework.decorators import action
 
 from apps.devs.services.email_service import MailService
 from apps.devs.services.pdf_service import PdfService
 
-class DevApiViewSet(ViewSet):
+class DevApiViewSet(BaseAPIView):
     permission_classes = [IsAuthenticatedOrReadOnly]
     
-    @action(detail=False, methods=['get'], url_path='test')
-    def invoke(self, request):
+    ##@action(detail=False, methods=['get'], url_path='test')
+    def get(self, request):
         try:
             
-            response = {
-                "message": "OK"
-            }
-            return Response({
-                'message': response,
-            }, status=status.HTTP_200_OK)
+            return self.respond_with_data(
+                message="OK"
+            )
+            
         except Exception as e:
-            return Response(
-                {"error": str(e)},
-                status=status.HTTP_500_INTERNAL_SERVER_ERROR
+            return self.respond_with_error(
+                message=str(e),
             )
             
     
-    @action(detail=False, methods=['get'], url_path='test_email')
+    ##@action(detail=False, methods=['get'], url_path='test_email')
     def invoke_email(self, request):
         """ EMAIL TEST 
             Envio de correo de prueba
@@ -93,18 +90,16 @@ class DevApiViewSet(ViewSet):
                 body="Hola,\n\nEste es un correo de prueba.\n\nGracias por tu tiempo."
             )
             
+            return self.respond_with_data(
+                message="Correo enviado correctamente"
+            )
             
-            response = {
-                "message": "OK"
-            }
-            return Response(response, status=status.HTTP_200_OK)
         except Exception as e:
-            return Response(
-                {"error": str(e)},
-                status=status.HTTP_500_INTERNAL_SERVER_ERROR
+            return self.respond_with_error(
+                message=str(e),
             )
     
-    @action(detail=False, methods=['get'], url_path='test_pdf')
+    ##@action(detail=False, methods=['get'], url_path='test_pdf')
     def invoke_pdf(self, request):
         """ 
             Generación de PDF de prueba.
@@ -138,16 +133,17 @@ class DevApiViewSet(ViewSet):
                 }
             )
             
-            response = {
-                "message": "PDF generado y guardado correctamente",
-                "file_path": file_path,
-            }
-            return Response(response, status=status.HTTP_200_OK)
+            return self.respond_with_data(
+                message="PDF generado y guardado correctamente",
+                data={
+                    "file_path": file_path,
+                }
+            )
+            
         
         except Exception as e:
-            return Response(
-                {"error": str(e)},
-                status=status.HTTP_500_INTERNAL_SERVER_ERROR
+            return self.respond_with_error(
+                message=str(e),
             )
 
 '''
@@ -158,6 +154,32 @@ class DevApiViewSet(ViewSet):
         print_message(f"Archivo generado: {file_path}", GREEN)
     except Exception as e:
         print_message(f"Error al generar el archivo {file_path}: {e}", CYAN)
+
+
+def update_router(full_path):
+    """
+    Actualiza el archivo
+    """
+    folder_path = os.path.join(full_path, "apps", "devs", "api")
+    file_path = os.path.join(folder_path, "router.py")
+
+    os.makedirs(folder_path, exist_ok=True)
+
+    content = r'''from django.urls import path
+from apps.devs.api.views import DevApiViewSet
+
+urlpatterns = [
+    path("dev/test/", DevApiViewSet.as_view(), name="dev-test"),
+]
+'''
+
+    try:
+        with open(file_path, "w") as f:
+            f.write(content)
+        print_message(f"Archivo generado: {file_path}", GREEN)
+    except Exception as e:
+        print_message(f"Error al generar el archivo {file_path}: {e}", CYAN)
+
 
 
 

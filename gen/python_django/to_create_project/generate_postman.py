@@ -243,9 +243,9 @@ def generate_postman(full_path, project_name, domain_name):
 							"raw": ""
 						},
 						"url": {
-							"raw": "{{base_url}}dev/test/",
+							"raw": "{{base_url}}devs/test/",
 							"host": [
-								"{{base_url}}dev"
+								"{{base_url}}devs"
 							],
 							"path": [
 								"test",

@@ -31,20 +31,22 @@ def generate_api_route(
     content = f'''from rest_framework.routers import DefaultRouter
 from apps.{plural_name_snake}.api.views import {singular_name}ApiViewSet
 
-# Add urls.py:
-# from apps.{plural_name_snake}.api.router import router_{singular_name_snake}
-# path('api/v1/', include(router_{singular_name_snake}.urls)),
+router = DefaultRouter()
 
-
-# example
-router_{singular_name_snake} = DefaultRouter()
-
-# examples
-router_{singular_name_snake}.register(
+router.register(
     prefix='{plural_name_snake}',
     basename='{plural_name_snake}',
     viewset={singular_name}ApiViewSet
 )
+
+urlpatterns = router.urls
+
+
+## Para agregar rutas manuales:
+# urlpatterns = router.urls + [
+#     path('{singular_name_snake}/current/', {singular_name}View.as_view(), name='{singular_name_kebab}-current'),
+# ]
+
 '''
 
     try:
@@ -87,16 +89,6 @@ def update_urls(
     plural_first_camel,
 ):
     
-    str = f'from drf_yasg import openapi\nfrom apps.{plural_name_snake}.api.router import router_{singular_name_snake}'
-    
-    helper_update_line(
-        full_path,
-        f"{app_main}/urls.py",
-        f'from drf_yasg import openapi',
-        str
-    )
-    
-
     helper_update_list(
         full_path,
         f"{app_main}/urls.py",
@@ -108,7 +100,7 @@ def update_urls(
         full_path, 
         f"{app_main}/urls.py", 
         "urlpatterns = [", 
-        f"    path('api/v1/', include(router_{singular_name_snake}.urls)),"
+        f"    path('api/v1/', include('apps.{plural_name_snake}.api.router')),"
     )
     
     print_message(f"Se ha actualizado el archivo {app_main}/urls.py", GREEN)

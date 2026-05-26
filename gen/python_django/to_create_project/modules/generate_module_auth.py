@@ -30,7 +30,6 @@ def generate_module_auth(full_path):
     
     standard_module_crud_python_django(full_path, app_main, singular_name, plural_name, columns, input_menu_checkbox)
     
-    update_main_urls(full_path, app_main)
     update_router(full_path)
     update_view(full_path)
     update_serializer(full_path)
@@ -39,21 +38,6 @@ def generate_module_auth(full_path):
     
     update_setting_auth_token(full_path, app_main)
     
-
-
-
-def update_main_urls(full_path, app_main):
-    """
-    Genera el archivo
-    """
-    helper_update_line(
-        full_path,
-        f"{app_main}/urls.py",
-        f"    path('api/v1/', include(router_authentication.urls)),",
-        f"    path('api/v1/', include('apps.authentications.api.router')),"
-    )
-    
-    print_message(f"Se ha actualizado el archivo {app_main}/urls.py", GREEN)
 
 
 
