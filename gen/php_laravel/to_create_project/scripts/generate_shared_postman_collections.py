@@ -4,7 +4,7 @@ from gen.helpers.helper_print import print_message, GREEN, CYAN
 
 
 
-def generate_shared_postman_collections(full_path, project_name):
+def generate_shared_postman_collections(full_path, project_name, domain_name):
     """
     Genera un archivo
 
@@ -26,10 +26,10 @@ def generate_shared_postman_collections(full_path, project_name):
 	"info": {
 		"_postman_id": "c45bcd65-d68b-4fbe-a0b6-b87a5632cbff",
 		"name": "API",
-		"description": "Api Rest Full \n\nApi URL:\n\n[https://{project_name}/api/](https://{project_name}/api/)\n\nEstructura principales de ENDPOINT para la gestión:\n\n- base_url/list\n- base_url/list-paginate\n- base_url/list/paginate?filter=cosoltrans\n- base_url/show/id\n- base_url/store\n- base_url/update\n- base_url/destroy",
+		"description": "Api Rest Full \n\nApi URL:\n\n[https://__PROJECT_NAME__/api/](https://__PROJECT_NAME__/api/)\n\nEstructura principales de ENDPOINT para la gestión:\n\n- base_url/list\n- base_url/list-paginate\n- base_url/list/paginate?filter=cosoltrans\n- base_url/show/id\n- base_url/store\n- base_url/update\n- base_url/destroy",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "5599797",
-		"_collection_link": "https://warped-satellite-11290.postman.co/workspace/GlobalFleet~ae865b4b-fd0c-416a-bcd9-0c9108578f23/collection/5599797-c45bcd65-d68b-4fbe-a0b6-b87a5632cbff?action=share&source=collection_link&creator=5599797"
+		"_collection_link": "https://warped-satellite-11290.postman.co/workspace/__PROJECT_NAME__t~ae865b4b-fd0c-416a-bcd9-0c9108578f23/collection/5599797-c45bcd65-d68b-4fbe-a0b6-b87a5632cbff?action=share&source=collection_link&creator=5599797"
 	},
 	"item": [
 		{
@@ -48,7 +48,7 @@ def generate_shared_postman_collections(full_path, project_name):
 									"formdata": [
 										{
 											"key": "email",
-											"value": "dorian.gonzalez@globaltank.eu",
+											"value": "admin@__DOMAIN_NAME__",
 											"type": "text"
 										}
 									]
@@ -131,14 +131,14 @@ def generate_shared_postman_collections(full_path, project_name):
 							"formdata": [
 								{
 									"key": "email",
-									"value": "webmaster@globalfleet.es",
-									"description": "Email usuario demo",
+									"value": "admin@__DOMAIN_NAME__",
+									"description": "Email usuario",
 									"type": "text"
 								},
 								{
 									"key": "password",
 									"value": "Tailandia2024",
-									"description": "Password de usuario demo",
+									"description": "Password usuario",
 									"type": "text"
 								}
 							]
@@ -1461,19 +1461,13 @@ def generate_shared_postman_collections(full_path, project_name):
 	"variable": [
 		{
 			"key": "base_url",
-			"value": "https://invoices-api.globalfleet.es/api/v1/",
+			"value": "https://__PROJECT_NAME__/api/v1/",
 			"type": "string",
 			"disabled": true
 		},
 		{
 			"key": "base_url",
-			"value": "https://invoices-api-staging.globalfleet.es/api/v1/",
-			"type": "string",
-			"disabled": true
-		},
-		{
-			"key": "base_url",
-			"value": "http://invoices-api.globalfleet.test/api/v1/",
+			"value": "http://__PROJECT_NAME__.test/api/v1/",
 			"type": "string"
 		},
 		{
@@ -1484,7 +1478,12 @@ def generate_shared_postman_collections(full_path, project_name):
 }
 """
 
+    content = content.replace("__PROJECT_NAME__", project_name)
+    content = content.replace("__DOMAIN_NAME__", domain_name)
+	
     try:
+        
+        
         # Crear o sobrescribir el archivo con el contenido
         with open(file_path, "w") as f:
             f.write(content)

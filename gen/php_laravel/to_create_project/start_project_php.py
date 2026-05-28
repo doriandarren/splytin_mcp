@@ -7,7 +7,7 @@ from gen.services.generator_services import create_php_project_service
 def start_project_php():
      # Defaults
     default_path = "/Users/dorian/PhpstormProjects81"
-    default_name = "app-1"
+    default_name = "api.app1.com"
 
     # Inputs
     project_name = input_with_validation(

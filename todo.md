@@ -3,10 +3,9 @@
 
 # Dorian tengo que terminar esto:
 
-- En php: crear y modificar en vez de repositorio por service... CAMBIADO pero hay que revisar\*\*\*\*
-- Cambiar y revisar el POSTMAN... cambiar valores dorian.gonzalez@globaltank.eu
+- En php: revisar boostrap/app.php que hay cosas nuevas
 
-- Python django: agregar logica de users esta creado en el proyecto de: python.splytin.com ...IMPORTANTE...
+
 
 
 

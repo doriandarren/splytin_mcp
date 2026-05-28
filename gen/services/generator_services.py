@@ -310,6 +310,8 @@ def create_php_project_service(
 
     full_path = _full_path(project_path, project_name)
     
+    domain_name = helper_domain.helper_domain_name(project_name)
+    
     
     generate_php_by_command_line(full_path)
     generate_snappy(full_path)
@@ -332,7 +334,7 @@ def create_php_project_service(
     generate_route_test(full_path)
     generate_company_logos(full_path)
     update_welcome_blade(full_path)
-    generate_shared_postman_collections(full_path, project_name)
+    generate_shared_postman_collections(full_path, project_name, domain_name)
     update_route_api_php(full_path)
 
     return {

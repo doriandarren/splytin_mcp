@@ -86,8 +86,8 @@ def create_router(full_path):
 
     content = r'''<?php
 
-// use App\Enums\EnumAbilitySuffix;
 // use App\Enums\EnumApiSetup;
+use App\Enums\EnumAbilitySuffix;
 use App\Http\Controllers\API\Dashboards\DashboardListController;
 use Illuminate\Support\Facades\Route;
 
