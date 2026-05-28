@@ -25,7 +25,7 @@ def generate_module_auth(full_path):
     singular_name = "Authentication"
     plural_name = "Authentications"
     columns = parse_columns_input("email password")
-    input_menu_checkbox=["api_route", "api_serializer", "api_wiewset", "api_model", "api_service"]
+    input_menu_checkbox=["api_route", "api_serializer", "api_wiewset", "api_model", "api_service", "api_postman"]
     
     
     standard_module_crud_python_django(full_path, app_main, singular_name, plural_name, columns, input_menu_checkbox)

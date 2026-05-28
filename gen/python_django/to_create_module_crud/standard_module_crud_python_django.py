@@ -4,6 +4,7 @@ from gen.helpers.helper_string import normalize_project_name
 from gen.helpers.helpers import dd
 from gen.python_django.helpers.helper_virtual_env import get_venv_python
 from gen.python_django.to_create_module_crud.generate_api_model import generate_api_model
+from gen.python_django.to_create_module_crud.generate_api_postman import generate_api_postman
 from gen.python_django.to_create_module_crud.generate_api_route import generate_api_route
 from gen.python_django.to_create_module_crud.generate_api_serializer import generate_api_serializer
 from gen.python_django.to_create_module_crud.generate_api_service import generate_api_service
@@ -28,7 +29,14 @@ def standard_module_crud_python_django(full_path, app_main, singular_name, plura
 
     # Input Default
     if input_menu_checkbox is None:
-        input_menu_checkbox = ["api_route", "api_serializer", "api_wiewset", "api_model", "api_service"]
+        input_menu_checkbox = [
+            "api_route", 
+            "api_serializer", 
+            "api_wiewset", 
+            "api_model", 
+            "api_service",
+            "api_postman"
+        ]
 
     # Convertir nombres
     singular_name_kebab = camel_to_kebab(singular_name)
@@ -157,4 +165,19 @@ def standard_module_crud_python_django(full_path, app_main, singular_name, plura
             columns,
         )
     
+    
+    if "api_postman" in input_menu_checkbox:
+        generate_api_postman(
+            full_path,
+            project_name,
+            singular_name,
+            plural_name,
+            singular_name_kebab,
+            plural_name_kebab,
+            singular_name_snake,
+            plural_name_snake,
+            singular_first_camel,
+            plural_first_camel,
+            columns,
+        )
     
