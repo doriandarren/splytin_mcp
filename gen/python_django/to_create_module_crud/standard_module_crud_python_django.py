@@ -80,9 +80,7 @@ def standard_module_crud_python_django(full_path, app_main, singular_name, plura
         manage_py_path
     )
     
-
-    
-
+    ## Generate Route
     if "api_route" in input_menu_checkbox:
         generate_api_route(
             full_path,
@@ -100,7 +98,7 @@ def standard_module_crud_python_django(full_path, app_main, singular_name, plura
         )
         
     
-        
+    ## Generate Serializer 
     if "api_serializer" in input_menu_checkbox:
         generate_api_serializer(
             full_path,
@@ -117,7 +115,7 @@ def standard_module_crud_python_django(full_path, app_main, singular_name, plura
         )
         
     
-    
+    ## Generate Viewset
     if "api_wiewset" in input_menu_checkbox:
         generate_api_viewset(
             full_path,
@@ -133,7 +131,7 @@ def standard_module_crud_python_django(full_path, app_main, singular_name, plura
             columns,
         )
     
-        
+    ## Generate Model
     if "api_model" in input_menu_checkbox:
         generate_api_model(
             full_path,
@@ -149,7 +147,7 @@ def standard_module_crud_python_django(full_path, app_main, singular_name, plura
             columns,
         )
         
-        
+    ## Generate Service
     if "api_service" in input_menu_checkbox:
         generate_api_service(
             full_path,
@@ -166,6 +164,8 @@ def standard_module_crud_python_django(full_path, app_main, singular_name, plura
         )
     
     
+    
+    ## Generate Postman
     if "api_postman" in input_menu_checkbox:
         generate_api_postman(
             full_path,

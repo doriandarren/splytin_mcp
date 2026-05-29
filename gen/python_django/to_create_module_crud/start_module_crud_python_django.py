@@ -12,6 +12,7 @@ def start_module_crud_python_django():
         ("Viewset", "api_wiewset"),
         ("Model", "api_model"),
         ("Service", "api_service"),
+        ("Postman", "api_postman"),
     ]
     
     #full_path_default = "/Users/dorian/PythonProjects/app1.com"

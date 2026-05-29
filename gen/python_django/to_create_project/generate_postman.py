@@ -1,4 +1,5 @@
 import os
+import uuid
 from helpers.helper_print import print_message, GREEN, CYAN
 
 def generate_postman(full_path, project_name, domain_name):
@@ -10,15 +11,16 @@ def generate_postman(full_path, project_name, domain_name):
     file_path = os.path.join(folder_path, "API-" + project_name + ".postman.collection.json")
 
     os.makedirs(folder_path, exist_ok=True)
+    
+    postman_id = str(uuid.uuid4())
 
 
     content = r"""{
 	"info": {
-		"_postman_id": "c45bcd65-d68b-4fbe-a0b6-b87a5632cbff",
+		"_postman_id": "__POSTMAN_ID__",
 		"name": "API",
 		"description": "Api Rest Full \n\nApi URL:\n\n[https://__PROJECT_NAME__/api/v1/](https://__PROJECT_NAME__/api/v1/)\n\nEstructura principales de ENDPOINT para la gestión:\n\n- base_url/list\n- base_url/list-paginate\n- base_url/list/paginate?filter=company\n- base_url/show/id\n- base_url/store\n- base_url/update\n- base_url/destroy",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "5599797",
 		"_collection_link": "https://warped-satellite-11290.postman.co/workspace/__DOMAIN_NAME__~ae865b4b-fd0c-416a-bcd9-0c9108578f23/collection/5599797-c45bcd65-d68b-4fbe-a0b6-b87a5632cbff?action=share&source=collection_link&creator=5599797"
 	},
 	"item": [
@@ -101,7 +103,7 @@ def generate_postman(full_path, project_name, domain_name):
 							"script": {
 								"exec": [
 									"let response = JSON.parse(pm.response.text());",
-									"pm.collectionVariables.set(\"token_api\", response.token);"
+									"pm.collectionVariables.set(\"token_api\", response.data.token);"
 								],
 								"type": "text/javascript",
 								"packages": {}
@@ -330,6 +332,7 @@ def generate_postman(full_path, project_name, domain_name):
 
     content = content.replace("__PROJECT_NAME__", project_name)
     content = content.replace("__DOMAIN_NAME__", domain_name)
+    content = content.replace("__POSTMAN_ID__", postman_id)
     
     
 

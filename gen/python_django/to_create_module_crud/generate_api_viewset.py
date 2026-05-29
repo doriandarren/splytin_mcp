@@ -23,16 +23,16 @@ def generate_api_viewset(
 
     os.makedirs(folder_path, exist_ok=True)
 
-    content = f'''from rest_framework.viewsets import ModelViewSet
-from rest_framework.permissions import IsAuthenticatedOrReadOnly
+    content = f'''from core.api.api_response import BaseModelViewSet
+from rest_framework.permissions import IsAuthenticated
 #from django_filters.rest_framework import DjangoFilterBackend
 
 from apps.{plural_name_snake}.api.serializers import {singular_name}Serializer
 from apps.{plural_name_snake}.models import {singular_name}
 
 
-class {singular_name}ApiViewSet(ModelViewSet):
-    permission_classes = [IsAuthenticatedOrReadOnly]
+class {singular_name}ApiViewSet(BaseModelViewSet):
+    permission_classes = [IsAuthenticated] # sin login: [IsAuthenticatedOrReadOnly]
     serializer_class = {singular_name}Serializer
     queryset = {singular_name}.objects.all()
     # Filtros...

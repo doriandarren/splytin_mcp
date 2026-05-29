@@ -1,5 +1,6 @@
 import os
 import json
+import uuid
 from gen.helpers.helpers import dd
 from helpers.helper_print import print_message, GREEN, CYAN
 
@@ -34,10 +35,9 @@ def generate_api_postman(
 
     content = {
         "info": {
-            "_postman_id": "1e8ef847-456f-4806-9ab0-c4b861fe675d",  # Puedes generar un UUID único si es necesario
+            "_postman_id": str(uuid.uuid4()),
             "name": singular_name,
             "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-            "_exporter_id": "5599797"
         },
         "item": [
             {
@@ -52,12 +52,12 @@ def generate_api_postman(
                             "method": "GET",
                             "header": [
                                 {"key": "Accept", "value": "application/json", "type": "text"},
-                                {"key": "Authorization", "value": "Bearer {{token_api}}", "type": "text"}
+                                {"key": "Authorization", "value": "Token {{token_api}}", "type": "text"}
                             ],
                             "url": {
-                                "raw": f"{{{{base_url}}}}{plural_name_kebab}/list",
+                                "raw": f"{{{{base_url}}}}{plural_name_kebab}/",
                                 "host": [f"{{{{base_url}}}}{plural_name_kebab}"],
-                                "path": ["list"]
+                                "path": [""]
                             }
                         },
                         "response": []
@@ -71,12 +71,12 @@ def generate_api_postman(
                             "method": "GET",
                             "header": [
                                 {"key": "Accept", "value": "application/json", "type": "text"},
-                                {"key": "Authorization", "value": "Bearer {{token_api}}", "type": "text"}
+                                {"key": "Authorization", "value": "Token {{token_api}}", "type": "text"}
                             ],
                             "url": {
-                                "raw": f"{{{{base_url}}}}{plural_name_kebab}/show/1",
+                                "raw": f"{{{{base_url}}}}{plural_name_kebab}/1/",
                                 "host": [f"{{{{base_url}}}}{plural_name_kebab}"],
-                                "path": ["show", "1"]
+                                "path": ["1", ""]
                             }
                         },
                         "response": []
@@ -87,7 +87,7 @@ def generate_api_postman(
                             "method": "POST",
                             "header": [
                                 {"key": "Accept", "value": "application/json", "type": "text"},
-                                {"key": "Authorization", "value": "Bearer {{token_api}}", "type": "text"}
+                                {"key": "Authorization", "value": "Token {{token_api}}", "type": "text"}
                             ],
                             "body": {
                                 "mode": "formdata",
@@ -97,9 +97,9 @@ def generate_api_postman(
                                 ]
                             },
                             "url": {
-                                "raw": f"{{{{base_url}}}}{plural_name_kebab}/store",
+                                "raw": f"{{{{base_url}}}}{plural_name_kebab}/",
                                 "host": [f"{{{{base_url}}}}{plural_name_kebab}"],
-                                "path": ["store"]
+                                "path": [""]
                             }
                         },
                         "response": []
@@ -110,7 +110,7 @@ def generate_api_postman(
                             "method": "PUT",
                             "header": [
                                 {"key": "Accept", "value": "application/json", "type": "text"},
-                                {"key": "Authorization", "value": "Bearer {{token_api}}", "type": "text"}
+                                {"key": "Authorization", "value": "Token {{token_api}}", "type": "text"}
                             ],
                             "body": {
                                 "mode": "urlencoded",
@@ -120,9 +120,9 @@ def generate_api_postman(
                                 ]
                             },
                             "url": {
-                                "raw": f"{{{{base_url}}}}{plural_name_kebab}/update/1",
+                                "raw": f"{{{{base_url}}}}{plural_name_kebab}/1/",
                                 "host": [f"{{{{base_url}}}}{plural_name_kebab}"],
-                                "path": ["update", "1"]
+                                "path": ["1", ""]
                             }
                         },
                         "response": []
@@ -133,12 +133,12 @@ def generate_api_postman(
                             "method": "DELETE",
                             "header": [
                                 {"key": "Accept", "value": "application/json", "type": "text"},
-                                {"key": "Authorization", "value": "Bearer {{token_api}}", "type": "text"}
+                                {"key": "Authorization", "value": "Token {{token_api}}", "type": "text"}
                             ],
                             "url": {
-                                "raw": f"{{{{base_url}}}}{plural_name_kebab}/delete/1",
+                                "raw": f"{{{{base_url}}}}{plural_name_kebab}/1/",
                                 "host": [f"{{{{base_url}}}}{plural_name_kebab}"],
-                                "path": ["delete", "1"]
+                                "path": ["1", ""]
                             }
                         },
                         "response": []
@@ -153,7 +153,7 @@ def generate_api_postman(
         with open(file_path, "w") as f:
             json.dump(content, f, indent=4)
             #f.write(content)
-        print_message(f"Archivo generado: {file_path}*************", GREEN)
+        print_message(f"Archivo generado: {file_path}", GREEN)
         
         ##dd("PASAA....")
         

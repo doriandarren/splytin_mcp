@@ -105,19 +105,22 @@ use Illuminate\Database\QueryException;
 
         // NotFoundHttpException
         $exceptions->render(function (NotFoundHttpException $e, Request $request) {
+
+            $ip = $request->ip();
+            $method = $request->method();
+            $url = $request->fullUrl();
+            $userAgent = $request->userAgent();
+
+            $msg = "IP: {$ip}\nMethod: {$method}\nURL: {$url}\nUser-Agent: {$userAgent}\nError: " . ($e->getMessage() ?: 'Error Not found');
+
+            MessageChannel::send($msg, 'Error NotFoundHttpException', true);
+
             if ($request->is('api/*')) {
-                $ip = $request->ip();
-                $method = $request->method();
-                $url = $request->fullUrl();
-                $userAgent = $request->userAgent();
-
-                $msg = "IP: {$ip}\nMethod: {$method}\nURL: {$url}\nUser-Agent: {$userAgent}\nError: " . ($e->getMessage() ?: 'Error Not found');
-
-                MessageChannel::send($msg, 'Error NotFoundHttpException', true);
                 return HandlerResponse::respondWithError('Error Not found', 404, [[
                     'e' => 'Error Not found'
                 ]]);
             }
+
             return null;
         });
 

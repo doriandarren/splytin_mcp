@@ -42,26 +42,15 @@ def create_api_response(full_path):
 
     content = f'''# core/api/api_response.py
 
+from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.viewsets import ModelViewSet
 
 
 class BaseApiResponse:
-    """
-    Clase base para centralizar las respuestas de la API.
-
-    Esta clase no es una vista por sí sola.
-    Solo contiene métodos reutilizables para devolver respuestas
-    con una estructura uniforme en toda la aplicación.
-    """
 
     def respond_with_data(self, message=None, data=None, success=True, status_code=200):
-        """
-        Respuesta correcta de la API.
-
-        Se utiliza cuando la petición se ha procesado correctamente.
-        """
         return Response({{
             "data": data,
             "message": message,
@@ -70,12 +59,6 @@ class BaseApiResponse:
         }}, status=status_code)
 
     def respond_with_error(self, message="", errors=None, status_code=422):
-        """
-        Respuesta de error de la API.
-
-        Se utiliza cuando ocurre un error de validación,
-        autenticación, permisos o cualquier excepción controlada.
-        """
         return Response({{
             "data": None,
             "message": message,
@@ -86,45 +69,83 @@ class BaseApiResponse:
 
 
 class BaseAPIView(BaseApiResponse, APIView):
-    """
-    Vista base para endpoints personalizados.
-
-    Hereda de APIView, por lo tanto se usa cuando queremos definir
-    manualmente métodos como get(), post(), put() o delete().
-
-    Ejemplos de uso:
-    - Login
-    - Logout
-    - Usuario actual
-    - Endpoints de prueba
-    - Acciones personalizadas que no son un CRUD automático
-    """
     pass
 
 
 class BaseModelViewSet(BaseApiResponse, ModelViewSet):
-    """
-    Vista base para CRUD automático basado en modelos.
 
-    Hereda de ModelViewSet, por lo tanto se usa cuando queremos que
-    Django REST Framework genere automáticamente acciones como:
+    def list(self, request, *args, **kwargs):
+        queryset = self.filter_queryset(self.get_queryset())
 
-    - list      -> GET listado
-    - retrieve  -> GET por id
-    - create    -> POST crear
-    - update    -> PUT/PATCH actualizar
-    - destroy   -> DELETE eliminar
+        page = self.paginate_queryset(queryset)
 
-    También permite usar @action para crear rutas adicionales
-    dentro del mismo ViewSet.
+        if page is not None:
+            serializer = self.get_serializer(page, many=True)
 
-    Ejemplos de uso:
-    - Gestión de usuarios
-    - Gestión de productos
-    - Gestión de categorías
-    - Cualquier modelo con operaciones CRUD
-    """
-    pass
+            return self.get_paginated_response({{
+                "data": serializer.data,
+                "message": "Records retrieved successfully",
+                "success": True,
+                "status_code": status.HTTP_200_OK,
+            }})
+
+        serializer = self.get_serializer(queryset, many=True)
+
+        return self.respond_with_data(
+            message="Records retrieved successfully",
+            data=serializer.data,
+            status_code=status.HTTP_200_OK
+        )
+
+    def retrieve(self, request, *args, **kwargs):
+        instance = self.get_object()
+        serializer = self.get_serializer(instance)
+
+        return self.respond_with_data(
+            message="Record retrieved successfully",
+            data=serializer.data,
+            status_code=status.HTTP_200_OK
+        )
+
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        self.perform_create(serializer)
+
+        return self.respond_with_data(
+            message="Record created successfully",
+            data=serializer.data,
+            status_code=status.HTTP_201_CREATED
+        )
+
+    def update(self, request, *args, **kwargs):
+        partial = kwargs.pop("partial", False)
+        instance = self.get_object()
+
+        serializer = self.get_serializer(
+            instance,
+            data=request.data,
+            partial=partial
+        )
+
+        serializer.is_valid(raise_exception=True)
+        self.perform_update(serializer)
+
+        return self.respond_with_data(
+            message="Record updated successfully",
+            data=serializer.data,
+            status_code=status.HTTP_200_OK
+        )
+
+    def destroy(self, request, *args, **kwargs):
+        instance = self.get_object()
+        self.perform_destroy(instance)
+
+        return self.respond_with_data(
+            message="Record deleted successfully",
+            data=None,
+            status_code=status.HTTP_200_OK
+        )
 '''
 
     try:

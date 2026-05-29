@@ -150,49 +150,49 @@ Para que entiendas el conexto que necesito. Tengo una carpeta en la raíz del pr
 router.py:
 
 from rest_framework.routers import DefaultRouter
-from apps.ai_prompt_categories.api.views import AiPromptCategoryApiViewSet
+from apps.users.api.views import UserApiViewSet
 
-# example
-router_ai_prompt_category = DefaultRouter()
+router = DefaultRouter()
 
-# examples
-router_ai_prompt_category.register(
-    prefix='ai_prompt_categories',
-    basename='ai_prompt_categories',
-    viewset=AiPromptCategoryApiViewSet
+router.register(
+    prefix='users',
+    basename='users',
+    viewset=UserApiViewSet
 )
+
+urlpatterns = router.urls
+
 
 serializers.py:
 
 from rest_framework.serializers import ModelSerializer
-from apps.ai_prompt_categories.models import AiPromptCategory
+from apps.users.models import User
 
-class AiPromptCategorySerializer(ModelSerializer):
+class UserSerializer(ModelSerializer):
+
     class Meta:
-        model = AiPromptCategory
-        ## fields = "__all__"
+        model = User
         fields = [
             'id',
-            'name',
-            'description',
-            'slug',
-            'created_at',
-            'updated_at',
-            'created_by',
-            'updated_by',
+            'email',
+            'first_name',
+            'last_name',
+            'is_active',
+            'is_staff',
         ]
+
 
 views.py:
 
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
-from apps.ai_prompt_categories.api.serializers import AiPromptCategorySerializer
-from apps.ai_prompt_categories.models import AiPromptCategory
+from apps.users.api.serializers import UserSerializer
+from apps.users.models import User
 
-class AiPromptCategoryApiViewSet(ModelViewSet):
+class UserApiViewSet(ModelViewSet):
     permission_classes = [IsAuthenticatedOrReadOnly]
-    serializer_class = AiPromptCategorySerializer
-    queryset = AiPromptCategory.objects.all()
+    serializer_class = UserSerializer
+    queryset = User.objects.all()
 
 ```
 
