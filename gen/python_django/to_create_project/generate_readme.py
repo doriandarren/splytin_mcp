@@ -1,7 +1,7 @@
 import os
 from gen.helpers.helper_print import print_message, GREEN, CYAN
 
-def generate_readme(full_path, project_name):
+def generate_readme(full_path, project_name, project_name_format, domain_name):
     """
     Genera el archivo
     """
@@ -11,18 +11,18 @@ def generate_readme(full_path, project_name):
 
     os.makedirs(folder_path, exist_ok=True)
 
-    content = r'''## __PROJECT_NAME__
+    content = r'''# Project __PROJECT_NAME__
 
 ## Script para ejecutar el proyecto
 
 ```sh
 ## Conda:
-conda create -n python-generator python=3.13
-conda activate python-generator
+conda create -n __PROJECT_NAME_FORMAT__ python=3.13
+conda activate __PROJECT_NAME_FORMAT__
 conda deactivate
 conda list
 pip install -r requirements.txt
-conda env remove -n python-generator
+conda env remove -n __PROJECT_NAME_FORMAT__
 
 
 ## Venv
@@ -32,7 +32,7 @@ pip install --upgrade pip
 pip install -r requirements.txt
 
 Crear raíz del proyecto: 
-- Archivo .env -> chmod 600 /var/www/vhosts/splytin.com/python.splytin.com/.env
+- Archivo .env -> chmod 600 /var/www/vhosts/__DOMAIN_NAME__/__PROJECT_NAME__/.env
 - Carpeta logs
 - Carpeta media
 
@@ -50,7 +50,7 @@ python3 manage.py runserver                     # Ejecutar servidor
 ## Entorno virtual MacOs
 - python3 -m venv .venv
 - source .venv/bin/activate                     # Activar entorno
-- deactive                                      # Desactivar entorno                               # Usar este comando para intrucciones
+- deactive                                      # Desactivar entorno
 
 ## Entorno virtual Windows
 py -m venv .venv                               # Windows
@@ -180,9 +180,9 @@ opc: 1
 - Modificar ENV: cp .env.example .env
 - Ejecutar comandos readme.md - Script para iniciar el proyecto
 - Cambiar permisos:
-    chown -R xxx:pppp /var/www/vhosts/x.com/api.x.com
-    find /var/www/vhosts/x.com/api.x.com -type d -exec chmod 755 {} \;
-    find /var/www/vhosts/x.com/api.x.com -type f -exec chmod 644 {} \;
+    chown -R xxx:pppp /var/www/vhosts/__DOMAIN_NAME__/__PROJECT_NAME_FORMAT__
+    find /var/www/vhosts/__DOMAIN_NAME__/__PROJECT_NAME_FORMAT__ -type d -exec chmod 755 {} \;
+    find /var/www/vhosts/__DOMAIN_NAME__/__PROJECT_NAME_FORMAT__ -type f -exec chmod 644 {} \;
     chmod +x manage.py
     chmod +x start_celery.sh
     chmod -R 775 logs
@@ -201,6 +201,8 @@ touch tmp/restart.txt
 
 
     content = content.replace("__PROJECT_NAME__", project_name)
+    content = content.replace("__PROJECT_NAME_FORMAT__", project_name_format)
+    content = content.replace("__DOMAIN_NAME__", domain_name)
 
     
 

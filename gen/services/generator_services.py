@@ -85,7 +85,7 @@ def create_python_django_project_service(
     generate_python_django_by_command_line(full_path, project_name_format, app_main)
     generate_gitignore(full_path)
     generate_passenger_wsgi(full_path, app_main)
-    generate_readme(full_path, project_name)
+    generate_readme(full_path, project_name, project_name_format, domain_name)
     generate_todo_md(full_path, project_name)
     
     
