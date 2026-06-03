@@ -1,20 +1,39 @@
 import os
 import platform
+import subprocess
 
-def get_venv_python(full_path):
+
+def get_venv_python(full_path, conda_env_name=None):
+    """
+    Retorna la ruta del Python del entorno.
+    Primero intenta usar Conda si se pasa conda_env_name.
+    Si no, busca .venv como antes.
+    """
+
+    if conda_env_name:
+        result = subprocess.run(
+            ["conda", "run", "-n", conda_env_name, "python", "-c", "import sys; print(sys.executable)"],
+            capture_output=True,
+            text=True
+        )
+
+        if result.returncode == 0:
+            return result.stdout.strip()
+
+        raise FileNotFoundError(
+            f"No se encontró el entorno Conda: {conda_env_name}"
+        )
+
     candidates = []
 
     if platform.system() == "Windows":
         candidates = [
             os.path.join(full_path, ".venv", "Scripts", "python.exe"),
-            ##os.path.join(full_path, "backend", ".venv", "Scripts", "python.exe"),
         ]
     else:
         candidates = [
             os.path.join(full_path, ".venv", "bin", "python"),
             os.path.join(full_path, ".venv", "bin", "python3"),
-            # os.path.join(full_path, "backend", ".venv", "bin", "python"),
-            # os.path.join(full_path, "backend", ".venv", "bin", "python3"),
         ]
 
     for c in candidates:
@@ -22,27 +41,5 @@ def get_venv_python(full_path):
             return c
 
     raise FileNotFoundError(
-        f"No se encontró python del venv dentro de:\n{full_path}\n"
-        "Asegúrate de tener una carpeta .venv creada."
+        f"No se encontró Python en .venv dentro de:\n{full_path}"
     )
-
-
-
-
-
-
-# import os
-# import platform
-
-
-# def get_venv_python(full_path):
-#     """
-#     Retorna la ruta del python del venv
-#     """
-    
-#     # Windows
-#     if platform.system() == "Windows":
-#         return os.path.join(full_path, ".venv", "Scripts", "python.exe")
-
-#     # Mac/Linux
-#     return os.path.join(full_path, ".venv", "bin", "python")

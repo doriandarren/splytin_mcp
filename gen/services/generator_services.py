@@ -87,8 +87,10 @@ def create_python_django_project_service(
     generate_passenger_wsgi(full_path, app_main)
     generate_readme(full_path, project_name)
     generate_todo_md(full_path, project_name)
-
+    
+    
     venv_python = get_venv_python(full_path)
+
 
     generate_django(full_path, project_name_format, app_main, venv_python)
     generate_env(full_path, project_name_format, app_main, venv_python)
@@ -113,6 +115,7 @@ def create_python_django_project_service(
     generate_postman(full_path, project_name, domain_name)
     generate_requirements_txt(full_path, venv_python)
     generate_api_response(full_path)
+    
         
 
     return {

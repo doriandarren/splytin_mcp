@@ -22,6 +22,7 @@ conda activate python-generator
 conda deactivate
 conda list
 pip install -r requirements.txt
+conda env remove -n python-generator
 
 
 ## Venv
