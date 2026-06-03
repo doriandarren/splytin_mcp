@@ -16,6 +16,15 @@ def generate_readme(full_path, project_name):
 ## Script para ejecutar el proyecto
 
 ```sh
+## Conda:
+conda create -n python-generator python=3.13
+conda activate python-generator
+conda deactivate
+conda list
+pip install -r requirements.txt
+
+
+## Venv
 python3 -m venv .venv
 source .venv/bin/activate 
 pip install --upgrade pip
@@ -34,7 +43,7 @@ python3 manage.py seed_users                    # Crear superuser
 python3 manage.py runserver                     # Ejecutar servidor
 ```
 
-## Crear entorno virtual
+## Crear entorno virtual Venv
 
 ```sh
 ## Entorno virtual MacOs
