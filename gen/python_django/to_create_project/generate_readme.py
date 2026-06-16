@@ -20,7 +20,7 @@ def generate_readme(full_path, project_name, project_name_format, domain_name):
 conda create -n __PROJECT_NAME_FORMAT__ python=3.13
 conda activate __PROJECT_NAME_FORMAT__
 conda deactivate
-conda list
+conda env list
 pip install -r requirements.txt
 conda env remove -n __PROJECT_NAME_FORMAT__
 
