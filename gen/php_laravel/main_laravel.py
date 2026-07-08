@@ -34,17 +34,13 @@ def main_laravel():
 
         if opt == 'project':
             start_project_php()
-            
         elif opt == 'crud':
             start_module_php()
-            
         elif opt == 'module_delete':
             start_module_delete_php()
-            
         elif opt == 'back':
             print("\nVolviendo al menú anterior...\n")
             break
-        
         else:
             print("Opción no reconocida.")
 

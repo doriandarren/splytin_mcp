@@ -185,7 +185,7 @@ class {singular_name}Service
 			$obj = $data;
 		}}
         
-        $objOld = {singular_name}::where('id', $id)->first();
+        $objOld = {singular_name}::query()->where('id', $id)->first();
 
 """
 
@@ -211,7 +211,12 @@ class {singular_name}Service
     */
     public function destroy($id): bool
     {{
-        $obj = {singular_name}::find($id);
+        $obj = {singular_name}::query()->find($id);
+        
+        if (!$obj) {{
+            return false;
+        }}
+        
         $obj->delete();
         return true;
     }}
