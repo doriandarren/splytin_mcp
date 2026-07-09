@@ -211,14 +211,7 @@ class {singular_name}Service
     */
     public function destroy($id): bool
     {{
-        $obj = {singular_name}::query()->find($id);
-        
-        if (!$obj) {{
-            return false;
-        }}
-        
-        $obj->delete();
-        return true;
+        return (bool) {singular_name}::query()->where('id', $id)->delete();
     }}
 
 
