@@ -35,7 +35,6 @@ def update_abilities(full_path):
 
 use Laravel\Sanctum\Http\Middleware\CheckAbilities;
 use Laravel\Sanctum\Http\Middleware\CheckForAnyAbility;
-use Illuminate\Http\Request;
 use App\Utilities\Messages\MessageChannel;
 use App\Exceptions\HandlerResponse;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
@@ -50,10 +49,10 @@ use Illuminate\Database\QueryException;
 
         # Abilities
         content = content.replace(
-            r"""->withMiddleware(function (Middleware $middleware) {
+            r"""->withMiddleware(function (Middleware $middleware): void {
         //
     })""",
-            r"""->withMiddleware(function (Middleware $middleware) {
+            r"""->withMiddleware(function (Middleware $middleware): void {
         $middleware->alias([
             'abilities' => CheckAbilities::class,
             'ability' => CheckForAnyAbility::class,
@@ -66,8 +65,8 @@ use Illuminate\Database\QueryException;
 
         # Exceptions
         content = content.replace(
-            r"""->withMiddleware(function (Middleware $middleware) {""",
-            r"""->withExceptions(function (Exceptions $exceptions) {
+            r"""->withExceptions(function (Exceptions $exceptions): void {""",
+            r"""->withExceptions(function (Exceptions $exceptions): void {
         // BadMethodCallException
         $exceptions->render(function (BadMethodCallException $e, Request $request) {
             if ($request->is('api/*')) {
