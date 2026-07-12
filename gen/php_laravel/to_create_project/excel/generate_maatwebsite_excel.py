@@ -8,7 +8,6 @@ def generate_maatwebsite_excel(full_path):
     install_publish(full_path)
 
 
-
 def install_excel(full_path):
     print_message("Instalando Excel...", CYAN)
     run_command("composer require maatwebsite/excel", cwd=full_path)
