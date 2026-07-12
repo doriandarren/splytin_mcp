@@ -17,5 +17,6 @@ def install_excel(full_path):
 
 def install_publish(full_path):
     print_message("Publicando Excel...", CYAN)
-    run_command("php artisan vendor:publish --provider=\"Maatwebsite\Excel\ExcelServiceProvider\"", cwd=full_path)
+    ##run_command("php artisan vendor:publish --provider=\"Maatwebsite\Excel\ExcelServiceProvider\"", cwd=full_path)
+    run_command('php artisan vendor:publish --provider="Maatwebsite\\Excel\\ExcelServiceProvider"', cwd=full_path)
     print_message("Excel publicado correctamente.", GREEN)
