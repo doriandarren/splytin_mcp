@@ -3,7 +3,7 @@ from gen.helpers.helper_print import print_message, GREEN, CYAN
 
 
 
-def update_welcome_blade(full_path):
+def update_welcome_blade(full_path, project_name, domain_name):
     """
     Genera un archivo
 
@@ -26,6 +26,8 @@ def update_welcome_blade(full_path):
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        
+        <link rel="icon" href="{{ asset('brand/images/company_logos/favicon.svg') }}" type="image/svg+xml">
 
         <title>{{ env('APP_NAME') }}</title>
 
@@ -38,17 +40,17 @@ def update_welcome_blade(full_path):
         <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 
     </head>
-
+    
     <body class="bg-[#e6e6e6] min-h-screen flex flex-col justify-between">
-        <div class="flex flex-1 items-center justify-center px-4 animate__animated animate__zoomIn">
+        <div class="flex flex-1 items-center justify-center px-4">
             <img
                 src="{{ asset('brand/images/company_logos/logo.svg') }}"
                 alt="logo"
-                class="max-w-[70%] w-full h-auto mx-auto"
+                class="w-40 sm:w-48 md:w-56 lg:w-64 xl:w-72 h-auto mx-auto animate__animated animate__zoomIn"
             />
         </div>
         <footer class="w-full text-md text-left text-black px-8 mb-5 animate__animated animate__slideInLeft">
-            ©<span id="year"></span> GlobalFleet.es - Developed by <strong>GlobalDevelopers</strong>.
+            ©<span id="year"></span> __PROJECT_NAME__ - Developed by <a href="https://splytin.com" target="_blank"><strong> Splytin</strong></a>.
         </footer>
         <script>
             document.getElementById("year").textContent = new Date().getFullYear();
@@ -57,6 +59,9 @@ def update_welcome_blade(full_path):
 
 </html>
 """
+
+    content = content.replace('__PROJECT_NAME__', project_name)
+
 
     try:
         # Crear o sobrescribir el archivo con el contenido

@@ -310,6 +310,10 @@ def create_php_project_service(
     from gen.php_laravel.to_create_project.utilities.generate_utilities import (
         generate_utilities,
     )
+    
+    from gen.php_laravel.to_create_project.exceptions.generate_exception_handler_response import (
+        generate_exception_handler_response
+    )
 
     full_path = _full_path(project_path, project_name)
     
@@ -336,9 +340,10 @@ def create_php_project_service(
     generate_test_controller(full_path)
     generate_route_test(full_path)
     generate_company_logos(full_path)
-    update_welcome_blade(full_path)
+    update_welcome_blade(full_path, project_name, domain_name)
     generate_shared_postman_collections(full_path, project_name, domain_name)
     update_route_api_php(full_path)
+    generate_exception_handler_response(full_path)
 
     return {
         "generator": "php_project",
