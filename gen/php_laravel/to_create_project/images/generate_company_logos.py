@@ -1,5 +1,6 @@
 import os
 from gen.helpers.helper_print import print_message, GREEN, CYAN
+import shutil
 
 
 
@@ -7,6 +8,7 @@ def generate_company_logos(full_path):
 	create_logo_svg(full_path)
 	create_favicon_svg(full_path)
 	create_favicon_png(full_path)
+	create_logo_png(full_path)
 
 
 
@@ -74,31 +76,106 @@ def create_favicon_svg(full_path):
 
 
 
+
 def create_favicon_png(full_path):
     """
-    Genera un archivo
+    Genera el favicon.png del proyecto.
 
     Args:
         full_path (str): Ruta completa del proyecto.
     """
-    styles_path = os.path.join(full_path, "public", "brand", "images", "company_logos")
+
+    styles_path = os.path.join(
+        full_path,
+        "public",
+        "brand",
+        "images",
+        "company_logos"
+    )
 
     # Crear la carpeta si no existe
-    if not os.path.exists(styles_path):
-        os.makedirs(styles_path)
-        print_message(f"Carpeta creada: {styles_path}", GREEN)
+    os.makedirs(styles_path, exist_ok=True)
 
-    # Ruta completa del archivo
-    file_path = os.path.join(styles_path, "logo.png")
+    # Carpeta donde se encuentra este archivo .py
+    current_dir = os.path.dirname(os.path.abspath(__file__))
 
-    # Contenido por defecto
-    content = """
-"""
+    # Archivo origen
+    source_file = os.path.join(
+        current_dir,
+        "img",
+        "favicon.png"
+    )
+
+    # Archivo destino
+    destination_file = os.path.join(
+        styles_path,
+        "favicon.png"
+    )
 
     try:
-        # Crear o sobrescribir el archivo con el contenido
-        with open(file_path, "w") as f:
-            f.write(content)
-        print_message(f"Archivo generado: {file_path}", GREEN)
+        # Copiar el archivo
+        shutil.copy2(source_file, destination_file)
+        print_message(
+            f"Archivo copiado: {destination_file}",
+            GREEN
+        )
+
     except Exception as e:
-        print_message(f"Error al generar el archivo {file_path}: {e}", CYAN)
+        print_message(
+            f"Error al copiar el archivo: {e}",
+            CYAN
+        )
+
+
+
+
+def create_logo_png(full_path):
+    """
+    Genera el favicon.png del proyecto.
+
+    Args:
+        full_path (str): Ruta completa del proyecto.
+    """
+
+    styles_path = os.path.join(
+        full_path,
+        "public",
+        "brand",
+        "images",
+        "company_logos"
+    )
+
+    # Crear la carpeta si no existe
+    os.makedirs(styles_path, exist_ok=True)
+
+    # Carpeta donde se encuentra este archivo .py
+    current_dir = os.path.dirname(os.path.abspath(__file__))
+
+    # Archivo origen
+    source_file = os.path.join(
+        current_dir,
+        "img",
+        "logo.png"
+    )
+
+    # Archivo destino
+    destination_file = os.path.join(
+        styles_path,
+        "logo.png"
+    )
+
+    try:
+        # Copiar el archivo
+        shutil.copy2(source_file, destination_file)
+        print_message(
+            f"Archivo copiado: {destination_file}",
+            GREEN
+        )
+
+    except Exception as e:
+        print_message(
+            f"Error al copiar el archivo: {e}",
+            CYAN
+        )
+
+
