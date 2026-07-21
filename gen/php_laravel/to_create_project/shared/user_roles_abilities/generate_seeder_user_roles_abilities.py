@@ -30,10 +30,10 @@ use App\\Enums\\Dev\\EnumDefaultCompany;
 use App\\Enums\\EnumAbilityGroups;
 use App\\Enums\\Roles\\EnumRole;
 use App\\Enums\\UserStatuses\\EnumUserStatus;
-use App\\Models\\Abilities\\Ability;
-use App\\Models\\Roles\\Role;
+use App\\Models\\SHARED\\Abilities\\Ability;
+use App\\Models\\SHARED\\Roles\\Role;
 use App\\Models\\User;
-use App\\Models\\UserStatuses\\UserStatus;
+use App\\Models\\SHARED\\UserStatuses\\UserStatus;
 use Illuminate\\Database\\Seeder;
 
 

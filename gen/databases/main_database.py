@@ -23,16 +23,15 @@ def main_database():
     port = 3306
 
     generator_type = input_with_validation("[1]Listar | [2]Generar: ")
-    input_db_type = input_with_validation("Basedatos", default_value=3306)
     database_name = input_with_validation("Nombre Basedatos", default_value=database_default)
     input_tables = input("Nombre Tablas [separado por espacio | blanco todos]: ")
-    print("\n\n")
+    print("\n----------------------------------------------------------------")
+    print("---------------------   LISTA   ----------------------------------")
+    print("----------------------------------------------------------------\n")
 
 
-    if input_db_type.lower() == '1':
-        port = 3306
-        password = os.getenv("DATABASE_LOCAL_PASSWORD")
-        
+    password = os.getenv("DATABASE_LOCAL_PASSWORD")
+    
 
     # Convertir input_tables en lista, aunque sea un solo elemento
     input_tables = input_tables.split() if input_tables else []
