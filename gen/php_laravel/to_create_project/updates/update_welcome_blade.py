@@ -27,7 +27,7 @@ def update_welcome_blade(full_path, project_name, domain_name):
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         
-        <link rel="icon" href="{{ asset('brand/images/company_logos/favicon.svg') }}" type="image/svg+xml">
+        <link rel="icon" href="{{ asset('brand/images/company_logos/favicon.ico') }}" type="image/x-icon">
 
         <title>{{ env('APP_NAME') }}</title>
 

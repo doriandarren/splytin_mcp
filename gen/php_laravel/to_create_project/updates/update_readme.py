@@ -18,10 +18,10 @@ def update_readme(full_path):
         print_message(f"Carpeta creada: {styles_path}", GREEN)
 
     # Ruta completa del archivo
-    file_path = os.path.join(styles_path, "README.md")
+    file_path = os.path.join(styles_path, "readme.md")
 
     # Contenido por defecto
-    content = """## Base Laravel 12
+    content = """## Base Laravel 13
 
 ## Installation
 
@@ -56,7 +56,7 @@ supervisorctl restart all
 
 
 
-## Activate hablities
+## Activate habilities
 
 ```sh
 

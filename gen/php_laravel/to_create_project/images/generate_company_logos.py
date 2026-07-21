@@ -7,6 +7,7 @@ import shutil
 def generate_company_logos(full_path):
 	create_logo_svg(full_path)
 	create_favicon_svg(full_path)
+	create_favicon_ico(full_path)
 	create_favicon_png(full_path)
 	create_logo_png(full_path)
 
@@ -75,6 +76,55 @@ def create_favicon_svg(full_path):
 
 
 
+
+def create_favicon_ico(full_path):
+    """
+    Genera el favicon.png del proyecto.
+
+    Args:
+        full_path (str): Ruta completa del proyecto.
+    """
+
+    styles_path = os.path.join(
+        full_path,
+        "public",
+        "brand",
+        "images",
+        "company_logos"
+    )
+
+    # Crear la carpeta si no existe
+    os.makedirs(styles_path, exist_ok=True)
+
+    # Carpeta donde se encuentra este archivo .py
+    current_dir = os.path.dirname(os.path.abspath(__file__))
+
+    # Archivo origen
+    source_file = os.path.join(
+        current_dir,
+        "img",
+        "favicon.png"
+    )
+
+    # Archivo destino
+    destination_file = os.path.join(
+        styles_path,
+        "favicon.ico"
+    )
+
+    try:
+        # Copiar el archivo
+        shutil.copy2(source_file, destination_file)
+        print_message(
+            f"Archivo copiado: {destination_file}",
+            GREEN
+        )
+
+    except Exception as e:
+        print_message(
+            f"Error al copiar el archivo: {e}",
+            CYAN
+        )
 
 
 def create_favicon_png(full_path):
