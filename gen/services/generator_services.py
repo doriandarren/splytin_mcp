@@ -3,6 +3,7 @@ from __future__ import annotations
 from typing import Any
 
 from gen.helpers.helper_columns import parse_columns_input
+from gen.php_laravel.to_create_project.updates import update_database
 from gen.python_django.helpers import helper_domain
 from gen.python_django.to_create_project.core.generate_api_response import generate_api_response
 from gen.python_django.to_create_project.core.generate_custom_logging import generate_custom_logging
@@ -307,6 +308,13 @@ def create_php_project_service(
     from gen.php_laravel.to_create_project.updates.update_welcome_blade import (
         update_welcome_blade,
     )
+    from gen.php_laravel.to_create_project.updates.update_database import (
+        update_database,
+    )
+    
+    from gen.php_laravel.to_create_project.updates.update_envs import (
+        update_envs,
+    )
     from gen.php_laravel.to_create_project.utilities.generate_utilities import (
         generate_utilities,
     )
@@ -343,6 +351,8 @@ def create_php_project_service(
     update_welcome_blade(full_path, project_name, domain_name)
     generate_shared_postman_collections(full_path, project_name, domain_name)
     update_route_api_php(full_path)
+    update_database(full_path)
+    update_envs(full_path, project_name, domain_name)
     generate_exception_handler_response(full_path)
 
     return {
