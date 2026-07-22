@@ -16,7 +16,7 @@ def create_ability_and_group(full_path):
     Args:
         full_path (str): Ruta completa del proyecto.
     """
-    styles_path = os.path.join(full_path, "app", "Repositories", "BatchProcesses", "Abilities")
+    styles_path = os.path.join(full_path, "app", "Services", "BatchProcesses", "Abilities")
 
     # Crear la carpeta si no existe
     if not os.path.exists(styles_path):
@@ -24,17 +24,17 @@ def create_ability_and_group(full_path):
         print_message(f"Carpeta creada: {styles_path}", GREEN)
 
     # Ruta completa del archivo
-    file_path = os.path.join(styles_path, "BatchAbilityAndGroupRepository.php")
+    file_path = os.path.join(styles_path, "BatchAbilityAndGroupService.php")
 
     # Contenido por defecto
     content = r"""<?php
 
-namespace App\Repositories\BatchProcesses\Abilities;
+namespace App\Services\BatchProcesses\Abilities;
 
 use App\Enums\Dev\EnumExcludeTable;
 use App\Enums\EnumAbilitySuffix;
-use App\Models\Abilities\Ability;
-use App\Models\AbilityGroups\AbilityGroup;
+use App\Models\SHARED\Abilities\Ability;
+use App\Models\SHARED\AbilityGroups\AbilityGroup;
 use Illuminate\Support\Facades\DB;
 
 
@@ -186,7 +186,7 @@ def create_reload_database(full_path):
     Args:
         full_path (str): Ruta completa del proyecto.
     """
-    styles_path = os.path.join(full_path, "app", "Repositories", "BatchProcesses", "Abilities")
+    styles_path = os.path.join(full_path, "app", "Services", "BatchProcesses", "Abilities")
 
     # Crear la carpeta si no existe
     if not os.path.exists(styles_path):
@@ -194,23 +194,23 @@ def create_reload_database(full_path):
         print_message(f"Carpeta creada: {styles_path}", GREEN)
 
     # Ruta completa del archivo
-    file_path = os.path.join(styles_path, "BatchReloadDatabaseAbilitiesRepository.php")
+    file_path = os.path.join(styles_path, "BatchReloadDatabaseAbilitiesService.php")
 
     # Contenido por defecto
     content = r"""<?php
 
-namespace App\Repositories\BatchProcesses\Abilities;
+namespace App\Services\BatchProcesses\Abilities;
 
 use App\Enums\EnumAbilityGroups;
 use App\Enums\Roles\EnumRole;
-use App\Models\Abilities\Ability;
-use App\Models\AbilityGroups\AbilityGroup;
-use App\Models\AbilityUsers\AbilityUser;
+use App\Models\SHARED\Abilities\Ability;
+use App\Models\SHARED\AbilityGroups\AbilityGroup;
+use App\Models\SHARED\AbilityUsers\AbilityUser;
 use App\Models\User;
-use App\Repositories\AbilityUsers\AbilityUserRepository;
+use App\Services\AbilityUsers\AbilityUserService;
 
 
-class BatchReloadDatabaseAbilitiesRepository
+class BatchReloadDatabaseAbilitiesService
 {
 
     public function __invoke()

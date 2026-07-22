@@ -6,7 +6,7 @@ from gen.helpers.helper_print import print_message, GREEN, CYAN
 def generate_dashboard(full_path):
     create_router(full_path)
     create_list_controller(full_path)
-    create_repository(full_path)
+    create_service(full_path)
 
 
 
@@ -28,15 +28,15 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
-use App\Repositories\API\Dashboards\DashboardRepository;
+use App\Services\API\Dashboards\DashboardService;
 
 class DashboardListController extends Controller
 {
-    private DashboardRepository $repository;
+    private DashboardService $repository;
 
     public function __construct()
     {
-        $this->repository = new DashboardRepository();
+        $this->repository = new DashboardService();
     }
 
     /**
@@ -50,11 +50,11 @@ class DashboardListController extends Controller
         $data = [];
 
         if ($this->isAdmin(Auth::user()->roles)) {
-            $data = $this->repository->start();
+            $data = $this->repository->list();
         } elseif ($this->isManager(Auth::user()->roles)) {
-            $data = $this->repository->startByRoleManager();
+            $data = $this->repository->listByRoleManager();
         } elseif ($this->isUser(Auth::user()->roles)) {
-            $data = $this->repository->startByRoleUser();
+            $data = $this->repository->listByRoleUser();
         }
 
         return $this->respondWithData('Dashboards list', $data);
@@ -124,23 +124,23 @@ Route::group(['prefix' => 'dashboards/'], function () {
 
 
         
-def create_repository(full_path):
+def create_service(full_path):
     """
     Genera el archivo
     """
 
-    folder_path = os.path.join(full_path, "app", "Repositories", "API", "Dashboards")
-    file_path = os.path.join(folder_path, "DashboardRepository.php")
+    folder_path = os.path.join(full_path, "app", "Services", "API", "Dashboards")
+    file_path = os.path.join(folder_path, "DashboardService.php")
 
     os.makedirs(folder_path, exist_ok=True)
 
     content = r'''<?php
 
-namespace App\Repositories\API\Dashboards;
+namespace App\Services\API\Dashboards;
 
 // use App\Enums\EnumApiSetup;
 
-class DashboardRepository
+class DashboardService
 {
 
     // const WITH = [];
@@ -148,7 +148,7 @@ class DashboardRepository
     /**
     * List
     */
-    public function start()
+    public function list()
     {
         // TODO implement
         return [];
@@ -157,7 +157,7 @@ class DashboardRepository
     /**
     * List by manager
     */
-    public function startByRoleManager()
+    public function listByRoleManager()
     {
         // TODO implement
         return [];
@@ -168,7 +168,7 @@ class DashboardRepository
     /**
     * List by user
     */
-    public function startByRoleUser()
+    public function listByRoleUser()
     {
         // TODO implement
         return [];
