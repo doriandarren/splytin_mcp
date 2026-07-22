@@ -4,8 +4,8 @@ from gen.helpers.helper_print import print_message, GREEN, CYAN
 
 
 
-def generate_enums(full_path, project_name, domain_name):
-    create_dev(full_path, project_name, domain_name)
+def generate_enums(full_path, project_name, domain_name, password):
+    create_dev(full_path, project_name, domain_name, password)
     create_exclude_table(full_path)
     create_role(full_path)
     create_user(full_path)
@@ -18,7 +18,7 @@ def generate_enums(full_path, project_name, domain_name):
 
 
 
-def create_dev(full_path, project_name, domain_name):
+def create_dev(full_path, project_name, domain_name, password):
     """
     Genera un archivo
 
@@ -48,14 +48,14 @@ class EnumDefaultCompany
      */
     const MY_COMPANY_ID = 1;
     const MY_COMPANY_DOMAIN = '__DOMAIN_NAME__';
-    const PASSWORD = 'Site2024';
+    const PASSWORD = '__PASSWORD__';
 
 
     /**
      * Admin
      */
     const ADMIN_NAME = 'Admin';
-    const ADMIN_EMAIL = 'webmaster@__DOMAIN_NAME__';
+    const ADMIN_EMAIL = 'admin@__DOMAIN_NAME__';
 
 
     /**
@@ -74,7 +74,8 @@ class EnumDefaultCompany
 }
 """
 
-    content = content.replace('__DONAMIN_NAME__', domain_name)
+    content = content.replace('__DOMAIN_NAME__', domain_name)
+    content = content.replace('__PASSWORD__', password)
     
 
 

@@ -4,7 +4,7 @@ from gen.helpers.helper_print import print_message, GREEN, CYAN
 
 
 
-def generate_shared_postman_collections(full_path, project_name, domain_name):
+def generate_shared_postman_collections(full_path, project_name, domain_name, password):
     """
     Genera un archivo
 
@@ -137,7 +137,7 @@ def generate_shared_postman_collections(full_path, project_name, domain_name):
 								},
 								{
 									"key": "password",
-									"value": "Tailandia2024",
+									"value": "__PASSWORD__",
 									"description": "Password usuario",
 									"type": "text"
 								}
@@ -1480,6 +1480,7 @@ def generate_shared_postman_collections(full_path, project_name, domain_name):
 
     content = content.replace("__PROJECT_NAME__", project_name)
     content = content.replace("__DOMAIN_NAME__", domain_name)
+    content = content.replace("__PASSWORD__", password)
 	
     try:
         

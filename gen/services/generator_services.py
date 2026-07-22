@@ -13,6 +13,11 @@ from gen.python_django.to_create_project.generate_postman import generate_postma
 from gen.python_django.to_create_project.generate_requirements_txt import generate_requirements_txt
 from gen.python_django.to_create_project.modules.generate_module_auth import generate_module_auth
 from gen.python_django.to_create_project.statics.generate_media import generate_media
+from dotenv import load_dotenv
+import os
+
+
+load_dotenv()
 
 
 DEFAULT_DJANGO_COMPONENTS = [
@@ -329,12 +334,14 @@ def create_php_project_service(
     
     domain_name = helper_domain.helper_domain_name(project_name)
     
+    password = os.getenv("PASSWORD")
+    
     
     generate_php_by_command_line(full_path)
     generate_snappy(full_path)
     generate_fpdf_merge(full_path)
     generate_maatwebsite_excel(full_path)
-    generate_enums(full_path, project_name, domain_name)
+    generate_enums(full_path, project_name, domain_name, password)
     generate_batch_processes(full_path)
     generate_base_controller(full_path)
     generate_php_module_auth(full_path)
@@ -353,7 +360,7 @@ def create_php_project_service(
     generate_route_test(full_path)
     generate_company_logos(full_path)
     update_welcome_blade(full_path, project_name, domain_name)
-    generate_shared_postman_collections(full_path, project_name, domain_name)
+    generate_shared_postman_collections(full_path, project_name, domain_name, password)
     update_route_api_php(full_path)
     update_database(full_path)
     update_envs(full_path, project_name, domain_name)
