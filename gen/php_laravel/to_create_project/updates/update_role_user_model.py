@@ -7,7 +7,7 @@ def update_role_user_model(full_path):
     """
     Genera el archivo
     """
-    main_jsx_path = os.path.join(full_path, "app", "Models", "RoleUsers", "RoleUser.php")
+    main_jsx_path = os.path.join(full_path, "app", "Models", "SHARED", "RoleUsers", "RoleUser.php")
 
     # Verificar si el archivo existe
     if not os.path.exists(main_jsx_path):

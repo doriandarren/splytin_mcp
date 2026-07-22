@@ -21,20 +21,20 @@ def generate_seeder_user_roles_abilities(full_path):
     file_path = os.path.join(styles_path, "UserRolesAbilitiesSeeder.php")
 
     # Contenido por defecto
-    content = """<?php
+    content = r"""<?php
 
-namespace Database\\Seeders;
+namespace Database\Seeders;
 
 
-use App\\Enums\\Dev\\EnumDefaultCompany;
-use App\\Enums\\EnumAbilityGroups;
-use App\\Enums\\Roles\\EnumRole;
-use App\\Enums\\UserStatuses\\EnumUserStatus;
-use App\\Models\\SHARED\\Abilities\\Ability;
-use App\\Models\\SHARED\\Roles\\Role;
-use App\\Models\\User;
-use App\\Models\\SHARED\\UserStatuses\\UserStatus;
-use Illuminate\\Database\\Seeder;
+use App\Enums\Dev\EnumDefaultCompany;
+use App\Enums\EnumAbilityGroups;
+use App\Enums\Roles\EnumRole;
+use App\Enums\UserStatuses\EnumUserStatus;
+use App\Models\SHARED\Abilities\Ability;
+use App\Models\SHARED\Roles\Role;
+use App\Models\User;
+use App\Models\SHARED\UserStatuses\UserStatus;
+use Illuminate\Database\Seeder;
 
 
 
@@ -53,18 +53,18 @@ class UserRolesAbilitiesSeeder extends Seeder
          * Create User
          */
         // ADMIN
-        $this->createUser(EnumDefaultCompany::ADMIN_NAME, EnumDefaultCompany::ADMIN_EMAIL, EnumDefaultCompany::PASSWORD,EnumRole::ADMIN);
+        $this->createUser(EnumDefaultCompany::ADMIN_NAME, EnumDefaultCompany::ADMIN_EMAIL, EnumDefaultCompany::PASSWORD, EnumRole::ADMIN);
 
         /**
          * Create Manager
          */
 
-        $this->createUser(EnumDefaultCompany::MANAGER_NAME, EnumDefaultCompany::MANAGER_EMAIL, EnumDefaultCompany::PASSWORD,EnumRole::MANAGER);
+        $this->createUser(EnumDefaultCompany::MANAGER_NAME, EnumDefaultCompany::MANAGER_EMAIL, EnumDefaultCompany::PASSWORD, EnumRole::MANAGER);
 
         /**
          * Create User
          */
-        $this->createUser(EnumDefaultCompany::USER_NAME, EnumDefaultCompany::USER_EMAIL, EnumDefaultCompany::PASSWORD,EnumRole::USER);
+        $this->createUser(EnumDefaultCompany::USER_NAME, EnumDefaultCompany::USER_EMAIL, EnumDefaultCompany::PASSWORD, EnumRole::USER);
 
 
 
@@ -141,66 +141,54 @@ class UserRolesAbilitiesSeeder extends Seeder
 
         }
 
+        if ($roleName === EnumRole::MANAGER) {
+            $this->assignAbilities(
+                $user,
+                EnumAbilityGroups::ABILITIES_GROUP_BY_MANAGER
+            );
 
-        if($roleName == EnumRole::MANAGER){
-
-            foreach (EnumAbilityGroups::ABILITIES_GROUP_BY_MANAGER as $abilityRecord) {
-
-                foreach ($abilityRecord["abilities"] as $ability) {
-
-                    $nameAbility =  $abilityRecord["name"] . $ability;
-                    //echo $nameAbility . "<br>";
-
-                    $ability = Ability::where('name', $nameAbility)->first();
-                    $user->allowTo($ability);
-
-                }
-
-            }
-
+            return;
         }
 
+        if ($roleName === EnumRole::USER) {
+            $this->assignAbilities(
+                $user,
+                EnumAbilityGroups::ABILITIES_GROUP_BY_USER
+            );
 
-        if($roleName == EnumRole::USER){
-
-            foreach (EnumAbilityGroups::ABILITIES_GROUP_BY_USER as $abilityRecord) {
-
-                foreach ($abilityRecord["abilities"] as $ability) {
-
-                    $nameAbility =  $abilityRecord["name"] . $ability;
-                    //echo $nameAbility . "<br>";
-
-                    $ability = Ability::where('name', $nameAbility)->first();
-                    $user->allowTo($ability);
-
-                }
-
-            }
-
+            return;
         }
 
-
-        if($roleName == EnumRole::ERP){
-
-            foreach (EnumAbilityGroups::ABILITIES_GROUP_BY_ERP as $abilityRecord) {
-
-                foreach ($abilityRecord["abilities"] as $ability) {
-
-                    $nameAbility =  $abilityRecord["name"] . $ability;
-                    //echo $nameAbility . "<br>";
-
-                    $ability = Ability::where('name', $nameAbility)->first();
-                    $user->allowTo($ability);
-
-                }
-
-            }
-
+        if ($roleName === EnumRole::ERP) {
+            $this->assignAbilities(
+                $user,
+                EnumAbilityGroups::ABILITIES_GROUP_BY_ERP
+            );
         }
 
 
 
+    }
 
+
+
+    private function assignAbilities(User $user, array $abilityGroups): void
+    {
+        foreach ($abilityGroups as $abilityRecord) {
+            foreach ($abilityRecord['abilities'] as $abilitySuffix) {
+                $abilityName = $abilityRecord['name'] . $abilitySuffix;
+
+                $abilityModel = Ability::where('name', $abilityName)->first();
+
+                if (!$abilityModel) {
+                    throw new \RuntimeException(
+                        "La habilidad '{$abilityName}' no existe en la tabla abilities."
+                    );
+                }
+
+                $user->allowTo($abilityModel);
+            }
+        }
     }
 
 }

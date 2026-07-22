@@ -7,7 +7,7 @@ def update_ability_user_model(full_path):
     """
     Genera el archivo
     """
-    main_jsx_path = os.path.join(full_path, "app", "Models", "AbilityUsers", "AbilityUser.php")
+    main_jsx_path = os.path.join(full_path, "app", "Models", "SHARED", "AbilityUsers", "AbilityUser.php")
 
     # Verificar si el archivo existe
     if not os.path.exists(main_jsx_path):

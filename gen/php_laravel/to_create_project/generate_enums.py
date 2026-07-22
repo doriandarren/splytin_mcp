@@ -4,8 +4,8 @@ from gen.helpers.helper_print import print_message, GREEN, CYAN
 
 
 
-def generate_enums(full_path):
-    create_dev(full_path)
+def generate_enums(full_path, project_name, domain_name):
+    create_dev(full_path, project_name, domain_name)
     create_exclude_table(full_path)
     create_role(full_path)
     create_user(full_path)
@@ -18,7 +18,7 @@ def generate_enums(full_path):
 
 
 
-def create_dev(full_path):
+def create_dev(full_path, project_name, domain_name):
     """
     Genera un archivo
 
@@ -36,9 +36,9 @@ def create_dev(full_path):
     file_path = os.path.join(styles_path, "EnumDefaultCompany.php")
 
     # Contenido por defecto
-    content = """<?php
+    content = r"""<?php
 
-namespace App\\Enums\\Dev;
+namespace App\Enums\Dev;
 
 class EnumDefaultCompany
 {
@@ -47,7 +47,7 @@ class EnumDefaultCompany
      * User Admin
      */
     const MY_COMPANY_ID = 1;
-    const MY_COMPANY_DOMAIN = 'site.com';
+    const MY_COMPANY_DOMAIN = '__DOMAIN_NAME__';
     const PASSWORD = 'Site2024';
 
 
@@ -55,24 +55,28 @@ class EnumDefaultCompany
      * Admin
      */
     const ADMIN_NAME = 'Admin';
-    const ADMIN_EMAIL = 'webmaster@site.com';
+    const ADMIN_EMAIL = 'webmaster@__DOMAIN_NAME__';
 
 
     /**
      * Manager
      */
     const MANAGER_NAME = 'Manager';
-    const MANAGER_EMAIL = 'manager@site.com';
+    const MANAGER_EMAIL = 'manager@__DOMAIN_NAME__';
 
 
     /**
      * User
      */
     const USER_NAME = 'User';
-    const USER_EMAIL = 'user@site.com';
+    const USER_EMAIL = 'user@__DOMAIN_NAME__';
 
 }
 """
+
+    content = content.replace('__DONAMIN_NAME__', domain_name)
+    
+
 
     try:
         # Crear o sobrescribir el archivo con el contenido
@@ -362,16 +366,6 @@ class EnumAbilityGroups
         ],
         [
             'name' => 'role_user',
-            'abilities' => [
-                EnumAbilitySuffix::LIST,
-                EnumAbilitySuffix::SHOW,
-                EnumAbilitySuffix::STORE,
-                EnumAbilitySuffix::UPDATE,
-                EnumAbilitySuffix::DESTROY,
-            ],
-        ],
-        [
-            'name' => 'dashboards',
             'abilities' => [
                 EnumAbilitySuffix::LIST,
                 EnumAbilitySuffix::SHOW,
