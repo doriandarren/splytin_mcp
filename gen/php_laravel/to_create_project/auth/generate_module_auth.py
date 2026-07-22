@@ -226,7 +226,7 @@ class AuthRegisterController extends Controller
             'name'  => $request->name,
             'email' => $request->email,
             'password' => bcrypt($request->password),
-            'user_status_id' => EnumUserStatus::STATUS_ACTIVE_ID
+            'user_status_id' => EnumUserStatus::ACTIVE_ID
         ]);
 
 

@@ -4,6 +4,8 @@ from typing import Any
 
 from gen.helpers.helper_columns import parse_columns_input
 from gen.php_laravel.to_create_project.updates import update_database
+from gen.php_laravel.to_create_project.updates.update_ability_user_model import update_ability_user_model
+from gen.php_laravel.to_create_project.updates.update_role_user_model import update_role_user_model
 from gen.python_django.helpers import helper_domain
 from gen.python_django.to_create_project.core.generate_api_response import generate_api_response
 from gen.python_django.to_create_project.core.generate_custom_logging import generate_custom_logging
@@ -340,6 +342,8 @@ def create_php_project_service(
     generate_dashboard(full_path)
     generate_utilities(full_path)
     update_model_user(full_path)
+    update_role_user_model(full_path)
+    update_ability_user_model(full_path)
     update_app_php(full_path)
     update_bootstrap_app_php(full_path)
     update_readme(full_path)

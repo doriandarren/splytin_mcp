@@ -29,17 +29,17 @@ def update_use(full_path):
 
         # Use Relations & HasApiTokens
         content = content.replace(
-            "use Illuminate\\Notifications\\Notifiable;",
-            """use Illuminate\\Notifications\\Notifiable;
-use App\\Models\\Abilities\\Ability;
-use App\\Models\\AbilityUsers\\AbilityUser;
-use App\\Models\\Roles\\Role;
-use App\\Models\\RoleUsers\\RoleUser;
-use App\\Models\\UserStatuses\\UserStatus;
-use Illuminate\\Database\\Eloquent\\Model;
-use Illuminate\\Database\\Eloquent\\Relations\\BelongsTo;
-use Illuminate\\Database\\Eloquent\\Relations\\BelongsToMany;
-use Laravel\\Sanctum\\HasApiTokens;"""
+            r"""use Illuminate\Notifications\Notifiable;""",
+            r"""use Illuminate\Notifications\Notifiable;
+use App\Models\SHARED\Abilities\Ability;
+use App\Models\SHARED\AbilityUsers\AbilityUser;
+use App\Models\SHARED\Roles\Role;
+use App\Models\SHARED\RoleUsers\RoleUser;
+use App\Models\SHARED\UserStatuses\UserStatus;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Laravel\Sanctum\HasApiTokens;"""
         )
 
 

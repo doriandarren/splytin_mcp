@@ -33,9 +33,9 @@ class UserStatusSeeder extends Seeder
 
         //Create UserStatus
         $userStatuses = [
-            EnumUserStatus::ACTIVE,
-            EnumUserStatus::BlOCKED,
-            EnumUserStatus::INACTIVE,
+            EnumUserStatus::ACTIVE_NAME,
+            EnumUserStatus::INACTIVE_NAME,
+            EnumUserStatus::BLOCKED_NAME,
         ];
 
         foreach ($userStatuses as $userStatus) {

@@ -252,13 +252,13 @@ namespace App\\Enums\\UserStatuses;
 
 class EnumUserStatus
 {
-    const STATUS_ACTIVE_ID = 1;
-    const STATUS_BLOKED_ID = 2;
-    const STATUS_INACTIVE_ID = 3;
+    const ACTIVE_ID = 1;
+    const INACTIVE_ID = 2;
+    const BLOCKED_ID = 3;
 
-    const STATUS_ACTIVE_NAME = 'Active';
-    const STATUS_BLOKED_NAME = 'Bloked';
-    const STATUS_INACTIVE_NAME = 'Inactive';
+    const ACTIVE_NAME = 'Active';
+    const INACTIVE_NAME = 'Inactive';
+    const BLOCKED_NAME = 'Blocked';
 }
 """
 
