@@ -31,7 +31,6 @@ def generate_routes_file(base_ruta, namespace, path_routes, plural_name, singula
     routes_content = f"""<?php
 
 use App\\Enums\\EnumAbilitySuffix;
-use App\\Enums\\EnumApiSetup;
 use App\\Http\\Controllers\\{namespace}\\{plural_name}\\{singular_name}ListController;
 use App\\Http\\Controllers\\{namespace}\\{plural_name}\\{singular_name}ShowController;
 use App\\Http\\Controllers\\{namespace}\\{plural_name}\\{singular_name}StoreController;

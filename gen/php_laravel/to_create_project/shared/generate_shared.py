@@ -7,6 +7,7 @@ from gen.php_laravel.to_create_project.shared.generate_migrations.generate_count
 from gen.php_laravel.to_create_project.shared.generate_migrations.generate_roles_table import generate_roles_table
 from gen.php_laravel.to_create_project.shared.generate_migrations.update_create_users_table import update_create_users_table
 from gen.php_laravel.to_create_project.shared.update_database_seeders.update_ability_sedeer import update_ability_seeder
+from gen.php_laravel.to_create_project.shared.update_database_seeders.update_country_seeder import update_country_seeder
 from gen.php_laravel.to_create_project.shared.update_database_seeders.update_database_seeders import update_database_seeder
 from gen.php_laravel.to_create_project.shared.update_database_seeders.update_role_seeder import update_role_seeder
 from gen.php_laravel.to_create_project.shared.update_database_seeders.update_user_status_seeder import update_user_status_seeder
@@ -136,6 +137,5 @@ def generate_shared(full_path):
     update_ability_seeder(full_path)
     update_role_seeder(full_path)
     update_user_status_seeder(full_path)
-    
+    update_country_seeder(full_path)
 
-    

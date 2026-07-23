@@ -12,8 +12,6 @@ def create_postman_structure(base_ruta):
     if not os.path.exists(postman_folder_path):
         os.makedirs(postman_folder_path)
         print(f"Estructura de carpetas '{postman_folder_path}' creada.")
-    else:
-        print(f"Estructura de carpetas '{postman_folder_path}' ya existe.")
 
     return postman_folder_path
 

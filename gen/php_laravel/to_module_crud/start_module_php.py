@@ -21,12 +21,9 @@ def start_module_php():
         ("Archivo Postman", "postman"),
     ]
     
-    default_path = "/Users/dorian/PhpstormProjects81/app-1"
-    #default_path = "/Users/dorian/PhpstormProjects81/docker-laravel-84/projects/api.truckwashvilamalla.eu"
-    #default_path = "/Users/dorian/PhpstormProjects81/docker-laravel/projects/erp-api.globalfleet.es"
-    #default_path = "/Users/dorian/PhpstormProjects81/docker-laravel-84/projects/services.avanzaoil.eu"
+    #default_path = "/Users/dorian/PhpstormProjects81/api.app1.com"
+    default_path = "/Users/dorian/PHPProjects/docker-laravel-84/projects/api-integrations.transportuarios.com"
     
-    #default_namespace = "EFIDATA"
     default_namespace = "API"
 
     input_menu_checkbox = menu_checkbox("Componentes: ", opt)

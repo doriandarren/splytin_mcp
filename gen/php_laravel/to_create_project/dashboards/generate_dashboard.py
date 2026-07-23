@@ -87,7 +87,7 @@ def create_router(full_path):
     content = r'''<?php
 
 // use App\Enums\EnumApiSetup;
-use App\Enums\EnumAbilitySuffix;
+// use App\Enums\EnumAbilitySuffix;
 use App\Http\Controllers\API\Dashboards\DashboardListController;
 use Illuminate\Support\Facades\Route;
 
@@ -100,7 +100,7 @@ Route::group(['prefix' => 'dashboards/'], function () {
 
 	Route::group(['middleware' => 'auth:sanctum'], function() {
 
-		Route::get('list', [DashboardListController::class, '__invoke'])->middleware('abilities:dashboards' . EnumAbilitySuffix::LIST);
+		Route::get('list', [DashboardListController::class, '__invoke']);
 
 	});
 });
