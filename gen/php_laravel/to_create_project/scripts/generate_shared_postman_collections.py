@@ -258,6 +258,23 @@ def generate_shared_postman_collections(full_path, project_name, domain_name, pa
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "Execute",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+						"raw": "{{base_url}}dev/execute",
+						"host": [
+							"{{base_url}}dev"
+						],
+						"path": [
+							"execute"
+						]
+						}
+					},
+					"response": []
 				}
 			]
 		},
