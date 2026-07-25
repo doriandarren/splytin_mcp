@@ -1,5 +1,5 @@
-from helpers.helper_menu import pause
-from helpers.helper_print import input_with_validation
+from gen.helpers.helper_menu import pause
+from gen.helpers.helper_print import input_with_validation
 
 
 def start_project_kotlin():

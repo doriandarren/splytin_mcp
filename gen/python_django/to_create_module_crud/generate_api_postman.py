@@ -2,7 +2,7 @@ import os
 import json
 import uuid
 from gen.helpers.helpers import dd
-from helpers.helper_print import print_message, GREEN, CYAN
+from gen.helpers.helper_print import print_message, GREEN, CYAN
 
 def generate_api_postman(
         full_path,

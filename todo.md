@@ -29,16 +29,6 @@
 [agenda_unloadings] AgendaUnloading *** AgendaUnloadings : transporeon_code:varchar(255) name:varchar(255) msoft_code:varchar(255)
 
 
-
-
-
-
-
-
-
-
-
-
 [transporeon_transports] TransporeonTransport *** TransporeonTransports : transport_identifier:varchar(255) number:varchar(255) changed:text status:text qualifier:varchar(255) document_reference:text vehicle_name:varchar(255) start_date:varchar(255) start_time:varchar(255) start_at:timestamp comment:text is_processed:varchar(255) is_selected:tinyint(1)
 
 [daily_summaries] DailySummary *** DailySummaries : start_date:timestamp end_date:timestamp total_created_transport:int(11) total_updated_transport:int(11) total_deleted_transport:int(11) avg_created_transport_15_days:double(10,2) avg_created_transport_30_days:double(10,2) avg_created_transport_3_months:double(10,2)

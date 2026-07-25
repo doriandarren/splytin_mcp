@@ -2,7 +2,7 @@ import os
 from gen.helpers.helper_columns import parse_columns_input
 from gen.python_django.helpers.helper_file import helper_add_import, helper_append_content, helper_insert_after_line, helper_update_line
 from gen.python_django.to_create_module_crud.standard_module_crud_python_django import standard_module_crud_python_django
-from helpers.helper_print import dd, print_message, GREEN, CYAN
+from gen.helpers.helper_print import dd, print_message, GREEN, CYAN
 
 
 

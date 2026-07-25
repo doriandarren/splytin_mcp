@@ -1,6 +1,6 @@
 import os
 import uuid
-from helpers.helper_print import print_message, GREEN, CYAN
+from gen.helpers.helper_print import print_message, GREEN, CYAN
 
 def generate_postman(full_path, project_name, domain_name):
     """

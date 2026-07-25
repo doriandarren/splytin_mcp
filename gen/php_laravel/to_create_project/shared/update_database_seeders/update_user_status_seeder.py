@@ -1,5 +1,5 @@
 import os
-from helpers.helper_print import print_message, GREEN, CYAN
+from gen.helpers.helper_print import print_message, GREEN, CYAN
 
 def update_user_status_seeder(full_path):
     """

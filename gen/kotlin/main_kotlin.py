@@ -7,8 +7,8 @@ if BASE_DIR not in sys.path:
 
 from gen.kotlin.to_create_module_crud.start_module_kotlin import start_module_kotlin
 from gen.kotlin.to_create_project.start_project_kotlin import start_project_kotlin
-from helpers.helper_print import print_header
-from helpers.helper_menu import menu_list, clear_screen
+from gen.helpers.helper_print import print_header
+from gen.helpers.helper_menu import menu_list, clear_screen
 
 
 def main_kotlin():

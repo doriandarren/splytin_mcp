@@ -45,7 +45,7 @@ def normalize_column_type(col_type: str):
     if col_type.startswith("double"):
         return "float"
 
-    if col_type.startswith("text"):
+    if col_type in {"text", "tinytext", "mediumtext", "longtext"}:
         return "text"
 
     if col_type == "date":
