@@ -28,6 +28,17 @@ python3 mcp_server.py
     }
   }
 }
+
+{
+  "mcpServers": {
+    "project-generator": {
+      "command": "/Users/dorian/PythonProjects/splytin_mcp/.venv/bin/python",
+      "args": [
+        "/Users/dorian/PythonProjects/splytin_mcp/mcp_server.py"
+      ]
+    }
+  }
+}
 ```
 
 ```json

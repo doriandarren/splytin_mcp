@@ -23,6 +23,16 @@ def update_readme(full_path):
     # Contenido por defecto
     content = """## Base Laravel 13
 
+
+## Create Project
+
+```sh
+
+composer create-project laravel/laravel project-name
+
+```
+
+
 ## Installation
 
 ```sh

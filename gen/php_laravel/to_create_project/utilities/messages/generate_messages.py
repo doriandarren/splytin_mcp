@@ -21,20 +21,16 @@ def generate_messages(full_path):
     file_path = os.path.join(styles_path, "MessageChannel.php")
 
     # Contenido por defecto
-    content = """<?php
+    content = r"""<?php
 
-namespace App\\Utilities\\Messages;
+namespace App\Utilities\Messages;
 
-use Illuminate\\Http\\Client\\ConnectionException;
-use Illuminate\\Support\\Facades\\Http;
+use Illuminate\Http\Client\ConnectionException;
+use Illuminate\Support\Facades\Http;
 use stdClass;
 
 class MessageChannel
 {
-
-    // Discord
-    const URL = 'https://discord.com/api/webhooks/1227264474621411509/pPLiLLoDwTx51Z9s5DBtqYaZ7juMaHZayu-QkJdhTLwCvXZdWT9dmFi85ssHdgMRakA6';
-
 
     /**
      * @param $text
@@ -65,13 +61,12 @@ class MessageChannel
             Http::withHeaders([
                 'Content-Type' => 'application/json',
             ])
-                ->post(self::URL, $payload);
-        } catch (\\GuzzleHttp\\Exception\\GuzzleException $e) {
+                ->post(env('DISCORD_WEBHOOK_URL'), $payload);
+        } catch (\GuzzleHttp\Exception\GuzzleException $e) {
             echo 'Error: ' . $e->getMessage();
         }catch (ConnectionException $e) {
             echo 'Error: ' . $e->getMessage();
         }
-
 
     }
 
