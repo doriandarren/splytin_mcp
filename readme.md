@@ -7,6 +7,7 @@ Este repositorio ya incluye un servidor MCP por `stdio` en [`mcp_server.py`](/Us
 ### Ejecutar
 
 ```sh
+python3 cli.py
 python3 mcp_server.py
 ```
 
@@ -162,4 +163,3 @@ PYTHON:
 
 - En PHP: cuando se crea un proyecto, se tiene que cambiar en el ".env" y en el ".env.example" lo siguientes: "LOG_CHANNEL=daily"
 - en el archivo para API de postman hay que agregar en el Dev: el "execute"
-
