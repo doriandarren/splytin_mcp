@@ -21,21 +21,24 @@ def php_column_line(col: dict) -> str:
 
     if t == "string":
         return f"                $table->string('{name}')->nullable();\n"
+    
+    if t == "text":
+        return f"                $table->text('{name}')->nullable();\n"
 
     if t == "integer":
-        return f"                $table->integer('{name}')->nullable();\n"
+        return f"                $table->integer('{name}')->nullable()->default(0);\n"
 
     if t == "float":
-        return f"                $table->float('{name}')->nullable();\n"
+        return f"                $table->float('{name}')->nullable()->default(0.0);\n"
 
     if t == "decimal":
-        return f"                $table->decimal('{name}', 13, 2)->nullable();\n"
+        return f"                $table->decimal('{name}', 13, 2)->nullable()->default(false);\n"
 
     if t == "boolean":
-        return f"                $table->boolean('{name}')->nullable();\n"
+        return f"                $table->boolean('{name}')->nullable()->default(false);\n"
     
     if t == "date":
-        return f"                $table->date('{name}')->nullable();\n"
+        return f"                $table->date('{name}')->nullable()->default(null);\n"
     
     if t == "datetime":
         return f"                $table->datetime('{name}')->nullable();\n"

@@ -14,8 +14,6 @@ def create_migration_structure(base_ruta, path_migration):
     if not os.path.exists(migration_folder_path):
         os.makedirs(migration_folder_path)
         print(f"Estructura de carpetas '{migration_folder_path}' creada.")
-    else:
-        print(f"Estructura de carpetas '{migration_folder_path}' ya existe.")
 
     return migration_folder_path
 
