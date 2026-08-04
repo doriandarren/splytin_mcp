@@ -3,7 +3,7 @@ import os
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 from gen.helpers.helper_menu import pause
-from gen.helpers.helper_print import print_header, input_with_validation
+from gen.helpers.helper_print import print_header, input_with_validation, print_header_list
 from gen.databases.to_list.list_tables import list_tables_and_columns
 from gen.databases.to_generate.generate_tables_columns import list_tables_and_columns_and_generate
 from dotenv import load_dotenv
@@ -25,9 +25,7 @@ def main_database():
     generator_type = input_with_validation("[1]Listar | [2]Generar: ")
     database_name = input_with_validation("Nombre Basedatos", default_value=database_default)
     input_tables = input("Nombre Tablas [separado por espacio | blanco todos]: ")
-    print("\n----------------------------------------------------------------")
-    print("---------------------   LISTA   ----------------------------------")
-    print("----------------------------------------------------------------\n")
+    print_header_list();
 
 
     password = os.getenv("DATABASE_LOCAL_PASSWORD")

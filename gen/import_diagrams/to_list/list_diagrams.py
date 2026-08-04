@@ -3,6 +3,7 @@ import html
 import xml.etree.ElementTree as ET
 
 from gen.import_diagrams.helpers.helper_table_naming import table_to_classes
+from gen.helpers.helper_print import print_header_list
 
 _TAG_RE = re.compile(r"<[^>]+>")
 
@@ -60,6 +61,8 @@ def list_diagrams(xml_path, excluded_columns, selected_filename=None):
             continue
 
         tables[parent_id]["columns"].append(value)
+        
+    print_header_list()
 
     # 3) Output con tu formato
     for table in tables.values():
