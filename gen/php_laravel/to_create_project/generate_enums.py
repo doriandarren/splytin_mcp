@@ -8,7 +8,7 @@ def generate_enums(full_path, project_name, domain_name, password):
     create_dev(full_path, project_name, domain_name, password)
     create_exclude_table(full_path)
     create_role(full_path)
-    create_user(full_path)
+    create_user(full_path, domain_name, password)
     create_user_status(full_path)
     create_ability_groups(full_path)
     create_ability_suffix(full_path)
@@ -193,7 +193,7 @@ class EnumRole
         print_message(f"Error al generar el archivo {file_path}: {e}", CYAN)
 
 
-def create_user(full_path):
+def create_user(full_path, domain_name, password):
     """
     Genera un archivo
 
@@ -211,18 +211,22 @@ def create_user(full_path):
     file_path = os.path.join(styles_path, "EnumUser.php")
 
     # Contenido por defecto
-    content = """<?php
+    content = r"""<?php
 
-namespace App\\Enums\\Users;
+namespace App\Enums\Users;
 
 enum EnumUser
 {
 
-    const WEBMASTER_EMAIL = 'webmaster@base.com';
-    const WEBMASTER_PASSWORD = 'Base2024';
+    const WEBMASTER_EMAIL = 'webmaster@__DOMAIN_NAME__';
+    const WEBMASTER_PASSWORD = '__PASSWORD__';
     
 }
 """
+
+    content = content.replace('__DOMAIN_NAME__', domain_name)
+    content = content.replace('__PASSWORD__', password)
+    
 
     try:
         # Crear o sobrescribir el archivo con el contenido

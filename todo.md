@@ -8,65 +8,6 @@
 
 
 
-
-# DB
-
-```sh
-
-
-[msoft_settings] MsoftSetting *** MsoftSettings : token:text
-
-[tows] Tow *** Tows : transporeon_plate:varchar(255) msoft_plate:varchar(255)
-
-[agenda_uploads] AgendaUpload *** AgendaUploads : transporeon_code:varchar(255) name:varchar(255) msoft_code:varchar(255)
-
-[services] Service *** Services : description:varchar(255) service_code:varchar(255)
-
-[providers] Provider *** Providers : name:varchar(255)
-
-[items] Item *** Items : description:varchar(255) transporeon_item_id:varchar(255) msoft_item_id:varchar(255)
-
-[agenda_unloadings] AgendaUnloading *** AgendaUnloadings : transporeon_code:varchar(255) name:varchar(255) msoft_code:varchar(255)
-
-
-[transporeon_transports] TransporeonTransport *** TransporeonTransports : transport_identifier:varchar(255) number:varchar(255) changed:text status:text qualifier:varchar(255) document_reference:text vehicle_name:varchar(255) start_date:varchar(255) start_time:varchar(255) start_at:timestamp comment:text is_processed:varchar(255) is_selected:tinyint(1)
-
-[daily_summaries] DailySummary *** DailySummaries : start_date:timestamp end_date:timestamp total_created_transport:int(11) total_updated_transport:int(11) total_deleted_transport:int(11) avg_created_transport_15_days:double(10,2) avg_created_transport_30_days:double(10,2) avg_created_transport_3_months:double(10,2)
-
-
-[shipment_items] ShipmentItem *** ShipmentItems : shipment_id:fk item_id:fk item_identifier:varchar(255) description:varchar(255)
-
-
-[transports] Transport *** Transports : provider_id:fk transport_identifier:varchar(255) number:varchar(255) changed:text status:text qualifier:varchar(255) document_reference:text vehicle_name:varchar(255) service_id:fk start_date:varchar(255) start_time:varchar(255) start_at:timestamp comment:text plate:varchar(255) transporeon_sent_at:timestamp transporeon_response_json:longtext is_transporeon_updated:tinyint(1) transporeon_updated_nb:int(11) msoft_numero_expedicion:varchar(255) msoft_modo:varchar(20) msoft_empresa_contexto:varchar(20) msoft_centro_contexto:varchar(20) msoft_session_contexto:varchar(20) msoft_sent_at:timestamp msoft_request_json:text msoft_response_result:varchar(255) msoft_response_code:varchar(255) msoft_response_description:varchar(255) msoft_response_json:text msoft_response_key:varchar(255)
-
-[transporeon_shipments] TransporeonShipment *** TransporeonShipments : transporeon_transport_id:fk shipment_identifier:varchar(255) number:varchar(255) comment:text
-
-
-[shipments] Shipment *** Shipments : provider_id:fk transport_id:fk shipment_identifier:varchar(255) number:varchar(255) comment:text
-
-[transporeon_shipment_stations] TransporeonShipmentStation *** TransporeonShipmentStations : transporeon_shipment_id:fk station_identifier:varchar(255) type:varchar(255) company_name:varchar(255) address:varchar(255) zip:varchar(255) region:varchar(255) city:varchar(255) country:varchar(255) from_date:varchar(255) from_time:varchar(255) from_at:timestamp
-
-[shipment_stations] ShipmentStation *** ShipmentStations : shipment_id:fk station_identifier:varchar(255) type:varchar(255) company_name:varchar(255) address:varchar(255) zip:varchar(255) region:varchar(255) city:varchar(255) country:varchar(255) from_date:varchar(255) from_time:varchar(255) from_at:timestamp
-
-
-[transporeon_shipment_items] TransporeonShipmentItem *** TransporeonShipmentItems : transporeon_shipment_id:fk item_identifier:varchar(255) description:varchar(255) pos_number:varchar(255) pos_index:varchar(255) material_number:varchar(255)
-
-
-[transport_logs] TransportLog *** TransportLogs : transport_id:fk method_type:varchar(255) request:text
-
-
-```
-
-
-
-
-
-
-
-
-
-
-
 # Blender ---> Dariana haciendo:
 
 ```sh
