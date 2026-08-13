@@ -4,15 +4,24 @@ from gen.helpers.helper_menu import pause
 
 
 def standard_module_migrate_proyect_php(
-    fullt_path_origin: str, 
-    fullt_path_destination: str
+    full_path_origin: str, 
+    full_path_destination: str
 ) -> None:
-
-    # Migrar la carpeta app/Enums de fullt_path_origin a fullt_path_destination
     
-    enums_path_origin = os.path.join(fullt_path_origin, "app", "Enums")
-    enums_path_destination = os.path.join(fullt_path_destination, "app", "Enums")
-
+    enums_path_origin = os.path.join(full_path_origin, "app", "Enums")
+    enums_path_destination = os.path.join(full_path_destination, "app", "Enums")
+    migrate_enums(enums_path_origin, enums_path_destination)
+    
+    
+    
+    
+    
+def migrate_enums(
+    enums_path_origin: str, 
+    enums_path_destination: str
+) -> None:
+    
+    # Migrar la carpeta app/Enums de fullt_path_origin a fullt_path_destination
 
     if not os.path.isdir(enums_path_origin):
         print(f"\n❌ No existe la carpeta origen:")
@@ -36,5 +45,4 @@ def standard_module_migrate_proyect_php(
 
     except OSError as error:
         print(f"\n❌ Error al migrar app/Enums: {error}")
-    
     

@@ -20,11 +20,11 @@ def start_module_migrate_project_php():
     default_path_origin = "/Users/dorian/PHPProjects/docker-laravel-84/projects/api.splytin.com"
     default_path_destination = "/Users/dorian/PHPProjects/api.splytin.com"
 
-    fullt_path_origin = input_with_validation("Carpeta Proyecto ORIGEN", default_path_origin)
-    fullt_path_destination = input_with_validation("Carpeta Proyecto DESTINO", default_path_destination)
+    full_path_origin = input_with_validation("Carpeta Proyecto ORIGEN", default_path_origin)
+    full_path_destination = input_with_validation("Carpeta Proyecto DESTINO", default_path_destination)
 
     # TODO refactor
-    standard_module_migrate_proyect_php(fullt_path_origin, fullt_path_destination)
+    standard_module_migrate_proyect_php(full_path_origin, full_path_destination)
 
 
     pause()
