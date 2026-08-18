@@ -203,3 +203,70 @@ class UserApiViewSet(ModelViewSet):
 
 - Crear carpeta Maps
 
+
+
+
+# TODO astro:
+
+- Crear proyecto:
+npm create astro@latest
+npm create astro@latest -- --template basics
+
+
+- Modificar iconos
+
+- Tailwind:
+npx astro add tailwind
+
+## en sytles/globals.css agregar:
+
+@theme {
+    ...
+}
+
+
+## luego agregar en el Layout: 
+---
+import "../styles/global.css";
+---
+
+
+- Animate css: 
+npm install animate.css
+
+y en el Layout.astro: 
+...
+import "animate.css";
+import "../styles/global.css";
+...
+
+
+
+- Activar React y Mapa leaflet
+
+npx astro add react         # Activa React para Astro
+
+npm install leaflet
+
+## Copiar de otros proyecto en el componente donde vaya estar 
+
+
+
+- SiteMap
+
+npx astro add sitemap
+
+## y luego en astro.config.mjs el nombre del sitio:
+
+export default defineConfig({
+    site: 'https://template.splytin.com',
+    ...
+...
+
+
+
+- Cookies:
+
+npx astro add @jop-software/astro-cookieconsent
+
+## Modificar el astro.config.mjs

@@ -8,9 +8,12 @@ def standard_module_migrate_proyect_php(
     full_path_destination: str
 ) -> None:
     
+    ## Enums folder
     enums_path_origin = os.path.join(full_path_origin, "app", "Enums")
     enums_path_destination = os.path.join(full_path_destination, "app", "Enums")
     migrate_enums(enums_path_origin, enums_path_destination)
+    
+    ## For others
     
     
     
