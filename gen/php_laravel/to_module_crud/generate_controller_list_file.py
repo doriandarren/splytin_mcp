@@ -9,8 +9,6 @@ def create_controllers_structure(base_ruta, path_model):
     if not os.path.exists(controllers_folder_path):
         os.makedirs(controllers_folder_path)
         print(f"Estructura de carpetas '{controllers_folder_path}' creada.")
-    else:
-        print(f"Estructura de carpetas '{controllers_folder_path}' ya existe.")
 
     return controllers_folder_path
 

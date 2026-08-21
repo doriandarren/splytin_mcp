@@ -10,8 +10,6 @@ def create_routes_structure(base_ruta, path_routes, namespace):
     if not os.path.exists(routes_folder_path):
         os.makedirs(routes_folder_path)
         print(f"Estructura de carpetas '{routes_folder_path}' creada.")
-    else:
-        print(f"Estructura de carpetas '{routes_folder_path}' ya existe.")
 
     return routes_folder_path
 

@@ -10,8 +10,6 @@ def create_structure(base_ruta, path_model):
     if not os.path.exists(service_folder_path):
         os.makedirs(service_folder_path)
         print(f"Estructura de carpetas '{service_folder_path}' creada.")
-    else:
-        print(f"Estructura de carpetas '{service_folder_path}' ya existe.")
 
     return service_folder_path
 

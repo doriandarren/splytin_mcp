@@ -11,8 +11,6 @@ def create_model_structure(base_ruta, path_model):
     if not os.path.exists(model_folder_path):
         os.makedirs(model_folder_path)
         print(f"Estructura de carpetas '{model_folder_path}' creada.")
-    else:
-        print(f"Estructura de carpetas '{model_folder_path}' ya existe.")
 
     return model_folder_path
 

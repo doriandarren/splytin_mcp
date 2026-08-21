@@ -44,7 +44,7 @@ def generate_shared(full_path):
     
     columns = parse_columns_input(input_columns)
     
-    standard_module_crud_php(namespace, full_path, singular_name, plural_name, columns, input_menu_checkbox)
+    standard_module_crud_php(full_path, namespace, singular_name, plural_name, columns, input_menu_checkbox)
     
     
     
@@ -56,7 +56,7 @@ def generate_shared(full_path):
     
     columns = parse_columns_input(input_columns)
     
-    standard_module_crud_php(namespace, full_path, singular_name, plural_name, columns, input_menu_checkbox)
+    standard_module_crud_php(full_path, namespace, singular_name, plural_name, columns, input_menu_checkbox)
     
     
     
@@ -68,7 +68,7 @@ def generate_shared(full_path):
     
     columns = parse_columns_input(input_columns)
     
-    standard_module_crud_php(namespace, full_path, singular_name, plural_name, columns, input_menu_checkbox)
+    standard_module_crud_php(full_path, namespace, singular_name, plural_name, columns, input_menu_checkbox)
     
     
     # Countries
@@ -79,7 +79,7 @@ def generate_shared(full_path):
     
     columns = parse_columns_input(input_columns)
     
-    standard_module_crud_php(namespace, full_path, singular_name, plural_name, columns, input_menu_checkbox)
+    standard_module_crud_php(full_path, namespace, singular_name, plural_name, columns, input_menu_checkbox)
     
     
     
@@ -91,7 +91,7 @@ def generate_shared(full_path):
     
     columns = parse_columns_input(input_columns)
     
-    standard_module_crud_php(namespace, full_path, singular_name, plural_name, columns, input_menu_checkbox)
+    standard_module_crud_php(full_path, namespace, singular_name, plural_name, columns, input_menu_checkbox)
     
     
     
@@ -103,7 +103,7 @@ def generate_shared(full_path):
     
     columns = parse_columns_input(input_columns)
     
-    standard_module_crud_php(namespace, full_path, singular_name, plural_name, columns, input_menu_checkbox)
+    standard_module_crud_php(full_path, namespace, singular_name, plural_name, columns, input_menu_checkbox)
     
     
 
@@ -115,7 +115,7 @@ def generate_shared(full_path):
     
     columns = parse_columns_input(input_columns)
     
-    standard_module_crud_php(namespace, full_path, singular_name, plural_name, columns, input_menu_checkbox)
+    standard_module_crud_php(full_path, namespace, singular_name, plural_name, columns, input_menu_checkbox)
     
     
     

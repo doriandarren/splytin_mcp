@@ -13,8 +13,6 @@ def start_module_php():
         ("Controlador - Store", "controller_store"),
         ("Controlador - Update", "controller_update"),
         ("Controlador - Destroy", "controller_destroy"),
-        ("Request - Store", "request_store"),
-        ("Request - Update", "request_update"),
         ("Servicio", "service"),
         ("Rutas", "routes"),
         ("Migración", "migration"),

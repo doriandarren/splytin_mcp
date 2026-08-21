@@ -10,8 +10,6 @@ def create_factory_structure(base_ruta, path_factory, plural_name):
     if not os.path.exists(factory_folder_path):
         os.makedirs(factory_folder_path)
         print(f"Estructura de carpetas '{factory_folder_path}' creada.")
-    else:
-        print(f"Estructura de carpetas '{factory_folder_path}' ya existe.")
 
     return factory_folder_path
 

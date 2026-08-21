@@ -34,8 +34,6 @@ def standard_module_crud_php(
             "controller_store", 
             "controller_update",
             "controller_destroy",
-            "request_store",
-            "request_update",
             "service", "routes",
             "migration", 
             "seeder", 
@@ -85,6 +83,8 @@ def standard_module_crud_php(
             )
 
         if "controller_store" in input_menu_checkbox:
+            
+            # Generate Controller
             generate_controller_store_file(
                 full_path, 
                 namespace, 
@@ -96,8 +96,24 @@ def standard_module_crud_php(
                 plural_name_snake, 
                 columns
             )
+            
+            ## Generate Request
+            # generate_request_store(
+            #     full_path, 
+            #     namespace,
+            #     singular_name, 
+            #     plural_name,
+            #     singular_name_kebab, 
+            #     plural_name_kebab, 
+            #     singular_name_snake, 
+            #     plural_name_snake,
+            #     columns
+            # )
+            
 
         if "controller_update" in input_menu_checkbox:
+            
+            ## Controller 
             generate_controller_update_file(
                 full_path, 
                 namespace, 
@@ -109,6 +125,11 @@ def standard_module_crud_php(
                 plural_name_snake, 
                 columns
             )
+            
+            ## TODO agregar 
+            ## generate_request_update(
+            
+            
 
         if "controller_destroy" in input_menu_checkbox:
             generate_controller_destroy_file(
@@ -122,22 +143,6 @@ def standard_module_crud_php(
                 plural_name_snake, 
                 columns
             )
-            
-            
-        # TODO::::     
-        if "request_store" in input_menu_checkbox:
-            generate_request_store(
-                full_path, 
-                namespace,
-                singular_name, 
-                plural_name,
-                singular_name_kebab, 
-                plural_name_kebab, 
-                singular_name_snake, 
-                plural_name_snake,
-                columns
-            )
-            
         
 
         if "service" in input_menu_checkbox:

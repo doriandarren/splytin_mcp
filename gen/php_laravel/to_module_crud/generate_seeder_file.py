@@ -10,8 +10,6 @@ def create_seeder_structure(base_ruta, path_seeder):
     if not os.path.exists(seeder_folder_path):
         os.makedirs(seeder_folder_path)
         print(f"Estructura de carpetas '{seeder_folder_path}' creada.")
-    else:
-        print(f"Estructura de carpetas '{seeder_folder_path}' ya existe.")
 
     return seeder_folder_path
 
