@@ -16,10 +16,21 @@ def create_seeder_structure(base_ruta, path_seeder):
     return seeder_folder_path
 
 
-def generate_seeder_file(base_ruta, namespace, path_seeder, singular_name, plural_name, singular_name_snake, plural_name_snake, columns):
+def generate_seeder_file(
+    base_ruta, 
+    namespace, 
+    singular_name, 
+    plural_name, 
+    singular_name_snake, 
+    plural_name_snake, 
+    columns
+):
     """
     Genera un archivo de seeder PHP basado en los nombres proporcionados y crea la estructura settings/migrations/sedeers dentro de base_ruta.
     """
+    
+    path_seeder = "database/seeders"
+    
     # Crear la estructura de carpetas llamando a create_seeder_structure
     seeder_folder_path = create_seeder_structure(base_ruta, path_seeder)
 

@@ -2,6 +2,7 @@ import os
 from gen.helpers.helper_menu import pause
 from gen.helpers.helper_print import camel_to_kebab, camel_to_snake
 from gen.php_laravel.to_module_crud.generate_model_file import generate_model_file
+from gen.php_laravel.to_module_crud.generate_request_store import generate_request_store
 from gen.php_laravel.to_module_crud.generate_routes_file import generate_routes_file
 from gen.php_laravel.to_module_crud.generate_migration_file import generate_migration_file
 from gen.php_laravel.to_module_crud.generate_controller_list_file import generate_controller_list_file
@@ -15,23 +16,32 @@ from gen.php_laravel.to_module_crud.generate_postman_file import generate_postma
 from gen.php_laravel.to_module_crud.generate_service_file import generate_service_file
 
 
-def standard_module_crud_php(namespace, ruta, singular_name, plural_name, columns, input_menu_checkbox=None):
+def standard_module_crud_php(
+    full_path,
+    namespace,
+    singular_name, 
+    plural_name, 
+    columns, 
+    input_menu_checkbox=None
+):
 
     # Input Default
     if input_menu_checkbox is None:
-        input_menu_checkbox = ["model", "controller_list", "controller_show", "controller_store", "controller_update",
-                               "controller_destroy", "service", "routes", "migration", "seeder", "factory", "postman"]
-
-
-    ##TODO refactorizar esto a cada uno de las rutas
-
-    path_model = "Models/" + namespace + "/" + plural_name
-    path_services = "Services/" + namespace + "/" + plural_name
-    path_controller = "Http/Controllers/" + namespace + "/" + plural_name
-    path_migration = "database/migrations/"
-    path_routes = "routes/"
-    path_seeder = "database/seeders"
-    path_factory = "database/factories/" + namespace
+        input_menu_checkbox = [
+            "model", 
+            "controller_list", 
+            "controller_show", 
+            "controller_store", 
+            "controller_update",
+            "controller_destroy",
+            "request_store",
+            "request_update",
+            "service", "routes",
+            "migration", 
+            "seeder", 
+            "factory", 
+            "postman"
+        ]
 
     # Convertir singular_name y plural_name a kebab-case para las URLs
     singular_name_kebab = camel_to_kebab(singular_name)
@@ -40,54 +50,163 @@ def standard_module_crud_php(namespace, ruta, singular_name, plural_name, column
     plural_name_snake = camel_to_snake(plural_name)
     
 
-    if os.path.isdir(ruta):
+    if os.path.isdir(full_path):
+        
         if "model" in input_menu_checkbox:
-            generate_model_file(ruta, namespace, path_model,
-                                singular_name, plural_name, plural_name_snake)
+            generate_model_file(
+                full_path, 
+                namespace,
+                singular_name, 
+                plural_name, 
+                plural_name_snake
+            )
 
         if "controller_list" in input_menu_checkbox:
-            generate_controller_list_file(ruta, namespace, path_controller, singular_name, plural_name,
-                                          singular_name_kebab, plural_name_kebab, singular_name_snake, plural_name_snake, columns)
+            generate_controller_list_file(
+                full_path, 
+                namespace, 
+                singular_name, 
+                plural_name,
+                singular_name_kebab, 
+                plural_name_kebab, 
+                singular_name_snake, 
+                plural_name_snake, 
+                columns
+            )
 
         if "controller_show" in input_menu_checkbox:
             generate_controller_show_file(
-                ruta, namespace, path_controller, singular_name, plural_name, singular_name_snake, plural_name_snake)
+                full_path,
+                namespace, 
+                singular_name, 
+                plural_name, 
+                singular_name_snake, 
+                plural_name_snake
+            )
 
         if "controller_store" in input_menu_checkbox:
-            generate_controller_store_file(ruta, namespace, path_controller, singular_name, plural_name,
-                                           singular_name_kebab, plural_name_kebab, singular_name_snake, plural_name_snake, columns)
+            generate_controller_store_file(
+                full_path, 
+                namespace, 
+                singular_name, 
+                plural_name,
+                singular_name_kebab, 
+                plural_name_kebab, 
+                singular_name_snake, 
+                plural_name_snake, 
+                columns
+            )
 
         if "controller_update" in input_menu_checkbox:
-            generate_controller_update_file(ruta, namespace, path_controller, singular_name, plural_name,
-                                            singular_name_kebab, plural_name_kebab, singular_name_snake, plural_name_snake, columns)
+            generate_controller_update_file(
+                full_path, 
+                namespace, 
+                singular_name, 
+                plural_name,
+                singular_name_kebab, 
+                plural_name_kebab, 
+                singular_name_snake, 
+                plural_name_snake, 
+                columns
+            )
 
         if "controller_destroy" in input_menu_checkbox:
-            generate_controller_destroy_file(ruta, namespace, path_controller, singular_name, plural_name,
-                                             singular_name_kebab, plural_name_kebab, singular_name_snake, plural_name_snake, columns)
+            generate_controller_destroy_file(
+                full_path, 
+                namespace, 
+                singular_name, 
+                plural_name,
+                singular_name_kebab, 
+                plural_name_kebab, 
+                singular_name_snake, 
+                plural_name_snake, 
+                columns
+            )
+            
+            
+        # TODO::::     
+        if "request_store" in input_menu_checkbox:
+            generate_request_store(
+                full_path, 
+                namespace,
+                singular_name, 
+                plural_name,
+                singular_name_kebab, 
+                plural_name_kebab, 
+                singular_name_snake, 
+                plural_name_snake,
+                columns
+            )
+            
+        
 
         if "service" in input_menu_checkbox:
-            generate_service_file(ruta, namespace, path_services, singular_name,
-                                     plural_name, singular_name_snake, plural_name_snake, columns)
+            generate_service_file(
+                full_path, 
+                namespace, 
+                singular_name,
+                plural_name, 
+                singular_name_snake, 
+                plural_name_snake, 
+                columns
+            )
 
         if "routes" in input_menu_checkbox:
-            generate_routes_file(ruta, namespace, path_routes, plural_name, singular_name,
-                                 singular_name_kebab, plural_name_kebab, singular_name_snake, plural_name_snake)
+            generate_routes_file(
+                full_path, 
+                namespace,
+                plural_name, 
+                singular_name,
+                singular_name_kebab, 
+                plural_name_kebab, 
+                singular_name_snake, 
+                plural_name_snake
+            )
 
         if "migration" in input_menu_checkbox:
-            generate_migration_file(ruta, namespace, path_migration, singular_name, plural_name,
-                                    singular_name_kebab, plural_name_kebab, singular_name_snake, plural_name_snake, columns)
+            generate_migration_file(
+                full_path, 
+                namespace, 
+                singular_name, 
+                plural_name,
+                singular_name_kebab, 
+                plural_name_kebab, 
+                singular_name_snake, 
+                plural_name_snake, 
+                columns
+            )
 
         if "seeder" in input_menu_checkbox:
-            generate_seeder_file(ruta, namespace, path_seeder, singular_name, plural_name,
-                                 singular_name_snake, plural_name_snake, columns)
+            generate_seeder_file(
+                full_path, 
+                namespace,
+                singular_name, 
+                plural_name,
+                singular_name_snake, 
+                plural_name_snake, 
+                columns
+            )
 
         if "factory" in input_menu_checkbox:
-            generate_factory_file(ruta, namespace, path_factory, singular_name,
-                                  plural_name, singular_name_snake, plural_name_snake, columns)
+            generate_factory_file(
+                full_path, 
+                namespace,
+                singular_name,
+                plural_name, 
+                singular_name_snake, 
+                plural_name_snake, 
+                columns
+            )
 
         if "postman" in input_menu_checkbox:
-            generate_postman_file(ruta, singular_name, plural_name,
-                                  singular_name_kebab, plural_name_kebab, columns)
+            generate_postman_file(
+                full_path, 
+                singular_name, 
+                plural_name,
+                singular_name_kebab, 
+                plural_name_kebab, 
+                columns
+            )
 
     else:
         print("La ruta proporcionada no es válida o no existe. Por favor, verifica y vuelve a intentarlo.")

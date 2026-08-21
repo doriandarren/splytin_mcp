@@ -16,10 +16,20 @@ def create_controller_structure(base_ruta, path_controller):
     return controller_folder_path
 
 
-def generate_controller_show_file(base_ruta, namespace, path_controller, singular_name, plural_name, singular_name_snake, plural_name_snake):
+def generate_controller_show_file(
+    base_ruta, 
+    namespace, 
+    singular_name, 
+    plural_name, 
+    singular_name_snake, 
+    plural_name_snake
+):
     """
     Genera un archivo de controlador PHP basado en los nombres proporcionados y crea la estructura app/path_controller dentro de base_ruta.
     """
+    
+    path_controller = "Http/Controllers/" + namespace + "/" + plural_name
+    
     # Crear la estructura de carpetas llamando a create_controller_structure
     controller_folder_path = create_controller_structure(base_ruta, path_controller)
 

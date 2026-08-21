@@ -17,11 +17,20 @@ def create_model_structure(base_ruta, path_model):
     return model_folder_path
 
 
-def generate_model_file(base_ruta, namespace, path_model, singular_name, plural_name, plural_name_snake):
+def generate_model_file(
+    base_ruta, 
+    namespace,
+    singular_name, 
+    plural_name, 
+    plural_name_snake
+):
     """
     Genera un archivo de modelo PHP basado en los nombres proporcionados y crea la estructura app/path_model dentro de base_ruta.
     El nombre del archivo será igual a 'singular_name'.
     """
+    
+    path_model = "Models/" + namespace + "/" + plural_name
+    
     # Crear la estructura de carpetas llamando a create_model_structure
     model_folder_path = create_model_structure(base_ruta, path_model)
 
@@ -52,7 +61,7 @@ class {singular_name} extends Model
     // TODO add relation tables
     // public function classrelacion()
     // {{
-    //     return $this->hasMany(ClassRelacion::class, 'classrelacion_id', 'id');
+    //     return $this->hasMany(Relation::class, 'relacion_id', 'id');
     // }}
 }}
 """

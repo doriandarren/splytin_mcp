@@ -22,10 +22,23 @@ def create_controller_structure(base_ruta, path_controller):
     return controller_folder_path
 
 
-def generate_controller_store_file(base_ruta, namespace, path_controller, singular_name, plural_name, singular_name_kebab, plural_name_kebab, singular_name_snake, plural_name_snake, columns):
+def generate_controller_store_file(
+    base_ruta, 
+    namespace, 
+    singular_name, 
+    plural_name, 
+    singular_name_kebab, 
+    plural_name_kebab, 
+    singular_name_snake, 
+    plural_name_snake, 
+    columns
+):
     """
     Genera un archivo de controlador PHP para el método 'store' basado en los nombres proporcionados y crea la estructura app/path_controller dentro de base_ruta.
     """
+    
+    path_controller = "Http/Controllers/" + namespace + "/" + plural_name
+    
     # Crear la estructura de carpetas llamando a create_controller_structure
     controller_folder_path = create_controller_structure(base_ruta, path_controller)
 

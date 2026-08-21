@@ -16,10 +16,21 @@ def create_factory_structure(base_ruta, path_factory, plural_name):
     return factory_folder_path
 
 
-def generate_factory_file(base_ruta, namespace, path_factory, singular_name, plural_name, singular_name_snake, plural_name_snake, columns):
+def generate_factory_file(
+    base_ruta, 
+    namespace, 
+    singular_name, 
+    plural_name, 
+    singular_name_snake, 
+    plural_name_snake, 
+    columns
+):
     """
     Genera un archivo de Factory PHP basado en los nombres proporcionados y crea la estructura settings/factories/plural_name dentro de base_ruta.
     """
+    
+    path_factory = "database/factories/" + namespace
+    
     # Crear la estructura de carpetas llamando a create_factory_structure
     factory_folder_path = create_factory_structure(base_ruta, path_factory, plural_name)
 

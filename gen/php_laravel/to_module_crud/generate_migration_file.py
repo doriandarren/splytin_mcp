@@ -21,7 +21,6 @@ def create_migration_structure(base_ruta, path_migration):
 def generate_migration_file(
     base_ruta,
     namespace,
-    path_migration,
     singular_name,
     plural_name,
     singular_name_kebab,
@@ -34,6 +33,8 @@ def generate_migration_file(
     Genera un archivo de migración PHP basado en los nombres proporcionados
     y crea la estructura dentro de base_ruta.
     """
+
+    path_migration = "database/migrations/"
 
     migration_folder_path = create_migration_structure(base_ruta, path_migration)
 

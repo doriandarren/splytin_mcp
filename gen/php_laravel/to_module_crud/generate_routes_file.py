@@ -16,10 +16,22 @@ def create_routes_structure(base_ruta, path_routes, namespace):
     return routes_folder_path
 
 
-def generate_routes_file(base_ruta, namespace, path_routes, plural_name, singular_name, singular_name_kebab, plural_name_kebab, singular_name_snake, plural_name_snake):
+def generate_routes_file(
+    base_ruta, 
+    namespace, 
+    plural_name, 
+    singular_name, 
+    singular_name_kebab, 
+    plural_name_kebab, 
+    singular_name_snake, 
+    plural_name_snake
+):
     """
     Genera un archivo de rutas PHP basado en los nombres proporcionados y crea la estructura path_routes/namespace dentro de base_ruta.
     """
+    
+    path_routes = "routes/"
+    
     # Crear la estructura de carpetas llamando a create_routes_structure
     routes_folder_path = create_routes_structure(base_ruta, path_routes, namespace)
 

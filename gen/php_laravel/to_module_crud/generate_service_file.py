@@ -16,12 +16,23 @@ def create_structure(base_ruta, path_model):
     return service_folder_path
 
 
-def generate_service_file(base_ruta, namespace, path_model, singular_name, plural_name, singular_name_snake, plural_name_snake, columns):
+def generate_service_file(
+    base_ruta, 
+    namespace, 
+    singular_name, 
+    plural_name, 
+    singular_name_snake, 
+    plural_name_snake, 
+    columns
+):
     """
     Genera un archivo de repositorio PHP basado en los nombres proporcionados y crea la estructura app/path_model dentro de base_ruta.
     """
+    
+    path_services = "Services/" + namespace + "/" + plural_name
+    
     # Crear la estructura de carpetas llamando a create_repository_structure
-    service_folder_path = create_structure(base_ruta, path_model)
+    service_folder_path = create_structure(base_ruta, path_services)
 
     # Nombre del archivo PHP será igual a singular_name
     file_name = f'{singular_name}Service.php'

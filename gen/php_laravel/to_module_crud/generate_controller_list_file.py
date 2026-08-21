@@ -28,12 +28,25 @@ def formatColumnQuery(columns):
 
 
 
-def generate_controller_list_file(base_ruta, namespace, path_model, singular_name, plural_name, singular_name_kebab, plural_name_kebab, singular_name_snake, plural_name_snake, columns):
+def generate_controller_list_file(
+    base_ruta, 
+    namespace, 
+    singular_name, 
+    plural_name, 
+    singular_name_kebab, 
+    plural_name_kebab, 
+    singular_name_snake, 
+    plural_name_snake, 
+    columns
+):
     """
     Genera un archivo de controlador PHP basado en los nombres proporcionados y crea la estructura app/path_model dentro de base_ruta.
     """
+    
+    path_controller = "Http/Controllers/" + namespace + "/" + plural_name
+    
     # Crear la estructura de carpetas llamando a create_controllers_structure
-    controllers_folder_path = create_controllers_structure(base_ruta, path_model)
+    controllers_folder_path = create_controllers_structure(base_ruta, path_controller)
 
     # Nombre del archivo PHP será igual a singular_name
     file_name = f'{singular_name}ListController.php'

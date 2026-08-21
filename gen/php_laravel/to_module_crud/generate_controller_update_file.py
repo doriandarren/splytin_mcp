@@ -18,10 +18,23 @@ def create_controller_structure(base_ruta, path_controller):
 
 
 
-def generate_controller_update_file(base_ruta, namespace, path_controller, singular_name, plural_name, singular_name_kebab, plural_name_kebab, singular_name_snake, plural_name_snake, columns):
+def generate_controller_update_file(
+    base_ruta, 
+    namespace, 
+    singular_name, 
+    plural_name, 
+    singular_name_kebab, 
+    plural_name_kebab, 
+    singular_name_snake, 
+    plural_name_snake, 
+    columns
+):
     """
     Genera el archivo de controlador PHP para el método Update.
     """
+    
+    path_controller = "Http/Controllers/" + namespace + "/" + plural_name
+    
     # Crear la estructura de carpetas llamando a create_controller_structure
     controller_folder_path = create_controller_structure(base_ruta, path_controller)
 
