@@ -9,19 +9,18 @@ load_dotenv()
 
 
 def start_project_php():
-     # Defaults
     
-    #default_path = "/Users/dorian/PHPProjects"
+    # Defaults
     default_path = os.getenv("DEFAULT_PATH_PHP")    
     default_name = "api.app1.com"
 
     # Inputs
     project_name = input_with_validation(
-        f"Nombre del proyecto (defecto: {default_name}): ",
+        f"Nombre del proyecto",
         default_name
     )
     project_path = input_with_validation(
-        f"Ruta del proyecto (defecto: {default_path}): ",
+        f"Ruta del proyecto",
         default_path
     )
 
