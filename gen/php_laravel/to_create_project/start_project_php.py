@@ -11,7 +11,7 @@ load_dotenv()
 def start_project_php():
     
     # Defaults
-    default_path = os.getenv("DEFAULT_PATH_PHP")    
+    default_path = os.getenv("DEFAULT_PATH_PROJECT_PHP")
     default_name = "api.app1.com"
 
     # Inputs
