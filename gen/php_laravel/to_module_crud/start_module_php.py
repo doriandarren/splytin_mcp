@@ -27,7 +27,9 @@ def start_module_php():
     ]
     
     #default_path = "/Users/dorian/PhpstormProjects81/api.app1.com"
-    default_path = "/Users/dorian/PHPProjects/docker-laravel-84/projects/api-integrations.transportuarios.com"
+    #default_path = "/Users/dorian/PHPProjects/docker-laravel-84/projects/api-integrations.transportuarios.com"
+    
+    default_path = os.getenv("DEFAULT_PATH_CRUD_PHP")
     default_namespace = "API"
     
     input_menu_checkbox = menu_checkbox("Componentes: ", opt)
