@@ -70,7 +70,7 @@ DB_PASSWORD_SHARED=
             f"""APP_URL=http://localhost""",
             f"""APP_URL=http://{domain_name}
 
-DISCORD_WEBHOOK_URL="""
+MESSAGE_CHANNEL_URL="""
         )
 
 
@@ -152,10 +152,10 @@ DB_PASSWORD_SHARED=
         )
 
         content = content.replace(
-            f"""APP_URL=http://localhost""",
+            f"""APP_URL=http://localhost:8000""",
             f"""APP_URL=http://{domain_name}
 
-DISCORD_WEBHOOK_URL="""
+MESSAGE_CHANNEL_URL="""
         )
 
 

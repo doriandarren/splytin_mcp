@@ -61,7 +61,7 @@ class MessageChannel
             Http::withHeaders([
                 'Content-Type' => 'application/json',
             ])
-                ->post(env('DISCORD_WEBHOOK_URL'), $payload);
+                ->post(env('MESSAGE_CHANNEL_URL'), $payload);
         } catch (\GuzzleHttp\Exception\GuzzleException $e) {
             echo 'Error: ' . $e->getMessage();
         }catch (ConnectionException $e) {
