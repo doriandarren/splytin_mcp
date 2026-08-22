@@ -24,10 +24,11 @@ def main_laravel():
         str_input = menu_list(
             "¿Qué quieres crear?: ",
             [
-                {"name": "Proyecto", "value": "project"},
-                {"name": "Módulo CRUD", "value": "crud"},
-                {"name": "Borrar Módulo", "value": "module_delete"},
-                {"name": "Migrar Proyecto", "value": "migrate_project"},
+                {"name": "API - Proyecto", "value": "project"},
+                {"name": "API - Módulo CRUD", "value": "crud"},
+                {"name": "API - Borrar Módulo", "value": "module_delete"},
+                {"name": "API - Migrar Proyecto", "value": "migrate_project"},
+                {"name": "WEB - CRUD", "value": "web_crud"},
                 {"name": "Volver", "value": "back"},
             ]
         )
@@ -44,6 +45,9 @@ def main_laravel():
             start_module_delete_php()
         elif opt == 'migrate_project':
             start_module_migrate_project_php()
+        elif opt == 'web_crud':
+            print("Haciendo...")
+            pass
         elif opt == 'back':
             print("\nVolviendo al menú anterior...\n")
             break
