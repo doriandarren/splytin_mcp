@@ -17,8 +17,9 @@ def create_controller_structure(base_ruta, path_controller):
 
 
 def generate_controller_update_file(
-    base_ruta, 
-    namespace, 
+    base_ruta,
+    namespace,
+    version_api,
     singular_name, 
     plural_name, 
     singular_name_kebab, 
@@ -31,7 +32,7 @@ def generate_controller_update_file(
     Genera el archivo de controlador PHP para el método Update.
     """
     
-    path_controller = "Http/Controllers/" + namespace + "/" + plural_name
+    path_controller = "Http/Controllers/" + namespace + "/" + version_api + "/" + plural_name
     
     # Crear la estructura de carpetas llamando a create_controller_structure
     controller_folder_path = create_controller_structure(base_ruta, path_controller)
@@ -50,7 +51,7 @@ def generate_controller_update_file(
     # Contenido del archivo PHP del controlador adaptado
     controller_content = f"""<?php
 
-namespace App\\Http\\Controllers\\{namespace}\\{plural_name};
+namespace App\\Http\\Controllers\\{namespace}\\{version_api}\\{plural_name};
 
 use Illuminate\\Http\\JsonResponse;
 use Illuminate\\Http\\Request;
@@ -59,7 +60,8 @@ use Illuminate\\Validation\\Rule;
 use Illuminate\\Support\\Facades\\Auth;
 use App\\Http\\Controllers\\Controller;
 use App\\Models\\{namespace}\\{plural_name}\\{singular_name};
-use App\\Services\\{namespace}\\{plural_name}\\{singular_name}Service;
+use App\\Services\\{namespace}\\{version_api}\\{plural_name}\\{singular_name}Service;
+use App\\Http\\Requests\\{namespace}\\{version_api}\\{plural_name}\\Update{singular_name}Request;
 
 class {singular_name}UpdateController extends Controller
 {{
@@ -80,37 +82,19 @@ class {singular_name}UpdateController extends Controller
     * @param {singular_name} ${singular_name_snake}
     * @return JsonResponse
     */
-    public function __invoke(Request $request, {singular_name} ${singular_name_snake}): JsonResponse
+    public function __invoke(Update{singular_name}Request $request, {singular_name} ${singular_name_snake}): JsonResponse
     {{
 
         if($this->isAdmin(Auth::user()->roles)){{
+            
             // By Admin
-
-            $validator = Validator::make($request->all(), [
-{generate_validation_rules(columns)}
-            ]);
-
-            if($validator->fails()){{
-                return $this->respondWithError('Error', $validator->errors());
-            }}
-
             $data = $this->service->update(${singular_name_snake}->id, $request->all());
             return $this->respondWithData('{singular_name} updated', $data);
 
         }}else{{
 
             // By Role Manager & User
-
-            $validator = Validator::make($request->all(), [
-{generate_validation_rules(columns)}
-            ]);
-
-            if($validator->fails()){{
-                return $this->respondWithError('Error', $validator->errors());
-            }}
-
             $data = $this->service->update(${singular_name_snake}->id, $request->all());
-
             return $this->respondWithData('{singular_name} updated', $data);
 
         }}
@@ -127,13 +111,3 @@ class {singular_name}UpdateController extends Controller
     except Exception as e:
         print(f"Error al crear el archivo de controlador '{file_name}': {e}")
 
-
-
-
-
-# Función auxiliar para generar reglas de validación
-def generate_validation_rules(columns):
-    validation_rules = ""
-    for column in columns:
-        validation_rules += f"                '{column['name']}' => 'required',\n"
-    return validation_rules

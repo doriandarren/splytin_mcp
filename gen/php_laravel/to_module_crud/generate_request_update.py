@@ -2,7 +2,6 @@ import os
 from gen.helpers.helper_print import print_message, GREEN, CYAN
 
 
-
 # Función auxiliar para generar reglas de validación
 def generate_validation_rules(columns):
     validation_rules = ""
@@ -44,7 +43,9 @@ def generate_validation_rules(columns):
 
 
 
-def generate_request_store(
+
+
+def generate_request_update(
     full_path,
     namespace,
     version_api,
@@ -62,7 +63,7 @@ def generate_request_store(
     """
 
     folder_path = os.path.join(full_path, "app", "Http", "Requests", namespace, version_api, plural_name)
-    file_path = os.path.join(folder_path, f"Store{singular_name}Request.php")
+    file_path = os.path.join(folder_path, f"Update{singular_name}Request.php")
 
     os.makedirs(folder_path, exist_ok=True)
 
@@ -73,7 +74,7 @@ namespace App\\Http\\Requests\\{namespace}\\{version_api}\\{plural_name};
 use Illuminate\\Contracts\\Validation\\ValidationRule;
 use Illuminate\\Foundation\\Http\\FormRequest;
 
-class Store{singular_name}Request extends FormRequest
+class Update{singular_name}Request extends FormRequest
 {{
     /**
      * Determine if the user is authorized to make this request.
@@ -91,7 +92,7 @@ class Store{singular_name}Request extends FormRequest
     public function rules(): array
     {{
         return [
-{generate_validation_rules(columns)}            
+{generate_validation_rules(columns)}
        ];
     }}
 }}
@@ -105,6 +106,3 @@ class Store{singular_name}Request extends FormRequest
         print_message(f"Archivo generado: {file_path}", GREEN)
     except Exception as e:
         print_message(f"Error al generar el archivo {file_path}: {e}", CYAN)
-
-
-

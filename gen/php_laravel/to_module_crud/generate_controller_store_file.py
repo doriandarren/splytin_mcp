@@ -6,12 +6,15 @@ def first_letter_lower(name):
     return name[0].lower() + name[1:]
 
 
-def create_controller_structure(base_ruta, path_controller):
+def create_controller_structure(
+    full_path, 
+    path_controller
+):
     """
     Crea la estructura de carpetas 'base_ruta/app/path_controller' en la ruta especificada.
     """
     # Crear la ruta completa base_ruta/app/path_controller
-    controller_folder_path = os.path.join(base_ruta, 'app', path_controller)
+    controller_folder_path = os.path.join(full_path, 'app', path_controller)
 
     if not os.path.exists(controller_folder_path):
         os.makedirs(controller_folder_path)
@@ -21,8 +24,9 @@ def create_controller_structure(base_ruta, path_controller):
 
 
 def generate_controller_store_file(
-    base_ruta, 
+    full_path, 
     namespace, 
+    version_api,
     singular_name, 
     plural_name, 
     singular_name_kebab, 
@@ -35,10 +39,10 @@ def generate_controller_store_file(
     Genera un archivo de controlador PHP para el método 'store' basado en los nombres proporcionados y crea la estructura app/path_controller dentro de base_ruta.
     """
     
-    path_controller = "Http/Controllers/" + namespace + "/" + plural_name
+    path_controller = "Http/Controllers/" + namespace + "/" + version_api + "/" + plural_name
     
     # Crear la estructura de carpetas llamando a create_controller_structure
-    controller_folder_path = create_controller_structure(base_ruta, path_controller)
+    controller_folder_path = create_controller_structure(full_path, path_controller)
 
     # Nombre del archivo PHP será igual a singular_name
     file_name = f'{singular_name}StoreController.php'
@@ -54,14 +58,15 @@ def generate_controller_store_file(
     # Contenido del archivo PHP del controlador para 'store'
     controller_content = f"""<?php
 
-namespace App\\Http\\Controllers\\{namespace}\\{plural_name};
+namespace App\\Http\\Controllers\\{namespace}\\{version_api}\\{plural_name};
 
 use Illuminate\\Http\\JsonResponse;
 use Illuminate\\Http\\Request;
 use Illuminate\\Support\\Facades\\Auth;
 use Illuminate\\Support\\Facades\\Validator;
 use App\\Http\\Controllers\\Controller;
-use App\\Services\\{namespace}\\{plural_name}\\{singular_name}Service;
+use App\\Services\\{namespace}\\{version_api}\\{plural_name}\\{singular_name}Service;
+use App\\Http\\Requests\\{namespace}\\{version_api}\\{plural_name}\\Store{singular_name}Request;
 
 class {singular_name}StoreController extends Controller
 {{
@@ -80,22 +85,13 @@ class {singular_name}StoreController extends Controller
     * @param Request $request
     * @return JsonResponse
     */
-    public function __invoke(Request $request): JsonResponse
+    public function __invoke(Store{singular_name}Request $request): JsonResponse
     {{
         if($this->isAdmin(Auth::user()->roles)){{
-
-            $validator = Validator::make($request->all(), [
+            
+            // By Admin
 """
-
-    # Agregar validaciones dinámicas para las columnas en la parte de Admin
-    for column in columns:
-        controller_content += f"                '{column['name']}'=>'required',\n"
-
-    controller_content += f"""            ]); 
-            if($validator->fails()){{
-                return $this->respondWithError('Error', $validator->errors());
-            }}
-            ${ first_letter_lower(singular_name)} = $this->service->set{singular_name}(
+    controller_content += f"""            ${ first_letter_lower(singular_name)} = $this->service->set{singular_name}(
                 {', '.join([f'$request->{column["name"]}' for column in columns])}
             );
 
@@ -103,19 +99,11 @@ class {singular_name}StoreController extends Controller
             return $this->respondWithData('{singular_name} created', $data);
 
         }} else if($this->isManager(Auth::user()->roles)){{
+            
             // By Manager
-            $validator = Validator::make($request->all(), [
 """
 
-    # Agregar validaciones dinámicas para las columnas en la parte de Manager
-    for column in columns:
-        controller_content += f"                '{column['name']}'=>'required',\n"
-
-    controller_content += f"""            ]);
-            if($validator->fails()){{
-                return $this->respondWithError('Error', $validator->errors());
-            }}
-            ${first_letter_lower(singular_name)} = $this->service->set{singular_name}(
+    controller_content += f"""            ${first_letter_lower(singular_name)} = $this->service->set{singular_name}(
                 {', '.join([f'$request->{column["name"]}' for column in columns])}
             );
 
@@ -123,24 +111,16 @@ class {singular_name}StoreController extends Controller
             return $this->respondWithData('{singular_name} created', $data);
 
         }} else {{
+            
             // By User
-            $validator = Validator::make($request->all(), [
 """
-
-    # Agregar validaciones dinámicas para las columnas en la parte de User
-    for column in columns:
-        controller_content += f"                '{column['name']}'=>'required',\n"
-
-    controller_content += f"""            ]);
-            if($validator->fails()){{
-                return $this->respondWithError('Error', $validator->errors());
-            }}
-            ${first_letter_lower(singular_name)} = $this->service->set{singular_name}(
+    controller_content += f"""            ${first_letter_lower(singular_name)} = $this->service->set{singular_name}(
                 {', '.join([f'$request->{column["name"]}' for column in columns])}
             );
 
             $data = $this->service->store(${first_letter_lower(singular_name)});
             return $this->respondWithData('{singular_name} created', $data);
+            
         }}
     }}
 }}

@@ -16,7 +16,8 @@ def create_structure(base_ruta, path_model):
 
 def generate_service_file(
     base_ruta, 
-    namespace, 
+    namespace,
+    version_api,
     singular_name, 
     plural_name, 
     singular_name_snake, 
@@ -27,7 +28,7 @@ def generate_service_file(
     Genera un archivo de repositorio PHP basado en los nombres proporcionados y crea la estructura app/path_model dentro de base_ruta.
     """
     
-    path_services = "Services/" + namespace + "/" + plural_name
+    path_services = "Services/" + namespace + "/" + version_api + "/" +plural_name
     
     # Crear la estructura de carpetas llamando a create_repository_structure
     service_folder_path = create_structure(base_ruta, path_services)
@@ -42,7 +43,7 @@ def generate_service_file(
     # Contenido del archivo PHP del repositorio adaptado
     service_content = f"""<?php
 
-namespace App\\Services\\{namespace}\\{plural_name};
+namespace App\\Services\\{namespace}\\{version_api}\\{plural_name};
 
 use App\\Enums\\EnumApiSetup;
 use App\\Models\\{namespace}\\{plural_name}\\{singular_name};

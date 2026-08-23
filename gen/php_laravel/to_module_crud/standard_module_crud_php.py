@@ -1,8 +1,10 @@
 import os
 from gen.helpers.helper_menu import pause
 from gen.helpers.helper_print import camel_to_kebab, camel_to_snake
+from gen.helpers.helper_string import normalize_project_name
 from gen.php_laravel.to_module_crud.generate_model_file import generate_model_file
 from gen.php_laravel.to_module_crud.generate_request_store import generate_request_store
+from gen.php_laravel.to_module_crud.generate_request_update import generate_request_update
 from gen.php_laravel.to_module_crud.generate_routes_file import generate_routes_file
 from gen.php_laravel.to_module_crud.generate_migration_file import generate_migration_file
 from gen.php_laravel.to_module_crud.generate_controller_list_file import generate_controller_list_file
@@ -19,6 +21,7 @@ from gen.php_laravel.to_module_crud.generate_service_file import generate_servic
 def standard_module_crud_php(
     full_path,
     namespace,
+    version_api,
     singular_name, 
     plural_name, 
     columns, 
@@ -47,6 +50,11 @@ def standard_module_crud_php(
     singular_name_snake = camel_to_snake(singular_name)
     plural_name_snake = camel_to_snake(plural_name)
     
+    
+    ## Project Name
+    temp_name = os.path.basename(full_path.rstrip(os.sep))
+    project_name = normalize_project_name(temp_name)
+    
 
     if os.path.isdir(full_path):
         
@@ -63,6 +71,7 @@ def standard_module_crud_php(
             generate_controller_list_file(
                 full_path, 
                 namespace, 
+                version_api,
                 singular_name, 
                 plural_name,
                 singular_name_kebab, 
@@ -74,20 +83,25 @@ def standard_module_crud_php(
 
         if "controller_show" in input_menu_checkbox:
             generate_controller_show_file(
-                full_path,
+                full_path, 
                 namespace, 
+                version_api,
                 singular_name, 
-                plural_name, 
+                plural_name,
+                singular_name_kebab, 
+                plural_name_kebab, 
                 singular_name_snake, 
-                plural_name_snake
+                plural_name_snake, 
+                columns
             )
 
         if "controller_store" in input_menu_checkbox:
             
             # Generate Controller
             generate_controller_store_file(
-                full_path, 
-                namespace, 
+                full_path,
+                namespace,
+                version_api,
                 singular_name, 
                 plural_name,
                 singular_name_kebab, 
@@ -98,43 +112,59 @@ def standard_module_crud_php(
             )
             
             ## Generate Request
-            # generate_request_store(
-            #     full_path, 
-            #     namespace,
-            #     singular_name, 
-            #     plural_name,
-            #     singular_name_kebab, 
-            #     plural_name_kebab, 
-            #     singular_name_snake, 
-            #     plural_name_snake,
-            #     columns
-            # )
+            generate_request_store(
+                full_path,
+                namespace,
+                version_api,
+                project_name,
+                singular_name,
+                plural_name,
+                singular_name_kebab,
+                plural_name_kebab,
+                singular_name_snake,
+                plural_name_snake,
+                columns
+            )
             
 
         if "controller_update" in input_menu_checkbox:
             
             ## Controller 
             generate_controller_update_file(
-                full_path, 
-                namespace, 
-                singular_name, 
+                full_path,
+                namespace,
+                version_api,
+                singular_name,
                 plural_name,
-                singular_name_kebab, 
-                plural_name_kebab, 
-                singular_name_snake, 
-                plural_name_snake, 
+                singular_name_kebab,
+                plural_name_kebab,
+                singular_name_snake,
+                plural_name_snake,
                 columns
             )
             
-            ## TODO agregar 
-            ## generate_request_update(
+            ## Generate Request
+            generate_request_update(
+                full_path,
+                namespace,
+                version_api,
+                project_name,
+                singular_name,
+                plural_name,
+                singular_name_kebab,
+                plural_name_kebab,
+                singular_name_snake,
+                plural_name_snake,
+                columns
+            )
             
             
 
         if "controller_destroy" in input_menu_checkbox:
             generate_controller_destroy_file(
                 full_path, 
-                namespace, 
+                namespace,
+                version_api,
                 singular_name, 
                 plural_name,
                 singular_name_kebab, 
@@ -149,6 +179,7 @@ def standard_module_crud_php(
             generate_service_file(
                 full_path, 
                 namespace, 
+                version_api,
                 singular_name,
                 plural_name, 
                 singular_name_snake, 
@@ -160,6 +191,7 @@ def standard_module_crud_php(
             generate_routes_file(
                 full_path, 
                 namespace,
+                version_api,
                 plural_name, 
                 singular_name,
                 singular_name_kebab, 

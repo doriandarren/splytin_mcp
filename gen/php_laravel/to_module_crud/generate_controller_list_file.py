@@ -1,10 +1,13 @@
 import os
 
-def create_controllers_structure(base_ruta, path_model):
+def create_controllers_structure(
+    full_path, 
+    path_model
+):
     """
     Crea la estructura de carpetas 'base_ruta/app/path_model' en la ruta especificada.
     """
-    controllers_folder_path = os.path.join(base_ruta, 'app', path_model)
+    controllers_folder_path = os.path.join(full_path, 'app', path_model)
 
     if not os.path.exists(controllers_folder_path):
         os.makedirs(controllers_folder_path)
@@ -27,8 +30,9 @@ def formatColumnQuery(columns):
 
 
 def generate_controller_list_file(
-    base_ruta, 
-    namespace, 
+    base_ruta,
+    namespace,
+    version_api,
     singular_name, 
     plural_name, 
     singular_name_kebab, 
@@ -41,7 +45,7 @@ def generate_controller_list_file(
     Genera un archivo de controlador PHP basado en los nombres proporcionados y crea la estructura app/path_model dentro de base_ruta.
     """
     
-    path_controller = "Http/Controllers/" + namespace + "/" + plural_name
+    path_controller = "Http/Controllers/" + namespace + "/" + version_api + "/" + plural_name
     
     # Crear la estructura de carpetas llamando a create_controllers_structure
     controllers_folder_path = create_controllers_structure(base_ruta, path_controller)
@@ -53,13 +57,13 @@ def generate_controller_list_file(
     # Contenido del archivo PHP del controlador adaptado
     controller_content = f"""<?php
 
-namespace App\\Http\\Controllers\\{namespace}\\{plural_name};
+namespace App\\Http\\Controllers\\{namespace}\\{version_api}\\{plural_name};
 
 use Illuminate\\Http\\JsonResponse;
 use Illuminate\\Http\\Request;
 use Illuminate\\Support\\Facades\\Auth;
 use App\\Http\\Controllers\\Controller;
-use App\\Services\\{namespace}\\{plural_name}\\{singular_name}Service;
+use App\\Services\\{namespace}\\{version_api}\\{plural_name}\\{singular_name}Service;
 
 class {singular_name}ListController extends Controller
 {{

@@ -2,7 +2,7 @@ import os
 from dotenv import load_dotenv
 from gen.helpers.helper_columns import parse_columns_input
 from gen.helpers.helper_menu import menu_checkbox, pause
-from gen.helpers.helper_print import input_with_validation
+from gen.helpers.helper_print import dd, input_with_validation
 from gen.php_laravel.to_module_crud.standard_module_crud_php import standard_module_crud_php
 
 
@@ -31,12 +31,14 @@ def start_module_php():
     
     default_path = os.getenv("DEFAULT_PATH_CRUD_PHP")
     default_namespace = "API"
+    default_api = 'V1'
     
     input_menu_checkbox = menu_checkbox("Componentes: ", opt)
 
 
     full_path = input_with_validation("Proyecto", default_path)
     namespace = input_with_validation("Namespace (ERP / API / INVOICES)", default_namespace)
+    version_api = input_with_validation("Version API", default_api)
     singular_name = input_with_validation("Nombre singular", "AgendaUnloading")
     plural_name = input_with_validation("Nombre plural", "AgendaUnloadings")
     input_columns = input_with_validation(
@@ -46,6 +48,8 @@ def start_module_php():
     
     columns = parse_columns_input(input_columns)
     
-    standard_module_crud_php(full_path, namespace, singular_name, plural_name, columns, input_menu_checkbox)
+    ##dd(columns)
+    
+    standard_module_crud_php(full_path, namespace, version_api, singular_name, plural_name, columns, input_menu_checkbox)
     
     pause()

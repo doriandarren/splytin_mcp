@@ -1,11 +1,14 @@
 import os
 
-def create_controller_structure(base_ruta, path_controller):
+def create_controller_structure(
+    full_path,
+    path_controller
+):
     """
-    Crea la estructura de carpetas 'base_ruta/app/path_controller' en la ruta especificada.
+    Crea la estructura de carpetas 'full_path/app/path_controller' en la ruta especificada.
     """
-    # Crear la ruta completa base_ruta/app/path_controller
-    controller_folder_path = os.path.join(base_ruta, 'app', path_controller)
+    # Crear la ruta completa full_path/app/path_controller
+    controller_folder_path = os.path.join(full_path, 'app', path_controller)
 
     if not os.path.exists(controller_folder_path):
         os.makedirs(controller_folder_path)
@@ -15,21 +18,25 @@ def create_controller_structure(base_ruta, path_controller):
 
 
 def generate_controller_show_file(
-    base_ruta, 
+    full_path, 
     namespace, 
+    version_api,
     singular_name, 
-    plural_name, 
+    plural_name,
+    singular_name_kebab, 
+    plural_name_kebab, 
     singular_name_snake, 
-    plural_name_snake
+    plural_name_snake, 
+    columns
 ):
     """
     Genera un archivo de controlador PHP basado en los nombres proporcionados y crea la estructura app/path_controller dentro de base_ruta.
     """
     
-    path_controller = "Http/Controllers/" + namespace + "/" + plural_name
+    path_controller = "Http/Controllers/" + namespace + "/" + version_api + "/" + plural_name
     
     # Crear la estructura de carpetas llamando a create_controller_structure
-    controller_folder_path = create_controller_structure(base_ruta, path_controller)
+    controller_folder_path = create_controller_structure(full_path, path_controller)
 
     # Nombre del archivo PHP será igual a singular_name
     file_name = f'{singular_name}ShowController.php'
@@ -38,13 +45,13 @@ def generate_controller_show_file(
     # Contenido del archivo PHP del controlador
     controller_content = f"""<?php
 
-namespace App\\Http\\Controllers\\{namespace}\\{plural_name};
+namespace App\\Http\\Controllers\\{namespace}\\{version_api}\\{plural_name};
 
 use Illuminate\\Support\\Facades\\Auth;
 use Illuminate\\Http\\JsonResponse;
 use App\\Http\\Controllers\\Controller;
 use App\\Models\\{namespace}\\{plural_name}\\{singular_name};
-use App\\Services\\{namespace}\\{plural_name}\\{singular_name}Service;
+use App\\Services\\{namespace}\\{version_api}\\{plural_name}\\{singular_name}Service;
 
 class {singular_name}ShowController extends Controller
 {{

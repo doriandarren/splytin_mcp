@@ -1,11 +1,15 @@
 import os
 
-def create_routes_structure(base_ruta, path_routes, namespace):
+def create_routes_structure(
+    full_path, 
+    path_routes, 
+    namespace
+):
     """
-    Crea la estructura de carpetas 'base_ruta/path_routes/namespace' en la ruta especificada.
+    Crea la estructura de carpetas 'full_path/path_routes/namespace' en la ruta especificada.
     """
-    # Crear la ruta completa base_ruta/path_routes/namespace
-    routes_folder_path = os.path.join(base_ruta, path_routes, namespace)
+    # Crear la ruta completa full_path/path_routes/namespace
+    routes_folder_path = os.path.join(full_path, path_routes, namespace)
 
     if not os.path.exists(routes_folder_path):
         os.makedirs(routes_folder_path)
@@ -17,6 +21,7 @@ def create_routes_structure(base_ruta, path_routes, namespace):
 def generate_routes_file(
     base_ruta, 
     namespace, 
+    version_api,
     plural_name, 
     singular_name, 
     singular_name_kebab, 
@@ -41,11 +46,11 @@ def generate_routes_file(
     routes_content = f"""<?php
 
 use App\\Enums\\EnumAbilitySuffix;
-use App\\Http\\Controllers\\{namespace}\\{plural_name}\\{singular_name}ListController;
-use App\\Http\\Controllers\\{namespace}\\{plural_name}\\{singular_name}ShowController;
-use App\\Http\\Controllers\\{namespace}\\{plural_name}\\{singular_name}StoreController;
-use App\\Http\\Controllers\\{namespace}\\{plural_name}\\{singular_name}UpdateController;
-use App\\Http\\Controllers\\{namespace}\\{plural_name}\\{singular_name}DestroyController;
+use App\\Http\\Controllers\\{namespace}\\{plural_name}\\{version_api}\\{singular_name}ListController;
+use App\\Http\\Controllers\\{namespace}\\{plural_name}\\{version_api}\\{singular_name}ShowController;
+use App\\Http\\Controllers\\{namespace}\\{plural_name}\\{version_api}\\{singular_name}StoreController;
+use App\\Http\\Controllers\\{namespace}\\{plural_name}\\{version_api}\\{singular_name}UpdateController;
+use App\\Http\\Controllers\\{namespace}\\{plural_name}\\{version_api}\\{singular_name}DestroyController;
 use Illuminate\\Support\\Facades\\Route;
 
 

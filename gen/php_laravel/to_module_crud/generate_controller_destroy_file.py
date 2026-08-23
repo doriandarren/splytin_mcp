@@ -14,21 +14,22 @@ def create_controller_structure(base_ruta, path_controller):
     return controller_folder_path
 
 def generate_controller_destroy_file(
-    base_ruta, 
-    namespace, 
-    singular_name, 
-    plural_name, 
-    singular_name_kebab, 
-    plural_name_kebab, 
-    singular_name_snake, 
-    plural_name_snake, 
+    base_ruta,
+    namespace,
+    version_api,
+    singular_name,
+    plural_name,
+    singular_name_kebab,
+    plural_name_kebab,
+    singular_name_snake,
+    plural_name_snake,
     columns
 ):
     """
     Genera el archivo de controlador PHP para el método Destroy, incluyendo las columnas.
     """
     
-    path_controller = "Http/Controllers/" + namespace + "/" + plural_name
+    path_controller = "Http/Controllers/" + namespace + "/" + version_api + "/" + plural_name
     
     # Crear la estructura de carpetas llamando a create_controller_structure
     controller_folder_path = create_controller_structure(base_ruta, path_controller)
@@ -40,14 +41,14 @@ def generate_controller_destroy_file(
     # Contenido del archivo PHP del controlador adaptado
     controller_content = f"""<?php
 
-namespace App\\Http\\Controllers\\{namespace}\\{plural_name};
+namespace App\\Http\\Controllers\\{namespace}\\{version_api}\\{plural_name};
 
 use Illuminate\\Http\\JsonResponse;
 use Illuminate\\Http\\Request;
 use Illuminate\\Support\\Facades\\Auth;
 use App\\Http\\Controllers\\Controller;
 use App\\Models\\{namespace}\\{plural_name}\\{singular_name};
-use App\\Services\\{namespace}\\{plural_name}\\{singular_name}Service;
+use App\\Services\\{namespace}\\{version_api}\\{plural_name}\\{singular_name}Service;
 
 class {singular_name}DestroyController extends Controller
 {{
