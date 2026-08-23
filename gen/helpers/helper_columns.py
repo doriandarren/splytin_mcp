@@ -95,10 +95,31 @@ def parse_columns_input(input_columns: str):
         if col_type not in allowed_types:
             raise ValueError(f"Tipo de columna no soportado: '{raw_col_type}' en '{token}'")
 
+
+
+        # Size - Tamaño
+        size = None
+        type_without_size = raw_col_type
+
+        if "(" in raw_col_type and ")" in raw_col_type:
+            type_without_size = raw_col_type.split("(", 1)[0]
+            size_value = raw_col_type.split("(", 1)[1].split(")", 1)[0]
+
+            if size_value.isdigit():
+                size = int(size_value)
+
+        col_type = normalize_column_type(type_without_size)
+
+        if size is None and col_type in {"string", "email"}:
+            size = 255
+
+
+        # Create Object
         col = {
             "name": name,
             "type": col_type,
             "raw_type": raw_col_type,
+            "size": size,
             "is_fk": col_type == "fk",
         }
 

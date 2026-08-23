@@ -43,12 +43,12 @@ def start_module_php():
     plural_name = input_with_validation("Nombre plural", "AgendaUnloadings")
     input_columns = input_with_validation(
         "Columnas (separdo por espacio)", 
-        "user_id:fk name:string amount:float description has_active:boolean"
+        "user_id:fk name:string(30) amount:float description:varchar(10) note has_active:boolean"
     )
     
     columns = parse_columns_input(input_columns)
     
-    ##dd(columns)
+    dd(columns)
     
     standard_module_crud_php(full_path, namespace, version_api, singular_name, plural_name, columns, input_menu_checkbox)
     

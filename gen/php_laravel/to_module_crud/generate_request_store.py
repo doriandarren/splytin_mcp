@@ -32,12 +32,19 @@ def generate_validation_rules(columns):
                 column_type,
                 "required"
             )
-            
+
+            # Añadir tamaño si aplica
+            if column_type in {"string", "email"} and column.get("size"):
+                str_value += f"|max:{column['size']}"
+
         is_last = index == len(columns) - 1
 
         validation_rules += (
-            f"            '{column['name']}' => '{str_value}',{"" if is_last else "\n"}"
+            f"            '{column['name']}' => '{str_value}',"
         )
+
+        if not is_last:
+            validation_rules += "\n"
 
     return validation_rules
 
