@@ -37,7 +37,7 @@ use App\\Http\\Controllers\\{namespace}\\{version_api}\\{plural_name}\\{singular
 /**
 * {plural_name}
 */
-Route::prefix('abilities')
+Route::prefix('{plural_name_kebab}')
     ->middleware('auth:sanctum')
     ->group(function () {{
 

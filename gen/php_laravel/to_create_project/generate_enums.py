@@ -450,7 +450,7 @@ abstract class EnumAbilitySuffix
      * Suffix for ability name
      */
     const ALL = ':all';
-    const INDEX = ':list';
+    const INDEX = ':index';
     const STORE = ':store';
     const UPDATE = ':update';
     const DESTROY = ':destroy';
