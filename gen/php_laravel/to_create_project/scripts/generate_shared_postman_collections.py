@@ -199,7 +199,7 @@ def generate_shared_postman_collections(full_path, project_name, domain_name, pa
 						"disableBodyPruning": true
 					},
 					"request": {
-						"method": "GET",
+						"method": "POST",
 						"header": [
 							{
 								"key": "Accept",

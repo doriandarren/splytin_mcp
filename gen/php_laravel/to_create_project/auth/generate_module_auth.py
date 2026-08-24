@@ -415,8 +415,8 @@ Route::post('auth/login', [AuthLoginController::class, '__invoke']);
 //    Route::post('password/restore', [RestorePasswordController::class, '__invoke']);
 
 Route::group(['middleware' => 'auth:sanctum'], function() {
-    Route::get('auth/logout', [AuthLogoutController::class, '__invoke']);
     Route::get('auth/user', [AuthUserController::class, '__invoke']);
+    Route::post('auth/logout', [AuthLogoutController::class, '__invoke']);
 });
 """
 
