@@ -332,7 +332,7 @@ class EnumAbilityGroups
         [
             'name' => 'ability_groups',
             'abilities' => [
-                EnumAbilitySuffix::LIST,
+                EnumAbilitySuffix::INDEX,
                 EnumAbilitySuffix::SHOW,
                 EnumAbilitySuffix::STORE,
                 EnumAbilitySuffix::UPDATE,
@@ -342,7 +342,7 @@ class EnumAbilityGroups
         [
             'name' => 'ability_user',
             'abilities' => [
-                EnumAbilitySuffix::LIST,
+                EnumAbilitySuffix::INDEX,
                 EnumAbilitySuffix::SHOW,
                 EnumAbilitySuffix::STORE,
                 EnumAbilitySuffix::UPDATE,
@@ -352,7 +352,7 @@ class EnumAbilityGroups
         [
             'name' => 'users',
             'abilities' => [
-                EnumAbilitySuffix::LIST,
+                EnumAbilitySuffix::INDEX,
                 EnumAbilitySuffix::SHOW,
                 EnumAbilitySuffix::STORE,
                 EnumAbilitySuffix::UPDATE,
@@ -362,7 +362,7 @@ class EnumAbilityGroups
         [
             'name' => 'user_statuses',
             'abilities' => [
-                EnumAbilitySuffix::LIST,
+                EnumAbilitySuffix::INDEX,
                 EnumAbilitySuffix::SHOW,
                 EnumAbilitySuffix::STORE,
                 EnumAbilitySuffix::UPDATE,
@@ -372,7 +372,7 @@ class EnumAbilityGroups
         [
             'name' => 'role_user',
             'abilities' => [
-                EnumAbilitySuffix::LIST,
+                EnumAbilitySuffix::INDEX,
                 EnumAbilitySuffix::SHOW,
                 EnumAbilitySuffix::STORE,
                 EnumAbilitySuffix::UPDATE,
@@ -450,7 +450,7 @@ abstract class EnumAbilitySuffix
      * Suffix for ability name
      */
     const ALL = ':all';
-    const LIST = ':list';
+    const INDEX = ':list';
     const STORE = ':store';
     const UPDATE = ':update';
     const DESTROY = ':destroy';

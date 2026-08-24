@@ -27,29 +27,38 @@ def generate_routes_file(
 
 use Illuminate\\Support\\Facades\\Route;
 use App\\Enums\\EnumAbilitySuffix;
-use App\\Http\\Controllers\\{namespace}\\{version_api}\\{plural_name}\\{singular_name}ListController;
+use App\\Http\\Controllers\\{namespace}\\{version_api}\\{plural_name}\\{singular_name}IndexController;
 use App\\Http\\Controllers\\{namespace}\\{version_api}\\{plural_name}\\{singular_name}ShowController;
 use App\\Http\\Controllers\\{namespace}\\{version_api}\\{plural_name}\\{singular_name}StoreController;
 use App\\Http\\Controllers\\{namespace}\\{version_api}\\{plural_name}\\{singular_name}UpdateController;
 use App\\Http\\Controllers\\{namespace}\\{version_api}\\{plural_name}\\{singular_name}DestroyController;
 
 
-
 /**
 * {plural_name}
 */
-Route::group(['prefix' => '{plural_name_kebab}/'], function () {{
+Route::prefix('abilities')
+    ->middleware('auth:sanctum')
+    ->group(function () {{
 
-	Route::group(['middleware' => 'auth:sanctum'], function() {{
+        Route::get('/', {singular_name}IndexController::class)
+            ->middleware('abilities:{plural_name_snake}' . EnumAbilitySuffix::INDEX);
+
+        Route::get('/{{{singular_name_snake}:id}}', {singular_name}ShowController::class)
+            ->middleware('abilities:{plural_name_snake}' . EnumAbilitySuffix::SHOW);
+
+        Route::post('/', {singular_name}StoreController::class)
+            ->middleware('abilities:{plural_name_snake}' . EnumAbilitySuffix::STORE);
+
+        Route::put('/{{{singular_name_snake}:id}}', {singular_name}UpdateController::class)
+            ->middleware('abilities:{plural_name_snake}' . EnumAbilitySuffix::UPDATE);
+
+        Route::delete('/{{{singular_name_snake}:id}}', {singular_name}DestroyController::class)
+            ->middleware('abilities:{plural_name_snake}' . EnumAbilitySuffix::DESTROY);
         
-		Route::get('list', [{singular_name}ListController::class, '__invoke'])->middleware('abilities:{plural_name_snake}' . EnumAbilitySuffix::LIST);
-		Route::get('show/{{{singular_name_snake}:id}}', [{singular_name}ShowController::class, '__invoke'])->middleware('abilities:{plural_name_snake}' . EnumAbilitySuffix::SHOW);
-		Route::post('store', [{singular_name}StoreController::class, '__invoke'])->middleware('abilities:{plural_name_snake}' . EnumAbilitySuffix::STORE);
-		Route::put('update/{{{singular_name_snake}:id}}', [{singular_name}UpdateController::class, '__invoke'])->middleware('abilities:{plural_name_snake}' . EnumAbilitySuffix::UPDATE);
-		Route::delete('delete/{{{singular_name_snake}:id}}', [{singular_name}DestroyController::class, '__invoke'])->middleware('abilities:{plural_name_snake}' . EnumAbilitySuffix::DESTROY);
-		
-	}});
 }});
+
+
 """
 
     try:
@@ -58,3 +67,4 @@ Route::group(['prefix' => '{plural_name_kebab}/'], function () {{
         print_message(f"Archivo generado: {file_path}", GREEN)
     except Exception as e:
         print_message(f"Error al generar el archivo {file_path}: {e}", CYAN)
+

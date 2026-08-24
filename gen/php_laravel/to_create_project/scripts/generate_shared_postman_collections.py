@@ -26,7 +26,7 @@ def generate_shared_postman_collections(full_path, project_name, domain_name, pa
 	"info": {
 		"_postman_id": "c45bcd65-d68b-4fbe-a0b6-b87a5632cbff",
 		"name": "API",
-		"description": "Api Rest Full \n\nApi URL:\n\n[https://__PROJECT_NAME__/api/](https://__PROJECT_NAME__/api/)\n\nEstructura principales de ENDPOINT para la gestión:\n\n- base_url/list\n- base_url/list-paginate\n- base_url/list/paginate?filter=cosoltrans\n- base_url/show/id\n- base_url/store\n- base_url/update\n- base_url/destroy",
+		"description": "Api Rest Full \n\nApi URL:\n\n[https://__PROJECT_NAME__/api/](https://__PROJECT_NAME__/api/)\n\nEstructura principales de ENDPOINT para la gestión:\n\n- GET base_url/resource\n- GET base_url/resource/id\n- POST base_url/resource\n- PUT base_url/resource/id\n- DELETE base_url/resource/id",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "5599797",
 		"_collection_link": "https://warped-satellite-11290.postman.co/workspace/__PROJECT_NAME__t~ae865b4b-fd0c-416a-bcd9-0c9108578f23/collection/5599797-c45bcd65-d68b-4fbe-a0b6-b87a5632cbff?action=share&source=collection_link&creator=5599797"
@@ -282,7 +282,7 @@ def generate_shared_postman_collections(full_path, project_name, domain_name, pa
 			"name": "Dashboards",
 			"item": [
 				{
-					"name": "List",
+					"name": "Index",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -299,12 +299,12 @@ def generate_shared_postman_collections(full_path, project_name, domain_name, pa
 							}
 						],
 						"url": {
-							"raw": "{{base_url}}dashboards/list",
+							"raw": "{{base_url}}dashboards",
 							"host": [
 								"{{base_url}}dashboards"
 							],
 							"path": [
-								"list"
+								
 							]
 						}
 					},
@@ -316,7 +316,7 @@ def generate_shared_postman_collections(full_path, project_name, domain_name, pa
 			"name": "Abilities",
 			"item": [
 				{
-					"name": "List",
+					"name": "Index",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -339,12 +339,12 @@ def generate_shared_postman_collections(full_path, project_name, domain_name, pa
 							"formdata": []
 						},
 						"url": {
-							"raw": "{{base_url}}abilities/list",
+							"raw": "{{base_url}}abilities",
 							"host": [
 								"{{base_url}}abilities"
 							],
 							"path": [
-								"list"
+								
 							]
 						}
 					},
@@ -374,12 +374,11 @@ def generate_shared_postman_collections(full_path, project_name, domain_name, pa
 							"formdata": []
 						},
 						"url": {
-							"raw": "{{base_url}}abilities/show/1",
+							"raw": "{{base_url}}abilities/1",
 							"host": [
 								"{{base_url}}abilities"
 							],
 							"path": [
-								"show",
 								"1"
 							]
 						}
@@ -423,12 +422,12 @@ def generate_shared_postman_collections(full_path, project_name, domain_name, pa
 							]
 						},
 						"url": {
-							"raw": "{{base_url}}abilities/store",
+							"raw": "{{base_url}}abilities",
 							"host": [
 								"{{base_url}}abilities"
 							],
 							"path": [
-								"store"
+								
 							]
 						}
 					},
@@ -471,12 +470,11 @@ def generate_shared_postman_collections(full_path, project_name, domain_name, pa
 							]
 						},
 						"url": {
-							"raw": "{{base_url}}abilities/update/1",
+							"raw": "{{base_url}}abilities/1",
 							"host": [
 								"{{base_url}}abilities"
 							],
 							"path": [
-								"update",
 								"1"
 							]
 						}
@@ -500,12 +498,11 @@ def generate_shared_postman_collections(full_path, project_name, domain_name, pa
 							}
 						],
 						"url": {
-							"raw": "{{base_url}}abilities/delete/1",
+							"raw": "{{base_url}}abilities/1",
 							"host": [
 								"{{base_url}}abilities"
 							],
 							"path": [
-								"delete",
 								"1"
 							]
 						}
@@ -518,7 +515,7 @@ def generate_shared_postman_collections(full_path, project_name, domain_name, pa
 			"name": "AbilityGroups",
 			"item": [
 				{
-					"name": "List",
+					"name": "Index",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -541,12 +538,12 @@ def generate_shared_postman_collections(full_path, project_name, domain_name, pa
 							"formdata": []
 						},
 						"url": {
-							"raw": "{{base_url}}ability-groups/list",
+							"raw": "{{base_url}}ability-groups",
 							"host": [
 								"{{base_url}}ability-groups"
 							],
 							"path": [
-								"list"
+								
 							]
 						}
 					},
@@ -576,12 +573,11 @@ def generate_shared_postman_collections(full_path, project_name, domain_name, pa
 							"formdata": []
 						},
 						"url": {
-							"raw": "{{base_url}}ability-groups/show/1",
+							"raw": "{{base_url}}ability-groups/1",
 							"host": [
 								"{{base_url}}ability-groups"
 							],
 							"path": [
-								"show",
 								"1"
 							]
 						}
@@ -615,12 +611,12 @@ def generate_shared_postman_collections(full_path, project_name, domain_name, pa
 							]
 						},
 						"url": {
-							"raw": "{{base_url}}ability-groups/store",
+							"raw": "{{base_url}}ability-groups",
 							"host": [
 								"{{base_url}}ability-groups"
 							],
 							"path": [
-								"store"
+								
 							]
 						}
 					},
@@ -653,12 +649,11 @@ def generate_shared_postman_collections(full_path, project_name, domain_name, pa
 							]
 						},
 						"url": {
-							"raw": "{{base_url}}ability-groups/update/1",
+							"raw": "{{base_url}}ability-groups/1",
 							"host": [
 								"{{base_url}}ability-groups"
 							],
 							"path": [
-								"update",
 								"1"
 							]
 						}
@@ -682,12 +677,11 @@ def generate_shared_postman_collections(full_path, project_name, domain_name, pa
 							}
 						],
 						"url": {
-							"raw": "{{base_url}}ability-groups/delete/1",
+							"raw": "{{base_url}}ability-groups/1",
 							"host": [
 								"{{base_url}}ability-groups"
 							],
 							"path": [
-								"delete",
 								"1"
 							]
 						}
@@ -700,7 +694,7 @@ def generate_shared_postman_collections(full_path, project_name, domain_name, pa
 			"name": "AbilityUsers",
 			"item": [
 				{
-					"name": "List",
+					"name": "Index",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -723,12 +717,12 @@ def generate_shared_postman_collections(full_path, project_name, domain_name, pa
 							"formdata": []
 						},
 						"url": {
-							"raw": "{{base_url}}ability-users/list",
+							"raw": "{{base_url}}ability-users",
 							"host": [
 								"{{base_url}}ability-users"
 							],
 							"path": [
-								"list"
+								
 							]
 						}
 					},
@@ -758,12 +752,11 @@ def generate_shared_postman_collections(full_path, project_name, domain_name, pa
 							"formdata": []
 						},
 						"url": {
-							"raw": "{{base_url}}ability-users/show/1",
+							"raw": "{{base_url}}ability-users/1",
 							"host": [
 								"{{base_url}}ability-users"
 							],
 							"path": [
-								"show",
 								"1"
 							]
 						}
@@ -802,12 +795,12 @@ def generate_shared_postman_collections(full_path, project_name, domain_name, pa
 							]
 						},
 						"url": {
-							"raw": "{{base_url}}ability-users/store",
+							"raw": "{{base_url}}ability-users",
 							"host": [
 								"{{base_url}}ability-users"
 							],
 							"path": [
-								"store"
+								
 							]
 						}
 					},
@@ -845,12 +838,11 @@ def generate_shared_postman_collections(full_path, project_name, domain_name, pa
 							]
 						},
 						"url": {
-							"raw": "{{base_url}}ability-users/update/1",
+							"raw": "{{base_url}}ability-users/1",
 							"host": [
 								"{{base_url}}ability-users"
 							],
 							"path": [
-								"update",
 								"1"
 							]
 						}
@@ -874,12 +866,11 @@ def generate_shared_postman_collections(full_path, project_name, domain_name, pa
 							}
 						],
 						"url": {
-							"raw": "{{base_url}}ability-users/delete/1",
+							"raw": "{{base_url}}ability-users/1",
 							"host": [
 								"{{base_url}}ability-users"
 							],
 							"path": [
-								"delete",
 								"1"
 							]
 						}
@@ -892,7 +883,7 @@ def generate_shared_postman_collections(full_path, project_name, domain_name, pa
 			"name": "RoleUsers",
 			"item": [
 				{
-					"name": "List",
+					"name": "Index",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -915,12 +906,12 @@ def generate_shared_postman_collections(full_path, project_name, domain_name, pa
 							"formdata": []
 						},
 						"url": {
-							"raw": "{{base_url}}role-users/list",
+							"raw": "{{base_url}}role-users",
 							"host": [
 								"{{base_url}}role-users"
 							],
 							"path": [
-								"list"
+								
 							]
 						}
 					},
@@ -950,12 +941,11 @@ def generate_shared_postman_collections(full_path, project_name, domain_name, pa
 							"formdata": []
 						},
 						"url": {
-							"raw": "{{base_url}}role-users/show/1",
+							"raw": "{{base_url}}role-users/1",
 							"host": [
 								"{{base_url}}role-users"
 							],
 							"path": [
-								"show",
 								"1"
 							]
 						}
@@ -994,12 +984,12 @@ def generate_shared_postman_collections(full_path, project_name, domain_name, pa
 							]
 						},
 						"url": {
-							"raw": "{{base_url}}role-users/store",
+							"raw": "{{base_url}}role-users",
 							"host": [
 								"{{base_url}}role-users"
 							],
 							"path": [
-								"store"
+								
 							]
 						}
 					},
@@ -1037,12 +1027,11 @@ def generate_shared_postman_collections(full_path, project_name, domain_name, pa
 							]
 						},
 						"url": {
-							"raw": "{{base_url}}role-users/update/1",
+							"raw": "{{base_url}}role-users/1",
 							"host": [
 								"{{base_url}}role-users"
 							],
 							"path": [
-								"update",
 								"1"
 							]
 						}
@@ -1066,12 +1055,11 @@ def generate_shared_postman_collections(full_path, project_name, domain_name, pa
 							}
 						],
 						"url": {
-							"raw": "{{base_url}}role-users/delete/1",
+							"raw": "{{base_url}}role-users/1",
 							"host": [
 								"{{base_url}}role-users"
 							],
 							"path": [
-								"delete",
 								"1"
 							]
 						}
@@ -1084,7 +1072,7 @@ def generate_shared_postman_collections(full_path, project_name, domain_name, pa
 			"name": "Roles",
 			"item": [
 				{
-					"name": "List",
+					"name": "Index",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -1107,12 +1095,12 @@ def generate_shared_postman_collections(full_path, project_name, domain_name, pa
 							"formdata": []
 						},
 						"url": {
-							"raw": "{{base_url}}roles/list",
+							"raw": "{{base_url}}roles",
 							"host": [
 								"{{base_url}}roles"
 							],
 							"path": [
-								"list"
+								
 							]
 						}
 					},
@@ -1142,12 +1130,11 @@ def generate_shared_postman_collections(full_path, project_name, domain_name, pa
 							"formdata": []
 						},
 						"url": {
-							"raw": "{{base_url}}roles/show/1",
+							"raw": "{{base_url}}roles/1",
 							"host": [
 								"{{base_url}}roles"
 							],
 							"path": [
-								"show",
 								"1"
 							]
 						}
@@ -1186,12 +1173,12 @@ def generate_shared_postman_collections(full_path, project_name, domain_name, pa
 							]
 						},
 						"url": {
-							"raw": "{{base_url}}roles/store",
+							"raw": "{{base_url}}roles",
 							"host": [
 								"{{base_url}}roles"
 							],
 							"path": [
-								"store"
+								
 							]
 						}
 					},
@@ -1229,12 +1216,11 @@ def generate_shared_postman_collections(full_path, project_name, domain_name, pa
 							]
 						},
 						"url": {
-							"raw": "{{base_url}}roles/update/1",
+							"raw": "{{base_url}}roles/1",
 							"host": [
 								"{{base_url}}roles"
 							],
 							"path": [
-								"update",
 								"1"
 							]
 						}
@@ -1258,12 +1244,11 @@ def generate_shared_postman_collections(full_path, project_name, domain_name, pa
 							}
 						],
 						"url": {
-							"raw": "{{base_url}}roles/delete/1",
+							"raw": "{{base_url}}roles/1",
 							"host": [
 								"{{base_url}}roles"
 							],
 							"path": [
-								"delete",
 								"1"
 							]
 						}
@@ -1276,7 +1261,7 @@ def generate_shared_postman_collections(full_path, project_name, domain_name, pa
 			"name": "UserStatuses",
 			"item": [
 				{
-					"name": "List",
+					"name": "Index",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -1299,12 +1284,12 @@ def generate_shared_postman_collections(full_path, project_name, domain_name, pa
 							"formdata": []
 						},
 						"url": {
-							"raw": "{{base_url}}user-statuses/list",
+							"raw": "{{base_url}}user-statuses",
 							"host": [
 								"{{base_url}}user-statuses"
 							],
 							"path": [
-								"list"
+								
 							]
 						}
 					},
@@ -1334,12 +1319,11 @@ def generate_shared_postman_collections(full_path, project_name, domain_name, pa
 							"formdata": []
 						},
 						"url": {
-							"raw": "{{base_url}}user-statuses/show/1",
+							"raw": "{{base_url}}user-statuses/1",
 							"host": [
 								"{{base_url}}user-statuses"
 							],
 							"path": [
-								"show",
 								"1"
 							]
 						}
@@ -1373,12 +1357,12 @@ def generate_shared_postman_collections(full_path, project_name, domain_name, pa
 							]
 						},
 						"url": {
-							"raw": "{{base_url}}user-statuses/store",
+							"raw": "{{base_url}}user-statuses",
 							"host": [
 								"{{base_url}}user-statuses"
 							],
 							"path": [
-								"store"
+								
 							]
 						}
 					},
@@ -1411,12 +1395,11 @@ def generate_shared_postman_collections(full_path, project_name, domain_name, pa
 							]
 						},
 						"url": {
-							"raw": "{{base_url}}user-statuses/update/1",
+							"raw": "{{base_url}}user-statuses/1",
 							"host": [
 								"{{base_url}}user-statuses"
 							],
 							"path": [
-								"update",
 								"1"
 							]
 						}
@@ -1440,12 +1423,11 @@ def generate_shared_postman_collections(full_path, project_name, domain_name, pa
 							}
 						],
 						"url": {
-							"raw": "{{base_url}}user-statuses/delete/1",
+							"raw": "{{base_url}}user-statuses/1",
 							"host": [
 								"{{base_url}}user-statuses"
 							],
 							"path": [
-								"delete",
 								"1"
 							]
 						}

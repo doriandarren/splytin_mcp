@@ -123,7 +123,7 @@ trait ApiResponses
             'token_type' => 'Bearer',
             //'user' => $user,
             'success' => TRUE,
-            'status_code' => 201
+            'status_code' => 200
         ]);
     }
 

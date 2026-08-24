@@ -106,9 +106,9 @@ class AbilitySeeder extends Seeder
     private function createModuleAbilities($tableName, $abilityGroupId)
     {
 
-        if(!Ability::where('name', $tableName.EnumAbilitySuffix::LIST)->exists()){
+        if(!Ability::where('name', $tableName.EnumAbilitySuffix::INDEX)->exists()){
             Ability::factory()->create([
-                'name' => $tableName.EnumAbilitySuffix::LIST,
+                'name' => $tableName.EnumAbilitySuffix::INDEX,
                 'label' => 'Lista modulo',
                 'ability_group_id' => $abilityGroupId,
             ]);

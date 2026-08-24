@@ -2,13 +2,13 @@ import os
 from gen.helpers.helper_menu import pause
 from gen.helpers.helper_print import camel_to_kebab, camel_to_snake
 from gen.helpers.helper_string import normalize_project_name
+from gen.php_laravel.to_module_crud.generate_controller_index_file import generate_controller_index_file
 from gen.php_laravel.to_module_crud.generate_model_file import generate_model_file
 from gen.php_laravel.to_module_crud.generate_request_store import generate_request_store
 from gen.php_laravel.to_module_crud.generate_request_update import generate_request_update
 from gen.php_laravel.to_module_crud.generate_resource import generate_resource
 from gen.php_laravel.to_module_crud.generate_routes_file import generate_routes_file
 from gen.php_laravel.to_module_crud.generate_migration_file import generate_migration_file
-from gen.php_laravel.to_module_crud.generate_controller_list_file import generate_controller_list_file
 from gen.php_laravel.to_module_crud.generate_controller_show_file import generate_controller_show_file
 from gen.php_laravel.to_module_crud.generate_controller_store_file import generate_controller_store_file
 from gen.php_laravel.to_module_crud.generate_controller_update_file import generate_controller_update_file
@@ -71,16 +71,17 @@ def standard_module_crud_php(
             )
 
         if "controller_list" in input_menu_checkbox:
-            generate_controller_list_file(
-                full_path, 
-                namespace, 
+            generate_controller_index_file(
+                full_path,
+                namespace,
                 version_api,
-                singular_name, 
+                project_name,
+                singular_name,
                 plural_name,
-                singular_name_kebab, 
-                plural_name_kebab, 
-                singular_name_snake, 
-                plural_name_snake, 
+                singular_name_kebab,
+                plural_name_kebab,
+                singular_name_snake,
+                plural_name_snake,
                 columns
             )
 

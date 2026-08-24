@@ -4,11 +4,67 @@ from gen.helpers.helper_print import print_message, GREEN, CYAN
 
 
 def generate_module_auth(full_path):
+    ## Login
+    create_login_request(full_path)
     create_login(full_path)
+    ## Logout
     create_logout(full_path)
     create_register(full_path)
     create_user(full_path)
     create_route(full_path)
+
+
+
+def create_login_request(full_path):
+    """
+    Genera el archivo
+    """
+
+    folder_path = os.path.join(full_path, "app", "Http", "Requests", "API", "V1", "Auth")
+    file_path = os.path.join(folder_path, "AuthRequest.php")
+
+    os.makedirs(folder_path, exist_ok=True)
+
+    content = f"""<?php
+
+namespace App\\Http\\Requests\\API\\V1\\Auth;
+
+use Illuminate\\Contracts\\Validation\\ValidationRule;
+use Illuminate\\Foundation\\Http\\FormRequest;
+
+class AuthRequest extends FormRequest
+{{
+    /**
+     * Determine if the user is authorized to make this request.
+     */
+    public function authorize(): bool
+    {{
+        return true;
+    }}
+
+    /**
+     * Get the validation rules that apply to the request.
+     *
+     * @return array<string, ValidationRule|array<mixed>|string>
+     */
+    public function rules(): array
+    {{
+        return [
+            'email' => ['required', 'string', 'email'],
+            'password' => ['required', 'string', 'min:8'],
+        ];
+    }}
+}}
+"""
+
+    try:
+        with open(file_path, "w") as f:
+            f.write(content)
+        print_message(f"Archivo generado: {file_path}", GREEN)
+    except Exception as e:
+        print_message(f"Error al generar el archivo {file_path}: {e}", CYAN)
+
+
 
 
 
@@ -30,48 +86,39 @@ def create_login(full_path):
     file_path = os.path.join(styles_path, "AuthLoginController.php")
 
     # Contenido por defecto
-    content = """<?php
+    content = f"""<?php
 
 namespace App\\Http\\Controllers\\API\\V1\\Auth;
 
 use App\\Http\\Controllers\\Controller;
-use Illuminate\\Http\\Request;
 use Illuminate\\Support\\Facades\\Auth;
-use Illuminate\\Support\\Facades\\Validator;
 use Illuminate\\Http\\JsonResponse;
-use App\\Utilities\\Messages\\MessageChannel;
 use App\\Enums\\Roles\\EnumRole;
+use App\\Utilities\\Messages\\MessageChannel;
+use App\\Http\\Requests\\API\\V1\\Auth\\AuthRequest;
 
 
 class AuthLoginController extends Controller
-{
+{{
     /**
      *
      * @bodyParam email string required Must be a valid email address. Example: satterfield.buddy@example.org
      * @bodyParam password string required
      *
-     * @param Request $request
+     * @param AuthRequest $request
      * @return JsonResponse
      */
-    public function __invoke(Request $request): JsonResponse
-    {
-
-        $validator = Validator::make($request->all(), [
-            'email' => 'required|string|email',
-            'password' => 'required|string',
-        ]);
-
-        if($validator->fails()){
-            return $this->respondWithError('Error', $validator->errors());
-        }
+    public function __invoke(AuthRequest $request): JsonResponse
+    {{
         
-
+        $request->validated($request->all());
+        
         //Response 200 but with error
         $credentials = request(['email','password']);
         if(!Auth::attempt($credentials))
-        {
+        {{
             return $this->respondHttpUnauthorized();
-        }
+        }}
 
 
         $user = Auth::user();
@@ -79,38 +126,46 @@ class AuthLoginController extends Controller
         //$user->tokens()->delete();
 
 
-        if(count($user->roles) == 0){
-            MessageChannel::send('Error Authentication ERP - User Id: (' . $user->id .') Usuario: ' . $user->name, 'Error Auth');
+        if(count($user->roles) == 0){{
+            MessageChannel::send(
+                'Error Authentication ERP - User Id: (' . $user->id .') Usuario: ' . $user->name, 
+                'Error Auth',
+                TRUE
+            );
             return $this->respondWithError('User without role', ['e' => 'User without role']);
-        }
+        }}
 
 
-        // Validate user role
-        if($user->roles[0]->name == EnumRole::ADMIN){
+        // Validate Roles
+        if($user->roles[0]->name == EnumRole::ADMIN){{
 
-            $token = $user->createToken('auth_token')->plainTextToken;
+            $token = $user->createToken(
+                'API Token for ' . $user->email,
+                ['*'],
+                now()->addMonth()
+            )->plainTextToken;
             $userTemp = $user;
             //$userTemp->abilities = $user->abilities;
-
             return $this->respondWithToken('Login successfully - Admin', $token);
 
-        }else{
+        }}else{{
 
             $arr = [];
-            foreach ($user->abilities as $ability) {
+            foreach ($user->abilities as $ability) {{
                 $arr[] = $ability->name;
-            }
-            $user->employee;
-            $token = $user->createToken('auth_token', $arr)->plainTextToken;
-
-
+            }}
+            $token = $user->createToken(
+                    'API Token for ' . $user->email,
+                    $arr,
+                    now()->addMonth()
+                )->plainTextToken;
             return $this->respondWithToken('Login successfully', $token);
+            
+        }}
 
-        }
+    }}
 
-    }
-
-}
+}}
 """
 
     try:
@@ -120,6 +175,8 @@ class AuthLoginController extends Controller
         print_message(f"Archivo generado: {file_path}", GREEN)
     except Exception as e:
         print_message(f"Error al generar el archivo {file_path}: {e}", CYAN)
+
+
 
 
 

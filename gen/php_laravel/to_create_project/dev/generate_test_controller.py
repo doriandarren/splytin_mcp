@@ -533,7 +533,7 @@ class TestController extends Controller
         [<br>
             \'name\' => \''.$tableName.'\',<br>
             \'abilities\' => [<br>
-                EnumAbilitySuffix::LIST,<br>
+                EnumAbilitySuffix::INDEX,<br>
                 EnumAbilitySuffix::SHOW,<br>
                 EnumAbilitySuffix::STORE,<br>
                 EnumAbilitySuffix::UPDATE,<br>
