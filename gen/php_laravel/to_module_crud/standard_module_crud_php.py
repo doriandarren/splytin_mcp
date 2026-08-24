@@ -189,15 +189,17 @@ def standard_module_crud_php(
 
         if "routes" in input_menu_checkbox:
             generate_routes_file(
-                full_path, 
+                full_path,
                 namespace,
                 version_api,
-                plural_name, 
+                project_name,
                 singular_name,
-                singular_name_kebab, 
-                plural_name_kebab, 
-                singular_name_snake, 
-                plural_name_snake
+                plural_name,
+                singular_name_kebab,
+                plural_name_kebab,
+                singular_name_snake,
+                plural_name_snake,
+                columns
             )
 
         if "migration" in input_menu_checkbox:

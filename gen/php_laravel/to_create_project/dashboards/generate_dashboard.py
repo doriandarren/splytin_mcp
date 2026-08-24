@@ -15,20 +15,20 @@ def create_list_controller(full_path):
     Genera el archivo
     """
 
-    folder_path = os.path.join(full_path, "app", "Http", "Controllers", "API", "Dashboards")
+    folder_path = os.path.join(full_path, "app", "Http", "Controllers", "API", "V1", "Dashboards")
     file_path = os.path.join(folder_path, "DashboardListController.php")
 
     os.makedirs(folder_path, exist_ok=True)
 
     content = r'''<?php
 
-namespace App\Http\Controllers\API\Dashboards;
+namespace App\Http\Controllers\API\V1\Dashboards;
 
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
-use App\Services\API\Dashboards\DashboardService;
+use App\Services\API\V1\Dashboards\DashboardService;
 
 class DashboardListController extends Controller
 {
@@ -79,7 +79,7 @@ def create_router(full_path):
     Genera el archivo
     """
 
-    folder_path = os.path.join(full_path, "routes", "API")
+    folder_path = os.path.join(full_path, "routes", "API", "V1")
     file_path = os.path.join(folder_path, "dashboards.php")
 
     os.makedirs(folder_path, exist_ok=True)
@@ -88,9 +88,9 @@ def create_router(full_path):
 
 // use App\Enums\EnumApiSetup;
 // use App\Enums\EnumAbilitySuffix;
-use App\Http\Controllers\API\Dashboards\DashboardListController;
-use Illuminate\Support\Facades\Route;
 
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\API\V1\Dashboards\DashboardListController;
 
 
 /**
@@ -129,14 +129,14 @@ def create_service(full_path):
     Genera el archivo
     """
 
-    folder_path = os.path.join(full_path, "app", "Services", "API", "Dashboards")
+    folder_path = os.path.join(full_path, "app", "Services", "API", "V1", "Dashboards")
     file_path = os.path.join(folder_path, "DashboardService.php")
 
     os.makedirs(folder_path, exist_ok=True)
 
     content = r'''<?php
 
-namespace App\Services\API\Dashboards;
+namespace App\Services\API\V1\Dashboards;
 
 // use App\Enums\EnumApiSetup;
 

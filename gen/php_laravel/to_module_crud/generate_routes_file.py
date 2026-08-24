@@ -1,57 +1,37 @@
 import os
-
-def create_routes_structure(
-    full_path, 
-    path_routes, 
-    namespace
-):
-    """
-    Crea la estructura de carpetas 'full_path/path_routes/namespace' en la ruta especificada.
-    """
-    # Crear la ruta completa full_path/path_routes/namespace
-    routes_folder_path = os.path.join(full_path, path_routes, namespace)
-
-    if not os.path.exists(routes_folder_path):
-        os.makedirs(routes_folder_path)
-        print(f"Estructura de carpetas '{routes_folder_path}' creada.")
-
-    return routes_folder_path
-
+from gen.helpers.helper_print import print_message, GREEN, CYAN
 
 def generate_routes_file(
-    base_ruta, 
-    namespace, 
+    full_path,
+    namespace,
     version_api,
-    plural_name, 
-    singular_name, 
-    singular_name_kebab, 
-    plural_name_kebab, 
-    singular_name_snake, 
-    plural_name_snake
+    project_name,
+    singular_name,
+    plural_name,
+    singular_name_kebab,
+    plural_name_kebab,
+    singular_name_snake,
+    plural_name_snake,
+    columns
 ):
     """
-    Genera un archivo de rutas PHP basado en los nombres proporcionados y crea la estructura path_routes/namespace dentro de base_ruta.
+    Genera el archivo
     """
-    
-    path_routes = "routes/"
-    
-    # Crear la estructura de carpetas llamando a create_routes_structure
-    routes_folder_path = create_routes_structure(base_ruta, path_routes, namespace)
 
-    # Nombre del archivo PHP será plural_name_snake.php
-    file_name = f'{plural_name_snake}.php'
-    routes_file_path = os.path.join(routes_folder_path, file_name)
+    folder_path = os.path.join(full_path, "routes", namespace, version_api)
+    file_path = os.path.join(folder_path, f"{plural_name_snake}.php")
 
-    # Contenido del archivo PHP de las rutas adaptado
-    routes_content = f"""<?php
+    os.makedirs(folder_path, exist_ok=True)
 
-use App\\Enums\\EnumAbilitySuffix;
-use App\\Http\\Controllers\\{namespace}\\{plural_name}\\{version_api}\\{singular_name}ListController;
-use App\\Http\\Controllers\\{namespace}\\{plural_name}\\{version_api}\\{singular_name}ShowController;
-use App\\Http\\Controllers\\{namespace}\\{plural_name}\\{version_api}\\{singular_name}StoreController;
-use App\\Http\\Controllers\\{namespace}\\{plural_name}\\{version_api}\\{singular_name}UpdateController;
-use App\\Http\\Controllers\\{namespace}\\{plural_name}\\{version_api}\\{singular_name}DestroyController;
+    content = f"""<?php
+
 use Illuminate\\Support\\Facades\\Route;
+use App\\Enums\\EnumAbilitySuffix;
+use App\\Http\\Controllers\\{namespace}\\{version_api}\\{plural_name}\\{singular_name}ListController;
+use App\\Http\\Controllers\\{namespace}\\{version_api}\\{plural_name}\\{singular_name}ShowController;
+use App\\Http\\Controllers\\{namespace}\\{version_api}\\{plural_name}\\{singular_name}StoreController;
+use App\\Http\\Controllers\\{namespace}\\{version_api}\\{plural_name}\\{singular_name}UpdateController;
+use App\\Http\\Controllers\\{namespace}\\{version_api}\\{plural_name}\\{singular_name}DestroyController;
 
 
 
@@ -72,10 +52,9 @@ Route::group(['prefix' => '{plural_name_kebab}/'], function () {{
 }});
 """
 
-    # Escribir el archivo PHP con el contenido de las rutas
     try:
-        with open(routes_file_path, 'w') as routes_file:
-            routes_file.write(routes_content)
-            print(f"Archivo de rutas PHP '{file_name}' creado en: {routes_folder_path}")
+        with open(file_path, "w") as f:
+            f.write(content)
+        print_message(f"Archivo generado: {file_path}", GREEN)
     except Exception as e:
-        print(f"Error al crear el archivo de rutas PHP '{file_name}': {e}")
+        print_message(f"Error al generar el archivo {file_path}: {e}", CYAN)

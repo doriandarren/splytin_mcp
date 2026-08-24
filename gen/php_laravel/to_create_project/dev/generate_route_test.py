@@ -9,7 +9,7 @@ def generate_route_test(full_path):
     Args:
         full_path (str): Ruta completa del proyecto.
     """
-    styles_path = os.path.join(full_path, "routes", "SHARED")
+    styles_path = os.path.join(full_path, "routes", "SHARED", "V1")
 
     # Crear la carpeta si no existe
     if not os.path.exists(styles_path):
@@ -22,10 +22,9 @@ def generate_route_test(full_path):
     # Contenido por defecto
     content = """<?php
 
-use App\\Http\\Controllers\\Dev\\ExecuteController;
-use App\\Http\\Controllers\\Dev\\TestController;
-use Illuminate\\Http\\Request;
 use Illuminate\\Support\\Facades\\Route;
+use App\\Http\\Controllers\\Dev\\V1\\ExecuteController;
+use App\\Http\\Controllers\\Dev\\V1\\TestController;
 
 /*
 |--------------------------------------------------------------------------

@@ -11,7 +11,7 @@ def generate_execute_controller(full_path):
     Args:
         full_path (str): Ruta completa del proyecto.
     """
-    styles_path = os.path.join(full_path, "app", "Http", "Controllers", "Dev")
+    styles_path = os.path.join(full_path, "app", "Http", "Controllers", "Dev", "V1")
 
     # Crear la carpeta si no existe
     if not os.path.exists(styles_path):
@@ -24,7 +24,7 @@ def generate_execute_controller(full_path):
     # Contenido por defecto
     content = """<?php
 
-namespace App\\Http\\Controllers\\Dev;
+namespace App\\Http\\Controllers\\Dev\\V1;
 
 use App\\Http\\Controllers\\Controller;
 use Illuminate\\Http\\Request;

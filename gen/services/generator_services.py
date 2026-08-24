@@ -344,11 +344,7 @@ def create_php_project_service(
     generate_maatwebsite_excel(full_path)
     generate_enums(full_path, project_name, domain_name, password)
     generate_batch_processes(full_path)
-    
-    
-    ##generate_base_controller(full_path)
     generate_trait_api_response(full_path)
-    
     generate_php_module_auth(full_path)
     generate_shared(full_path)
     generate_dashboard(full_path)

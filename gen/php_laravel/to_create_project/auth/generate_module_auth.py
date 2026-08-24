@@ -19,7 +19,7 @@ def create_login(full_path):
     Args:
         full_path (str): Ruta completa del proyecto.
     """
-    styles_path = os.path.join(full_path, "app", "Http", "Controllers", "API", "Auth")
+    styles_path = os.path.join(full_path, "app", "Http", "Controllers", "API", "V1", "Auth")
 
     # Crear la carpeta si no existe
     if not os.path.exists(styles_path):
@@ -32,15 +32,15 @@ def create_login(full_path):
     # Contenido por defecto
     content = """<?php
 
-namespace App\\Http\\Controllers\\API\\Auth;
+namespace App\\Http\\Controllers\\API\\V1\\Auth;
 
-use App\\Enums\\Roles\\EnumRole;
 use App\\Http\\Controllers\\Controller;
-use App\\Utilities\\Messages\\MessageChannel;
-use Illuminate\\Http\\JsonResponse;
 use Illuminate\\Http\\Request;
 use Illuminate\\Support\\Facades\\Auth;
 use Illuminate\\Support\\Facades\\Validator;
+use Illuminate\\Http\\JsonResponse;
+use App\\Utilities\\Messages\\MessageChannel;
+use App\\Enums\\Roles\\EnumRole;
 
 
 class AuthLoginController extends Controller
@@ -130,7 +130,7 @@ def create_logout(full_path):
     Args:
         full_path (str): Ruta completa del proyecto.
     """
-    styles_path = os.path.join(full_path, "app", "Http", "Controllers", "API", "Auth")
+    styles_path = os.path.join(full_path, "app", "Http", "Controllers", "API", "V1", "Auth")
 
     # Crear la carpeta si no existe
     if not os.path.exists(styles_path):
@@ -143,11 +143,11 @@ def create_logout(full_path):
     # Contenido por defecto
     content = """<?php
 
-namespace App\\Http\\Controllers\\API\\Auth;
+namespace App\\Http\\Controllers\\API\\V1\\Auth;
 
 use App\\Http\\Controllers\\Controller;
-use Illuminate\\Http\\JsonResponse;
 use Illuminate\\Http\\Request;
+use Illuminate\\Http\\JsonResponse;
 
 class AuthLogoutController extends Controller
 {
@@ -185,7 +185,7 @@ def create_register(full_path):
     Args:
         full_path (str): Ruta completa del proyecto.
     """
-    styles_path = os.path.join(full_path, "app", "Http", "Controllers", "API", "Auth")
+    styles_path = os.path.join(full_path, "app", "Http", "Controllers", "API", "V1", "Auth")
 
     # Crear la carpeta si no existe
     if not os.path.exists(styles_path):
@@ -198,7 +198,7 @@ def create_register(full_path):
     # Contenido por defecto
     content = """<?php
 
-namespace App\\Http\\Controllers\\API\\Auth;
+namespace App\\Http\\Controllers\\API\\V1\\Auth;
 
 use App\\Enums\\UserStatuses\\EnumUserStatus;
 use App\\Http\\Controllers\\Controller;
@@ -262,7 +262,7 @@ def create_user(full_path):
     Args:
         full_path (str): Ruta completa del proyecto.
     """
-    styles_path = os.path.join(full_path, "app", "Http", "Controllers", "API", "Auth")
+    styles_path = os.path.join(full_path, "app", "Http", "Controllers", "API", "V1", "Auth")
 
     # Crear la carpeta si no existe
     if not os.path.exists(styles_path):
@@ -275,7 +275,7 @@ def create_user(full_path):
     # Contenido por defecto
     content = """<?php
 
-namespace App\\Http\\Controllers\\API\\Auth;
+namespace App\\Http\\Controllers\\API\\V1\\Auth;
 
 use App\\Http\\Controllers\\Controller;
 use Illuminate\\Http\\JsonResponse;
@@ -326,7 +326,7 @@ def create_route(full_path):
     Args:
         full_path (str): Ruta completa del proyecto.
     """
-    styles_path = os.path.join(full_path, "routes", "API")
+    styles_path = os.path.join(full_path, "routes", "API", "V1")
 
     # Crear la carpeta si no existe
     if not os.path.exists(styles_path):
@@ -339,10 +339,10 @@ def create_route(full_path):
     # Contenido por defecto
     content = r"""<?php
 
-use App\Http\Controllers\API\Auth\AuthLoginController;
-use App\Http\Controllers\API\Auth\AuthLogoutController;
-use App\Http\Controllers\API\Auth\AuthUserController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\API\V1\Auth\AuthLoginController;
+use App\Http\Controllers\API\V1\Auth\AuthLogoutController;
+use App\Http\Controllers\API\V1\Auth\AuthUserController;
 
 /*
 |--------------------------------------------------------------------------
