@@ -61,10 +61,13 @@ def normalize_column_type(col_type: str):
 
 
 
+
 def parse_columns_input(input_columns: str):
     """
     Convierte un string tipo:
+
     'customer_id:fk name:string amount:float description has_active:boolean'
+
     en una lista de diccionarios bien formados.
     """
 
@@ -88,14 +91,12 @@ def parse_columns_input(input_columns: str):
         parts = token.split(":")
 
         name = parts[0].strip()
-        raw_col_type = parts[1].strip() if len(parts) > 1 else "string"
 
-        col_type = normalize_column_type(raw_col_type)
-
-        if col_type not in allowed_types:
-            raise ValueError(f"Tipo de columna no soportado: '{raw_col_type}' en '{token}'")
-
-
+        raw_col_type = (
+            parts[1].strip()
+            if len(parts) > 1
+            else "string"
+        )
 
         # Size - Tamaño
         size = None
@@ -103,16 +104,29 @@ def parse_columns_input(input_columns: str):
 
         if "(" in raw_col_type and ")" in raw_col_type:
             type_without_size = raw_col_type.split("(", 1)[0]
-            size_value = raw_col_type.split("(", 1)[1].split(")", 1)[0]
+
+            size_value = (
+                raw_col_type
+                .split("(", 1)[1]
+                .split(")", 1)[0]
+            )
 
             if size_value.isdigit():
                 size = int(size_value)
 
+        # Normalizar tipo
         col_type = normalize_column_type(type_without_size)
 
+        # Validar tipo
+        if col_type not in allowed_types:
+            raise ValueError(
+                f"Tipo de columna no soportado: "
+                f"'{raw_col_type}' en '{token}'"
+            )
+
+        # Tamaño por defecto
         if size is None and col_type in {"string", "email"}:
             size = 255
-
 
         # Create Object
         col = {
@@ -125,6 +139,7 @@ def parse_columns_input(input_columns: str):
 
         if col["is_fk"]:
             base = name
+
             if base.endswith("_id"):
                 base = base[:-3]
 
