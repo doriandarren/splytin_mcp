@@ -209,7 +209,7 @@ def generate_shared_postman_collections(full_path, project_name, domain_name, pa
 							},
 							{
 								"key": "Authorization",
-								"value": "Bearer  {{token_api}}",
+								"value": "Bearer {{token_api}}",
 								"type": "text",
 								"uuid": "ceb2cd55-8f07-4f33-b225-aa776f852e8e"
 							}

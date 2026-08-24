@@ -445,7 +445,6 @@ namespace App\\Enums;
 
 abstract class EnumAbilitySuffix
 {
-
     /**
      * Suffix for ability name
      */
@@ -455,7 +454,6 @@ abstract class EnumAbilitySuffix
     const UPDATE = ':update';
     const DESTROY = ':destroy';
     const SHOW = ':show';
-    
 }
 """
 
