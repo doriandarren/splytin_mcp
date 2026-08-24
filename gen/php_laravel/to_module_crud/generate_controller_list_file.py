@@ -17,15 +17,15 @@ def create_controllers_structure(
 
 
 
-def formatColumnQuery(columns):
-    # Obtener los nombres de las columnas dinámicamente
-    column_names = [column["name"] for column in columns]
+# def formatColumnQuery(columns):
+#     # Obtener los nombres de las columnas dinámicamente
+#     column_names = [column["name"] for column in columns]
 
-    filters_lines = ""
-    for col in column_names:
-        filters_lines += f"            '{col}' => $request->query('{col}'),\n"
+#     filters_lines = ""
+#     for col in column_names:
+#         filters_lines += f"            '{col}' => $request->query('{col}'),\n"
 
-    return filters_lines
+#     return filters_lines
 
 
 
@@ -63,9 +63,13 @@ use Illuminate\\Http\\JsonResponse;
 use Illuminate\\Http\\Request;
 use Illuminate\\Support\\Facades\\Auth;
 use App\\Http\\Controllers\\Controller;
+use App\\Models\\{namespace}\\{plural_name}\\{singular_name};
+use App\\Http\\Resources\\{namespace}\\{version_api}\\{plural_name}\\{singular_name}Resource;
 use App\\Services\\{namespace}\\{version_api}\\{plural_name}\\{singular_name}Service;
 
-class {singular_name}ListController extends Controller
+
+
+class {singular_name}IndexController extends Controller
 {{
     private {singular_name}Service $service;
 
@@ -77,17 +81,13 @@ class {singular_name}ListController extends Controller
     /**
     * @header Authorization Bearer TOKEN 
     *
-    * @param Request $request
-    * @return JsonResponse
     */
-    public function __invoke(Request $request): JsonResponse
+    public function __invoke(Request $request)
     {{
         
-        $filters = [
-{formatColumnQuery(columns)}            // opcional paginación:
-            'per_page' => $request->integer('per_page'),
-        ];
-
+        return {singular_name}Resource::collection({singular_name}::paginate());
+        
+        
         $data = [];
         
         if ($this->isAdmin(Auth::user()->roles)) {{

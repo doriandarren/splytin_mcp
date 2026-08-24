@@ -19,6 +19,7 @@ def start_module_php():
         ("Controlador - Update", "controller_update"),
         ("Controlador - Destroy", "controller_destroy"),
         ("Servicio", "service"),
+        ("Resource", "resource"),
         ("Rutas", "routes"),
         ("Migración", "migration"),
         ("Seeder", "seeder"),

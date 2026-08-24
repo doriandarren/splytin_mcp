@@ -5,6 +5,7 @@ from gen.helpers.helper_string import normalize_project_name
 from gen.php_laravel.to_module_crud.generate_model_file import generate_model_file
 from gen.php_laravel.to_module_crud.generate_request_store import generate_request_store
 from gen.php_laravel.to_module_crud.generate_request_update import generate_request_update
+from gen.php_laravel.to_module_crud.generate_resource import generate_resource
 from gen.php_laravel.to_module_crud.generate_routes_file import generate_routes_file
 from gen.php_laravel.to_module_crud.generate_migration_file import generate_migration_file
 from gen.php_laravel.to_module_crud.generate_controller_list_file import generate_controller_list_file
@@ -37,7 +38,9 @@ def standard_module_crud_php(
             "controller_store", 
             "controller_update",
             "controller_destroy",
-            "service", "routes",
+            "service", 
+            "resource", 
+            "routes",
             "migration", 
             "seeder", 
             "factory", 
@@ -244,6 +247,22 @@ def standard_module_crud_php(
                 plural_name,
                 singular_name_kebab, 
                 plural_name_kebab, 
+                columns
+            )
+            
+            
+        if "resource" in input_menu_checkbox:
+            generate_resource(
+                full_path,
+                namespace,
+                version_api,
+                project_name,
+                singular_name,
+                plural_name,
+                singular_name_kebab,
+                plural_name_kebab,
+                singular_name_snake,
+                plural_name_snake,
                 columns
             )
 

@@ -3,6 +3,7 @@ from __future__ import annotations
 from typing import Any
 
 from gen.helpers.helper_columns import parse_columns_input
+from gen.php_laravel.to_create_project.generate_query_filter import generate_query_filter
 from gen.php_laravel.to_create_project.generate_trait_api_response import generate_trait_api_response
 from gen.php_laravel.to_create_project.updates import update_database
 from gen.php_laravel.to_create_project.updates.update_ability_user_model import update_ability_user_model
@@ -366,6 +367,7 @@ def create_php_project_service(
     update_database(full_path)
     update_envs(full_path, project_name, domain_name)
     generate_exception_handler_response(full_path)
+    generate_query_filter(full_path)
 
     return {
         "generator": "php_project",

@@ -29,10 +29,11 @@ def generate_shared(full_path):
         "controller_destroy",
         "service",
         "routes",
-        # "migration",
+        "resource",
         "seeder",
         "factory",
         "postman",
+        # "migration",
     ]
     
     
