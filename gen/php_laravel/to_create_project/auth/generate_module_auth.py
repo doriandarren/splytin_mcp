@@ -4,14 +4,29 @@ from gen.helpers.helper_print import print_message, GREEN, CYAN
 
 
 def generate_module_auth(full_path):
-    ## Login
+    # Login
     create_login_request(full_path)
     create_login(full_path)
-    ## Logout
+    
+    # Logout
     create_logout(full_path)
+    
+    # Register
+    create_register_request(full_path)
     create_register(full_path)
+    
+    # Forgot Password
+    create_forgot_password_request(full_path)
+    create_forgot_password(full_path)
+    
+    # Restore Password
+    create_restore_password_request(full_path)
+    create_restore_password(full_path)
+    
     create_user(full_path)
     create_route(full_path)
+    
+    
 
 
 
@@ -21,7 +36,7 @@ def create_login_request(full_path):
     """
 
     folder_path = os.path.join(full_path, "app", "Http", "Requests", "API", "V1", "Auth")
-    file_path = os.path.join(folder_path, "AuthRequest.php")
+    file_path = os.path.join(folder_path, "AuthLoginRequest.php")
 
     os.makedirs(folder_path, exist_ok=True)
 
@@ -32,7 +47,7 @@ namespace App\\Http\\Requests\\API\\V1\\Auth;
 use Illuminate\\Contracts\\Validation\\ValidationRule;
 use Illuminate\\Foundation\\Http\\FormRequest;
 
-class AuthRequest extends FormRequest
+class AuthLoginRequest extends FormRequest
 {{
     /**
      * Determine if the user is authorized to make this request.
@@ -95,7 +110,8 @@ use Illuminate\\Support\\Facades\\Auth;
 use Illuminate\\Http\\JsonResponse;
 use App\\Enums\\Roles\\EnumRole;
 use App\\Utilities\\Messages\\MessageChannel;
-use App\\Http\\Requests\\API\\V1\\Auth\\AuthRequest;
+use App\\Http\\Requests\\API\\V1\\Auth\\AuthLoginRequest;
+use App\\Models\\User;
 
 
 class AuthLoginController extends Controller
@@ -108,7 +124,7 @@ class AuthLoginController extends Controller
      * @param AuthRequest $request
      * @return JsonResponse
      */
-    public function __invoke(AuthRequest $request): JsonResponse
+    public function __invoke(AuthLoginRequest $request): JsonResponse
     {{
         
         $credentials = $request->validated();
@@ -120,7 +136,8 @@ class AuthLoginController extends Controller
         }}
 
 
-        $user = Auth::user();
+        $user = User::find(Auth::user()->id);
+        //$user = Auth::user();
         // Delete Tokens
         //$user->tokens()->delete();
 
@@ -144,7 +161,7 @@ class AuthLoginController extends Controller
             $token = $user->createToken(
                 'API Token for ' . $user->email,
                 ['*'],
-                now()->addMonth()
+                now()->addDay()
             )->plainTextToken;
             $userTemp = $user;
             //$userTemp->abilities = $user->abilities;
@@ -159,7 +176,7 @@ class AuthLoginController extends Controller
             $token = $user->createToken(
                     'API Token for ' . $user->email,
                     $arr,
-                    now()->addMonth()
+                    now()->addDay()
                 )->plainTextToken;
             return $this->respondWithToken('Login successfully', $token);
             
@@ -237,6 +254,79 @@ class AuthLogoutController extends Controller
 
 
 
+
+
+
+def create_register_request(full_path):
+    """
+    Genera el archivo
+    """
+
+    folder_path = os.path.join(full_path, "app", "Http", "Requests", "API", "V1", "Auth")
+    file_path = os.path.join(folder_path, "AuthRegisterRequest.php")
+
+    os.makedirs(folder_path, exist_ok=True)
+
+    content = f"""<?php
+
+namespace App\\Http\\Requests\\API\\V1\\Auth;
+
+use Illuminate\\Contracts\\Validation\\ValidationRule;
+use Illuminate\\Foundation\\Http\\FormRequest;
+
+class AuthRegisterRequest extends FormRequest
+{{
+    /**
+     * Determine if the user is authorized to make this request.
+     */
+    public function authorize(): bool
+    {{
+        return false;
+    }}
+
+    /**
+     * Get the validation rules that apply to the request.
+     *
+     * @return array<string, ValidationRule|array<mixed>|string>
+     */
+    public function rules(): array
+    {{
+        return [
+            'name' => [
+                'required',
+                'string',
+                'max:255',
+            ],
+
+            'email' => [
+                'required',
+                'string',
+                'email',
+                'max:255',
+                'unique:users,email',
+            ],
+
+            'password' => [
+                'required',
+                'string',
+                'min:8',
+                'confirmed',
+            ],
+        ];
+    }}
+}}
+"""
+
+    try:
+        with open(file_path, "w") as f:
+            f.write(content)
+        print_message(f"Archivo generado: {file_path}", GREEN)
+    except Exception as e:
+        print_message(f"Error al generar el archivo {file_path}: {e}", CYAN)
+
+
+
+
 def create_register(full_path):
     """
     Genera un archivo
@@ -255,52 +345,52 @@ def create_register(full_path):
     file_path = os.path.join(styles_path, "AuthRegisterController.php")
 
     # Contenido por defecto
-    content = """<?php
+    content = f"""<?php
 
 namespace App\\Http\\Controllers\\API\\V1\\Auth;
 
-use App\\Enums\\UserStatuses\\EnumUserStatus;
 use App\\Http\\Controllers\\Controller;
-use App\\Models\\User;
 use Illuminate\\Http\\JsonResponse;
 use Illuminate\\Http\\Request;
+use App\\Enums\\Roles\\EnumRole;
+use App\\Enums\\UserStatuses\\EnumUserStatus;
+use App\\Models\\SHARED\Roles\\Role;
+use App\\Models\\User;
 
 class AuthRegisterController extends Controller
-{
+{{
     /**
      * @param Request $request
      * @return JsonResponse
      */
     public function __invoke(Request $request): JsonResponse
-    {
+    {{
 
-        $request->validate([
-            'name' => 'required|string',
-            'email'=>'required|string|unique:users',
-            'password'=>'required|string',
-            'c_password' => 'required|same:password'
+        $validated = $request->validated();
+
+        $user = User::create([
+            'name' => $validated['name'],
+            'email' => $validated['email'],
+            'password' => $validated['password'],
+            'user_status_id' => EnumUserStatus::ACTIVE_ID,
         ]);
 
-        $user = new User([
-            'name'  => $request->name,
-            'email' => $request->email,
-            'password' => bcrypt($request->password),
-            'user_status_id' => EnumUserStatus::ACTIVE_ID
-        ]);
+        $role = Role::where('name', EnumRole::USER)->first();
 
+        $user->assignRole($role);
+        
+        $token = $user->createToken(
+            'API Token for ' . $user->email,
+            ['*'],
+            now()->addDay()
+        )->plainTextToken;
 
-        if($user->save()){
-            $tokenResult = $user->createToken('Personal Access Token');
-            $token = $tokenResult->plainTextToken;
-            return $this->respondWithToken('Successfully created user!', $token);
-        }
-        else{
-            return $this->respondWithError('Provide proper details', 'Provide proper details');
-        }
-
-    }
-
-}
+        return $this->respondWithToken(
+            'Successfully created user.',
+            $token
+        );
+    }}
+}}
 """
 
     try:
@@ -310,6 +400,8 @@ class AuthRegisterController extends Controller
         print_message(f"Archivo generado: {file_path}", GREEN)
     except Exception as e:
         print_message(f"Error al generar el archivo {file_path}: {e}", CYAN)
+
+
 
 
 
@@ -401,6 +493,7 @@ def create_route(full_path):
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\V1\Auth\AuthLoginController;
 use App\Http\Controllers\API\V1\Auth\AuthLogoutController;
+use App\Http\Controllers\API\V1\Auth\AuthRegisterController;
 use App\Http\Controllers\API\V1\Auth\AuthUserController;
 
 /*
@@ -412,9 +505,14 @@ use App\Http\Controllers\API\V1\Auth\AuthUserController;
 // Login
 Route::post('auth/login', [AuthLoginController::class, '__invoke']);
 
+
+// Register
+Route::post('auth/register', [AuthRegisterController::class, '__invoke']);
+
+
 // Password Reset
-//    Route::post('password/email', [ForgotPasswordController::class, '__invoke']);
-//    Route::post('password/restore', [RestorePasswordController::class, '__invoke']);
+Route::post('password/email', [ForgotPasswordController::class, '__invoke']);
+Route::post('password/restore', [RestorePasswordController::class, '__invoke']);
 
 Route::group(['middleware' => 'auth:sanctum'], function() {
     Route::get('auth/user', [AuthUserController::class, '__invoke']);
@@ -424,6 +522,108 @@ Route::group(['middleware' => 'auth:sanctum'], function() {
 
     try:
         # Crear o sobrescribir el archivo con el contenido
+        with open(file_path, "w") as f:
+            f.write(content)
+        print_message(f"Archivo generado: {file_path}", GREEN)
+    except Exception as e:
+        print_message(f"Error al generar el archivo {file_path}: {e}", CYAN)
+
+
+
+
+
+def create_forgot_password_request(full_path):
+    """
+    Genera el archivo
+    """
+
+    folder_path = os.path.join(full_path, "app", "Http", "Controllers", "API", "V1", "Auth")
+    file_path = os.path.join(folder_path, ".jsx")
+
+    os.makedirs(folder_path, exist_ok=True)
+
+    content = f'''
+    ## TODO Content
+'''
+
+    try:
+        with open(file_path, "w") as f:
+            f.write(content)
+        print_message(f"Archivo generado: {file_path}", GREEN)
+    except Exception as e:
+        print_message(f"Error al generar el archivo {file_path}: {e}", CYAN)
+        
+        
+        
+        
+
+
+def create_forgot_password(full_path):
+    """
+    Genera el archivo
+    """
+
+    folder_path = os.path.join(full_path, "app", "Http", "Controllers", "API", "V1", "Auth")
+    file_path = os.path.join(folder_path, ".jsx")
+
+    os.makedirs(folder_path, exist_ok=True)
+
+    content = f'''
+    ## TODO Content
+'''
+
+    try:
+        with open(file_path, "w") as f:
+            f.write(content)
+        print_message(f"Archivo generado: {file_path}", GREEN)
+    except Exception as e:
+        print_message(f"Error al generar el archivo {file_path}: {e}", CYAN)
+
+
+
+
+
+
+def create_restore_password_request(full_path):
+    """
+    Genera el archivo
+    """
+
+    folder_path = os.path.join(full_path, "app", "Http", "Controllers", "API", "V1", "Auth")
+    file_path = os.path.join(folder_path, ".jsx")
+
+    os.makedirs(folder_path, exist_ok=True)
+
+    content = f'''
+    ## TODO Content
+'''
+
+    try:
+        with open(file_path, "w") as f:
+            f.write(content)
+        print_message(f"Archivo generado: {file_path}", GREEN)
+    except Exception as e:
+        print_message(f"Error al generar el archivo {file_path}: {e}", CYAN)
+
+
+
+
+
+def create_restore_password(full_path):
+    """
+    Genera el archivo
+    """
+
+    folder_path = os.path.join(full_path, "app", "Http", "Controllers", "API", "V1", "Auth")
+    file_path = os.path.join(folder_path, ".jsx")
+
+    os.makedirs(folder_path, exist_ok=True)
+
+    content = f'''
+    ## TODO Content
+'''
+
+    try:
         with open(file_path, "w") as f:
             f.write(content)
         print_message(f"Archivo generado: {file_path}", GREEN)

@@ -45,12 +45,19 @@ use Laravel\Sanctum\HasApiTokens;"""
 
 
 
-        ## add HasApiTokens
+        ## Add HasApiTokens
         content = content.replace(
             "use HasFactory, Notifiable;",
             "use HasApiTokens, HasFactory, Notifiable;"
         )
 
+
+
+        ## Fillable update
+        content = content.replace(
+            "#[Fillable(['name', 'email', 'password'])]",
+            "#[Fillable(['name', 'email', 'password', 'user_status_id'])]"
+        )
 
 
         # Escribir el contenido actualizado

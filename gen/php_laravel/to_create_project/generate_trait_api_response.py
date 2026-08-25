@@ -137,14 +137,14 @@ trait ApiResponses
      */
     public function respondWithTokenWithUser($message, $user, $token): JsonResponse
     {
-        $this->setCode(201);
+        $this->setCode(200);
         return $this->respond([
             'message' => $message,
             'token' => $token,
             'token_type' => 'Bearer',
             'user' => $user,
             'success' => TRUE,
-            'status_code' => 201
+            'status_code' => 200
         ]);
     }
 
@@ -158,14 +158,14 @@ trait ApiResponses
      */
     public function respondWithTokenByApp($message, $user, $token): JsonResponse
     {
-        $this->setCode(201);
+        $this->setCode(200);
         return $this->respond([
             'message' => $message,
             'token' => $token,
             'token_type' => 'Bearer',
             'user' => $user,
             'success' => TRUE,
-            'status_code' => 201
+            'status_code' => 200
         ]);
     }
 
@@ -198,59 +198,6 @@ trait ApiResponses
         $this->setCode(422);
         return $this->respondWithError($message, ['e' => $message]);
     }
-
-
-    /**
-     * Response validate to FORM
-     * Validation To Use:
-     *
-     * $validation =  Validator::make(
-     * $request->all(),
-     * [
-     * 'name' => 'required',
-     * 'email' => 'required',
-     * ],
-     * [
-     * 'required' => [
-     * 'error_code' => 'E001',
-     * 'error_description' => 'Parameter :attribute is required'
-     * ]
-     * ]);
-     *
-     * if ($validation->fails()) {
-     * return $this->respondWithValidation($validation->errors());
-     * }
-     *
-     * @param $errors
-     * @return JsonResponse
-     */
-    public function respondWithValidation($errors)
-    {
-
-        $errorCodes = [];
-        $errorDescriptions = [];
-
-        foreach(json_decode($errors) as $key => $error){
-            if(count($errors) > 3){
-                $errorCodes[] = $error[0]->error_code;
-                $errorDescriptions[] = $error[0]->error_description;
-            }else{
-                $errorCodes = $error[0]->error_code;
-                $errorDescriptions = $error[0]->error_description;
-            }
-        }
-
-        $this->setCode(200);
-        return $this->respond([
-            'success' => false,
-            'message' => '',
-            'error_code' => $errorCodes,
-            'error_description' => $errorDescriptions,
-            'status_code' => 200,
-        ]);
-    }
-
-
 
     /**
      * Role Admin

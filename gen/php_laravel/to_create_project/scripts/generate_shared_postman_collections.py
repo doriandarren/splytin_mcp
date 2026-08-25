@@ -102,6 +102,66 @@ def generate_shared_postman_collections(full_path, project_name, domain_name, pa
 					]
 				},
 				{
+					"name": "register",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let response = JSON.parse(pm.response.text());",
+									"pm.collectionVariables.set(\"token_api\", response.token);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "Test User",
+									"description": "Nombre del usuario",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "test@__DOMAIN_NAME__",
+									"description": "Email del usuario",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "__PASSWORD__",
+									"description": "Contraseña del usuario",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}auth/register",
+							"host": [
+								"{{base_url}}auth"
+							],
+							"path": [
+								"register"
+							]
+						},
+						"description": "Registra un nuevo usuario mediante name, email y password. Si el registro es correcto, guarda el token recibido en la variable de colección {{token_api}}."
+					},
+					"response": []
+				},
+				{
 					"name": "login",
 					"event": [
 						{
@@ -141,7 +201,7 @@ def generate_shared_postman_collections(full_path, project_name, domain_name, pa
 									"description": "Password Admin",
 									"type": "text"
 								},
-        {
+        						{
 									"key": "email",
 									"value": "manager@__DOMAIN_NAME__",
 									"description": "Email Manager",
@@ -153,7 +213,7 @@ def generate_shared_postman_collections(full_path, project_name, domain_name, pa
 									"description": "Password Manager",
 									"type": "text"
 								},
-        {
+        						{
 									"key": "email",
 									"value": "user@__DOMAIN_NAME__",
 									"description": "Email Usuario",
