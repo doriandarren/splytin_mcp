@@ -132,13 +132,37 @@ def generate_shared_postman_collections(full_path, project_name, domain_name, pa
 								{
 									"key": "email",
 									"value": "admin@__DOMAIN_NAME__",
-									"description": "Email usuario",
+									"description": "Email Admin",
 									"type": "text"
 								},
 								{
 									"key": "password",
 									"value": "__PASSWORD__",
-									"description": "Password usuario",
+									"description": "Password Admin",
+									"type": "text"
+								},
+        {
+									"key": "email",
+									"value": "manager@__DOMAIN_NAME__",
+									"description": "Email Manager",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "__PASSWORD__",
+									"description": "Password Manager",
+									"type": "text"
+								},
+        {
+									"key": "email",
+									"value": "user@__DOMAIN_NAME__",
+									"description": "Email Usuario",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "__PASSWORD__",
+									"description": "Password Usuario",
 									"type": "text"
 								}
 							]

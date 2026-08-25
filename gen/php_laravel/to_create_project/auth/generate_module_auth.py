@@ -111,10 +111,9 @@ class AuthLoginController extends Controller
     public function __invoke(AuthRequest $request): JsonResponse
     {{
         
-        $request->validated($request->all());
-        
+        $credentials = $request->validated();
+
         //Response 200 but with error
-        $credentials = request(['email','password']);
         if(!Auth::attempt($credentials))
         {{
             return $this->respondHttpUnauthorized();
@@ -130,14 +129,17 @@ class AuthLoginController extends Controller
             MessageChannel::send(
                 'Error Authentication ERP - User Id: (' . $user->id .') Usuario: ' . $user->name, 
                 'Error Auth',
-                TRUE
+                true
             );
-            return $this->respondWithError('User without role', ['e' => 'User without role']);
+            return $this->respondWithError(
+                'User without role', 
+                ['e' => 'User without role']
+            );
         }}
 
 
         // Validate Roles
-        if($user->roles[0]->name == EnumRole::ADMIN){{
+        if($user->roles->contains('name', EnumRole::ADMIN)){{
 
             $token = $user->createToken(
                 'API Token for ' . $user->email,

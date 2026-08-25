@@ -116,7 +116,7 @@ trait ApiResponses
      */
     public function respondWithToken($message, $token): JsonResponse
     {
-        $this->setCode(201);
+        $this->setCode(200);
         return $this->respond([
             'message' => $message,
             'token' => $token,
