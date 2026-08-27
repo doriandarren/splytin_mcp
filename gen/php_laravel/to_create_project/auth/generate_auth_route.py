@@ -27,6 +27,7 @@ def create_auth_route(full_path):
     content = r"""<?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Http\Request;
 use App\Http\Controllers\API\V1\Auth\AuthLoginController;
 use App\Http\Controllers\API\V1\Auth\AuthUserController;
 use App\Http\Controllers\API\V1\Auth\AuthLogoutController;
@@ -50,10 +51,12 @@ Route::post('auth/register', [AuthRegisterController::class, '__invoke']);
 Route::post('auth/forgot-password', [AuthForgotPasswordController::class, '__invoke']);
 Route::post('auth/reset-password', [AuthResetPasswordController::class, '__invoke']);
 Route::get('auth/reset-password', function (Request $request) {
-    return response()->json([
-        'token' => $request->token,
-        'email' => $request->email,
-    ]);
+    return redirect(
+        config('app.frontend_url')
+        . '/reset-password'
+        . '?token=' . urlencode($request->token)
+        . '&email=' . urlencode($request->email)
+    );
 })->name('password.reset');
 
 
