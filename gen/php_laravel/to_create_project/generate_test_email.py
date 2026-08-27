@@ -66,7 +66,7 @@ class TestMail extends Mailable
     public function content(): Content
     {{
         return new Content(
-            view: 'tests.email_test',
+            view: 'mails.test.test_mail',
             with: [
                 'mySubject' => $this->mySubject,
                 'myBody' => $this->myBody,
@@ -77,7 +77,7 @@ class TestMail extends Mailable
     /**
      * Get the attachments for the message.
      *
-     * @return array<int, \Illuminate\Mail\Mailables\Attachment>
+     * @return array<int, \\Illuminate\\Mail\\Mailables\\Attachment>
      */
     public function attachments(): array
     {{
