@@ -36,10 +36,10 @@ def generate_shared_postman_collections(full_path, project_name, domain_name, pa
 			"name": "Authentication",
 			"item": [
 				{
-					"name": "Restore Password",
+					"name": "Reset Password",
 					"item": [
 						{
-							"name": "forgot Password",
+							"name": "Forgot Password",
 							"request": {
 								"method": "POST",
 								"header": [],
@@ -54,46 +54,33 @@ def generate_shared_postman_collections(full_path, project_name, domain_name, pa
 									]
 								},
 								"url": {
-									"raw": "{{base_url}}auth/password/email",
+									"raw": "{{base_url}}auth/forgot-password",
 									"host": [
 										"{{base_url}}auth"
 									],
 									"path": [
-										"password",
-										"email"
+										"forgot-password"
 									]
 								}
 							},
 							"response": []
 						},
 						{
-							"name": "Restore Password",
+							"name": "Reset Password",
 							"request": {
 								"method": "POST",
 								"header": [],
 								"body": {
 									"mode": "formdata",
-									"formdata": [
-										{
-											"key": "token",
-											"value": "o3T8UOouVBmNYe48QEGgE7AGYycgxHlKA5ySHitAnaGa50bHtVdu57Pp2Kv6",
-											"type": "text"
-										},
-										{
-											"key": "password",
-											"value": "pepepe",
-											"type": "text"
-										}
-									]
+									"formdata": []
 								},
 								"url": {
-									"raw": "{{base_url}}auth/password/restore",
+									"raw": "{{base_url}}auth/reset-password",
 									"host": [
 										"{{base_url}}auth"
 									],
 									"path": [
-										"password",
-										"restore"
+										"reset-password",
 									]
 								}
 							},

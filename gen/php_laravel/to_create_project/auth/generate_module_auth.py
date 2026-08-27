@@ -20,8 +20,8 @@ def generate_module_auth(full_path):
     create_forgot_password(full_path)
     
     # Restore Password
-    create_restore_password_request(full_path)
-    create_restore_password(full_path)
+    create_reset_password_request(full_path)
+    create_reset_password(full_path)
     
     create_user(full_path)
     create_route(full_path)
@@ -495,6 +495,8 @@ use App\Http\Controllers\API\V1\Auth\AuthLoginController;
 use App\Http\Controllers\API\V1\Auth\AuthLogoutController;
 use App\Http\Controllers\API\V1\Auth\AuthRegisterController;
 use App\Http\Controllers\API\V1\Auth\AuthUserController;
+use App\Http\Controllers\API\V1\Auth\AuthForgotPasswordController;
+use App\Http\Controllers\API\V1\Auth\AuthUserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -505,16 +507,15 @@ use App\Http\Controllers\API\V1\Auth\AuthUserController;
 // Login
 Route::post('auth/login', [AuthLoginController::class, '__invoke']);
 
-
 // Register
 Route::post('auth/register', [AuthRegisterController::class, '__invoke']);
 
-
 // Password Reset
-Route::post('password/email', [ForgotPasswordController::class, '__invoke']);
-Route::post('password/restore', [RestorePasswordController::class, '__invoke']);
+Route::post('auth/forgot-password', [AuthForgotPasswordController::class, '__invoke']);
+Route::post('auth/reset-password', [AuthResetPasswordController::class, '__invoke']);
 
-Route::group(['middleware' => 'auth:sanctum'], function() {
+
+Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::get('auth/user', [AuthUserController::class, '__invoke']);
     Route::post('auth/logout', [AuthLogoutController::class, '__invoke']);
 });
@@ -537,13 +538,44 @@ def create_forgot_password_request(full_path):
     Genera el archivo
     """
 
-    folder_path = os.path.join(full_path, "app", "Http", "Controllers", "API", "V1", "Auth")
-    file_path = os.path.join(folder_path, ".jsx")
+    folder_path = os.path.join(full_path, "app", "Http", "Requests", "API", "V1", "Auth")
+    file_path = os.path.join(folder_path, "AuthForgotPasswordRequest.php")
 
     os.makedirs(folder_path, exist_ok=True)
 
-    content = f'''
-    ## TODO Content
+    content = f'''<?php
+
+namespace App\\Http\\Requests\\API\\V1\\Auth;
+
+use Illuminate\\Contracts\\Validation\\ValidationRule;
+use Illuminate\\Foundation\\Http\\FormRequest;
+
+class AuthForgotPasswordRequest extends FormRequest
+{{
+    /**
+     * Determine if the user is authorized to make this request.
+     */
+    public function authorize(): bool
+    {{
+        return true;
+    }}
+
+    /**
+     * Get the validation rules that apply to the request.
+     *
+     * @return array<string, ValidationRule|array<mixed>|string>
+     */
+    public function rules(): array
+    {{
+        return [
+            'email' => [
+                'required',
+                'email',
+                'exists:users,email',
+            ],
+        ];
+    }}
+}}
 '''
 
     try:
@@ -564,12 +596,43 @@ def create_forgot_password(full_path):
     """
 
     folder_path = os.path.join(full_path, "app", "Http", "Controllers", "API", "V1", "Auth")
-    file_path = os.path.join(folder_path, ".jsx")
+    file_path = os.path.join(folder_path, "AuthForgotPasswordController.php")
 
     os.makedirs(folder_path, exist_ok=True)
 
-    content = f'''
-    ## TODO Content
+    content = f'''<?php
+
+namespace App\\Http\\Controllers\\API\\V1\\Auth;
+
+use App\\Http\\Controllers\\Controller;
+use App\\Http\\Requests\\API\\V1\\Auth\\AuthForgotPasswordRequest;
+use Illuminate\\Http\\JsonResponse;
+use Illuminate\\Support\\Facades\\Password;
+
+
+
+class AuthForgotPasswordController extends Controller
+{{
+
+    public function __invoke(AuthForgotPasswordRequest $request): JsonResponse
+    {{
+        $status = Password::sendResetLink([
+            'email' => $request->email,
+        ]);
+
+        if ($status !== Password::RESET_LINK_SENT) {{
+            return $this->respondWithError(
+                __($status),
+                422
+            );
+        }}
+
+        return $this->respondWithData(
+            'Password reset link sent',
+            []
+        );
+    }}
+}}
 '''
 
     try:
@@ -584,18 +647,59 @@ def create_forgot_password(full_path):
 
 
 
-def create_restore_password_request(full_path):
+def create_reset_password_request(full_path):
     """
     Genera el archivo
     """
 
-    folder_path = os.path.join(full_path, "app", "Http", "Controllers", "API", "V1", "Auth")
-    file_path = os.path.join(folder_path, ".jsx")
+    folder_path = os.path.join(full_path, "app", "Http", "Requests", "API", "V1", "Auth")
+    file_path = os.path.join(folder_path, "AuthResetPasswordRequest.php")
 
     os.makedirs(folder_path, exist_ok=True)
 
-    content = f'''
-    ## TODO Content
+    content = f'''<?php
+
+namespace App\\Http\\Requests\\API\\V1\\Auth;
+
+use Illuminate\\Contracts\\Validation\\ValidationRule;
+use Illuminate\\Foundation\\Http\\FormRequest;
+
+class AuthResetPasswordRequest extends FormRequest
+{{
+    /**
+     * Determine if the user is authorized to make this request.
+     */
+    public function authorize(): bool
+    {{
+        return true;
+    }}
+
+    /**
+     * Get the validation rules that apply to the request.
+     *
+     * @return array<string, ValidationRule|array<mixed>|string>
+     */
+    public function rules(): array
+    {{
+        return [
+            'email' => [
+                'required',
+                'email',
+            ],
+            'token' => [
+                'required',
+                'string',
+            ],
+            'password' => [
+                'required',
+                'string',
+                'min:8',
+                'confirmed',
+            ],
+        ];
+    }}
+}}
+
 '''
 
     try:
@@ -609,19 +713,64 @@ def create_restore_password_request(full_path):
 
 
 
-def create_restore_password(full_path):
+def create_reset_password(full_path):
     """
     Genera el archivo
     """
 
     folder_path = os.path.join(full_path, "app", "Http", "Controllers", "API", "V1", "Auth")
-    file_path = os.path.join(folder_path, ".jsx")
+    file_path = os.path.join(folder_path, "AuthResetPasswordController.php")
 
     os.makedirs(folder_path, exist_ok=True)
 
-    content = f'''
-    ## TODO Content
-'''
+    content = f"""<?php
+
+namespace App\\Http\\Controllers\\API\\V1\\Auth;
+
+use App\\Http\\Controllers\\Controller;
+use App\\Http\\Requests\\API\\V1\\Auth\\AuthResetPasswordRequest;
+use Illuminate\\Http\\JsonResponse;
+use Illuminate\\Support\\Facades\\Hash;
+use Illuminate\\Support\\Facades\\Password;
+use Illuminate\\Support\\Str;
+
+
+class AuthResetPasswordController extends Controller
+{{
+
+    public function __invoke(AuthResetPasswordRequest $request): JsonResponse
+    {{
+        $status = Password::reset(
+            $request->only(
+                'email',
+                'password',
+                'password_confirmation',
+                'token'
+            ),
+            function ($user, string $password) {{
+                $user->forceFill([
+                    'password' => Hash::make($password),
+                    'remember_token' => Str::random(60),
+                ])->save();
+            }}
+        );
+
+        if ($status !== Password::PASSWORD_RESET) {{
+            return $this->respondWithError(
+                'Password could not be reset',
+                [],
+                422
+            );
+        }}
+
+        return $this->respondWithData(
+            'Password reset successfully',
+            []
+        );
+    }}
+    
+}}
+"""
 
     try:
         with open(file_path, "w") as f:

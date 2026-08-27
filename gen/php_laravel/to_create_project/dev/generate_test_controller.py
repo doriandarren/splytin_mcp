@@ -46,7 +46,7 @@ use Illuminate\Support\Facades\DB;
 use Knp\Snappy\Pdf;
 use Maatwebsite\Excel\Facades\Excel;
 use setasign\Fpdi\Fpdi;
-use App\Mail\TestMail;
+use App\Mail\Test\TestMail;
 use Illuminate\Support\Facades\Mail;
 use stdClass;
 
