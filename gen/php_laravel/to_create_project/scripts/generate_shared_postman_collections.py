@@ -153,6 +153,12 @@ def generate_shared_postman_collections(full_path, project_name, domain_name, pa
 											"value": "__PASSWORD__",
 											"description": "Contraseña del usuario",
 											"type": "text"
+										},
+          								{
+											"key": "password_confirmation",
+											"value": "__PASSWORD__",
+											"description": "Confirmación de contraseña del usuario",
+											"type": "text"
 										}
 									]
 								},
@@ -215,25 +221,29 @@ def generate_shared_postman_collections(full_path, project_name, domain_name, pa
 									"key": "email",
 									"value": "manager@__DOMAIN_NAME__",
 									"description": "Email Manager",
-									"type": "text"
+									"type": "text",
+         							"disabled": true
 								},
 								{
 									"key": "password",
 									"value": "__PASSWORD__",
 									"description": "Password Manager",
-									"type": "text"
+									"type": "text",
+         							"disabled": true
 								},
         						{
 									"key": "email",
 									"value": "user@__DOMAIN_NAME__",
 									"description": "Email Usuario",
-									"type": "text"
+									"type": "text",
+         							"disabled": true
 								},
 								{
 									"key": "password",
 									"value": "__PASSWORD__",
 									"description": "Password Usuario",
-									"type": "text"
+									"type": "text",
+         							"disabled": true
 								}
 							]
 						},

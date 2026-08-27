@@ -70,7 +70,10 @@ DB_PASSWORD_SHARED=
             f"""APP_URL=http://localhost:8000""",
             f"""APP_URL=http://{domain_name}
 
-MESSAGE_CHANNEL_URL="""
+MESSAGE_CHANNEL_URL=
+
+## Reset Password
+FRONTEND_URL=http://localhost:3000      ## https://erp.splytin.com"""
         )
 
 
@@ -155,7 +158,10 @@ DB_PASSWORD_SHARED=
             f"""APP_URL=http://localhost:8000""",
             f"""APP_URL=http://{domain_name}
 
-MESSAGE_CHANNEL_URL="""
+MESSAGE_CHANNEL_URL=
+
+## Reset Password
+FRONTEND_URL=http://localhost:3000      ## https://erp.splytin.com"""
         )
 
 
