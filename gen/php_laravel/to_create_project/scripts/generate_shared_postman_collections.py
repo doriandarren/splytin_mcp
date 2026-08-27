@@ -37,56 +37,42 @@ def generate_shared_postman_collections(full_path, project_name, domain_name, pa
 			"item": [
 				{
 					"name": "Reset Password",
-					"item": [
-						{
-							"name": "Forgot Password",
-							"request": {
-								"method": "POST",
-								"header": [],
-								"body": {
-									"mode": "formdata",
-									"formdata": [
-										{
-											"key": "email",
-											"value": "admin@__DOMAIN_NAME__",
-											"type": "text"
-										}
-									]
-								},
-								"url": {
-									"raw": "{{base_url}}auth/forgot-password",
-									"host": [
-										"{{base_url}}auth"
-									],
-									"path": [
-										"forgot-password"
-									]
-								}
-							},
-							"response": []
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
 						},
-						{
-							"name": "Reset Password",
-							"request": {
-								"method": "POST",
-								"header": [],
-								"body": {
-									"mode": "formdata",
-									"formdata": []
+						"url": {
+							"raw": "{{base_url}}auth/reset-password?token=ABCD1234&email=admin@__DOMAIN_NAME__&password=value1234&password_confirmation=value1234",
+							"host": [
+								"{{base_url}}auth"
+							],
+							"path": [
+								"reset-password"
+							],
+							"query": [
+								{
+									"key": "token",
+									"value": "ABCD1234"
 								},
-								"url": {
-									"raw": "{{base_url}}auth/reset-password",
-									"host": [
-										"{{base_url}}auth"
-									],
-									"path": [
-										"reset-password",
-									]
+								{
+									"key": "email",
+									"value": "admin@__DOMAIN_NAME__"
+								},
+								{
+									"key": "password",
+									"value": "value1234"
+								},
+								{
+									"key": "password_confirmation",
+									"value": "value1234"
 								}
-							},
-							"response": []
+							]
 						}
-					]
+					},
+					"response": []
 				},
 				{
 					"name": "register",
