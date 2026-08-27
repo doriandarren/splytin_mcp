@@ -32,7 +32,7 @@ def generate_shared(full_path):
         "resource",
         "seeder",
         "factory",
-        "postman",
+        # "postman",
         # "migration",
     ]
     

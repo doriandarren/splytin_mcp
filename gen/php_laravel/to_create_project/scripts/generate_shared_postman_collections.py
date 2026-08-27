@@ -37,102 +37,139 @@ def generate_shared_postman_collections(full_path, project_name, domain_name, pa
 			"item": [
 				{
 					"name": "Reset Password",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "formdata",
-							"formdata": []
-						},
-						"url": {
-							"raw": "{{base_url}}auth/reset-password?token=ABCD1234&email=admin@__DOMAIN_NAME__&password=value1234&password_confirmation=value1234",
-							"host": [
-								"{{base_url}}auth"
-							],
-							"path": [
-								"reset-password"
-							],
-							"query": [
-								{
-									"key": "token",
-									"value": "ABCD1234"
+					"item": [
+						{
+							"name": "Forgot Password",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "email",
+											"value": "admin@__DOMAIN_NAME__",
+											"type": "text"
+										}
+									]
 								},
-								{
-									"key": "email",
-									"value": "admin@__DOMAIN_NAME__"
-								},
-								{
-									"key": "password",
-									"value": "value1234"
-								},
-								{
-									"key": "password_confirmation",
-									"value": "value1234"
+								"url": {
+									"raw": "{{base_url}}auth/forgot-password",
+									"host": [
+										"{{base_url}}auth"
+									],
+									"path": [
+										"forgot-password"
+									]
 								}
-							]
+							},
+							"response": []
+						},
+						{
+							"name": "Reset Password",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": []
+								},
+								"url": {
+									"raw": "{{base_url}}auth/reset-password?token=ABCD1234&email=admin@__DOMAIN_NAME__&password=value1234&password_confirmation=value1234",
+									"host": [
+										"{{base_url}}auth"
+									],
+									"path": [
+										"reset-password"
+									],
+									"query": [
+										{
+											"key": "token",
+											"value": "ABCD1234"
+										},
+										{
+											"key": "email",
+											"value": "admin@__DOMAIN_NAME__"
+										},
+										{
+											"key": "password",
+											"value": "value1234"
+										},
+										{
+											"key": "password_confirmation",
+											"value": "value1234"
+										}
+									]
+								}
+							},
+							"response": []
 						}
-					},
-					"response": []
+					]
 				},
 				{
-					"name": "register",
-					"event": [
+					"name": "Register",
+					"item": [
 						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"let response = JSON.parse(pm.response.text());",
-									"pm.collectionVariables.set(\"token_api\", response.token);"
-								],
-								"type": "text/javascript",
-								"packages": {}
-							}
-						}
-					],
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Accept",
-								"value": "application/json",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "formdata",
-							"formdata": [
+							"name": "Register",
+							"event": [
 								{
-									"key": "name",
-									"value": "Test User",
-									"description": "Nombre del usuario",
-									"type": "text"
-								},
-								{
-									"key": "email",
-									"value": "test@__DOMAIN_NAME__",
-									"description": "Email del usuario",
-									"type": "text"
-								},
-								{
-									"key": "password",
-									"value": "__PASSWORD__",
-									"description": "Contraseña del usuario",
-									"type": "text"
+									"listen": "test",
+									"script": {
+										"exec": [
+											"let response = JSON.parse(pm.response.text());",
+											"pm.collectionVariables.set(\"token_api\", response.token);"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
 								}
-							]
-						},
-						"url": {
-							"raw": "{{base_url}}auth/register",
-							"host": [
-								"{{base_url}}auth"
 							],
-							"path": [
-								"register"
-							]
-						},
-						"description": "Registra un nuevo usuario mediante name, email y password. Si el registro es correcto, guarda el token recibido en la variable de colección {{token_api}}."
-					},
-					"response": []
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "name",
+											"value": "Test User",
+											"description": "Nombre del usuario",
+											"type": "text"
+										},
+										{
+											"key": "email",
+											"value": "test@__DOMAIN_NAME__",
+											"description": "Email del usuario",
+											"type": "text"
+										},
+										{
+											"key": "password",
+											"value": "__PASSWORD__",
+											"description": "Contraseña del usuario",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{base_url}}auth/register",
+									"host": [
+										"{{base_url}}auth"
+									],
+									"path": [
+										"register"
+									]
+								},
+								"description": "Registra un nuevo usuario mediante name, email y password. Si el registro es correcto, guarda el token recibido en la variable de colección {{token_api}}."
+							},
+							"response": []
+						}
+					]
 				},
 				{
 					"name": "login",

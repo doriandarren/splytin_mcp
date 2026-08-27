@@ -354,7 +354,7 @@ use Illuminate\\Http\\JsonResponse;
 use Illuminate\\Http\\Request;
 use App\\Enums\\Roles\\EnumRole;
 use App\\Enums\\UserStatuses\\EnumUserStatus;
-use App\\Models\\SHARED\Roles\\Role;
+use App\\Models\\SHARED\\Roles\\Role;
 use App\\Models\\User;
 
 class AuthRegisterController extends Controller
@@ -492,11 +492,11 @@ def create_route(full_path):
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\V1\Auth\AuthLoginController;
+use App\Http\Controllers\API\V1\Auth\AuthUserController;
 use App\Http\Controllers\API\V1\Auth\AuthLogoutController;
 use App\Http\Controllers\API\V1\Auth\AuthRegisterController;
-use App\Http\Controllers\API\V1\Auth\AuthUserController;
 use App\Http\Controllers\API\V1\Auth\AuthForgotPasswordController;
-use App\Http\Controllers\API\V1\Auth\AuthUserController;
+use App\Http\Controllers\API\V1\Auth\AuthResetPasswordController;
 
 /*
 |--------------------------------------------------------------------------

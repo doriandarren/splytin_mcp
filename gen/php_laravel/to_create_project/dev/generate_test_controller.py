@@ -92,7 +92,7 @@ class TestController extends Controller
         
         try{
 
-            Mail::to('dorian.gonzalez@globaltank.eu')->send(new TestMail('Prueba de email', 'Mensaje de prueba.'));
+            Mail::to('doriandarren1@gmail.com')->send(new TestMail('Prueba de email', 'Mensaje de prueba.'));
 
             echo "Email Sent.";
 
