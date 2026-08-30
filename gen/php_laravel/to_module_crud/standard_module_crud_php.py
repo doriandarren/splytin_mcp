@@ -3,6 +3,7 @@ from gen.helpers.helper_menu import pause
 from gen.helpers.helper_print import camel_to_kebab, camel_to_snake
 from gen.helpers.helper_string import normalize_project_name
 from gen.php_laravel.to_module_crud.generate_controller_index_file import generate_controller_index_file
+from gen.php_laravel.to_module_crud.generate_index_filter import generate_index_filter
 from gen.php_laravel.to_module_crud.generate_model_file import generate_model_file
 from gen.php_laravel.to_module_crud.generate_request_store import generate_request_store
 from gen.php_laravel.to_module_crud.generate_request_update import generate_request_update
@@ -32,12 +33,12 @@ def standard_module_crud_php(
     # Input Default
     if input_menu_checkbox is None:
         input_menu_checkbox = [
-            "model", 
-            "controller_list", 
+            "controller_index", 
             "controller_show", 
             "controller_store", 
             "controller_update",
             "controller_destroy",
+            "model", 
             "service", 
             "resource", 
             "routes",
@@ -67,10 +68,11 @@ def standard_module_crud_php(
                 namespace,
                 singular_name, 
                 plural_name, 
-                plural_name_snake
+                plural_name_snake,
+                columns
             )
 
-        if "controller_list" in input_menu_checkbox:
+        if "controller_index" in input_menu_checkbox:
             generate_controller_index_file(
                 full_path,
                 namespace,
@@ -84,6 +86,22 @@ def standard_module_crud_php(
                 plural_name_snake,
                 columns
             )
+            
+            ## TODO agregar el Filter
+            generate_index_filter(full_path,
+                namespace,
+                version_api,
+                project_name,
+                singular_name,
+                plural_name,
+                singular_name_kebab,
+                plural_name_kebab,
+                singular_name_snake,
+                plural_name_snake,
+                columns
+            )
+            
+            
 
         if "controller_show" in input_menu_checkbox:
             generate_controller_show_file(

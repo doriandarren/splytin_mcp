@@ -6,7 +6,8 @@ def generate_model_file(
     namespace,
     singular_name, 
     plural_name, 
-    plural_name_snake
+    plural_name_snake,
+    columns
 ):
     """
     Genera el archivo
@@ -24,7 +25,7 @@ namespace App\\Models\\{namespace}\\{plural_name};
 use Illuminate\\Database\\Eloquent\\Factories\\HasFactory;
 use Illuminate\\Database\\Eloquent\\Model;
 use Illuminate\\Database\\Eloquent\\Builder;
-use App\\Http\\Filters\\V1\\QueryFilter;
+use App\\Http\\Filters\\API\\V1\\QueryFilter;
 
 class {singular_name} extends Model
 {{
@@ -34,6 +35,17 @@ class {singular_name} extends Model
     protected $connection = '{namespace.lower()}';
     protected $table = '{plural_name_snake}';
     
+    
+"""
+
+    content += f"""    protected $fillable = [
+        {', \n        '.join([f"'{column["name"]}'" for column in columns])}
+    ];
+
+"""
+    
+    
+    content += f"""
     /***********************
     * Scope Filter
     ***********************/

@@ -13,7 +13,7 @@ def start_module_php():
 
     opt = [
         ("Modelo", "model"),
-        ("Controlador - List", "controller_list"),
+        ("Controlador - Index", "controller_index"),
         ("Controlador - Show", "controller_show"),
         ("Controlador - Store", "controller_store"),
         ("Controlador - Update", "controller_update"),
@@ -51,6 +51,14 @@ def start_module_php():
     
     ## dd(columns)
     
-    standard_module_crud_php(full_path, namespace, version_api, singular_name, plural_name, columns, input_menu_checkbox)
+    standard_module_crud_php(
+        full_path, 
+        namespace, 
+        version_api, 
+        singular_name, 
+        plural_name, 
+        columns, 
+        input_menu_checkbox
+    )
     
     pause()

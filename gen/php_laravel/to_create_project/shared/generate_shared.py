@@ -22,7 +22,7 @@ def generate_shared(full_path):
     ## By all:
     input_menu_checkbox = [
         "model",
-        "controller_list",
+        "controller_index",
         "controller_show",
         "controller_store",
         "controller_update",
