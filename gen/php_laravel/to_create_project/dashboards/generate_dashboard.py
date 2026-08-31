@@ -16,7 +16,7 @@ def create_list_controller(full_path):
     """
 
     folder_path = os.path.join(full_path, "app", "Http", "Controllers", "API", "V1", "Dashboards")
-    file_path = os.path.join(folder_path, "DashboardListController.php")
+    file_path = os.path.join(folder_path, "DashboardIndexController.php")
 
     os.makedirs(folder_path, exist_ok=True)
 
@@ -30,7 +30,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use App\Services\API\V1\Dashboards\DashboardService;
 
-class DashboardListController extends Controller
+class DashboardIndexController extends Controller
 {
     private DashboardService $repository;
 
@@ -50,14 +50,14 @@ class DashboardListController extends Controller
         $data = [];
 
         if ($this->isAdmin(Auth::user()->roles)) {
-            $data = $this->repository->list();
+            $data = $this->repository->index();
         } elseif ($this->isManager(Auth::user()->roles)) {
-            $data = $this->repository->listByRoleManager();
+            $data = $this->repository->indexByRoleManager();
         } elseif ($this->isUser(Auth::user()->roles)) {
-            $data = $this->repository->listByRoleUser();
+            $data = $this->repository->indexByRoleUser();
         }
 
-        return $this->respondWithData('Dashboards list', $data);
+        return $this->respondWithData('Dashboards Index', $data);
     }
 }
 
@@ -90,7 +90,7 @@ def create_router(full_path):
 // use App\Enums\EnumAbilitySuffix;
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\API\V1\Dashboards\DashboardListController;
+use App\Http\Controllers\API\V1\Dashboards\DashboardIndexController;
 
 
 /**
@@ -100,7 +100,7 @@ Route::group(['prefix' => 'dashboards/'], function () {
 
 	Route::group(['middleware' => 'auth:sanctum'], function() {
 
-		Route::get('list', [DashboardListController::class, '__invoke']);
+		Route::get('/', [DashboardIndexController::class, '__invoke']);
 
 	});
 });
@@ -148,7 +148,7 @@ class DashboardService
     /**
     * List
     */
-    public function list()
+    public function index()
     {
         // TODO implement
         return [];
@@ -157,7 +157,7 @@ class DashboardService
     /**
     * List by manager
     */
-    public function listByRoleManager()
+    public function indexByRoleManager()
     {
         // TODO implement
         return [];
@@ -168,7 +168,7 @@ class DashboardService
     /**
     * List by user
     */
-    public function listByRoleUser()
+    public function indexByRoleUser()
     {
         // TODO implement
         return [];
