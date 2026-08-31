@@ -24,6 +24,62 @@ def create_postman_structure(base_ruta):
     return postman_folder_path
 
 
+
+def generate_index_query_params(columns):
+    query_params = [
+        {
+            "key": "include",
+            "value": "",
+            "description": "Relationship",
+            "disabled": True
+        }
+    ]
+
+    for column in columns:
+        query_params.append({
+            "key": f"filter[{column["name"]}]",
+            "value": "term",
+            "description": f"Filter by {column["name"]}",
+            "disabled": True
+        })
+    
+    query_params.append({
+        "key": "filter[created_at]",
+        "value": "2026-08-01,2026-09-20",
+        "description": "Range by created_at",
+        "disabled": True
+    })
+    
+        
+    query_params.append({
+        "key": "filter[updated_at]",
+        "value": "2026-08-01,2026-09-20",
+        "description": "Range by updated_at",
+        "disabled": True
+    })
+        
+    for column in columns:
+        query_params.append({
+            "key": f"sort",
+            "value": f"{column["name"]}",
+            "description": f"Sort by {column["name"]}",
+            "disabled": True
+        })
+
+    
+    query_params.append({
+        "key": "sort",
+        "value": "-created_at",
+        "description": "Sort by created_at",
+        "disabled": True
+    })
+    
+    return query_params
+
+
+
+
+
 def generate_postman_file(
     base_ruta,
     singular_name,
@@ -51,6 +107,9 @@ def generate_postman_file(
         column["name"]
         for column in columns
     ]
+    
+    
+    query_params = generate_index_query_params(columns)
 
     # Crear estructura Postman
     postman_content = {
@@ -64,7 +123,6 @@ def generate_postman_file(
         "item": [
             {
                 "name": plural_name,
-
                 "item": [
 
                     # INDEX
@@ -96,7 +154,8 @@ def generate_postman_file(
                                 "host": [
                                     f"{{{{base_url}}}}{plural_name_kebab}"
                                 ],
-                                "path": []
+                                "path": [],
+                                "query": {query_params}
                             }
                         },
 

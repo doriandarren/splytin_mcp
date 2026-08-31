@@ -63,7 +63,11 @@ trait ApiResponses
      * @return JsonResponse
      */
     public function respond($data, $headers = []){
-        return response()->json($data, $this->getCode());
+        return response()->json(
+            $data, 
+            $this->getCode(),
+            $headers
+        );
     }
 
     /**
@@ -88,9 +92,10 @@ trait ApiResponses
     /*************************************
      *  RESPONSE 200
      *************************************/
-
+     
     /**
-     * Respond 200
+     * Respond with data
+     *
      * @param null $message
      * @param null $data
      * @param bool $success
@@ -107,102 +112,124 @@ trait ApiResponses
         ]);
     }
 
-
     /**
-     * Respond with Token
+     * Response with pagination data
+     *
      * @param $message
-     * @param $token
+     * @param $resource
+     * @param $paginator
+     * @param boolean $success
      * @return JsonResponse
      */
-    public function respondWithToken($message, $token): JsonResponse
-    {
+    public function respondWithPaginatedData(
+        $message,
+        $resource,
+        $paginator,
+        $success = true
+    ): JsonResponse {
         $this->setCode(200);
+
         return $this->respond([
-            'data' => [    
-                'token' => $token,
-                'token_type' => 'Bearer',
+            'data' => $resource,
+
+            'meta' => [
+                'current_page' => $paginator->currentPage(),
+                'per_page' => $paginator->perPage(),
+                'last_page' => $paginator->lastPage(),
+                'total' => $paginator->total(),
+                'from' => $paginator->firstItem(),
+                'to' => $paginator->lastItem(),
             ],
+
+            'links' => [
+                'first' => $paginator->url(1),
+                'last' => $paginator->url($paginator->lastPage()),
+                'prev' => $paginator->previousPageUrl(),
+                'next' => $paginator->nextPageUrl(),
+            ],
+
             'message' => $message,
             'status_code' => 200,
-            'success' => true,
+            'success' => $success,
         ]);
     }
-
-
+    
+    
     /**
-     * Respond with Token
-     * @param $message
-     * @param $user
-     * @param $token
-     * @return JsonResponse
-     */
-    public function respondWithTokenWithUser($message, $user, $token): JsonResponse
-    {
+    * Respond with Token
+    *
+    * @param string $message
+    * @param string $token
+    * @param mixed|null $user
+    * @return JsonResponse
+    */
+    public function respondWithToken(
+        string $message,
+        string $token,
+        $user = null
+    ): JsonResponse {
         $this->setCode(200);
-        return $this->respond([
+
+        $response = [
             'data' => [
                 'token' => $token,
                 'token_type' => 'Bearer',
             ],
             'message' => $message,
-            'user' => $user,
             'status_code' => 200,
             'success' => true,
-        ]);
+        ];
+
+        if ($user !== null) {
+            $response['user'] = $user;
+        }
+
+        return $this->respond($response);
     }
-
-
-    /**
-     * Respond with Token
-     * @param $message
-     * @param $user
-     * @param $token
-     * @return JsonResponse
-     */
-    public function respondWithTokenByApp($message, $user, $token): JsonResponse
-    {
-        $this->setCode(200);
-        return $this->respond([
-            'data' => [    
-                'token' => $token,
-                'token_type' => 'Bearer',
-            ],
-            'message' => $message,
-            'user' => $user,
-            'status_code' => 200,
-            'success' => true,
-        ]);
-    }
-
+    
+    
+    
 
     /*************************************
      *  RESPONSE 400
      *************************************/
 
-    //The 400
-    public function respondHttpBadRequest($message = 'Bad Request'){
-        $this->setCode(400);
-        return $this->respondWithError($message, ['e' => $message]);
+    public function respondHttpBadRequest($message = 'Bad Request')
+    {
+        return $this->respondWithError(
+            $message,
+            ['e' => $message],
+            400
+        );
     }
 
-    // Response 401
-    public function respondHttpUnauthorized($message = 'Unauthorized'){
-        $this->setCode(401);
-        return $this->respondWithError($message, ['e' => $message]);
+    public function respondHttpUnauthorized($message = 'Unauthorized')
+    {
+        return $this->respondWithError(
+            $message,
+            ['e' => $message],
+            401
+        );
     }
 
-    // Response 409
-    public function respondHttpConflict($message = 'Data Conflict'){
-        $this->setCode(409);
-        return $this->respondWithError($message, ['e' => $message]);
+    public function respondHttpConflict($message = 'Data Conflict')
+    {
+        return $this->respondWithError(
+            $message,
+            ['e' => $message],
+            409
+        );
     }
 
-    // Response 422
     public function respondUnprocessableEntity($message = 'Unprocessable Entity')
     {
-        $this->setCode(422);
-        return $this->respondWithError($message, ['e' => $message]);
+        return $this->respondWithError(
+            $message,
+            ['e' => $message],
+            422
+        );
     }
+    
 
     /**
      * Role Admin

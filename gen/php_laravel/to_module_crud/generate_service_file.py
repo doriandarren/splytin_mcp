@@ -28,7 +28,7 @@ def generate_service_file(
     Genera un archivo de repositorio PHP basado en los nombres proporcionados y crea la estructura app/path_model dentro de base_ruta.
     """
     
-    path_services = "Services/" + namespace + "/" + version_api + "/" +plural_name
+    path_services = "Services/" + namespace + "/" + version_api + "/" + plural_name
     
     # Crear la estructura de carpetas llamando a create_repository_structure
     service_folder_path = create_structure(base_ruta, path_services)

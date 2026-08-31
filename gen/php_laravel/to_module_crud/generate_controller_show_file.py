@@ -52,15 +52,19 @@ use Illuminate\\Http\\JsonResponse;
 use App\\Http\\Controllers\\Controller;
 use App\\Models\\{namespace}\\{plural_name}\\{singular_name};
 use App\\Services\\{namespace}\\{version_api}\\{plural_name}\\{singular_name}Service;
+use App\\Http\\Resources\\{namespace}\\{version_api}\\{plural_name}\\{singular_name}Resource;
 
 class {singular_name}ShowController extends Controller
 {{
-    private {singular_name}Service $service;
+    /**
+     * Construct
+     *
+     * @param {singular_name}Service $service
+     */
+    public function __construct(
+        private {singular_name}Service $service
+    ) {{}}
 
-    public function __construct()
-    {{
-        $this->service = new {singular_name}Service();
-    }}
 
     /**
     * @header Authorization Bearer TOKEN 
@@ -73,14 +77,17 @@ class {singular_name}ShowController extends Controller
     {{
         if($this->isAdmin(Auth::user()->roles)){{
             $data = $this->service->show(${singular_name_snake}->id);
-            return $this->respondWithData('{singular_name} show', $data);
         }} else if($this->isManager(Auth::user()->roles)){{
             $data = $this->service->showByRoleManager(${singular_name_snake}->id);
-            return $this->respondWithData('{singular_name} show', $data);
         }} else {{
             $data = $this->service->showByRoleUser(${singular_name_snake}->id);
-            return $this->respondWithData('{singular_name} show', $data);
         }}
+        
+        return $this->respondWithData(
+            '{singular_name} show',
+            new {singular_name}Resource($data)
+        );
+        
     }}
 }}
 """

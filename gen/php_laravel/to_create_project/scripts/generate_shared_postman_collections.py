@@ -456,8 +456,74 @@ def generate_shared_postman_collections(full_path, project_name, domain_name, pa
 							"host": [
 								"{{base_url}}abilities"
 							],
-							"path": [
-								
+							"path": [],
+							"query": [
+								{
+									"key": "include",
+									"value": "",
+									"description": "Relationship",
+									"disabled": true
+								},
+								{
+									"key": "filter[ability_group_id]",
+									"value": "1",
+									"description": "Filter by ability_group_id",
+									"disabled": true
+								},
+								{
+									"key": "filter[name]",
+									"value": "roles:store",
+									"description": "Ej: roles:store | *roles*",
+									"disabled": true
+								},
+								{
+									"key": "filter[label]",
+									"value": "Edita modulo",
+									"description": "Ej: Edita modulo | *Edita*",
+									"disabled": true
+								},
+								{
+									"key": "filter[created_at]",
+									"value": "2026-08-01,2026-09-20",
+									"description": "Range by created_at",
+									"disabled": true
+								},
+								{
+									"key": "filter[updated_at]",
+									"value": "2026-08-01,2026-09-20",
+									"description": "Range by updated_at",
+									"disabled": true
+								},
+								{
+									"key": "sort",
+									"value": "ability_group_id",
+									"description": "Ej: ability_group_id | -ability_group_id",
+									"disabled": true
+								},
+								{
+									"key": "sort",
+									"value": "name",
+									"description": "Ej: name | -name",
+									"disabled": true
+								},
+								{
+									"key": "sort",
+									"value": "label",
+									"description": "Ej: label | -label",
+									"disabled": true
+								},
+								{
+									"key": "sort",
+									"value": "created_at",
+									"description": "Ej: created_at | -created_at",
+									"disabled": true
+								},
+								{
+									"key": "sort",
+									"value": "updated_at",
+									"description": "Ej: updated_at | -updated_at",
+									"disabled": true
+								}
 							]
 						}
 					},
@@ -655,8 +721,50 @@ def generate_shared_postman_collections(full_path, project_name, domain_name, pa
 							"host": [
 								"{{base_url}}ability-groups"
 							],
-							"path": [
-								
+							"path": [],
+							"query": [
+								{
+									"key": "include",
+									"value": "",
+									"description": "Relationship",
+									"disabled": true
+								},
+								{
+									"key": "filter[name]",
+									"value": "roles",
+									"description": "Ej: roles | *roles*",
+									"disabled": true
+								},
+								{
+									"key": "filter[created_at]",
+									"value": "2026-08-01,2026-09-20",
+									"description": "Range by created_at",
+									"disabled": true
+								},
+								{
+									"key": "filter[updated_at]",
+									"value": "2026-08-01,2026-09-20",
+									"description": "Range by updated_at",
+									"disabled": true
+								},
+								{
+									"key": "sort",
+									"value": "name",
+									"description": "Sort by name",
+									"disabled": true
+								},
+								{
+									"key": "sort",
+									"value": "created_at",
+									"description": "Sort by created_at",
+									"disabled": true
+								},
+								{
+									"key": "sort",
+									"value": "updated_at",
+									"description": "Sort by updated_at",
+									"disabled": true
+								}
 							]
 						}
 					},
@@ -834,9 +942,64 @@ def generate_shared_postman_collections(full_path, project_name, domain_name, pa
 							"host": [
 								"{{base_url}}ability-users"
 							],
-							"path": [
-								
+							"path": [], 
+							"query": [
+								{
+									"key": "include",
+									"value": "",
+									"description": "Relationship",
+									"disabled": true
+								},
+								{
+									"key": "filter[user_id]",
+									"value": "1",
+									"description": "Filter by user_id",
+									"disabled": true
+								},
+								{
+									"key": "filter[ability_id]",
+									"value": "1",
+									"description": "Filter by ability_id",
+									"disabled": true
+								},
+								{
+									"key": "filter[created_at]",
+									"value": "2026-08-01,2026-09-20",
+									"description": "Range by created_at",
+									"disabled": true
+								},
+								{
+									"key": "filter[updated_at]",
+									"value": "2026-08-01,2026-09-20",
+									"description": "Range by updated_at",
+									"disabled": true
+								},
+								{
+									"key": "sort",
+									"value": "user_id",
+									"description": "Sort by user_id",
+									"disabled": true
+								},
+								{
+									"key": "sort",
+									"value": "ability_id",
+									"description": "Sort by ability_id",
+									"disabled": true
+								},
+								{
+									"key": "sort",
+									"value": "created_at",
+									"description": "Sort by created_at",
+									"disabled": true
+								},
+								{
+									"key": "sort",
+									"value": "updated_at",
+									"description": "Sort by updated_at",
+									"disabled": true
+								}
 							]
+       
 						}
 					},
 					"response": []
@@ -1023,8 +1186,62 @@ def generate_shared_postman_collections(full_path, project_name, domain_name, pa
 							"host": [
 								"{{base_url}}role-users"
 							],
-							"path": [
-								
+							"path": [],
+							"query": [
+								{
+									"key": "include",
+									"value": "",
+									"description": "Relationship",
+									"disabled": true
+								},
+								{
+									"key": "filter[role_id]",
+									"value": "1",
+									"description": "Filter by role_id",
+									"disabled": true
+								},
+								{
+									"key": "filter[user_id]",
+									"value": "1",
+									"description": "Filter by user_id",
+									"disabled": true
+								},
+								{
+									"key": "filter[created_at]",
+									"value": "2026-08-01,2026-09-20",
+									"description": "Range by created_at",
+									"disabled": true
+								},
+								{
+									"key": "filter[updated_at]",
+									"value": "2026-08-01,2026-09-20",
+									"description": "Range by updated_at",
+									"disabled": true
+								},
+								{
+									"key": "sort",
+									"value": "role_id",
+									"description": "Sort by role_id",
+									"disabled": true
+								},
+								{
+									"key": "sort",
+									"value": "user_id",
+									"description": "Sort by user_id",
+									"disabled": true
+								},
+								{
+									"key": "sort",
+									"value": "created_at",
+									"description": "Sort by created_at",
+									"disabled": true
+								},
+								{
+									"key": "sort",
+									"value": "updated_at",
+									"description": "Sort by updated_at",
+									"disabled": true
+								}
 							]
 						}
 					},
@@ -1212,8 +1429,62 @@ def generate_shared_postman_collections(full_path, project_name, domain_name, pa
 							"host": [
 								"{{base_url}}roles"
 							],
-							"path": [
-								
+							"path": [],
+							"query": [
+								{
+									"key": "include",
+									"value": "",
+									"description": "Relationship",
+									"disabled": true
+								},
+								{
+									"key": "filter[name]",
+									"value": "",
+									"description": "Ej: Admin | *Admin*",
+									"disabled": true
+								},
+								{
+									"key": "filter[description]",
+									"value": "",
+									"description": "Ej: Description | *Description*",
+									"disabled": true
+								},
+								{
+									"key": "filter[created_at]",
+									"value": "2026-08-01,2026-09-20",
+									"description": "Range by created_at",
+									"disabled": true
+								},
+								{
+									"key": "filter[updated_at]",
+									"value": "2026-08-01,2026-09-20",
+									"description": "Range by updated_at",
+									"disabled": true
+								},
+								{
+									"key": "sort",
+									"value": "name",
+									"description": "Sort by name",
+									"disabled": true
+								},
+								{
+									"key": "sort",
+									"value": "description",
+									"description": "Sort by description",
+									"disabled": true
+								},
+								{
+									"key": "sort",
+									"value": "created_at",
+									"description": "Sort by created_at",
+									"disabled": true
+								},
+								{
+									"key": "sort",
+									"value": "updated_at",
+									"description": "Sort by updated_at",
+									"disabled": true
+								}
 							]
 						}
 					},
@@ -1401,8 +1672,50 @@ def generate_shared_postman_collections(full_path, project_name, domain_name, pa
 							"host": [
 								"{{base_url}}user-statuses"
 							],
-							"path": [
-								
+							"path": [],
+							"query": [
+								{
+									"key": "include",
+									"value": "",
+									"description": "Relationship",
+									"disabled": true
+								},
+								{
+									"key": "filter[name]",
+									"value": "",
+									"description": "Ej: Active | *Active*",
+									"disabled": true
+								},
+								{
+									"key": "filter[created_at]",
+									"value": "2026-08-01,2026-09-20",
+									"description": "Range by created_at",
+									"disabled": true
+								},
+								{
+									"key": "filter[updated_at]",
+									"value": "2026-08-01,2026-09-20",
+									"description": "Range by updated_at",
+									"disabled": true
+								},
+								{
+									"key": "sort",
+									"value": "name",
+									"description": "Sort by name",
+									"disabled": true
+								},
+								{
+									"key": "sort",
+									"value": "created_at",
+									"description": "Sort by created_at",
+									"disabled": true
+								},
+								{
+									"key": "sort",
+									"value": "updated_at",
+									"description": "Sort by updated_at",
+									"disabled": true
+								}
 							]
 						}
 					},

@@ -42,6 +42,7 @@ use App\\Services\\{namespace}\\{version_api}\\{plural_name}\\{singular_name}Ser
 
 class {singular_name}IndexController extends Controller
 {{
+    
     public function __construct(
         private {singular_name}Service $service
     ) {{}}
@@ -61,7 +62,11 @@ class {singular_name}IndexController extends Controller
             $data = $this->service->indexByRoleUser($filter);
         }}
         
-        return {singular_name}Resource::collection($data);
+        return $this->respondWithPaginatedData(
+            '{singular_name} list',
+            {singular_name}Resource::collection($data),
+            $data
+        );
         
     }}
 }}
