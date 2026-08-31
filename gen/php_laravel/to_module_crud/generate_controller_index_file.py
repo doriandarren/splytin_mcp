@@ -34,7 +34,7 @@ use Illuminate\\Http\\Request;
 use Illuminate\\Support\\Facades\\Auth;
 use App\\Http\\Controllers\\Controller;
 use App\\Models\\{namespace}\\{plural_name}\\{singular_name};
-use App\\Http\\Filters\\{namespace}\\{version_api}\\{plural_name}\\{singular_name}Resource;
+use App\\Http\\Filters\\{namespace}\\{version_api}\\{plural_name}\\{singular_name}Filter;
 use App\\Http\\Resources\\{namespace}\\{version_api}\\{plural_name}\\{singular_name}Resource;
 use App\\Services\\{namespace}\\{version_api}\\{plural_name}\\{singular_name}Service;
 
@@ -50,8 +50,9 @@ class {singular_name}IndexController extends Controller
     
     /**
     * @header Authorization Bearer TOKEN 
+    * @return JsonResponse
     */
-    public function __invoke({singular_name}Filter $filter)
+    public function __invoke({singular_name}Filter $filter): JsonResponse
     {{
         
         if ($this->isAdmin(Auth::user()->roles)) {{
