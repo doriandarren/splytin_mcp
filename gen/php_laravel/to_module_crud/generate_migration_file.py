@@ -38,7 +38,7 @@ def generate_migration_file(
 
     migration_folder_path = create_migration_structure(base_ruta, path_migration)
 
-    current_time = datetime.now().strftime('%Y_%m_%d_%H_%M_%S')
+    current_time = datetime.now().strftime('%Y_%m_%d_%H%M%S')
     file_name = f'{current_time}_create_{plural_name_snake}_table.php'
     migration_file_path = os.path.join(migration_folder_path, file_name)
 

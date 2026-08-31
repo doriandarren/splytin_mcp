@@ -46,84 +46,60 @@ def generate_service_file(
 namespace App\\Services\\{namespace}\\{version_api}\\{plural_name};
 
 use App\\Enums\\EnumApiSetup;
+use App\\Http\\Filters\\{namespace}\\{version_api}\\{plural_name}\\{singular_name}Filter;
 use App\\Models\\{namespace}\\{plural_name}\\{singular_name};
 
 class {singular_name}Service
 {{
     const WITH = [];
-
+   
     /**
     * List by Admin
     * @return mixed
     */
-    public function list(array $filters = []): mixed
+    public function index({singular_name}Filter $filter)
     {{
-        $q = {singular_name}::with(self::WITH);
+        $perPage = request()->integer('perPage', EnumApiSetup::QUERY_DEFAULT_LIMIT);
+        $perPage = max(1, min($perPage, EnumApiSetup::QUERY_MAX_LIMIT));
         
-"""
-
-    for column in column_names:
-        service_content += f"""        // Filter by {column}
-        if (!empty($filters['{column}'])) {{
-            ${column} = trim($filters['{column}']);
-            $q->where('{column}', 'LIKE', '%' . ${column} . '%');
-        }}
-
-"""
-    service_content += f"""        return $q->latest()
-            ->limit(EnumApiSetup::QUERY_LIMIT)
-            ->get();
+        return $filter
+            ->apply({singular_name}::query())
+            ->paginate($perPage);
     }}
-    
-    
+
+
     /**
     * List by Manager
     * @return mixed
     */
-    public function listByRoleManager(array $filters = []): mixed
+    public function indexByRoleManager({singular_name}Filter $filter)
     {{
-        $q = {singular_name}::with(self::WITH);
+        $perPage = request()->integer('perPage', EnumApiSetup::QUERY_DEFAULT_LIMIT);
+        $perPage = max(1, min($perPage, EnumApiSetup::QUERY_MAX_LIMIT));
         
-"""
-
-    for column in column_names:
-        service_content += f"""        // Filter by {column}
-        if (!empty($filters['{column}'])) {{
-            ${column} = trim($filters['{column}']);
-            $q->where('{column}', 'LIKE', '%' . ${column} . '%');
-        }}
-
-"""
-    service_content += f"""        return $q->latest()
-            ->limit(EnumApiSetup::QUERY_LIMIT)
-            ->get();
+        return $filter
+            ->apply({singular_name}::query())
+            ->paginate($perPage);
     }}
-    
-    
+
     /**
     * List by User
     * @return mixed
     */
-    public function listByRoleUser(array $filters = []): mixed
+    public function indexByRoleUser({singular_name}Filter $filter)
     {{
-        $q = {singular_name}::with(self::WITH);
+        $perPage = request()->integer('perPage', EnumApiSetup::QUERY_DEFAULT_LIMIT);
+        $perPage = max(1, min($perPage, EnumApiSetup::QUERY_MAX_LIMIT));
+        
+        return $filter
+            ->apply({singular_name}::query())
+            ->paginate($perPage);
+    }} 
         
 """
 
-    for column in column_names:
-        service_content += f"""        // Filter by {column}
-        if (!empty($filters['{column}'])) {{
-            ${column} = trim($filters['{column}']);
-            $q->where('{column}', 'LIKE', '%' . ${column} . '%');
-        }}
 
-"""
-    service_content += f"""        return $q->latest()
-            ->limit(EnumApiSetup::QUERY_LIMIT)
-            ->get();
-    }}
-
-
+    service_content += f"""
     /**
     * Show by Admin
 	* @param $id

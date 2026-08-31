@@ -1,11 +1,12 @@
 import re
 import html
 import xml.etree.ElementTree as ET
-
 from gen.import_diagrams.helpers.helper_table_naming import table_to_classes
 from gen.helpers.helper_print import print_header_list
 
+
 _TAG_RE = re.compile(r"<[^>]+>")
+
 
 def _clean_value(v: str) -> str:
     if not v:
@@ -26,7 +27,12 @@ def _clean_value(v: str) -> str:
     return v
 
 
-def list_diagrams(xml_path, excluded_columns, selected_filename=None):
+def list_diagrams(
+    xml_path, 
+    excluded_columns, 
+    selected_filename=None
+):
+    
     if selected_filename:
         print(f"✔ 📂 Selecciona un archivo para importar: {selected_filename}")
 

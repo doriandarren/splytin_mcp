@@ -4,20 +4,18 @@ from gen.helpers.helper_print import print_message, GREEN, CYAN
 
 def format_columns_function(columns):
 
-    content = """
-    public function email($value)
-    {{
-        $likeStr = str_replace('*', '%', $value);
-        return $this->builder->where('email', 'like', $likeStr);
-    }}
-
-    public function name($value)
-    {{
-        $likeStr = str_replace('*', '%', $value);
-        return $this->builder->where('name', 'like', $likeStr);
-    }}
+    content = "" 
     
-    """
+    for column in columns:
+        column_name = column["name"]
+
+        content += f"""
+        public function {column_name}($value)
+        {{
+            $likeStr = str_replace('*', '%', $value);
+            return $this->builder->where('{column_name}', 'like', $likeStr);
+        }}
+        """
 
     return content
 
@@ -82,7 +80,7 @@ class {singular_name}Filter extends QueryFilter
 {format_columns_function(columns)}
 
 
-    public function createdAt($value)
+    public function created_at($value)
     {{
         $dates = explode(',', $value);
 
@@ -94,7 +92,7 @@ class {singular_name}Filter extends QueryFilter
     }}
 
 
-    public function updatedAt($value)
+    public function updated_at($value)
     {{
         $dates = explode(',', $value);
 

@@ -25,8 +25,8 @@ def main_import_diagrams():
     print_header("IMPORT DIAGRAMS")
 
     opt = menu_list("¿Qué quieres hacer?", [
-        {"name": "Listar", "value": "listar"},
-        {"name": "Generar", "value": "generar"},
+        {"name": "Listar", "value": "list"},
+        {"name": "Generar", "value": "generate"},
         {"name": "Volver", "value": "volver"},
     ])
 
@@ -44,8 +44,8 @@ def main_import_diagrams():
     if not xml_path:
         return
 
-    if opt == "listar":
+    if opt == "list":
         list_diagrams(xml_path, EXCLUDED_COLUMNS)
 
-    elif opt == "generar":
+    elif opt == "generate":
         generate_tables_columns(xml_path, EXCLUDED_COLUMNS)

@@ -490,18 +490,17 @@ namespace App\\Enums;
 
 abstract class EnumApiSetup
 {
+    // QUERIES
+    const QUERY_DEFAULT_LIMIT = 15;
+    const QUERY_MAX_LIMIT = 2000;
 
+
+    // API SETTINGS
     const API_VERSION = 'v1/';
-
     const API_NAME = 'api/';
 
-    const QUERY_LIMIT = 2000;
-
-
-
-    const API_DRIVER = 'driver-app/';
-
-    const API_OFFICE = 'office/';
+    // const API_DRIVER = 'driver-app/';
+    // const API_OFFICE = 'office/';
 
 }
 """
