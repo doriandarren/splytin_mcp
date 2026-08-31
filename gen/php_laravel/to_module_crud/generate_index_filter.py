@@ -45,10 +45,6 @@ def generate_index_filter(
 
     os.makedirs(folder_path, exist_ok=True)
     
-    
-    
-    
-    
 
     content = f"""<?php
 
@@ -61,8 +57,11 @@ class {singular_name}Filter extends QueryFilter
 {{
 
     protected $sortable = [
-        'name',
-        'email',
+"""
+
+    content += f"""{'\n'.join([f'        \'{column["name"]}\',' for column in columns])}"""
+
+    content += f"""
         'created_at' => 'created_at',
         'updated_at' => 'updated_at',
     ];

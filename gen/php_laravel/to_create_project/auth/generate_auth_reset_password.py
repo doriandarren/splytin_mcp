@@ -107,7 +107,14 @@ use Illuminate\\Support\\Str;
 
 class AuthResetPasswordController extends Controller
 {{
-
+    
+    
+    /**
+     * Reset Password
+     *
+     * @param AuthResetPasswordRequest $request
+     * @return JsonResponse
+     */
     public function __invoke(AuthResetPasswordRequest $request): JsonResponse
     {{
         $status = Password::reset(

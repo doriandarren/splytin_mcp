@@ -87,7 +87,6 @@ def standard_module_crud_php(
                 columns
             )
             
-            ## TODO agregar el Filter
             generate_index_filter(full_path,
                 namespace,
                 version_api,

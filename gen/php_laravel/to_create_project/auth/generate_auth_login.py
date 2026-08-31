@@ -101,7 +101,7 @@ class AuthLoginController extends Controller
      * @bodyParam email string required Must be a valid email address. Example: satterfield.buddy@example.org
      * @bodyParam password string required
      *
-     * @param AuthRequest $request
+     * @param AuthLoginRequest $request
      * @return JsonResponse
      */
     public function __invoke(AuthLoginRequest $request): JsonResponse

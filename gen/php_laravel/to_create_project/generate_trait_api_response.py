@@ -77,10 +77,10 @@ trait ApiResponses
     {
         $this->setCode($code);
         return $this->respond([
-            'message' => $message,
             'data' => null,
+            'message' => $message,
             'errors' => [ $errors ],
-            'success' => FALSE,
+            'success' => false,
             'status_code' => $this->getCode(),
         ]);
     }
@@ -102,8 +102,8 @@ trait ApiResponses
         return $this->respond([
             'data' => $data,
             'message' => $message,
+            'status_code' => 200,
             'success' => $success,
-            'status_code' => 200
         ]);
     }
 
@@ -118,12 +118,13 @@ trait ApiResponses
     {
         $this->setCode(200);
         return $this->respond([
+            'data' => [    
+                'token' => $token,
+                'token_type' => 'Bearer',
+            ],
             'message' => $message,
-            'token' => $token,
-            'token_type' => 'Bearer',
-            //'user' => $user,
-            'success' => TRUE,
-            'status_code' => 200
+            'status_code' => 200,
+            'success' => true,
         ]);
     }
 
@@ -139,12 +140,14 @@ trait ApiResponses
     {
         $this->setCode(200);
         return $this->respond([
+            'data' => [
+                'token' => $token,
+                'token_type' => 'Bearer',
+            ],
             'message' => $message,
-            'token' => $token,
-            'token_type' => 'Bearer',
             'user' => $user,
-            'success' => TRUE,
-            'status_code' => 200
+            'status_code' => 200,
+            'success' => true,
         ]);
     }
 
@@ -160,12 +163,14 @@ trait ApiResponses
     {
         $this->setCode(200);
         return $this->respond([
+            'data' => [    
+                'token' => $token,
+                'token_type' => 'Bearer',
+            ],
             'message' => $message,
-            'token' => $token,
-            'token_type' => 'Bearer',
             'user' => $user,
-            'success' => TRUE,
-            'status_code' => 200
+            'status_code' => 200,
+            'success' => true,
         ]);
     }
 
