@@ -4,49 +4,96 @@ from gen.helpers.helper_print import print_message, GREEN, CYAN
 
 
 # Función auxiliar para generar reglas de validación
-def generate_validation_rules(columns):
+def generate_request_validation_rules(
+    columns,
+    singular_name,
+    singular_name_camel,
+    singular_name_snake,
+    plural_name_snake
+):
     validation_rules = ""
 
     rules_by_type = {
-        "string": "required|string",
-        "text": "required|string",
-        "integer": "required|integer",
-        "float": "required|numeric",
-        "decimal": "required|numeric",
-        "boolean": "required|boolean",
-        "date": "required|date",
-        "datetime": "required|date",
-        "timestamp": "required|date",
-        "email": "required|email",
+        "string": ["required", "string"],
+        "text": ["required", "string"],
+        "integer": ["required", "integer"],
+        "float": ["required", "numeric"],
+        "decimal": ["required", "numeric"],
+        "boolean": ["required", "boolean"],
+        "date": ["required", "date"],
+        "datetime": ["required", "date"],
+        "timestamp": ["required", "date"],
+        "email": ["required", "email"],
     }
 
     for index, column in enumerate(columns):
+
         column_type = column["type"]
 
+        # ---------------------------------
+        # Reglas base
+        # ---------------------------------
+
         if column_type == "fk":
-            str_value = (
-                f"required|integer|exists:{column['related_table']},id"
-            )
+            rules = [
+                "required",
+                "integer",
+                f"exists:{column['related_table']},id",
+            ]
+
         else:
-            str_value = rules_by_type.get(
+            rules = rules_by_type.get(
                 column_type,
-                "required"
-            )
+                ["required"]
+            ).copy()
 
-            # Añadir tamaño si aplica
-            if column_type in {"string", "email"} and column.get("size"):
-                str_value += f"|max:{column['size']}"
+            # Tamaño
+            if (
+                column_type in {"string", "email"}
+                and column.get("size")
+            ):
+                rules.append(
+                    f"max:{column['size']}"
+                )
 
-        is_last = index == len(columns) - 1
+        # ---------------------------------
+        # Nullable
+        # ---------------------------------
+        if column.get("is_nullable"):
+            rules[0] = "nullable"
 
+
+        # ---------------------------------
+        # Generar array PHP
+        # ---------------------------------
         validation_rules += (
-            f"            '{column['name']}' => '{str_value}',"
+            f"            '{column['name']}' => [\n"
         )
 
-        if not is_last:
+        for rule in rules:
+            validation_rules += (
+                f"                '{rule}',\n"
+            )
+
+
+        # ---------------------------------
+        # Unique
+        # ---------------------------------
+        if column.get("is_unique"):
+            validation_rules += (
+            f"                'unique:{plural_name_snake},{column['name']}',\n"
+        )
+
+        validation_rules += "            ],"
+
+        # Salto de línea excepto último
+        if index != len(columns) - 1:
             validation_rules += "\n"
 
     return validation_rules
+
+
+
 
 
 
@@ -58,6 +105,8 @@ def generate_request_store(
     project_name,
     singular_name,
     plural_name,
+    singular_name_camel,
+    plural_name_camel,
     singular_name_kebab,
     plural_name_kebab,
     singular_name_snake,
@@ -77,11 +126,17 @@ def generate_request_store(
 
 namespace App\\Http\\Requests\\{namespace}\\{version_api}\\{plural_name};
 
+use Illuminate\\Contracts\\Validation\\Validator;
 use Illuminate\\Contracts\\Validation\\ValidationRule;
 use Illuminate\\Foundation\\Http\\FormRequest;
+use Illuminate\\Http\\Exceptions\\HttpResponseException;
+use App\\Traits\\ApiResponses;
 
 class Store{singular_name}Request extends FormRequest
 {{
+    
+    use ApiResponses;
+    
     /**
      * Determine if the user is authorized to make this request.
      */
@@ -98,9 +153,34 @@ class Store{singular_name}Request extends FormRequest
     public function rules(): array
     {{
         return [
-{generate_validation_rules(columns)}            
+{generate_request_validation_rules(
+    columns, 
+    singular_name, 
+    singular_name_camel, 
+    singular_name_snake, 
+    plural_name_snake
+)}            
        ];
     }}
+    
+    
+    /**
+     * Handle a failed validation attempt.
+     *
+     * @param Validator $validator
+     * @return void
+     */
+    protected function failedValidation(Validator $validator)
+    {{
+        throw new HttpResponseException(
+            $this->respondWithError(
+                'Validation error',
+                $validator->errors(),
+                422
+            )
+        );
+    }}
+    
 }}
 
 """

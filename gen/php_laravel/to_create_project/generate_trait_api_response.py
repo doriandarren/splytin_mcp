@@ -77,15 +77,19 @@ trait ApiResponses
      * @param int $code
      * @return JsonResponse
      */
-    public function respondWithError(string $message='', $errors = null, $code = 422): JsonResponse
-    {
+    public function respondWithError(
+        string $message = '',
+        $errors = null,
+        int $code = 422
+    ): JsonResponse {
         $this->setCode($code);
+
         return $this->respond([
             'data' => null,
             'message' => $message,
-            'errors' => [ $errors ],
+            'errors' => $errors,
             'success' => false,
-            'status_code' => $this->getCode(),
+            'status_code' => $code,
         ]);
     }
 

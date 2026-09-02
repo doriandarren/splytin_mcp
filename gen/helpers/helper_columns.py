@@ -12,9 +12,6 @@ def pluralize(word: str) -> str:
     return word + "s"
 
 
-
-
-
 def normalize_column_type(col_type: str):
     col_type = col_type.lower().strip()
 
@@ -60,15 +57,18 @@ def normalize_column_type(col_type: str):
     return col_type
 
 
-
-
 def parse_columns_input(input_columns: str):
     """
     Convierte un string tipo:
 
-    'customer_id:fk name:string amount:float description has_active:boolean'
+    customer_id:fk
+    name:string(255)|unique
+    amount:decimal(10,2)|nullable
+    country_id:fk|unique|string(255)
+    description
+    has_active:boolean
 
-    en una lista de diccionarios bien formados.
+    en una lista de diccionarios.
     """
 
     allowed_types = {
@@ -85,59 +85,208 @@ def parse_columns_input(input_columns: str):
         "timestamp"
     }
 
+    allowed_options = {
+        "fk",
+        "unique",
+        "nullable",
+        "index",
+        "unsigned"
+    }
+
     columns = []
 
     for token in input_columns.split():
-        parts = token.split(":")
+
+        # ---------------------------------
+        # Separar nombre de configuración
+        # ---------------------------------
+
+        parts = token.split(":", 1)
 
         name = parts[0].strip()
 
-        raw_col_type = (
+        raw_options = (
             parts[1].strip()
             if len(parts) > 1
             else "string"
         )
 
-        # Size - Tamaño
+        # ---------------------------------
+        # Separar opciones por |
+        # ---------------------------------
+
+        options = [
+            option.strip()
+            for option in raw_options.split("|")
+            if option.strip()
+        ]
+
+        # ---------------------------------
+        # Valores por defecto
+        # ---------------------------------
+
+        col_type = None
+        raw_col_type = None
+
         size = None
-        type_without_size = raw_col_type
+        precision = None
+        scale = None
 
-        if "(" in raw_col_type and ")" in raw_col_type:
-            type_without_size = raw_col_type.split("(", 1)[0]
+        is_fk = False
+        is_unique = False
+        is_nullable = False
+        is_index = False
+        is_unsigned = False
 
-            size_value = (
-                raw_col_type
-                .split("(", 1)[1]
-                .split(")", 1)[0]
+        # ---------------------------------
+        # Procesar cada opción
+        # ---------------------------------
+
+        for option in options:
+
+            option_lower = option.lower().strip()
+
+            # -----------------------------
+            # Modificadores
+            # -----------------------------
+
+            if option_lower in allowed_options:
+
+                if option_lower == "fk":
+                    is_fk = True
+
+                elif option_lower == "unique":
+                    is_unique = True
+
+                elif option_lower == "nullable":
+                    is_nullable = True
+
+                elif option_lower == "index":
+                    is_index = True
+
+                elif option_lower == "unsigned":
+                    is_unsigned = True
+
+                continue
+
+            # -----------------------------
+            # Detectar tipo y parámetros
+            # -----------------------------
+
+            type_without_size = option
+            params = None
+
+            if "(" in option and ")" in option:
+
+                type_without_size = option.split("(", 1)[0]
+
+                params = (
+                    option
+                    .split("(", 1)[1]
+                    .split(")", 1)[0]
+                )
+
+            normalized_type = normalize_column_type(
+                type_without_size
             )
 
-            if size_value.isdigit():
-                size = int(size_value)
+            # -----------------------------
+            # Validar tipo
+            # -----------------------------
 
-        # Normalizar tipo
-        col_type = normalize_column_type(type_without_size)
+            if normalized_type not in allowed_types:
+                raise ValueError(
+                    f"Tipo u opción no soportado: "
+                    f"'{option}' en '{token}'"
+                )
 
-        # Validar tipo
-        if col_type not in allowed_types:
-            raise ValueError(
-                f"Tipo de columna no soportado: "
-                f"'{raw_col_type}' en '{token}'"
-            )
+            col_type = normalized_type
+            raw_col_type = option
 
+            # -----------------------------
+            # string(255)
+            # -----------------------------
+
+            if col_type in {"string", "email"}:
+
+                if params and params.isdigit():
+                    size = int(params)
+
+            # -----------------------------
+            # decimal(10,2)
+            # -----------------------------
+
+            elif col_type == "decimal":
+
+                if params:
+
+                    decimal_parts = [
+                        value.strip()
+                        for value in params.split(",")
+                    ]
+
+                    if (
+                        len(decimal_parts) >= 1
+                        and decimal_parts[0].isdigit()
+                    ):
+                        precision = int(decimal_parts[0])
+
+                    if (
+                        len(decimal_parts) >= 2
+                        and decimal_parts[1].isdigit()
+                    ):
+                        scale = int(decimal_parts[1])
+
+        # ---------------------------------
+        # Si solamente viene fk
+        # ---------------------------------
+
+        if col_type is None:
+
+            if is_fk:
+                col_type = "fk"
+                raw_col_type = "fk"
+
+            else:
+                col_type = "string"
+                raw_col_type = "string"
+
+        # ---------------------------------
         # Tamaño por defecto
+        # ---------------------------------
+
         if size is None and col_type in {"string", "email"}:
             size = 255
 
+        # ---------------------------------
         # Create Object
+        # ---------------------------------
+
         col = {
             "name": name,
+
             "type": col_type,
             "raw_type": raw_col_type,
+
             "size": size,
-            "is_fk": col_type == "fk",
+            "precision": precision,
+            "scale": scale,
+
+            "is_fk": is_fk,
+            "is_unique": is_unique,
+            "is_nullable": is_nullable,
+            "is_index": is_index,
+            "is_unsigned": is_unsigned,
+
+            "options": options,
         }
 
+        # ---------------------------------
+        # Foreign Key
+        # ---------------------------------
+
         if col["is_fk"]:
+
             base = name
 
             if base.endswith("_id"):

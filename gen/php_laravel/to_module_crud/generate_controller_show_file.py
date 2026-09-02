@@ -56,6 +56,7 @@ use App\\Http\\Resources\\{namespace}\\{version_api}\\{plural_name}\\{singular_n
 
 class {singular_name}ShowController extends Controller
 {{
+    
     /**
      * Construct
      *

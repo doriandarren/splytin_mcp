@@ -44,7 +44,7 @@ def start_module_php():
     plural_name = input_with_validation("Nombre plural", "AgendaUnloadings")
     input_columns = input_with_validation(
         "Columnas (separdo por espacio)", 
-        "user_id:fk name:string(30) amount:float description:varchar(10) note has_active:boolean"
+        "user_id:fk name:string(30)|unique amount:decimal(10,2) amount_with_tax:float description:varchar(10) note has_active:boolean"
     )
     
     columns = parse_columns_input(input_columns)

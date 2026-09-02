@@ -65,12 +65,16 @@ use App\\Http\\Requests\\{namespace}\\{version_api}\\{plural_name}\\Update{singu
 
 class {singular_name}UpdateController extends Controller
 {{
-    private {singular_name}Service $service;
-
-    public function __construct()
-    {{
-        $this->service = new {singular_name}Service();
-    }}
+    
+    /**
+     * Construct
+     *
+     * @param {singular_name}Service $service
+     */
+    public function __construct(
+        private {singular_name}Service $service
+    ) {{}}
+    
 
     /**
     * @header Authorization Bearer TOKEN 

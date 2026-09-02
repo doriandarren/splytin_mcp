@@ -51,7 +51,7 @@ def generate_controller_store_file(
     # Construir los comentarios dinámicos para @bodyParam usando las columnas
     body_param_comments = ""
     for i, column in enumerate(columns):
-        body_param_comments += f"    * @bodyParam {column['name']} string required"
+        body_param_comments += f"    * @bodyParam {column['name']} {column['type']} required"
         if i < len(columns) - 1:
             body_param_comments += "\n"
 
@@ -61,67 +61,54 @@ def generate_controller_store_file(
 namespace App\\Http\\Controllers\\{namespace}\\{version_api}\\{plural_name};
 
 use Illuminate\\Http\\JsonResponse;
-use Illuminate\\Http\\Request;
 use Illuminate\\Support\\Facades\\Auth;
 use Illuminate\\Support\\Facades\\Validator;
 use App\\Http\\Controllers\\Controller;
 use App\\Services\\{namespace}\\{version_api}\\{plural_name}\\{singular_name}Service;
 use App\\Http\\Requests\\{namespace}\\{version_api}\\{plural_name}\\Store{singular_name}Request;
+use App\\Http\\Resources\\{namespace}\\{version_api}\\{plural_name}\\{singular_name}Resource;
 
 class {singular_name}StoreController extends Controller
 {{
-    private {singular_name}Service $service;
-
-    public function __construct()
-    {{
-        $this->service = new {singular_name}Service();
-    }}
+    
+    /**
+     * Construct
+     *
+     * @param {singular_name}Service $service
+     */
+    public function __construct(
+        private {singular_name}Service $service
+    ) {{}}
+    
 
     /**
     * @header Authorization Bearer TOKEN 
     *
 {body_param_comments}
     *
-    * @param Request $request
+    * @param Store{singular_name}Request $request
     * @return JsonResponse
     */
     public function __invoke(Store{singular_name}Request $request): JsonResponse
     {{
-        if($this->isAdmin(Auth::user()->roles)){{
-            
-            // By Admin
 """
-    controller_content += f"""            ${ first_letter_lower(singular_name)} = $this->service->set{singular_name}(
-                {', '.join([f'$request->{column["name"]}' for column in columns])}
+    controller_content += f"""        ${ first_letter_lower(singular_name)} = $this->service->set{singular_name}(
+                {', \n'.join([f'$request->{column["name"]}' for column in columns])}
             );
-
-            $data = $this->service->store(${first_letter_lower(singular_name)});
-            return $this->respondWithData('{singular_name} created', $data);
-
-        }} else if($this->isManager(Auth::user()->roles)){{
-            
-            // By Manager
 """
-
-    controller_content += f"""            ${first_letter_lower(singular_name)} = $this->service->set{singular_name}(
-                {', '.join([f'$request->{column["name"]}' for column in columns])}
-            );
-
+    controller_content += f"""
+        if ($this->isAdmin(Auth::user()->roles)) {{
             $data = $this->service->store(${first_letter_lower(singular_name)});
-            return $this->respondWithData('{singular_name} created', $data);
-
+        }} elseif ($this->isManager(Auth::user()->roles)) {{
+            $data = $this->service->store(${first_letter_lower(singular_name)});
         }} else {{
-            
-            // By User
-"""
-    controller_content += f"""            ${first_letter_lower(singular_name)} = $this->service->set{singular_name}(
-                {', '.join([f'$request->{column["name"]}' for column in columns])}
-            );
-
             $data = $this->service->store(${first_letter_lower(singular_name)});
-            return $this->respondWithData('{singular_name} created', $data);
-            
         }}
+
+        return $this->respondWithData(
+            '{singular_name} created',
+            new {singular_name}Resource($data)
+        );
     }}
 }}
 """

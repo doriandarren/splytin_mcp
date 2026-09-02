@@ -2,47 +2,98 @@ import os
 from gen.helpers.helper_print import print_message, GREEN, CYAN
 
 
+
 # Función auxiliar para generar reglas de validación
-def generate_validation_rules(columns):
+def generate_request_validation_rules(
+    columns,
+    singular_name,
+    singular_name_camel,
+    singular_name_snake,
+    plural_name_snake
+):
     validation_rules = ""
 
     rules_by_type = {
-        "string": "required|string",
-        "text": "required|string",
-        "integer": "required|integer",
-        "float": "required|numeric",
-        "decimal": "required|numeric",
-        "boolean": "required|boolean",
-        "date": "required|date",
-        "datetime": "required|date",
-        "timestamp": "required|date",
-        "email": "required|email",
+        "string": ["sometimes", "string"],
+        "text": ["sometimes", "string"],
+        "integer": ["sometimes", "integer"],
+        "float": ["sometimes", "numeric"],
+        "decimal": ["sometimes", "numeric"],
+        "boolean": ["sometimes", "boolean"],
+        "date": ["sometimes", "date"],
+        "datetime": ["sometimes", "date"],
+        "timestamp": ["sometimes", "date"],
+        "email": ["sometimes", "email"],
     }
 
     for index, column in enumerate(columns):
+
         column_type = column["type"]
 
+        # ---------------------------------
+        # Reglas base
+        # ---------------------------------
+
         if column_type == "fk":
-            str_value = (
-                f"required|integer|exists:{column['related_table']},id"
-            )
+            rules = [
+                "sometimes",
+                "integer",
+                f"exists:{column['related_table']},id",
+            ]
+
         else:
-            str_value = rules_by_type.get(
+            rules = rules_by_type.get(
                 column_type,
-                "required"
-            )
+                ["sometimes"]
+            ).copy()
 
-            # Añadir tamaño si aplica
-            if column_type in {"string", "email"} and column.get("size"):
-                str_value += f"|max:{column['size']}"
+            # Tamaño
+            if (
+                column_type in {"string", "email"}
+                and column.get("size")
+            ):
+                rules.append(
+                    f"max:{column['size']}"
+                )
 
-        is_last = index == len(columns) - 1
+        # ---------------------------------
+        # Nullable
+        # ---------------------------------
+
+        if column.get("is_nullable"):
+            rules[0] = "nullable"
+
+        # ---------------------------------
+        # Generar array PHP
+        # ---------------------------------
 
         validation_rules += (
-            f"            '{column['name']}' => '{str_value}',"
+            f"            '{column['name']}' => [\n"
         )
 
-        if not is_last:
+        for rule in rules:
+            validation_rules += (
+                f"                '{rule}',\n"
+            )
+
+        # ---------------------------------
+        # Unique
+        # ---------------------------------
+
+        if column.get("is_unique"):
+            validation_rules += (
+                f"                Rule::unique("
+                f"'{plural_name_snake}', "
+                f"'{column['name']}'"
+                f")->ignore("
+                f"$this->route('{singular_name_snake}')"
+                f"),\n"
+            )
+
+        validation_rules += "            ],"
+
+        # Salto de línea excepto último
+        if index != len(columns) - 1:
             validation_rules += "\n"
 
     return validation_rules
@@ -59,6 +110,8 @@ def generate_request_update(
     project_name,
     singular_name,
     plural_name,
+    singular_name_camel,
+    plural_name_camel,
     singular_name_kebab,
     plural_name_kebab,
     singular_name_snake,
@@ -80,6 +133,7 @@ namespace App\\Http\\Requests\\{namespace}\\{version_api}\\{plural_name};
 
 use Illuminate\\Contracts\\Validation\\ValidationRule;
 use Illuminate\\Foundation\\Http\\FormRequest;
+use Illuminate\\Validation\\Rule;
 
 class Update{singular_name}Request extends FormRequest
 {{
@@ -99,7 +153,7 @@ class Update{singular_name}Request extends FormRequest
     public function rules(): array
     {{
         return [
-{generate_validation_rules(columns)}
+{generate_request_validation_rules(columns, singular_name, singular_name_camel, singular_name_snake, plural_name_snake )}
        ];
     }}
 }}

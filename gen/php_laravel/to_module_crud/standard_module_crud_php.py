@@ -1,6 +1,6 @@
 import os
 from gen.helpers.helper_menu import pause
-from gen.helpers.helper_print import camel_to_kebab, camel_to_snake
+from gen.helpers.helper_print import camel_to_first_letter_lower, camel_to_kebab, camel_to_snake, dd
 from gen.helpers.helper_string import normalize_project_name
 from gen.php_laravel.to_module_crud.generate_controller_index_file import generate_controller_index_file
 from gen.php_laravel.to_module_crud.generate_index_filter import generate_index_filter
@@ -53,11 +53,17 @@ def standard_module_crud_php(
     plural_name_kebab = camel_to_kebab(plural_name)
     singular_name_snake = camel_to_snake(singular_name)
     plural_name_snake = camel_to_snake(plural_name)
+    singular_name_camel = camel_to_first_letter_lower(singular_name)
+    plural_name_camel = camel_to_first_letter_lower(plural_name)
+    
     
     
     ## Project Name
     temp_name = os.path.basename(full_path.rstrip(os.sep))
     project_name = normalize_project_name(temp_name)
+    
+    
+    ## dd(singular_name + " / " + plural_name + " / " + singular_name_kebab + " / " + plural_name_kebab + " / " + singular_name_snake + " / " + plural_name_snake)
     
 
     if os.path.isdir(full_path):
@@ -140,6 +146,8 @@ def standard_module_crud_php(
                 project_name,
                 singular_name,
                 plural_name,
+                singular_name_camel,
+                plural_name_camel,
                 singular_name_kebab,
                 plural_name_kebab,
                 singular_name_snake,
@@ -172,6 +180,8 @@ def standard_module_crud_php(
                 project_name,
                 singular_name,
                 plural_name,
+                singular_name_camel,
+                plural_name_camel,
                 singular_name_kebab,
                 plural_name_kebab,
                 singular_name_snake,

@@ -43,6 +43,11 @@ use App\\Services\\{namespace}\\{version_api}\\{plural_name}\\{singular_name}Ser
 class {singular_name}IndexController extends Controller
 {{
     
+    /**
+     * Construct
+     *
+     * @param {singular_name}Service $service
+     */
     public function __construct(
         private {singular_name}Service $service
     ) {{}}
@@ -64,7 +69,7 @@ class {singular_name}IndexController extends Controller
         }}
         
         return $this->respondWithPaginatedData(
-            '{singular_name} list',
+            '{singular_name} index',
             {singular_name}Resource::collection($data),
             $data
         );

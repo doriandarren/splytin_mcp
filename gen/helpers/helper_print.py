@@ -109,6 +109,10 @@ def camel_to_snake(name):
     return re.sub(r'(?<!^)(?=[A-Z])', '_', name).lower()
 
 
+def camel_to_first_letter_lower(name):
+    """Convierte la primera letra de un string a minúscula."""
+    return name[0].lower() + name[1:]
+
 
 
 # Función para manejar input con validación y valores por defecto

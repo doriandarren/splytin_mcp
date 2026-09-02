@@ -41,7 +41,7 @@ def generate_shared(full_path):
     namespace = "SHARED"
     singular_name = "Ability"
     plural_name = "Abilities"
-    input_columns = "ability_group_id:fk name label"
+    input_columns = "ability_group_id:fk name:unique label"
     
     columns = parse_columns_input(input_columns)
     
@@ -61,7 +61,7 @@ def generate_shared(full_path):
     namespace = "SHARED"
     singular_name = "AbilityGroup"
     plural_name = "AbilityGroups"
-    input_columns = "name"
+    input_columns = "name:unique"
     
     columns = parse_columns_input(input_columns)
     
@@ -139,7 +139,7 @@ def generate_shared(full_path):
     namespace = "SHARED"
     singular_name = "Role"
     plural_name = "Roles"
-    input_columns = "name description"
+    input_columns = "name:unique description"
     
     columns = parse_columns_input(input_columns)
     
@@ -158,7 +158,7 @@ def generate_shared(full_path):
     namespace = "SHARED"
     singular_name = "UserStatus"
     plural_name = "UserStatuses"
-    input_columns = "name"
+    input_columns = "name:unique"
     
     columns = parse_columns_input(input_columns)
     
