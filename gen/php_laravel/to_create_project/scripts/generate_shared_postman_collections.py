@@ -26,7 +26,7 @@ def generate_shared_postman_collections(full_path, project_name, domain_name, pa
 	"info": {
 		"_postman_id": "c45bcd65-d68b-4fbe-a0b6-b87a5632cbff",
 		"name": "API",
-		"description": "Api Rest Full \n\nApi URL:\n\n[https://__PROJECT_NAME__/api/](https://__PROJECT_NAME__/api/)\n\nEstructura principales de ENDPOINT para la gestión:\n\n- GET base_url/resource\n- GET base_url/resource/id\n- POST base_url/resource\n- PUT base_url/resource/id\n- DELETE base_url/resource/id",
+		"description": "Api Rest Full \n\nApi URL:\n\n[https://__PROJECT_NAME__/api/](https://__PROJECT_NAME__/api/)\n\nEstructura principales de ENDPOINT para la gestión:\n\n- GET base_url/resource\n- GET base_url/resource/id\n- POST base_url/resource\n- PATCH base_url/resource/id\n- DELETE base_url/resource/id",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "5599797",
 		"_collection_link": "https://warped-satellite-11290.postman.co/workspace/__PROJECT_NAME__t~ae865b4b-fd0c-416a-bcd9-0c9108578f23/collection/5599797-c45bcd65-d68b-4fbe-a0b6-b87a5632cbff?action=share&source=collection_link&creator=5599797"
@@ -346,6 +346,1448 @@ def generate_shared_postman_collections(full_path, project_name, domain_name, pa
 			]
 		},
 		{
+			"name": "SHARED",
+			"item": [
+				{
+					"name": "Abilities",
+					"item": [
+						{
+							"name": "Index",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"uuid": "11f6afea-eee9-4fbd-bff6-5f12bf0c49bd"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{token_api}}",
+										"uuid": "c8614f09-c19d-4009-b8fa-2327999619ea"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": []
+								},
+								"url": {
+									"raw": "{{base_url}}abilities",
+									"host": [
+										"{{base_url}}abilities"
+									],
+									"path": [],
+									"query": [
+										{
+											"key": "include",
+											"value": "",
+											"description": "Relationship",
+											"disabled": true
+										},
+										{
+											"key": "filter[ability_group_id]",
+											"value": "1",
+											"description": "Filter by ability_group_id",
+											"disabled": true
+										},
+										{
+											"key": "filter[name]",
+											"value": "roles:store",
+											"description": "Ej: roles:store | *roles*",
+											"disabled": true
+										},
+										{
+											"key": "filter[label]",
+											"value": "Edita modulo",
+											"description": "Ej: Edita modulo | *Edita*",
+											"disabled": true
+										},
+										{
+											"key": "filter[created_at]",
+											"value": "2026-08-01,2026-09-20",
+											"description": "Range by created_at",
+											"disabled": true
+										},
+										{
+											"key": "filter[updated_at]",
+											"value": "2026-08-01,2026-09-20",
+											"description": "Range by updated_at",
+											"disabled": true
+										},
+										{
+											"key": "sort",
+											"value": "ability_group_id",
+											"description": "Ej: ability_group_id | -ability_group_id",
+											"disabled": true
+										},
+										{
+											"key": "sort",
+											"value": "name",
+											"description": "Ej: name | -name",
+											"disabled": true
+										},
+										{
+											"key": "sort",
+											"value": "label",
+											"description": "Ej: label | -label",
+											"disabled": true
+										},
+										{
+											"key": "sort",
+											"value": "created_at",
+											"description": "Ej: created_at | -created_at",
+											"disabled": true
+										},
+										{
+											"key": "sort",
+											"value": "updated_at",
+											"description": "Ej: updated_at | -updated_at",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Show",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"uuid": "320d88fb-c04d-4338-8f09-1e93f8f9b32d"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{token_api}}",
+										"uuid": "ac170de5-2512-49cb-929e-81c8a823e859"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": []
+								},
+								"url": {
+									"raw": "{{base_url}}abilities/1",
+									"host": [
+										"{{base_url}}abilities"
+									],
+									"path": [
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Store",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"uuid": "f00d6e4a-e620-4dc6-bf64-f6746b0a4cbb"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{token_api}}",
+										"uuid": "df6bcd51-d58c-4c08-b21c-aed977f24acc"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "name",
+											"value": "New name",
+											"type": "text"
+										},
+										{
+											"key": "label",
+											"value": "New label",
+											"type": "text"
+										},
+										{
+											"key": "ability_group_id",
+											"value": "1",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{base_url}}abilities",
+									"host": [
+										"{{base_url}}abilities"
+									],
+									"path": [
+										
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update",
+							"request": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"uuid": "81bbeb58-37cd-438e-b434-3d8ed3e5969c"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{token_api}}",
+										"uuid": "51408beb-6274-4cd3-ac4f-75abdcfd46c6"
+									}
+								],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "name",
+											"value": "Update name",
+											"type": "text"
+										},
+										{
+											"key": "label",
+											"value": "Update label",
+											"type": "text"
+										},
+										{
+											"key": "ability_group_id",
+											"value": "1",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{base_url}}abilities/1",
+									"host": [
+										"{{base_url}}abilities"
+									],
+									"path": [
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete",
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"uuid": "dabbaf0e-fea5-4264-a74d-ca89545b1b8d"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{token_api}}",
+										"uuid": "67c34718-e632-4dbb-bf50-162df3107f0d"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}abilities/1",
+									"host": [
+										"{{base_url}}abilities"
+									],
+									"path": [
+										"1"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "AbilityGroups",
+					"item": [
+						{
+							"name": "Index",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"uuid": "a0885dea-f00d-4db6-8640-dc7b1441e700"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{token_api}}",
+										"uuid": "fea63a97-b9be-494d-b94f-5f3a588a4bc6"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": []
+								},
+								"url": {
+									"raw": "{{base_url}}ability-groups",
+									"host": [
+										"{{base_url}}ability-groups"
+									],
+									"path": [],
+									"query": [
+										{
+											"key": "include",
+											"value": "",
+											"description": "Relationship",
+											"disabled": true
+										},
+										{
+											"key": "filter[name]",
+											"value": "roles",
+											"description": "Ej: roles | *roles*",
+											"disabled": true
+										},
+										{
+											"key": "filter[created_at]",
+											"value": "2026-08-01,2026-09-20",
+											"description": "Range by created_at",
+											"disabled": true
+										},
+										{
+											"key": "filter[updated_at]",
+											"value": "2026-08-01,2026-09-20",
+											"description": "Range by updated_at",
+											"disabled": true
+										},
+										{
+											"key": "sort",
+											"value": "name",
+											"description": "Sort by name",
+											"disabled": true
+										},
+										{
+											"key": "sort",
+											"value": "created_at",
+											"description": "Sort by created_at",
+											"disabled": true
+										},
+										{
+											"key": "sort",
+											"value": "updated_at",
+											"description": "Sort by updated_at",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Show",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"uuid": "11c01d7e-24c9-4a30-9959-077dd9a624fb"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{token_api}}",
+										"uuid": "fa45d2c7-471f-4b6e-8cfc-060d6ae101c2"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": []
+								},
+								"url": {
+									"raw": "{{base_url}}ability-groups/1",
+									"host": [
+										"{{base_url}}ability-groups"
+									],
+									"path": [
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Store",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"uuid": "5ef744f2-6f8d-4446-bb89-72f4336d45ef"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{token_api}}",
+										"uuid": "26f07958-8e0a-4489-a014-db5bccb32c78"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "name",
+											"value": "New name",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{base_url}}ability-groups",
+									"host": [
+										"{{base_url}}ability-groups"
+									],
+									"path": [
+										
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update",
+							"request": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"uuid": "1a2663b1-ad7b-41b4-913c-99639cbedb2e"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{token_api}}",
+										"uuid": "6d5a9c9f-a52c-4637-a862-1738d7a88ff4"
+									}
+								],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "name",
+											"value": "Update name",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{base_url}}ability-groups/1",
+									"host": [
+										"{{base_url}}ability-groups"
+									],
+									"path": [
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete",
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"uuid": "99d3b66c-954d-412a-a63b-d6cdc2fe7684"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{token_api}}",
+										"uuid": "87c7b280-8a88-43aa-a030-e1e1e20588cc"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}ability-groups/1",
+									"host": [
+										"{{base_url}}ability-groups"
+									],
+									"path": [
+										"1"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "AbilityUsers",
+					"item": [
+						{
+							"name": "Index",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"uuid": "1e011b46-90f7-4586-85b2-ad54c4390682"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{token_api}}",
+										"uuid": "c79c8e54-5ce1-466b-aea3-6f437493c548"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": []
+								},
+								"url": {
+									"raw": "{{base_url}}ability-users",
+									"host": [
+										"{{base_url}}ability-users"
+									],
+									"path": [], 
+									"query": [
+										{
+											"key": "include",
+											"value": "",
+											"description": "Relationship",
+											"disabled": true
+										},
+										{
+											"key": "filter[user_id]",
+											"value": "1",
+											"description": "Filter by user_id",
+											"disabled": true
+										},
+										{
+											"key": "filter[ability_id]",
+											"value": "1",
+											"description": "Filter by ability_id",
+											"disabled": true
+										},
+										{
+											"key": "filter[created_at]",
+											"value": "2026-08-01,2026-09-20",
+											"description": "Range by created_at",
+											"disabled": true
+										},
+										{
+											"key": "filter[updated_at]",
+											"value": "2026-08-01,2026-09-20",
+											"description": "Range by updated_at",
+											"disabled": true
+										},
+										{
+											"key": "sort",
+											"value": "user_id",
+											"description": "Sort by user_id",
+											"disabled": true
+										},
+										{
+											"key": "sort",
+											"value": "ability_id",
+											"description": "Sort by ability_id",
+											"disabled": true
+										},
+										{
+											"key": "sort",
+											"value": "created_at",
+											"description": "Sort by created_at",
+											"disabled": true
+										},
+										{
+											"key": "sort",
+											"value": "updated_at",
+											"description": "Sort by updated_at",
+											"disabled": true
+										}
+									]
+			
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Show",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"uuid": "b3f24eb5-3dd5-43b1-bedc-de3f1d2453c1"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{token_api}}",
+										"uuid": "c4473217-c1cf-4409-a82a-3c758b46b907"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": []
+								},
+								"url": {
+									"raw": "{{base_url}}ability-users/1",
+									"host": [
+										"{{base_url}}ability-users"
+									],
+									"path": [
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Store",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"uuid": "6a05c939-dabe-469b-b1ed-ff1ac8dc4c77"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{token_api}}",
+										"uuid": "6ca1b424-bd84-4285-988e-0197dae69e71"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "user_id",
+											"value": "1",
+											"type": "text"
+										},
+										{
+											"key": "ability_id",
+											"value": "1",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{base_url}}ability-users",
+									"host": [
+										"{{base_url}}ability-users"
+									],
+									"path": [
+										
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update",
+							"request": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"uuid": "2066b0a5-11e9-469e-bb51-1d39ccece843"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{token_api}}",
+										"uuid": "e7a96858-9791-4280-b3de-8b968d134033"
+									}
+								],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "user_id",
+											"value": "1",
+											"type": "text"
+										},
+										{
+											"key": "ability_id",
+											"value": "1",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{base_url}}ability-users/1",
+									"host": [
+										"{{base_url}}ability-users"
+									],
+									"path": [
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete",
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"uuid": "6caad92f-7ca7-4d9e-a429-da872d7c5c10"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{token_api}}",
+										"uuid": "5491d269-c1b7-4b16-9683-76673c14dff0"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}ability-users/1",
+									"host": [
+										"{{base_url}}ability-users"
+									],
+									"path": [
+										"1"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "RoleUsers",
+					"item": [
+						{
+							"name": "Index",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"uuid": "0f419ea6-3df9-45f6-82f1-542c32ba7595"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{token_api}}",
+										"uuid": "90c51d34-a9a6-4bd0-b758-0f476b9001b1"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": []
+								},
+								"url": {
+									"raw": "{{base_url}}role-users",
+									"host": [
+										"{{base_url}}role-users"
+									],
+									"path": [],
+									"query": [
+										{
+											"key": "include",
+											"value": "",
+											"description": "Relationship",
+											"disabled": true
+										},
+										{
+											"key": "filter[role_id]",
+											"value": "1",
+											"description": "Filter by role_id",
+											"disabled": true
+										},
+										{
+											"key": "filter[user_id]",
+											"value": "1",
+											"description": "Filter by user_id",
+											"disabled": true
+										},
+										{
+											"key": "filter[created_at]",
+											"value": "2026-08-01,2026-09-20",
+											"description": "Range by created_at",
+											"disabled": true
+										},
+										{
+											"key": "filter[updated_at]",
+											"value": "2026-08-01,2026-09-20",
+											"description": "Range by updated_at",
+											"disabled": true
+										},
+										{
+											"key": "sort",
+											"value": "role_id",
+											"description": "Sort by role_id",
+											"disabled": true
+										},
+										{
+											"key": "sort",
+											"value": "user_id",
+											"description": "Sort by user_id",
+											"disabled": true
+										},
+										{
+											"key": "sort",
+											"value": "created_at",
+											"description": "Sort by created_at",
+											"disabled": true
+										},
+										{
+											"key": "sort",
+											"value": "updated_at",
+											"description": "Sort by updated_at",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Show",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"uuid": "a6cebf54-e155-4f21-9504-dd9ee411280c"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{token_api}}",
+										"uuid": "23885482-c7b1-4850-b55b-9f9dc483316e"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": []
+								},
+								"url": {
+									"raw": "{{base_url}}role-users/1",
+									"host": [
+										"{{base_url}}role-users"
+									],
+									"path": [
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Store",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"uuid": "a290879f-81f7-4319-892b-9f1000f30767"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{token_api}}",
+										"uuid": "ff96cf5a-6953-4cab-979d-9e856ffaaf53"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "role_id",
+											"value": "1",
+											"type": "text"
+										},
+										{
+											"key": "user_id",
+											"value": "1",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{base_url}}role-users",
+									"host": [
+										"{{base_url}}role-users"
+									],
+									"path": [
+										
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update",
+							"request": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"uuid": "cabe1bce-50ce-40a4-a36c-374a51d53eef"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{token_api}}",
+										"uuid": "82ee7fac-c9ed-459b-a247-198db348e411"
+									}
+								],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "role_id",
+											"value": "1",
+											"type": "text"
+										},
+										{
+											"key": "user_id",
+											"value": "1",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{base_url}}role-users/1",
+									"host": [
+										"{{base_url}}role-users"
+									],
+									"path": [
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete",
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"uuid": "aef43afd-1b27-4021-9fe7-9b6b560b9bba"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{token_api}}",
+										"uuid": "291278aa-204a-417c-a28a-98df00b70678"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}role-users/1",
+									"host": [
+										"{{base_url}}role-users"
+									],
+									"path": [
+										"1"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Roles",
+					"item": [
+						{
+							"name": "Index",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"uuid": "f5f5dd9a-3191-4145-8c96-eff31368fef8"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{token_api}}",
+										"uuid": "e3289006-ab5d-451d-af3a-0f2337d44c00"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": []
+								},
+								"url": {
+									"raw": "{{base_url}}roles",
+									"host": [
+										"{{base_url}}roles"
+									],
+									"path": [],
+									"query": [
+										{
+											"key": "include",
+											"value": "",
+											"description": "Relationship",
+											"disabled": true
+										},
+										{
+											"key": "filter[name]",
+											"value": "",
+											"description": "Ej: Admin | *Admin*",
+											"disabled": true
+										},
+										{
+											"key": "filter[description]",
+											"value": "",
+											"description": "Ej: Description | *Description*",
+											"disabled": true
+										},
+										{
+											"key": "filter[created_at]",
+											"value": "2026-08-01,2026-09-20",
+											"description": "Range by created_at",
+											"disabled": true
+										},
+										{
+											"key": "filter[updated_at]",
+											"value": "2026-08-01,2026-09-20",
+											"description": "Range by updated_at",
+											"disabled": true
+										},
+										{
+											"key": "sort",
+											"value": "name",
+											"description": "Sort by name",
+											"disabled": true
+										},
+										{
+											"key": "sort",
+											"value": "description",
+											"description": "Sort by description",
+											"disabled": true
+										},
+										{
+											"key": "sort",
+											"value": "created_at",
+											"description": "Sort by created_at",
+											"disabled": true
+										},
+										{
+											"key": "sort",
+											"value": "updated_at",
+											"description": "Sort by updated_at",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Show",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"uuid": "6b8b1fb9-61af-45ca-99a0-2e148d2527be"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{token_api}}",
+										"uuid": "47c11368-b30d-4c87-8ff3-11c6879f95d7"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": []
+								},
+								"url": {
+									"raw": "{{base_url}}roles/1",
+									"host": [
+										"{{base_url}}roles"
+									],
+									"path": [
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Store",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"uuid": "c6ae51d7-3679-4d73-b133-1bf9343e20f9"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{token_api}}",
+										"uuid": "e3cb0ad1-8791-4815-8542-0f5fa1d1e69a"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "name",
+											"value": "New name",
+											"type": "text"
+										},
+										{
+											"key": "description",
+											"value": "New description",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{base_url}}roles",
+									"host": [
+										"{{base_url}}roles"
+									],
+									"path": [
+										
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update",
+							"request": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"uuid": "fb06cfba-1cff-4870-bf24-27519ef1b8b2"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{token_api}}",
+										"uuid": "f562b402-277a-492a-916c-ac156d308823"
+									}
+								],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "name",
+											"value": "Update name",
+											"type": "text"
+										},
+										{
+											"key": "description",
+											"value": "Update description",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{base_url}}roles/1",
+									"host": [
+										"{{base_url}}roles"
+									],
+									"path": [
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete",
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"uuid": "5a9c8bc9-c0c8-4b82-8237-ab5528d8948c"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{token_api}}",
+										"uuid": "ce6ce348-9ac7-4348-b83e-d1d96f14fbd7"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}roles/1",
+									"host": [
+										"{{base_url}}roles"
+									],
+									"path": [
+										"1"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "UserStatuses",
+					"item": [
+						{
+							"name": "Index",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"uuid": "f896b670-2bdc-44aa-b813-e08a7b912a00"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{token_api}}",
+										"uuid": "e0064dfa-fc91-4aa5-8903-3da60753f719"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": []
+								},
+								"url": {
+									"raw": "{{base_url}}user-statuses",
+									"host": [
+										"{{base_url}}user-statuses"
+									],
+									"path": [],
+									"query": [
+										{
+											"key": "include",
+											"value": "",
+											"description": "Relationship",
+											"disabled": true
+										},
+										{
+											"key": "filter[name]",
+											"value": "",
+											"description": "Ej: Active | *Active*",
+											"disabled": true
+										},
+										{
+											"key": "filter[created_at]",
+											"value": "2026-08-01,2026-09-20",
+											"description": "Range by created_at",
+											"disabled": true
+										},
+										{
+											"key": "filter[updated_at]",
+											"value": "2026-08-01,2026-09-20",
+											"description": "Range by updated_at",
+											"disabled": true
+										},
+										{
+											"key": "sort",
+											"value": "name",
+											"description": "Sort by name",
+											"disabled": true
+										},
+										{
+											"key": "sort",
+											"value": "created_at",
+											"description": "Sort by created_at",
+											"disabled": true
+										},
+										{
+											"key": "sort",
+											"value": "updated_at",
+											"description": "Sort by updated_at",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Show",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"uuid": "bcc1cea1-7378-4f97-ba6d-9e1c52f6d2c8"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{token_api}}",
+										"uuid": "94038b5d-1cc8-4c52-bc49-5535f092d0f8"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": []
+								},
+								"url": {
+									"raw": "{{base_url}}user-statuses/1",
+									"host": [
+										"{{base_url}}user-statuses"
+									],
+									"path": [
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Store",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"uuid": "f3b17046-88d8-4ba4-878c-24ca7b86eb92"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{token_api}}",
+										"uuid": "3f8d7f57-275b-4ec2-838d-923d0d070171"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "name",
+											"value": "New name",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{base_url}}user-statuses",
+									"host": [
+										"{{base_url}}user-statuses"
+									],
+									"path": [
+										
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update",
+							"request": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"uuid": "965ebd5b-8043-4c13-9b49-a8f4c0b1e935"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{token_api}}",
+										"uuid": "f9e3d04f-8869-45ca-a09e-141a179153f0"
+									}
+								],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "name",
+											"value": "Update name",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{base_url}}user-statuses/1",
+									"host": [
+										"{{base_url}}user-statuses"
+									],
+									"path": [
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete",
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"uuid": "7913047d-8600-4ef4-a4b7-5c326a27dbe2"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{token_api}}",
+										"uuid": "0dfd6460-eded-4302-9087-0a4bf33a037c"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}user-statuses/1",
+									"host": [
+										"{{base_url}}user-statuses"
+									],
+									"path": [
+										"1"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+       		]
+		},
+		{
 			"name": "Dev",
 			"item": [
 				{
@@ -418,1443 +1860,6 @@ def generate_shared_postman_collections(full_path, project_name, domain_name, pa
 							],
 							"path": [
 								
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "Abilities",
-			"item": [
-				{
-					"name": "Index",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "Accept",
-								"value": "application/json",
-								"uuid": "11f6afea-eee9-4fbd-bff6-5f12bf0c49bd"
-							},
-							{
-								"key": "Authorization",
-								"value": "Bearer {{token_api}}",
-								"uuid": "c8614f09-c19d-4009-b8fa-2327999619ea"
-							}
-						],
-						"body": {
-							"mode": "formdata",
-							"formdata": []
-						},
-						"url": {
-							"raw": "{{base_url}}abilities",
-							"host": [
-								"{{base_url}}abilities"
-							],
-							"path": [],
-							"query": [
-								{
-									"key": "include",
-									"value": "",
-									"description": "Relationship",
-									"disabled": true
-								},
-								{
-									"key": "filter[ability_group_id]",
-									"value": "1",
-									"description": "Filter by ability_group_id",
-									"disabled": true
-								},
-								{
-									"key": "filter[name]",
-									"value": "roles:store",
-									"description": "Ej: roles:store | *roles*",
-									"disabled": true
-								},
-								{
-									"key": "filter[label]",
-									"value": "Edita modulo",
-									"description": "Ej: Edita modulo | *Edita*",
-									"disabled": true
-								},
-								{
-									"key": "filter[created_at]",
-									"value": "2026-08-01,2026-09-20",
-									"description": "Range by created_at",
-									"disabled": true
-								},
-								{
-									"key": "filter[updated_at]",
-									"value": "2026-08-01,2026-09-20",
-									"description": "Range by updated_at",
-									"disabled": true
-								},
-								{
-									"key": "sort",
-									"value": "ability_group_id",
-									"description": "Ej: ability_group_id | -ability_group_id",
-									"disabled": true
-								},
-								{
-									"key": "sort",
-									"value": "name",
-									"description": "Ej: name | -name",
-									"disabled": true
-								},
-								{
-									"key": "sort",
-									"value": "label",
-									"description": "Ej: label | -label",
-									"disabled": true
-								},
-								{
-									"key": "sort",
-									"value": "created_at",
-									"description": "Ej: created_at | -created_at",
-									"disabled": true
-								},
-								{
-									"key": "sort",
-									"value": "updated_at",
-									"description": "Ej: updated_at | -updated_at",
-									"disabled": true
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Show",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "Accept",
-								"value": "application/json",
-								"uuid": "320d88fb-c04d-4338-8f09-1e93f8f9b32d"
-							},
-							{
-								"key": "Authorization",
-								"value": "Bearer {{token_api}}",
-								"uuid": "ac170de5-2512-49cb-929e-81c8a823e859"
-							}
-						],
-						"body": {
-							"mode": "formdata",
-							"formdata": []
-						},
-						"url": {
-							"raw": "{{base_url}}abilities/1",
-							"host": [
-								"{{base_url}}abilities"
-							],
-							"path": [
-								"1"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Store",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Accept",
-								"value": "application/json",
-								"uuid": "f00d6e4a-e620-4dc6-bf64-f6746b0a4cbb"
-							},
-							{
-								"key": "Authorization",
-								"value": "Bearer {{token_api}}",
-								"uuid": "df6bcd51-d58c-4c08-b21c-aed977f24acc"
-							}
-						],
-						"body": {
-							"mode": "formdata",
-							"formdata": [
-								{
-									"key": "name",
-									"value": "New name",
-									"type": "text"
-								},
-								{
-									"key": "label",
-									"value": "New label",
-									"type": "text"
-								},
-								{
-									"key": "ability_group_id",
-									"value": "1",
-									"type": "text"
-								}
-							]
-						},
-						"url": {
-							"raw": "{{base_url}}abilities",
-							"host": [
-								"{{base_url}}abilities"
-							],
-							"path": [
-								
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Update",
-					"request": {
-						"method": "PUT",
-						"header": [
-							{
-								"key": "Accept",
-								"value": "application/json",
-								"uuid": "81bbeb58-37cd-438e-b434-3d8ed3e5969c"
-							},
-							{
-								"key": "Authorization",
-								"value": "Bearer {{token_api}}",
-								"uuid": "51408beb-6274-4cd3-ac4f-75abdcfd46c6"
-							}
-						],
-						"body": {
-							"mode": "urlencoded",
-							"urlencoded": [
-								{
-									"key": "name",
-									"value": "Update name",
-									"type": "text"
-								},
-								{
-									"key": "label",
-									"value": "Update label",
-									"type": "text"
-								},
-								{
-									"key": "ability_group_id",
-									"value": "1",
-									"type": "text"
-								}
-							]
-						},
-						"url": {
-							"raw": "{{base_url}}abilities/1",
-							"host": [
-								"{{base_url}}abilities"
-							],
-							"path": [
-								"1"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Delete",
-					"request": {
-						"method": "DELETE",
-						"header": [
-							{
-								"key": "Accept",
-								"value": "application/json",
-								"uuid": "dabbaf0e-fea5-4264-a74d-ca89545b1b8d"
-							},
-							{
-								"key": "Authorization",
-								"value": "Bearer {{token_api}}",
-								"uuid": "67c34718-e632-4dbb-bf50-162df3107f0d"
-							}
-						],
-						"url": {
-							"raw": "{{base_url}}abilities/1",
-							"host": [
-								"{{base_url}}abilities"
-							],
-							"path": [
-								"1"
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "AbilityGroups",
-			"item": [
-				{
-					"name": "Index",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "Accept",
-								"value": "application/json",
-								"uuid": "a0885dea-f00d-4db6-8640-dc7b1441e700"
-							},
-							{
-								"key": "Authorization",
-								"value": "Bearer {{token_api}}",
-								"uuid": "fea63a97-b9be-494d-b94f-5f3a588a4bc6"
-							}
-						],
-						"body": {
-							"mode": "formdata",
-							"formdata": []
-						},
-						"url": {
-							"raw": "{{base_url}}ability-groups",
-							"host": [
-								"{{base_url}}ability-groups"
-							],
-							"path": [],
-							"query": [
-								{
-									"key": "include",
-									"value": "",
-									"description": "Relationship",
-									"disabled": true
-								},
-								{
-									"key": "filter[name]",
-									"value": "roles",
-									"description": "Ej: roles | *roles*",
-									"disabled": true
-								},
-								{
-									"key": "filter[created_at]",
-									"value": "2026-08-01,2026-09-20",
-									"description": "Range by created_at",
-									"disabled": true
-								},
-								{
-									"key": "filter[updated_at]",
-									"value": "2026-08-01,2026-09-20",
-									"description": "Range by updated_at",
-									"disabled": true
-								},
-								{
-									"key": "sort",
-									"value": "name",
-									"description": "Sort by name",
-									"disabled": true
-								},
-								{
-									"key": "sort",
-									"value": "created_at",
-									"description": "Sort by created_at",
-									"disabled": true
-								},
-								{
-									"key": "sort",
-									"value": "updated_at",
-									"description": "Sort by updated_at",
-									"disabled": true
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Show",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "Accept",
-								"value": "application/json",
-								"uuid": "11c01d7e-24c9-4a30-9959-077dd9a624fb"
-							},
-							{
-								"key": "Authorization",
-								"value": "Bearer {{token_api}}",
-								"uuid": "fa45d2c7-471f-4b6e-8cfc-060d6ae101c2"
-							}
-						],
-						"body": {
-							"mode": "formdata",
-							"formdata": []
-						},
-						"url": {
-							"raw": "{{base_url}}ability-groups/1",
-							"host": [
-								"{{base_url}}ability-groups"
-							],
-							"path": [
-								"1"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Store",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Accept",
-								"value": "application/json",
-								"uuid": "5ef744f2-6f8d-4446-bb89-72f4336d45ef"
-							},
-							{
-								"key": "Authorization",
-								"value": "Bearer {{token_api}}",
-								"uuid": "26f07958-8e0a-4489-a014-db5bccb32c78"
-							}
-						],
-						"body": {
-							"mode": "formdata",
-							"formdata": [
-								{
-									"key": "name",
-									"value": "New name",
-									"type": "text"
-								}
-							]
-						},
-						"url": {
-							"raw": "{{base_url}}ability-groups",
-							"host": [
-								"{{base_url}}ability-groups"
-							],
-							"path": [
-								
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Update",
-					"request": {
-						"method": "PUT",
-						"header": [
-							{
-								"key": "Accept",
-								"value": "application/json",
-								"uuid": "1a2663b1-ad7b-41b4-913c-99639cbedb2e"
-							},
-							{
-								"key": "Authorization",
-								"value": "Bearer {{token_api}}",
-								"uuid": "6d5a9c9f-a52c-4637-a862-1738d7a88ff4"
-							}
-						],
-						"body": {
-							"mode": "urlencoded",
-							"urlencoded": [
-								{
-									"key": "name",
-									"value": "Update name",
-									"type": "text"
-								}
-							]
-						},
-						"url": {
-							"raw": "{{base_url}}ability-groups/1",
-							"host": [
-								"{{base_url}}ability-groups"
-							],
-							"path": [
-								"1"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Delete",
-					"request": {
-						"method": "DELETE",
-						"header": [
-							{
-								"key": "Accept",
-								"value": "application/json",
-								"uuid": "99d3b66c-954d-412a-a63b-d6cdc2fe7684"
-							},
-							{
-								"key": "Authorization",
-								"value": "Bearer {{token_api}}",
-								"uuid": "87c7b280-8a88-43aa-a030-e1e1e20588cc"
-							}
-						],
-						"url": {
-							"raw": "{{base_url}}ability-groups/1",
-							"host": [
-								"{{base_url}}ability-groups"
-							],
-							"path": [
-								"1"
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "AbilityUsers",
-			"item": [
-				{
-					"name": "Index",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "Accept",
-								"value": "application/json",
-								"uuid": "1e011b46-90f7-4586-85b2-ad54c4390682"
-							},
-							{
-								"key": "Authorization",
-								"value": "Bearer {{token_api}}",
-								"uuid": "c79c8e54-5ce1-466b-aea3-6f437493c548"
-							}
-						],
-						"body": {
-							"mode": "formdata",
-							"formdata": []
-						},
-						"url": {
-							"raw": "{{base_url}}ability-users",
-							"host": [
-								"{{base_url}}ability-users"
-							],
-							"path": [], 
-							"query": [
-								{
-									"key": "include",
-									"value": "",
-									"description": "Relationship",
-									"disabled": true
-								},
-								{
-									"key": "filter[user_id]",
-									"value": "1",
-									"description": "Filter by user_id",
-									"disabled": true
-								},
-								{
-									"key": "filter[ability_id]",
-									"value": "1",
-									"description": "Filter by ability_id",
-									"disabled": true
-								},
-								{
-									"key": "filter[created_at]",
-									"value": "2026-08-01,2026-09-20",
-									"description": "Range by created_at",
-									"disabled": true
-								},
-								{
-									"key": "filter[updated_at]",
-									"value": "2026-08-01,2026-09-20",
-									"description": "Range by updated_at",
-									"disabled": true
-								},
-								{
-									"key": "sort",
-									"value": "user_id",
-									"description": "Sort by user_id",
-									"disabled": true
-								},
-								{
-									"key": "sort",
-									"value": "ability_id",
-									"description": "Sort by ability_id",
-									"disabled": true
-								},
-								{
-									"key": "sort",
-									"value": "created_at",
-									"description": "Sort by created_at",
-									"disabled": true
-								},
-								{
-									"key": "sort",
-									"value": "updated_at",
-									"description": "Sort by updated_at",
-									"disabled": true
-								}
-							]
-       
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Show",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "Accept",
-								"value": "application/json",
-								"uuid": "b3f24eb5-3dd5-43b1-bedc-de3f1d2453c1"
-							},
-							{
-								"key": "Authorization",
-								"value": "Bearer {{token_api}}",
-								"uuid": "c4473217-c1cf-4409-a82a-3c758b46b907"
-							}
-						],
-						"body": {
-							"mode": "formdata",
-							"formdata": []
-						},
-						"url": {
-							"raw": "{{base_url}}ability-users/1",
-							"host": [
-								"{{base_url}}ability-users"
-							],
-							"path": [
-								"1"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Store",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Accept",
-								"value": "application/json",
-								"uuid": "6a05c939-dabe-469b-b1ed-ff1ac8dc4c77"
-							},
-							{
-								"key": "Authorization",
-								"value": "Bearer {{token_api}}",
-								"uuid": "6ca1b424-bd84-4285-988e-0197dae69e71"
-							}
-						],
-						"body": {
-							"mode": "formdata",
-							"formdata": [
-								{
-									"key": "user_id",
-									"value": "1",
-									"type": "text"
-								},
-								{
-									"key": "ability_id",
-									"value": "1",
-									"type": "text"
-								}
-							]
-						},
-						"url": {
-							"raw": "{{base_url}}ability-users",
-							"host": [
-								"{{base_url}}ability-users"
-							],
-							"path": [
-								
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Update",
-					"request": {
-						"method": "PUT",
-						"header": [
-							{
-								"key": "Accept",
-								"value": "application/json",
-								"uuid": "2066b0a5-11e9-469e-bb51-1d39ccece843"
-							},
-							{
-								"key": "Authorization",
-								"value": "Bearer {{token_api}}",
-								"uuid": "e7a96858-9791-4280-b3de-8b968d134033"
-							}
-						],
-						"body": {
-							"mode": "urlencoded",
-							"urlencoded": [
-								{
-									"key": "user_id",
-									"value": "1",
-									"type": "text"
-								},
-								{
-									"key": "ability_id",
-									"value": "1",
-									"type": "text"
-								}
-							]
-						},
-						"url": {
-							"raw": "{{base_url}}ability-users/1",
-							"host": [
-								"{{base_url}}ability-users"
-							],
-							"path": [
-								"1"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Delete",
-					"request": {
-						"method": "DELETE",
-						"header": [
-							{
-								"key": "Accept",
-								"value": "application/json",
-								"uuid": "6caad92f-7ca7-4d9e-a429-da872d7c5c10"
-							},
-							{
-								"key": "Authorization",
-								"value": "Bearer {{token_api}}",
-								"uuid": "5491d269-c1b7-4b16-9683-76673c14dff0"
-							}
-						],
-						"url": {
-							"raw": "{{base_url}}ability-users/1",
-							"host": [
-								"{{base_url}}ability-users"
-							],
-							"path": [
-								"1"
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "RoleUsers",
-			"item": [
-				{
-					"name": "Index",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "Accept",
-								"value": "application/json",
-								"uuid": "0f419ea6-3df9-45f6-82f1-542c32ba7595"
-							},
-							{
-								"key": "Authorization",
-								"value": "Bearer {{token_api}}",
-								"uuid": "90c51d34-a9a6-4bd0-b758-0f476b9001b1"
-							}
-						],
-						"body": {
-							"mode": "formdata",
-							"formdata": []
-						},
-						"url": {
-							"raw": "{{base_url}}role-users",
-							"host": [
-								"{{base_url}}role-users"
-							],
-							"path": [],
-							"query": [
-								{
-									"key": "include",
-									"value": "",
-									"description": "Relationship",
-									"disabled": true
-								},
-								{
-									"key": "filter[role_id]",
-									"value": "1",
-									"description": "Filter by role_id",
-									"disabled": true
-								},
-								{
-									"key": "filter[user_id]",
-									"value": "1",
-									"description": "Filter by user_id",
-									"disabled": true
-								},
-								{
-									"key": "filter[created_at]",
-									"value": "2026-08-01,2026-09-20",
-									"description": "Range by created_at",
-									"disabled": true
-								},
-								{
-									"key": "filter[updated_at]",
-									"value": "2026-08-01,2026-09-20",
-									"description": "Range by updated_at",
-									"disabled": true
-								},
-								{
-									"key": "sort",
-									"value": "role_id",
-									"description": "Sort by role_id",
-									"disabled": true
-								},
-								{
-									"key": "sort",
-									"value": "user_id",
-									"description": "Sort by user_id",
-									"disabled": true
-								},
-								{
-									"key": "sort",
-									"value": "created_at",
-									"description": "Sort by created_at",
-									"disabled": true
-								},
-								{
-									"key": "sort",
-									"value": "updated_at",
-									"description": "Sort by updated_at",
-									"disabled": true
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Show",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "Accept",
-								"value": "application/json",
-								"uuid": "a6cebf54-e155-4f21-9504-dd9ee411280c"
-							},
-							{
-								"key": "Authorization",
-								"value": "Bearer {{token_api}}",
-								"uuid": "23885482-c7b1-4850-b55b-9f9dc483316e"
-							}
-						],
-						"body": {
-							"mode": "formdata",
-							"formdata": []
-						},
-						"url": {
-							"raw": "{{base_url}}role-users/1",
-							"host": [
-								"{{base_url}}role-users"
-							],
-							"path": [
-								"1"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Store",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Accept",
-								"value": "application/json",
-								"uuid": "a290879f-81f7-4319-892b-9f1000f30767"
-							},
-							{
-								"key": "Authorization",
-								"value": "Bearer {{token_api}}",
-								"uuid": "ff96cf5a-6953-4cab-979d-9e856ffaaf53"
-							}
-						],
-						"body": {
-							"mode": "formdata",
-							"formdata": [
-								{
-									"key": "role_id",
-									"value": "1",
-									"type": "text"
-								},
-								{
-									"key": "user_id",
-									"value": "1",
-									"type": "text"
-								}
-							]
-						},
-						"url": {
-							"raw": "{{base_url}}role-users",
-							"host": [
-								"{{base_url}}role-users"
-							],
-							"path": [
-								
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Update",
-					"request": {
-						"method": "PUT",
-						"header": [
-							{
-								"key": "Accept",
-								"value": "application/json",
-								"uuid": "cabe1bce-50ce-40a4-a36c-374a51d53eef"
-							},
-							{
-								"key": "Authorization",
-								"value": "Bearer {{token_api}}",
-								"uuid": "82ee7fac-c9ed-459b-a247-198db348e411"
-							}
-						],
-						"body": {
-							"mode": "urlencoded",
-							"urlencoded": [
-								{
-									"key": "role_id",
-									"value": "1",
-									"type": "text"
-								},
-								{
-									"key": "user_id",
-									"value": "1",
-									"type": "text"
-								}
-							]
-						},
-						"url": {
-							"raw": "{{base_url}}role-users/1",
-							"host": [
-								"{{base_url}}role-users"
-							],
-							"path": [
-								"1"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Delete",
-					"request": {
-						"method": "DELETE",
-						"header": [
-							{
-								"key": "Accept",
-								"value": "application/json",
-								"uuid": "aef43afd-1b27-4021-9fe7-9b6b560b9bba"
-							},
-							{
-								"key": "Authorization",
-								"value": "Bearer {{token_api}}",
-								"uuid": "291278aa-204a-417c-a28a-98df00b70678"
-							}
-						],
-						"url": {
-							"raw": "{{base_url}}role-users/1",
-							"host": [
-								"{{base_url}}role-users"
-							],
-							"path": [
-								"1"
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "Roles",
-			"item": [
-				{
-					"name": "Index",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "Accept",
-								"value": "application/json",
-								"uuid": "f5f5dd9a-3191-4145-8c96-eff31368fef8"
-							},
-							{
-								"key": "Authorization",
-								"value": "Bearer {{token_api}}",
-								"uuid": "e3289006-ab5d-451d-af3a-0f2337d44c00"
-							}
-						],
-						"body": {
-							"mode": "formdata",
-							"formdata": []
-						},
-						"url": {
-							"raw": "{{base_url}}roles",
-							"host": [
-								"{{base_url}}roles"
-							],
-							"path": [],
-							"query": [
-								{
-									"key": "include",
-									"value": "",
-									"description": "Relationship",
-									"disabled": true
-								},
-								{
-									"key": "filter[name]",
-									"value": "",
-									"description": "Ej: Admin | *Admin*",
-									"disabled": true
-								},
-								{
-									"key": "filter[description]",
-									"value": "",
-									"description": "Ej: Description | *Description*",
-									"disabled": true
-								},
-								{
-									"key": "filter[created_at]",
-									"value": "2026-08-01,2026-09-20",
-									"description": "Range by created_at",
-									"disabled": true
-								},
-								{
-									"key": "filter[updated_at]",
-									"value": "2026-08-01,2026-09-20",
-									"description": "Range by updated_at",
-									"disabled": true
-								},
-								{
-									"key": "sort",
-									"value": "name",
-									"description": "Sort by name",
-									"disabled": true
-								},
-								{
-									"key": "sort",
-									"value": "description",
-									"description": "Sort by description",
-									"disabled": true
-								},
-								{
-									"key": "sort",
-									"value": "created_at",
-									"description": "Sort by created_at",
-									"disabled": true
-								},
-								{
-									"key": "sort",
-									"value": "updated_at",
-									"description": "Sort by updated_at",
-									"disabled": true
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Show",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "Accept",
-								"value": "application/json",
-								"uuid": "6b8b1fb9-61af-45ca-99a0-2e148d2527be"
-							},
-							{
-								"key": "Authorization",
-								"value": "Bearer {{token_api}}",
-								"uuid": "47c11368-b30d-4c87-8ff3-11c6879f95d7"
-							}
-						],
-						"body": {
-							"mode": "formdata",
-							"formdata": []
-						},
-						"url": {
-							"raw": "{{base_url}}roles/1",
-							"host": [
-								"{{base_url}}roles"
-							],
-							"path": [
-								"1"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Store",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Accept",
-								"value": "application/json",
-								"uuid": "c6ae51d7-3679-4d73-b133-1bf9343e20f9"
-							},
-							{
-								"key": "Authorization",
-								"value": "Bearer {{token_api}}",
-								"uuid": "e3cb0ad1-8791-4815-8542-0f5fa1d1e69a"
-							}
-						],
-						"body": {
-							"mode": "formdata",
-							"formdata": [
-								{
-									"key": "name",
-									"value": "New name",
-									"type": "text"
-								},
-								{
-									"key": "description",
-									"value": "New description",
-									"type": "text"
-								}
-							]
-						},
-						"url": {
-							"raw": "{{base_url}}roles",
-							"host": [
-								"{{base_url}}roles"
-							],
-							"path": [
-								
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Update",
-					"request": {
-						"method": "PUT",
-						"header": [
-							{
-								"key": "Accept",
-								"value": "application/json",
-								"uuid": "fb06cfba-1cff-4870-bf24-27519ef1b8b2"
-							},
-							{
-								"key": "Authorization",
-								"value": "Bearer {{token_api}}",
-								"uuid": "f562b402-277a-492a-916c-ac156d308823"
-							}
-						],
-						"body": {
-							"mode": "urlencoded",
-							"urlencoded": [
-								{
-									"key": "name",
-									"value": "Update name",
-									"type": "text"
-								},
-								{
-									"key": "description",
-									"value": "Update description",
-									"type": "text"
-								}
-							]
-						},
-						"url": {
-							"raw": "{{base_url}}roles/1",
-							"host": [
-								"{{base_url}}roles"
-							],
-							"path": [
-								"1"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Delete",
-					"request": {
-						"method": "DELETE",
-						"header": [
-							{
-								"key": "Accept",
-								"value": "application/json",
-								"uuid": "5a9c8bc9-c0c8-4b82-8237-ab5528d8948c"
-							},
-							{
-								"key": "Authorization",
-								"value": "Bearer {{token_api}}",
-								"uuid": "ce6ce348-9ac7-4348-b83e-d1d96f14fbd7"
-							}
-						],
-						"url": {
-							"raw": "{{base_url}}roles/1",
-							"host": [
-								"{{base_url}}roles"
-							],
-							"path": [
-								"1"
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "UserStatuses",
-			"item": [
-				{
-					"name": "Index",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "Accept",
-								"value": "application/json",
-								"uuid": "f896b670-2bdc-44aa-b813-e08a7b912a00"
-							},
-							{
-								"key": "Authorization",
-								"value": "Bearer {{token_api}}",
-								"uuid": "e0064dfa-fc91-4aa5-8903-3da60753f719"
-							}
-						],
-						"body": {
-							"mode": "formdata",
-							"formdata": []
-						},
-						"url": {
-							"raw": "{{base_url}}user-statuses",
-							"host": [
-								"{{base_url}}user-statuses"
-							],
-							"path": [],
-							"query": [
-								{
-									"key": "include",
-									"value": "",
-									"description": "Relationship",
-									"disabled": true
-								},
-								{
-									"key": "filter[name]",
-									"value": "",
-									"description": "Ej: Active | *Active*",
-									"disabled": true
-								},
-								{
-									"key": "filter[created_at]",
-									"value": "2026-08-01,2026-09-20",
-									"description": "Range by created_at",
-									"disabled": true
-								},
-								{
-									"key": "filter[updated_at]",
-									"value": "2026-08-01,2026-09-20",
-									"description": "Range by updated_at",
-									"disabled": true
-								},
-								{
-									"key": "sort",
-									"value": "name",
-									"description": "Sort by name",
-									"disabled": true
-								},
-								{
-									"key": "sort",
-									"value": "created_at",
-									"description": "Sort by created_at",
-									"disabled": true
-								},
-								{
-									"key": "sort",
-									"value": "updated_at",
-									"description": "Sort by updated_at",
-									"disabled": true
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Show",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "Accept",
-								"value": "application/json",
-								"uuid": "bcc1cea1-7378-4f97-ba6d-9e1c52f6d2c8"
-							},
-							{
-								"key": "Authorization",
-								"value": "Bearer {{token_api}}",
-								"uuid": "94038b5d-1cc8-4c52-bc49-5535f092d0f8"
-							}
-						],
-						"body": {
-							"mode": "formdata",
-							"formdata": []
-						},
-						"url": {
-							"raw": "{{base_url}}user-statuses/1",
-							"host": [
-								"{{base_url}}user-statuses"
-							],
-							"path": [
-								"1"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Store",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Accept",
-								"value": "application/json",
-								"uuid": "f3b17046-88d8-4ba4-878c-24ca7b86eb92"
-							},
-							{
-								"key": "Authorization",
-								"value": "Bearer {{token_api}}",
-								"uuid": "3f8d7f57-275b-4ec2-838d-923d0d070171"
-							}
-						],
-						"body": {
-							"mode": "formdata",
-							"formdata": [
-								{
-									"key": "name",
-									"value": "New name",
-									"type": "text"
-								}
-							]
-						},
-						"url": {
-							"raw": "{{base_url}}user-statuses",
-							"host": [
-								"{{base_url}}user-statuses"
-							],
-							"path": [
-								
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Update",
-					"request": {
-						"method": "PUT",
-						"header": [
-							{
-								"key": "Accept",
-								"value": "application/json",
-								"uuid": "965ebd5b-8043-4c13-9b49-a8f4c0b1e935"
-							},
-							{
-								"key": "Authorization",
-								"value": "Bearer {{token_api}}",
-								"uuid": "f9e3d04f-8869-45ca-a09e-141a179153f0"
-							}
-						],
-						"body": {
-							"mode": "urlencoded",
-							"urlencoded": [
-								{
-									"key": "name",
-									"value": "Update name",
-									"type": "text"
-								}
-							]
-						},
-						"url": {
-							"raw": "{{base_url}}user-statuses/1",
-							"host": [
-								"{{base_url}}user-statuses"
-							],
-							"path": [
-								"1"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Delete",
-					"request": {
-						"method": "DELETE",
-						"header": [
-							{
-								"key": "Accept",
-								"value": "application/json",
-								"uuid": "7913047d-8600-4ef4-a4b7-5c326a27dbe2"
-							},
-							{
-								"key": "Authorization",
-								"value": "Bearer {{token_api}}",
-								"uuid": "0dfd6460-eded-4302-9087-0a4bf33a037c"
-							}
-						],
-						"url": {
-							"raw": "{{base_url}}user-statuses/1",
-							"host": [
-								"{{base_url}}user-statuses"
-							],
-							"path": [
-								"1"
 							]
 						}
 					},

@@ -50,7 +50,7 @@ Route::prefix('{plural_name_kebab}')
         Route::post('/', {singular_name}StoreController::class)
             ->middleware('abilities:{plural_name_snake}' . EnumAbilitySuffix::STORE);
 
-        Route::put('/{{{singular_name_snake}:id}}', {singular_name}UpdateController::class)
+        Route::patch('/{{{singular_name_snake}:id}}', {singular_name}UpdateController::class)
             ->middleware('abilities:{plural_name_snake}' . EnumAbilitySuffix::UPDATE);
 
         Route::delete('/{{{singular_name_snake}:id}}', {singular_name}DestroyController::class)

@@ -250,7 +250,7 @@ def generate_postman_file(
                         "name": "Update",
 
                         "request": {
-                            "method": "PUT",
+                            "method": "PATCH",
 
                             "header": [
                                 {
