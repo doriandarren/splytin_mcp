@@ -35,12 +35,13 @@ def update_abilities(full_path):
 
 use Laravel\Sanctum\Http\Middleware\CheckAbilities;
 use Laravel\Sanctum\Http\Middleware\CheckForAnyAbility;
-use App\Utilities\Messages\MessageChannel;
-use App\Exceptions\HandlerResponse;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
+use Illuminate\Auth\AuthenticationException;
 use Illuminate\Database\QueryException;
+use App\Exceptions\HandlerResponse;
+use App\Utilities\Messages\MessageChannel;
 """
         )
 
@@ -72,9 +73,13 @@ use Illuminate\Database\QueryException;
             if ($request->is('api/*')) {
                 $msg = $e->getMessage() . ' File: ' . $e->getFile() . ' Line: ' . $e->getLine();
                 MessageChannel::send($msg, 'Error BadMethodCallException', true);
-                return HandlerResponse::respondWithError('Error Bad method call', 500, [[
-                    'e' => 'Error bad method call',
-                ]]);
+                return HandlerResponse::respondWithError(
+                    'Error Bad method call', 
+                    500, 
+                    [
+                        [ 'e' => 'Error bad method call']
+                    ]
+                );
             }
             return null;
         });
@@ -84,9 +89,13 @@ use Illuminate\Database\QueryException;
             if ($request->is('api/*')) {
                 $msg = $e->getMessage() . ' File: ' . $e->getFile() . ' Line: ' . $e->getLine();
                 MessageChannel::send($msg, 'Error ErrorException', true);
-                return HandlerResponse::respondWithError('Error exception', 500, [[
-                    'e' => 'Error Exception',
-                ]]);
+                return HandlerResponse::respondWithError(
+                    'Error exception', 
+                    500, 
+                    [
+                        [ 'e' => 'Error Exception']
+                    ]
+                );
             }
             return null;
         });
@@ -95,9 +104,13 @@ use Illuminate\Database\QueryException;
         $exceptions->render(function (QueryException $e, Request $request) {
             if ($request->is('api/*')) {
                 MessageChannel::send($e->getMessage(), 'Error QueryException', true);
-                return HandlerResponse::respondWithError('Error Query Exception', 500, [[
-                    'e' => 'Error Query Exception'
-                ]]);
+                return HandlerResponse::respondWithError(
+                    'Error Query Exception', 
+                    500, 
+                    [
+                        [ 'e' => 'Error Query Exception' ]
+                    ]
+                );
             }
             return null;
         });
@@ -115,22 +128,15 @@ use Illuminate\Database\QueryException;
             MessageChannel::send($msg, 'Error NotFoundHttpException', true);
 
             if ($request->is('api/*')) {
-                return HandlerResponse::respondWithError('Error Not found', 404, [[
-                    'e' => 'Error Not found'
-                ]]);
+                return HandlerResponse::respondWithError(
+                    'Error Not found', 
+                    404, 
+                    [
+                        [ 'e' => 'Error Not found' ]
+                    ]
+                );
             }
 
-            return null;
-        });
-
-        // AccessDeniedHttpException
-        $exceptions->render(function (AccessDeniedHttpException $e, Request $request) {
-            if ($request->is('api/*')) {
-                MessageChannel::send($e->getMessage(), 'Error AccessDeniedHttpException', true);
-                return HandlerResponse::respondWithError('Error Access denied', 403, [[
-                    'e' => 'Error Access denied'
-                ]]);
-            }
             return null;
         });
 
@@ -139,12 +145,46 @@ use Illuminate\Database\QueryException;
             if ($request->is('api/*')) {
                 $msg = $e->getMessage() ?: 'Error Method not allowed';
                 MessageChannel::send($msg, 'Error MethodNotAllowedHttpException', true);
-                return HandlerResponse::respondWithError('Error Method not allowed', 405, [[
-                    'e' => 'Error Method not allowed'
-                ]]);
+                return HandlerResponse::respondWithError(
+                    'Error Method not allowed',
+                    405, 
+                    [
+                        [ 'e' => 'Error Method not allowed' ]
+                    ]
+                );
             }
             return null;
         });
+        
+        // AccessDeniedHttpException
+        $exceptions->render(function (AccessDeniedHttpException $e, Request $request) {
+            if ($request->is('api/*')) {
+                MessageChannel::send($e->getMessage(), 'Error AccessDeniedHttpException', true);
+                return HandlerResponse::respondWithError(
+                    'Error Access denied', 
+                    403, 
+                    [
+                        [ 'e' => 'Error Access denied' ]
+                    ]
+                );
+            }
+            return null;
+        });
+        
+        // AuthenticationException
+        $exceptions->render(function (AuthenticationException $e, Request $request) {
+            if ($request->is('api/*')) {
+                return HandlerResponse::respondWithError(
+                    'Error unauthenticated',
+                    401,
+                    [
+                        [ 'e' => 'Unauthenticated' ]
+                    ]
+                );
+            }
+            return null;
+        });
+        
 """
         )
 

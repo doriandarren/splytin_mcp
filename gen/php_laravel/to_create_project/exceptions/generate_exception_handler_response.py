@@ -41,11 +41,11 @@ class HandlerResponse
     public static function respondWithError($message, $statusCode, $errors=null): JsonResponse
     {
         $data = [
-            'message' => $message,
             'data' => null,
+            'message' => $message,
             'errors' => $errors,
-            'success' => FALSE,
-            'status_code' => $statusCode
+            'status_code' => $statusCode,
+            'success' => false
         ];
         return response()->json($data, $statusCode);
     }
