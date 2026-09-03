@@ -29,11 +29,9 @@ def generate_controller_index_file(
 
 namespace App\\Http\\Controllers\\{namespace}\\{version_api}\\{plural_name};
 
-use Illuminate\\Http\\JsonResponse;
-use Illuminate\\Http\\Request;
-use Illuminate\\Support\\Facades\\Auth;
 use App\\Http\\Controllers\\Controller;
-use App\\Models\\{namespace}\\{plural_name}\\{singular_name};
+use Illuminate\\Support\\Facades\\Auth;
+use Illuminate\\Http\\JsonResponse;
 use App\\Http\\Filters\\{namespace}\\{version_api}\\{plural_name}\\{singular_name}Filter;
 use App\\Http\\Resources\\{namespace}\\{version_api}\\{plural_name}\\{singular_name}Resource;
 use App\\Services\\{namespace}\\{version_api}\\{plural_name}\\{singular_name}Service;

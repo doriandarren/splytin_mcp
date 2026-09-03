@@ -22,6 +22,8 @@ def generate_controller_update_file(
     version_api,
     singular_name, 
     plural_name, 
+    singular_name_camel,
+    plural_name_camel,
     singular_name_kebab, 
     plural_name_kebab, 
     singular_name_snake, 
@@ -53,15 +55,14 @@ def generate_controller_update_file(
 
 namespace App\\Http\\Controllers\\{namespace}\\{version_api}\\{plural_name};
 
-use Illuminate\\Http\\JsonResponse;
-use Illuminate\\Http\\Request;
-use Illuminate\\Support\\Facades\\Validator;
-use Illuminate\\Validation\\Rule;
-use Illuminate\\Support\\Facades\\Auth;
 use App\\Http\\Controllers\\Controller;
+use Illuminate\\Http\\Request;
+use Illuminate\\Support\\Facades\\Auth;
+use Illuminate\\Http\\JsonResponse;
 use App\\Models\\{namespace}\\{plural_name}\\{singular_name};
 use App\\Services\\{namespace}\\{version_api}\\{plural_name}\\{singular_name}Service;
 use App\\Http\\Requests\\{namespace}\\{version_api}\\{plural_name}\\Update{singular_name}Request;
+use App\\Http\\Resources\\{namespace}\\{version_api}\\{plural_name}\\{singular_name}Resource;
 
 class {singular_name}UpdateController extends Controller
 {{
@@ -83,25 +84,46 @@ class {singular_name}UpdateController extends Controller
 {body_param_comments}
     *
     * @param Request $request
-    * @param {singular_name} ${singular_name_snake}
+    * @param {singular_name} ${singular_name_camel}
     * @return JsonResponse
     */
-    public function __invoke(Update{singular_name}Request $request, {singular_name} ${singular_name_snake}): JsonResponse
+    public function __invoke(
+        Update{singular_name}Request $request, 
+        {singular_name} ${singular_name_camel}
+    ): JsonResponse
     {{
 
         if($this->isAdmin(Auth::user()->roles)){{
             
             // By Admin
-            $data = $this->service->update(${singular_name_snake}->id, $request->all());
-            return $this->respondWithData('{singular_name} updated', $data);
+            $data = $this->service->update(
+                ${singular_name_camel}->id,
+                $request->validated()
+            );
+
+        }}elseif($this->isManager(Auth::user()->roles)){{
+            
+            // By Manager
+            $data = $this->service->update(
+                ${singular_name_camel}->id,
+                $request->validated()
+            );
 
         }}else{{
 
-            // By Role Manager & User
-            $data = $this->service->update(${singular_name_snake}->id, $request->all());
-            return $this->respondWithData('{singular_name} updated', $data);
+             // By User
+            $data = $this->service->update(
+                ${singular_name_camel}->id,
+                $request->validated()
+            );
 
         }}
+        
+        
+        return $this->respondWithData(
+            '{singular_name} updated',
+            new {singular_name}Resource($data)
+        );
 
     }}
 

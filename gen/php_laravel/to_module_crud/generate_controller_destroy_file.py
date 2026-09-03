@@ -43,10 +43,10 @@ def generate_controller_destroy_file(
 
 namespace App\\Http\\Controllers\\{namespace}\\{version_api}\\{plural_name};
 
-use Illuminate\\Http\\JsonResponse;
+use App\\Http\\Controllers\\Controller;
 use Illuminate\\Http\\Request;
 use Illuminate\\Support\\Facades\\Auth;
-use App\\Http\\Controllers\\Controller;
+use Illuminate\\Http\\JsonResponse;
 use App\\Models\\{namespace}\\{plural_name}\\{singular_name};
 use App\\Services\\{namespace}\\{version_api}\\{plural_name}\\{singular_name}Service;
 
@@ -77,18 +77,26 @@ class {singular_name}DestroyController extends Controller
 
         if($this->isAdmin(Auth::user()->roles)){{
 
+            // By Admin
             $data = $this->service->destroy(${singular_name_snake}->id);
-
-            return $this->respondWithData('{singular_name} deleted', $data);
+            
+        }}if($this->isManager(Auth::user()->roles)){{
+            
+            // By Manager
+            $data = $this->service->destroy(${singular_name_snake}->id);
 
         }}else{{
 
+            // By User
             $data = $this->service->destroy(${singular_name_snake}->id);
 
-            return $this->respondWithData('{singular_name} deleted', $data);
-
         }}
-
+        
+        return $this->respondWithData(
+            '{singular_name} deleted',
+            $data
+        );
+        
     }}
 
 }}"""

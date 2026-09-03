@@ -60,10 +60,9 @@ def generate_controller_store_file(
 
 namespace App\\Http\\Controllers\\{namespace}\\{version_api}\\{plural_name};
 
-use Illuminate\\Http\\JsonResponse;
-use Illuminate\\Support\\Facades\\Auth;
-use Illuminate\\Support\\Facades\\Validator;
 use App\\Http\\Controllers\\Controller;
+use Illuminate\\Support\\Facades\\Auth;
+use Illuminate\\Http\\JsonResponse;
 use App\\Services\\{namespace}\\{version_api}\\{plural_name}\\{singular_name}Service;
 use App\\Http\\Requests\\{namespace}\\{version_api}\\{plural_name}\\Store{singular_name}Request;
 use App\\Http\\Resources\\{namespace}\\{version_api}\\{plural_name}\\{singular_name}Resource;
@@ -93,7 +92,7 @@ class {singular_name}StoreController extends Controller
     {{
 """
     controller_content += f"""        ${ first_letter_lower(singular_name)} = $this->service->set{singular_name}(
-                {', \n'.join([f'$request->{column["name"]}' for column in columns])}
+                {', \n'.join([f'                $request->{column["name"]}' for column in columns])}
             );
 """
     controller_content += f"""

@@ -47,9 +47,9 @@ def generate_controller_show_file(
 
 namespace App\\Http\\Controllers\\{namespace}\\{version_api}\\{plural_name};
 
+use App\\Http\\Controllers\\Controller;
 use Illuminate\\Support\\Facades\\Auth;
 use Illuminate\\Http\\JsonResponse;
-use App\\Http\\Controllers\\Controller;
 use App\\Models\\{namespace}\\{plural_name}\\{singular_name};
 use App\\Services\\{namespace}\\{version_api}\\{plural_name}\\{singular_name}Service;
 use App\\Http\\Resources\\{namespace}\\{version_api}\\{plural_name}\\{singular_name}Resource;
@@ -77,11 +77,17 @@ class {singular_name}ShowController extends Controller
     public function __invoke({singular_name} ${singular_name_snake}): JsonResponse
     {{
         if($this->isAdmin(Auth::user()->roles)){{
+            
             $data = $this->service->show(${singular_name_snake}->id);
+            
         }} else if($this->isManager(Auth::user()->roles)){{
+            
             $data = $this->service->showByRoleManager(${singular_name_snake}->id);
+            
         }} else {{
+            
             $data = $this->service->showByRoleUser(${singular_name_snake}->id);
+            
         }}
         
         return $this->respondWithData(
