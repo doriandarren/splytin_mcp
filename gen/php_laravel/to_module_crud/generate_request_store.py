@@ -4,7 +4,7 @@ from gen.helpers.helper_print import print_message, GREEN, CYAN
 
 
 # Función auxiliar para generar reglas de validación
-def generate_request_validation_rules(
+def create_request_validation_rules(
     columns,
     singular_name,
     singular_name_camel,
@@ -66,9 +66,15 @@ def generate_request_validation_rules(
         # ---------------------------------
         # Generar array PHP
         # ---------------------------------
-        validation_rules += (
-            f"            '{column['name']}' => [\n"
-        )
+        
+        if column_type == "fk":
+            validation_rules += (
+                f"            'data.relationships.{column['relationship_name']}.data.id' => [\n"
+            )
+        else:
+            validation_rules += (
+                f"            'data.attributes.{column['name']}' => [\n"
+            )
 
         for rule in rules:
             validation_rules += (
@@ -92,6 +98,34 @@ def generate_request_validation_rules(
 
     return validation_rules
 
+
+
+
+
+
+def create_attribute_map(columns):
+
+    lines = []
+
+    for column in columns:
+        name = column["name"]
+
+        if column["type"] == "fk":
+            lines.append(
+                f"        'data.relationships.{column['relationship_name']}.data.id' => '{name}',"
+            )
+        else:
+            lines.append(
+                f"        'data.attributes.{name}' => '{name}',"
+            )
+
+    content = """protected array $attributeMap = [
+"""
+    content += "\n".join(lines)
+    content += """
+    ];"""
+
+    return content
 
 
 
@@ -126,16 +160,20 @@ def generate_request_store(
 
 namespace App\\Http\\Requests\\{namespace}\\{version_api}\\{plural_name};
 
+use App\\Http\\Requests\\BaseApiRequest;
 use Illuminate\\Contracts\\Validation\\Validator;
 use Illuminate\\Contracts\\Validation\\ValidationRule;
-use Illuminate\\Foundation\\Http\\FormRequest;
 use Illuminate\\Http\\Exceptions\\HttpResponseException;
 use App\\Traits\\ApiResponses;
 
-class Store{singular_name}Request extends FormRequest
+class Store{singular_name}Request extends BaseApiRequest
 {{
     
     use ApiResponses;
+    
+    
+{create_attribute_map(columns)}
+    
     
     /**
      * Determine if the user is authorized to make this request.
@@ -152,8 +190,9 @@ class Store{singular_name}Request extends FormRequest
      */
     public function rules(): array
     {{
+        
         return [
-{generate_request_validation_rules(
+{create_request_validation_rules(
     columns, 
     singular_name, 
     singular_name_camel, 

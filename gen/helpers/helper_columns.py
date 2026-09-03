@@ -294,6 +294,7 @@ def parse_columns_input(input_columns: str):
 
             col["related_table"] = pluralize(base)
             col["related_model"] = snake_to_pascal(base)
+            col["relationship_name"] = base
 
         columns.append(col)
 

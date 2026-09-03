@@ -221,16 +221,20 @@ def generate_postman_file(
                             ],
 
                             "body": {
-                                "mode": "formdata",
-
-                                "formdata": [
-                                    {
-                                        "key": column,
-                                        "value": f"New {column}",
-                                        "type": "text"
+                                "mode": "raw",
+                                "raw": json.dumps({
+                                    "data": {
+                                        "attributes": {
+                                            column: f"New {column}"
+                                            for column in column_names
+                                        }
                                     }
-                                    for column in column_names
-                                ]
+                                }, indent=4),
+                                "options": {
+                                    "raw": {
+                                        "language": "json"
+                                    }
+                                }
                             },
 
                             "url": {
@@ -248,13 +252,16 @@ def generate_postman_file(
                     # UPDATE
                     {
                         "name": "Update",
-
                         "request": {
                             "method": "PATCH",
-
                             "header": [
                                 {
                                     "key": "Accept",
+                                    "value": "application/json",
+                                    "type": "text"
+                                },
+                                {
+                                    "key": "Content-Type",
                                     "value": "application/json",
                                     "type": "text"
                                 },
@@ -264,20 +271,22 @@ def generate_postman_file(
                                     "type": "text"
                                 }
                             ],
-
                             "body": {
-                                "mode": "urlencoded",
-
-                                "urlencoded": [
-                                    {
-                                        "key": column,
-                                        "value": f"Update {column}",
-                                        "type": "text"
+                                "mode": "raw",
+                                "raw": json.dumps({
+                                    "data": {
+                                        "attributes": {
+                                            column: f"Update {column}"
+                                            for column in column_names
+                                        }
                                     }
-                                    for column in column_names
-                                ]
+                                }, indent=4),
+                                "options": {
+                                    "raw": {
+                                        "language": "json"
+                                    }
+                                }
                             },
-
                             "url": {
                                 "raw": f"{{{{base_url}}}}{plural_name_kebab}/1",
                                 "host": [
@@ -288,7 +297,6 @@ def generate_postman_file(
                                 ]
                             }
                         },
-
                         "response": []
                     },
 

@@ -68,7 +68,7 @@ def generate_request_validation_rules(
         # ---------------------------------
 
         validation_rules += (
-            f"            '{column['name']}' => [\n"
+            f"            'data.attributes.{column['name']}' => [\n"
         )
 
         for rule in rules:
@@ -103,6 +103,34 @@ def generate_request_validation_rules(
 
 
 
+def create_attribute_map(columns):
+
+    lines = []
+
+    for column in columns:
+        name = column["name"]
+
+        if column["type"] == "fk":
+            lines.append(
+                f"        'data.relationships.{column['relationship_name']}.data.id' => '{name}',"
+            )
+        else:
+            lines.append(
+                f"        'data.attributes.{name}' => '{name}',"
+            )
+
+    content = """protected array $attributeMap = [
+"""
+    content += "\n".join(lines)
+    content += """
+    ];"""
+
+    return content
+
+
+
+
+
 def generate_request_update(
     full_path,
     namespace,
@@ -131,12 +159,19 @@ def generate_request_update(
 
 namespace App\\Http\\Requests\\{namespace}\\{version_api}\\{plural_name};
 
+use App\\Http\\Requests\\BaseApiRequest;
 use Illuminate\\Contracts\\Validation\\ValidationRule;
-use Illuminate\\Foundation\\Http\\FormRequest;
 use Illuminate\\Validation\\Rule;
+use Illuminate\\Http\\Exceptions\\HttpResponseException;
+use App\\Traits\\ApiResponses;
 
-class Update{singular_name}Request extends FormRequest
+class Update{singular_name}Request extends BaseApiRequest
 {{
+    
+    use ApiResponses;
+
+{create_attribute_map(columns)}
+    
     /**
      * Determine if the user is authorized to make this request.
      */
@@ -156,6 +191,25 @@ class Update{singular_name}Request extends FormRequest
 {generate_request_validation_rules(columns, singular_name, singular_name_camel, singular_name_snake, plural_name_snake )}
        ];
     }}
+    
+    
+    /**
+     * Handle a failed validation attempt.
+     *
+     * @param Validator $validator
+     * @return void
+     */
+    protected function failedValidation(Validator $validator)
+    {{
+        throw new HttpResponseException(
+            $this->respondWithError(
+                'Validation error',
+                $validator->errors(),
+                422
+            )
+        );
+    }}
+    
 }}
 
 """

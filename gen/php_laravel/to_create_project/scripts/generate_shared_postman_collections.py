@@ -504,24 +504,13 @@ def generate_shared_postman_collections(full_path, project_name, domain_name, pa
 									}
 								],
 								"body": {
-									"mode": "formdata",
-									"formdata": [
-										{
-											"key": "name",
-											"value": "New name",
-											"type": "text"
-										},
-										{
-											"key": "label",
-											"value": "New label",
-											"type": "text"
-										},
-										{
-											"key": "ability_group_id",
-											"value": "1",
-											"type": "text"
+									"mode": "raw",
+									"raw": "{\n  \"data\": {\n    \"attributes\": {\n      \"name\": \"New name\",\n      \"label\": \"New label\"\n    },\n    \"relationships\": {\n      \"ability_group\": {\n        \"data\": {\n          \"id\": \"1\"\n        }\n      }\n    }\n  }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
 										}
-									]
+									}
 								},
 								"url": {
 									"raw": "{{base_url}}abilities",
@@ -552,24 +541,13 @@ def generate_shared_postman_collections(full_path, project_name, domain_name, pa
 									}
 								],
 								"body": {
-									"mode": "urlencoded",
-									"urlencoded": [
-										{
-											"key": "name",
-											"value": "Update name",
-											"type": "text"
-										},
-										{
-											"key": "label",
-											"value": "Update label",
-											"type": "text"
-										},
-										{
-											"key": "ability_group_id",
-											"value": "1",
-											"type": "text"
+									"mode": "raw",
+									"raw": "{\n  \"data\": {\n    \"attributes\": {\n      \"name\": \"Update name\",\n      \"label\": \"Update label\"\n    },\n    \"relationships\": {\n      \"ability_group\": {\n        \"data\": {\n          \"id\": \"1\"\n        }\n      }\n    }\n  }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
 										}
-									]
+									}
 								},
 								"url": {
 									"raw": "{{base_url}}abilities/1",
@@ -745,14 +723,13 @@ def generate_shared_postman_collections(full_path, project_name, domain_name, pa
 									}
 								],
 								"body": {
-									"mode": "formdata",
-									"formdata": [
-										{
-											"key": "name",
-											"value": "New name",
-											"type": "text"
+									"mode": "raw",
+									"raw": "{\n  \"data\": {\n    \"attributes\": {\n      \"name\": \"New name\"\n    }\n  }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
 										}
-									]
+									}
 								},
 								"url": {
 									"raw": "{{base_url}}ability-groups",
@@ -783,14 +760,13 @@ def generate_shared_postman_collections(full_path, project_name, domain_name, pa
 									}
 								],
 								"body": {
-									"mode": "urlencoded",
-									"urlencoded": [
-										{
-											"key": "name",
-											"value": "Update name",
-											"type": "text"
+									"mode": "raw",
+									"raw": "{\n  \"data\": {\n    \"attributes\": {\n      \"name\": \"Update name\"\n    }\n  }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
 										}
-									]
+									}
 								},
 								"url": {
 									"raw": "{{base_url}}ability-groups/1",
@@ -979,19 +955,13 @@ def generate_shared_postman_collections(full_path, project_name, domain_name, pa
 									}
 								],
 								"body": {
-									"mode": "formdata",
-									"formdata": [
-										{
-											"key": "user_id",
-											"value": "1",
-											"type": "text"
-										},
-										{
-											"key": "ability_id",
-											"value": "1",
-											"type": "text"
+									"mode": "raw",
+									"raw": "{\n  \"data\": {\n    \"relationships\": {\n      \"user\": {\n        \"data\": {\n          \"id\": \"1\"\n        }\n      },\n      \"ability\": {\n        \"data\": {\n          \"id\": \"1\"\n        }\n      }\n    }\n  }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
 										}
-									]
+									}
 								},
 								"url": {
 									"raw": "{{base_url}}ability-users",
@@ -1022,19 +992,13 @@ def generate_shared_postman_collections(full_path, project_name, domain_name, pa
 									}
 								],
 								"body": {
-									"mode": "urlencoded",
-									"urlencoded": [
-										{
-											"key": "user_id",
-											"value": "1",
-											"type": "text"
-										},
-										{
-											"key": "ability_id",
-											"value": "1",
-											"type": "text"
+									"mode": "raw",
+									"raw": "{\n  \"data\": {\n    \"relationships\": {\n      \"user\": {\n        \"data\": {\n          \"id\": \"1\"\n        }\n      },\n      \"ability\": {\n        \"data\": {\n          \"id\": \"1\"\n        }\n      }\n    }\n  }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
 										}
-									]
+									}
 								},
 								"url": {
 									"raw": "{{base_url}}ability-users/1",
