@@ -1186,19 +1186,13 @@ def generate_shared_postman_collections(full_path, project_name, domain_name, pa
 									}
 								],
 								"body": {
-									"mode": "formdata",
-									"formdata": [
-										{
-											"key": "role_id",
-											"value": "1",
-											"type": "text"
-										},
-										{
-											"key": "user_id",
-											"value": "1",
-											"type": "text"
+									"mode": "raw",
+									"raw": "{\n  \"data\": {\n    \"relationships\": {\n      \"role\": {\n        \"data\": {\n          \"id\": \"1\"\n        }\n      },\n      \"user\": {\n        \"data\": {\n          \"id\": \"1\"\n        }\n      }\n    }\n  }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
 										}
-									]
+									}
 								},
 								"url": {
 									"raw": "{{base_url}}role-users",
@@ -1229,19 +1223,13 @@ def generate_shared_postman_collections(full_path, project_name, domain_name, pa
 									}
 								],
 								"body": {
-									"mode": "urlencoded",
-									"urlencoded": [
-										{
-											"key": "role_id",
-											"value": "1",
-											"type": "text"
-										},
-										{
-											"key": "user_id",
-											"value": "1",
-											"type": "text"
+									"mode": "raw",
+									"raw": "{\n  \"data\": {\n    \"relationships\": {\n      \"role\": {\n        \"data\": {\n          \"id\": \"1\"\n        }\n      },\n      \"user\": {\n        \"data\": {\n          \"id\": \"1\"\n        }\n      }\n    }\n  }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
 										}
-									]
+									}
 								},
 								"url": {
 									"raw": "{{base_url}}role-users/1",
@@ -1429,19 +1417,13 @@ def generate_shared_postman_collections(full_path, project_name, domain_name, pa
 									}
 								],
 								"body": {
-									"mode": "formdata",
-									"formdata": [
-										{
-											"key": "name",
-											"value": "New name",
-											"type": "text"
-										},
-										{
-											"key": "description",
-											"value": "New description",
-											"type": "text"
+									"mode": "raw",
+									"raw": "{\n  \"data\": {\n    \"attributes\": {\n      \"name\": \"New name\",\n      \"description\": \"New description\"\n    }\n  }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
 										}
-									]
+									}
 								},
 								"url": {
 									"raw": "{{base_url}}roles",
@@ -1472,19 +1454,13 @@ def generate_shared_postman_collections(full_path, project_name, domain_name, pa
 									}
 								],
 								"body": {
-									"mode": "urlencoded",
-									"urlencoded": [
-										{
-											"key": "name",
-											"value": "Update name",
-											"type": "text"
-										},
-										{
-											"key": "description",
-											"value": "Update description",
-											"type": "text"
+									"mode": "raw",
+									"raw": "{\n  \"data\": {\n    \"attributes\": {\n      \"name\": \"Update name\",\n      \"description\": \"Update description\"\n    }\n  }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
 										}
-									]
+									}
 								},
 								"url": {
 									"raw": "{{base_url}}roles/1",
@@ -1660,14 +1636,13 @@ def generate_shared_postman_collections(full_path, project_name, domain_name, pa
 									}
 								],
 								"body": {
-									"mode": "formdata",
-									"formdata": [
-										{
-											"key": "name",
-											"value": "New name",
-											"type": "text"
+									"mode": "raw",
+									"raw": "{\n  \"data\": {\n    \"attributes\": {\n      \"name\": \"New name\"\n    }\n  }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
 										}
-									]
+									}
 								},
 								"url": {
 									"raw": "{{base_url}}user-statuses",
@@ -1698,14 +1673,13 @@ def generate_shared_postman_collections(full_path, project_name, domain_name, pa
 									}
 								],
 								"body": {
-									"mode": "urlencoded",
-									"urlencoded": [
-										{
-											"key": "name",
-											"value": "Update name",
-											"type": "text"
+									"mode": "raw",
+									"raw": "{\n  \"data\": {\n    \"attributes\": {\n      \"name\": \"Update name\"\n    }\n  }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
 										}
-									]
+									}
 								},
 								"url": {
 									"raw": "{{base_url}}user-statuses/1",
