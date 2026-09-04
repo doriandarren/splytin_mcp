@@ -23,12 +23,36 @@ def create_controller_structure(
     return controller_folder_path
 
 
+
+
+def format_attributes(columns, singular_name, singular_name_camel):
+    
+    lines = []
+
+    for column in columns:
+        lines.append(f"""            $attributes['{column["name"]}'],""") 
+    
+    
+    content = f"""        ${ singular_name_camel} = $this->service->set{singular_name}(
+"""
+    content += "\n".join(lines)
+    content += """
+        );"""
+
+    return content
+
+
+
+
+
 def generate_controller_store_file(
     full_path, 
     namespace, 
     version_api,
     singular_name, 
     plural_name, 
+    singular_name_camel,
+    plural_name_camel,
     singular_name_kebab, 
     plural_name_kebab, 
     singular_name_snake, 
@@ -90,22 +114,26 @@ class {singular_name}StoreController extends Controller
     */
     public function __invoke(Store{singular_name}Request $request): JsonResponse
     {{
-"""
+        
+        $attributes = $request->mappedAttributes();
 
+{format_attributes(columns, singular_name, singular_name_camel)}
 
-    controller_content += f"""        ${ first_letter_lower(singular_name)} = $this->service->set{singular_name}(
-                {', \n'.join([f'            $request->{column["name"]}' for column in columns])}
-        );
-"""
-
-
-    controller_content += f"""
         if ($this->isAdmin(Auth::user()->roles)) {{
+            
+            // By Admin
             $data = $this->service->store(${first_letter_lower(singular_name)});
+            
         }} elseif ($this->isManager(Auth::user()->roles)) {{
+            
+            // By Manager
             $data = $this->service->store(${first_letter_lower(singular_name)});
+            
         }} else {{
+            
+            // By User
             $data = $this->service->store(${first_letter_lower(singular_name)});
+            
         }}
 
         return $this->respondWithData(

@@ -6,6 +6,17 @@
 - En php: revisar boostrap/app.php que hay cosas nuevas
 
 
+# Ejecutar nodulo:
+
+
+```sh
+
+python3 -m gen.php_laravel.to_module_crud.generate_model_file
+
+```
+
+
+
 
 
 # Blender ---> Dariana haciendo:

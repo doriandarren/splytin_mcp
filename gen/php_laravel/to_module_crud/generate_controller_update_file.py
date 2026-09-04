@@ -56,7 +56,6 @@ def generate_controller_update_file(
 namespace App\\Http\\Controllers\\{namespace}\\{version_api}\\{plural_name};
 
 use App\\Http\\Controllers\\Controller;
-use Illuminate\\Http\\Request;
 use Illuminate\\Support\\Facades\\Auth;
 use Illuminate\\Http\\JsonResponse;
 use App\\Models\\{namespace}\\{plural_name}\\{singular_name};
@@ -83,7 +82,7 @@ class {singular_name}UpdateController extends Controller
     *
 {body_param_comments}
     *
-    * @param Request $request
+    * @param Update{singular_name}Request $request
     * @param {singular_name} ${singular_name_camel}
     * @return JsonResponse
     */
@@ -92,13 +91,15 @@ class {singular_name}UpdateController extends Controller
         {singular_name} ${singular_name_camel}
     ): JsonResponse
     {{
+        
+        $attributes = $request->mappedAttributes();
 
         if($this->isAdmin(Auth::user()->roles)){{
             
             // By Admin
             $data = $this->service->update(
                 ${singular_name_camel}->id,
-                $request->validated()
+                $attributes
             );
 
         }}elseif($this->isManager(Auth::user()->roles)){{
@@ -106,7 +107,7 @@ class {singular_name}UpdateController extends Controller
             // By Manager
             $data = $this->service->update(
                 ${singular_name_camel}->id,
-                $request->validated()
+                $attributes
             );
 
         }}else{{
@@ -114,7 +115,7 @@ class {singular_name}UpdateController extends Controller
              // By User
             $data = $this->service->update(
                 ${singular_name_camel}->id,
-                $request->validated()
+                $attributes
             );
 
         }}

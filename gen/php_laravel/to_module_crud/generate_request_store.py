@@ -66,7 +66,6 @@ def create_request_validation_rules(
         # ---------------------------------
         # Generar array PHP
         # ---------------------------------
-        
         if column_type == "fk":
             validation_rules += (
                 f"            'data.relationships.{column['relationship_name']}.data.id' => [\n"
@@ -119,7 +118,7 @@ def create_attribute_map(columns):
                 f"        'data.attributes.{name}' => '{name}',"
             )
 
-    content = """protected array $attributeMap = [
+    content = """    protected array $attributeMap = [
 """
     content += "\n".join(lines)
     content += """
@@ -172,6 +171,9 @@ class Store{singular_name}Request extends BaseApiRequest
     use ApiResponses;
     
     
+    /**
+    * Maps JSON:API request paths to model/database attributes.
+    */
 {create_attribute_map(columns)}
     
     
@@ -182,6 +184,7 @@ class Store{singular_name}Request extends BaseApiRequest
     {{
         return true;
     }}
+
 
     /**
      * Get the validation rules that apply to the request.
@@ -214,7 +217,7 @@ class Store{singular_name}Request extends BaseApiRequest
         throw new HttpResponseException(
             $this->respondWithError(
                 'Validation error',
-                $validator->errors(),
+                $validator->errors()->toArray(),
                 422
             )
         );

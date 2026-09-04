@@ -66,10 +66,15 @@ def generate_request_validation_rules(
         # ---------------------------------
         # Generar array PHP
         # ---------------------------------
+        if column_type == "fk":
+            validation_rules += (
+                f"            'data.relationships.{column['relationship_name']}.data.id' => [\n"
+            )
+        else:
+            validation_rules += (
+                f"            'data.attributes.{column['name']}' => [\n"
+            )
 
-        validation_rules += (
-            f"            'data.attributes.{column['name']}' => [\n"
-        )
 
         for rule in rules:
             validation_rules += (
@@ -119,7 +124,7 @@ def create_attribute_map(columns):
                 f"        'data.attributes.{name}' => '{name}',"
             )
 
-    content = """protected array $attributeMap = [
+    content = """    protected array $attributeMap = [
 """
     content += "\n".join(lines)
     content += """
@@ -160,6 +165,7 @@ def generate_request_update(
 namespace App\\Http\\Requests\\{namespace}\\{version_api}\\{plural_name};
 
 use App\\Http\\Requests\\BaseApiRequest;
+use Illuminate\\Contracts\\Validation\\Validator;
 use Illuminate\\Contracts\\Validation\\ValidationRule;
 use Illuminate\\Validation\\Rule;
 use Illuminate\\Http\\Exceptions\\HttpResponseException;
@@ -169,8 +175,13 @@ class Update{singular_name}Request extends BaseApiRequest
 {{
     
     use ApiResponses;
+    
 
+    /**
+    * Maps JSON:API request paths to model/database attributes.
+    */
 {create_attribute_map(columns)}
+    
     
     /**
      * Determine if the user is authorized to make this request.
@@ -179,6 +190,7 @@ class Update{singular_name}Request extends BaseApiRequest
     {{
         return true;
     }}
+    
 
     /**
      * Get the validation rules that apply to the request.
@@ -204,7 +216,7 @@ class Update{singular_name}Request extends BaseApiRequest
         throw new HttpResponseException(
             $this->respondWithError(
                 'Validation error',
-                $validator->errors(),
+                $validator->errors()->toArray(),
                 422
             )
         );

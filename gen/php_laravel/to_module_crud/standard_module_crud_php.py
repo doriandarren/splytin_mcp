@@ -131,6 +131,8 @@ def standard_module_crud_php(
                 version_api,
                 singular_name, 
                 plural_name,
+                singular_name_camel,
+                plural_name_camel,
                 singular_name_kebab, 
                 plural_name_kebab, 
                 singular_name_snake, 
