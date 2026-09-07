@@ -21,10 +21,14 @@ def format_relation_fields(columns):
 
 def format_relation_uses(columns):
     content = ''
+    flag = False
     
     for column in columns:
         if column["is_fk"]:
-            content += f"""use Illuminate\\Database\\Eloquent\\Relations\\BelongsTo; """
+            flag = True
+        
+    if flag:
+        content += f"""use Illuminate\\Database\\Eloquent\\Relations\\BelongsTo; """    
             
     return content
     
@@ -134,6 +138,24 @@ if __name__ == "__main__":
             'related_table': 'users',
             'relationship_name': 'user',
             'relationship_column': 'user_id',
+            'scale': None,
+            'size': None,
+            'type': 'fk',
+        },
+        {
+            'is_fk': True,
+            'is_index': False,
+            'is_nullable': False,
+            'is_unique': False,
+            'is_unsigned': False,
+            'name': 'customer_id',
+            'options': ['fk'],
+            'precision': None,
+            'raw_type': 'fk',
+            'related_model': 'Customer',
+            'related_table': 'customers',
+            'relationship_name': 'customer',
+            'relationship_column': 'customer_id',
             'scale': None,
             'size': None,
             'type': 'fk',

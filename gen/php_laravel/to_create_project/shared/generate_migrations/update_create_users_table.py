@@ -23,13 +23,14 @@ def update_create_users_table(full_path):
         # Reemplazos
         content = content.replace(
             """Schema::create('users', function (Blueprint $table) {""",
-            """Schema::create('user_statuses', function (Blueprint $table) {
-            $table->id();
-            $table->string('name')->unique();
-            $table->timestamps();
-            $table->softDeletes();
-        });
-        
+            """if (!Schema::hasTable('user_statuses')) {
+                Schema::create('user_statuses', function (Blueprint $table) {
+                $table->id();
+                $table->string('name')->unique();
+                $table->timestamps();
+                $table->softDeletes();
+            });
+        }
         Schema::create('users', function (Blueprint $table) {"""
         )
 

@@ -39,22 +39,28 @@ use App\\Http\\Controllers\\{namespace}\\{version_api}\\{plural_name}\\{singular
 */
 Route::prefix('{plural_name_kebab}')
     ->middleware('auth:sanctum')
+    ->name('{plural_name_kebab}.')
     ->group(function () {{
 
         Route::get('/', {singular_name}IndexController::class)
-            ->middleware('abilities:{plural_name_snake}' . EnumAbilitySuffix::INDEX);
+            ->middleware('abilities:{plural_name_snake}' . EnumAbilitySuffix::INDEX)
+            ->name('index');
 
         Route::get('/{{{singular_name_snake}:id}}', {singular_name}ShowController::class)
-            ->middleware('abilities:{plural_name_snake}' . EnumAbilitySuffix::SHOW);
+            ->middleware('abilities:{plural_name_snake}' . EnumAbilitySuffix::SHOW)
+            ->name('show');
 
         Route::post('/', {singular_name}StoreController::class)
-            ->middleware('abilities:{plural_name_snake}' . EnumAbilitySuffix::STORE);
+            ->middleware('abilities:{plural_name_snake}' . EnumAbilitySuffix::STORE)
+            ->name('store');
 
         Route::patch('/{{{singular_name_snake}:id}}', {singular_name}UpdateController::class)
-            ->middleware('abilities:{plural_name_snake}' . EnumAbilitySuffix::UPDATE);
+            ->middleware('abilities:{plural_name_snake}' . EnumAbilitySuffix::UPDATE)
+            ->name('update');
 
         Route::delete('/{{{singular_name_snake}:id}}', {singular_name}DestroyController::class)
-            ->middleware('abilities:{plural_name_snake}' . EnumAbilitySuffix::DESTROY);
+            ->middleware('abilities:{plural_name_snake}' . EnumAbilitySuffix::DESTROY)
+            ->name('destroy');
         
 }});
 

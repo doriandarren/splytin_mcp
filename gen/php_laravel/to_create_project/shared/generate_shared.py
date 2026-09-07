@@ -174,6 +174,46 @@ def generate_shared(full_path):
     
     
     
+    
+    
+    ## Only User:
+    input_menu_checkbox_user = [
+        "controller_index",
+        "controller_show",
+        "controller_store",
+        "controller_update",
+        "controller_destroy",
+        "service",
+        "routes",
+        "resource",
+        # "seeder",
+        # "factory",
+        #"model",
+        # "postman",
+        # "migration",
+    ]
+    
+    
+    # User
+    namespace = "SHARED"
+    singular_name = "User"
+    plural_name = "Users"
+    input_columns = "user_status_id:fk name email:unique email_verified_at:timestamp password image_url"
+    
+    columns = parse_columns_input(input_columns)
+    
+    standard_module_crud_php(
+        full_path=full_path, 
+        namespace=namespace, 
+        version_api='V1', 
+        singular_name=singular_name, 
+        plural_name=plural_name, 
+        columns=columns, 
+        input_menu_checkbox=input_menu_checkbox_user
+    )
+    
+    
+    
     # UserRolesAbilities
     generate_seeder_user_roles_abilities(full_path)
 
