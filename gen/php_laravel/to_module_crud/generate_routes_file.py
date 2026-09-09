@@ -5,9 +5,11 @@ def generate_routes_file(
     full_path,
     namespace,
     version_api,
-    project_name,
+    folder_group,
     singular_name,
     plural_name,
+    singular_name_camel,
+    plural_name_camel,
     singular_name_kebab,
     plural_name_kebab,
     singular_name_snake,
@@ -26,7 +28,7 @@ def generate_routes_file(
     content = f"""<?php
 
 use Illuminate\\Support\\Facades\\Route;
-use App\\Enums\\EnumAbilitySuffix;
+//use App\\Enums\\EnumAbilitySuffix;
 use App\\Http\\Controllers\\{namespace}\\{version_api}\\{plural_name}\\{singular_name}IndexController;
 use App\\Http\\Controllers\\{namespace}\\{version_api}\\{plural_name}\\{singular_name}ShowController;
 use App\\Http\\Controllers\\{namespace}\\{version_api}\\{plural_name}\\{singular_name}StoreController;
@@ -43,23 +45,23 @@ Route::prefix('{plural_name_kebab}')
     ->group(function () {{
 
         Route::get('/', {singular_name}IndexController::class)
-            ->middleware('abilities:{plural_name_snake}' . EnumAbilitySuffix::INDEX)
+            //->middleware('abilities:{plural_name_snake}' . EnumAbilitySuffix::INDEX)
             ->name('index');
 
         Route::get('/{{{singular_name_snake}:id}}', {singular_name}ShowController::class)
-            ->middleware('abilities:{plural_name_snake}' . EnumAbilitySuffix::SHOW)
+            //->middleware('abilities:{plural_name_snake}' . EnumAbilitySuffix::SHOW)
             ->name('show');
 
         Route::post('/', {singular_name}StoreController::class)
-            ->middleware('abilities:{plural_name_snake}' . EnumAbilitySuffix::STORE)
+            //->middleware('abilities:{plural_name_snake}' . EnumAbilitySuffix::STORE)
             ->name('store');
 
         Route::patch('/{{{singular_name_snake}:id}}', {singular_name}UpdateController::class)
-            ->middleware('abilities:{plural_name_snake}' . EnumAbilitySuffix::UPDATE)
+            //->middleware('abilities:{plural_name_snake}' . EnumAbilitySuffix::UPDATE)
             ->name('update');
 
         Route::delete('/{{{singular_name_snake}:id}}', {singular_name}DestroyController::class)
-            ->middleware('abilities:{plural_name_snake}' . EnumAbilitySuffix::DESTROY)
+            //->middleware('abilities:{plural_name_snake}' . EnumAbilitySuffix::DESTROY)
             ->name('destroy');
         
 }});

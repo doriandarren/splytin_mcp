@@ -2,6 +2,7 @@ import os
 from gen.helpers.helper_menu import pause
 from gen.helpers.helper_print import camel_to_first_letter_lower, camel_to_kebab, camel_to_snake, dd
 from gen.helpers.helper_string import normalize_project_name
+from gen.php_laravel.to_module_crud.add_route_api_php import add_route_api_php
 from gen.php_laravel.to_module_crud.generate_controller_index_file import generate_controller_index_file
 from gen.php_laravel.to_module_crud.generate_index_filter import generate_index_filter
 from gen.php_laravel.to_module_crud.generate_model_file import generate_model_file
@@ -24,10 +25,11 @@ def standard_module_crud_php(
     full_path,
     namespace,
     version_api,
+    folder_group,
     singular_name, 
     plural_name, 
     columns, 
-    input_menu_checkbox=None
+    input_menu_checkbox=None,
 ):
 
     # Input Default
@@ -83,9 +85,12 @@ def standard_module_crud_php(
                 full_path,
                 namespace,
                 version_api,
+                folder_group,
                 project_name,
                 singular_name,
                 plural_name,
+                singular_name_camel,
+                plural_name_camel,
                 singular_name_kebab,
                 plural_name_kebab,
                 singular_name_snake,
@@ -93,12 +98,16 @@ def standard_module_crud_php(
                 columns
             )
             
-            generate_index_filter(full_path,
+            generate_index_filter(
+                full_path,
                 namespace,
                 version_api,
+                folder_group,
                 project_name,
                 singular_name,
                 plural_name,
+                singular_name_camel,
+                plural_name_camel,
                 singular_name_kebab,
                 plural_name_kebab,
                 singular_name_snake,
@@ -110,15 +119,19 @@ def standard_module_crud_php(
 
         if "controller_show" in input_menu_checkbox:
             generate_controller_show_file(
-                full_path, 
-                namespace, 
+                full_path,
+                namespace,
                 version_api,
-                singular_name, 
+                folder_group,
+                project_name,
+                singular_name,
                 plural_name,
-                singular_name_kebab, 
-                plural_name_kebab, 
-                singular_name_snake, 
-                plural_name_snake, 
+                singular_name_camel,
+                plural_name_camel,
+                singular_name_kebab,
+                plural_name_kebab,
+                singular_name_snake,
+                plural_name_snake,
                 columns
             )
 
@@ -129,14 +142,16 @@ def standard_module_crud_php(
                 full_path,
                 namespace,
                 version_api,
-                singular_name, 
+                folder_group,
+                project_name,
+                singular_name,
                 plural_name,
                 singular_name_camel,
                 plural_name_camel,
-                singular_name_kebab, 
-                plural_name_kebab, 
-                singular_name_snake, 
-                plural_name_snake, 
+                singular_name_kebab,
+                plural_name_kebab,
+                singular_name_snake,
+                plural_name_snake,
                 columns
             )
             
@@ -145,6 +160,7 @@ def standard_module_crud_php(
                 full_path,
                 namespace,
                 version_api,
+                folder_group,
                 project_name,
                 singular_name,
                 plural_name,
@@ -165,6 +181,8 @@ def standard_module_crud_php(
                 full_path,
                 namespace,
                 version_api,
+                folder_group,
+                project_name,
                 singular_name,
                 plural_name,
                 singular_name_camel,
@@ -181,6 +199,7 @@ def standard_module_crud_php(
                 full_path,
                 namespace,
                 version_api,
+                folder_group,
                 project_name,
                 singular_name,
                 plural_name,
@@ -197,28 +216,37 @@ def standard_module_crud_php(
 
         if "controller_destroy" in input_menu_checkbox:
             generate_controller_destroy_file(
-                full_path, 
+                full_path,
                 namespace,
                 version_api,
-                singular_name, 
+                folder_group,
+                project_name,
+                singular_name,
                 plural_name,
-                singular_name_kebab, 
-                plural_name_kebab, 
-                singular_name_snake, 
-                plural_name_snake, 
+                singular_name_camel,
+                plural_name_camel,
+                singular_name_kebab,
+                plural_name_kebab,
+                singular_name_snake,
+                plural_name_snake,
                 columns
             )
         
 
         if "service" in input_menu_checkbox:
             generate_service_file(
-                full_path, 
-                namespace, 
+                full_path,
+                namespace,
                 version_api,
+                folder_group,
                 singular_name,
-                plural_name, 
-                singular_name_snake, 
-                plural_name_snake, 
+                plural_name,
+                singular_name_camel,
+                plural_name_camel,
+                singular_name_kebab,
+                plural_name_kebab,
+                singular_name_snake,
+                plural_name_snake,
                 columns
             )
 
@@ -227,9 +255,45 @@ def standard_module_crud_php(
                 full_path,
                 namespace,
                 version_api,
-                project_name,
+                folder_group,
                 singular_name,
                 plural_name,
+                singular_name_camel,
+                plural_name_camel,
+                singular_name_kebab,
+                plural_name_kebab,
+                singular_name_snake,
+                plural_name_snake,
+                columns
+            )
+            
+            add_route_api_php(
+                full_path,
+                namespace,
+                version_api,
+                folder_group,
+                singular_name,
+                plural_name,
+                singular_name_camel,
+                plural_name_camel,
+                singular_name_kebab,
+                plural_name_kebab,
+                singular_name_snake,
+                plural_name_snake,
+                columns
+            )
+            
+
+        if "migration" in input_menu_checkbox:
+            generate_migration_file(
+                full_path,
+                namespace,
+                version_api,
+                folder_group,
+                singular_name,
+                plural_name,
+                singular_name_camel,
+                plural_name_camel,
                 singular_name_kebab,
                 plural_name_kebab,
                 singular_name_snake,
@@ -237,38 +301,41 @@ def standard_module_crud_php(
                 columns
             )
 
-        if "migration" in input_menu_checkbox:
-            generate_migration_file(
-                full_path, 
-                namespace, 
-                singular_name, 
-                plural_name,
-                singular_name_kebab, 
-                plural_name_kebab, 
-                singular_name_snake, 
-                plural_name_snake, 
-                columns
-            )
+
+
+
 
         if "seeder" in input_menu_checkbox:
             generate_seeder_file(
-                full_path, 
+                full_path,
                 namespace,
-                singular_name, 
+                version_api,
+                project_name,
+                singular_name,
                 plural_name,
-                singular_name_snake, 
-                plural_name_snake, 
+                singular_name_camel,
+                plural_name_camel,
+                singular_name_kebab,
+                plural_name_kebab,
+                singular_name_snake,
+                plural_name_snake,
                 columns
             )
 
         if "factory" in input_menu_checkbox:
             generate_factory_file(
-                full_path, 
+                full_path,
                 namespace,
+                version_api,
+                project_name,
                 singular_name,
-                plural_name, 
-                singular_name_snake, 
-                plural_name_snake, 
+                plural_name,
+                singular_name_camel,
+                plural_name_camel,
+                singular_name_kebab,
+                plural_name_kebab,
+                singular_name_snake,
+                plural_name_snake,
                 columns
             )
 

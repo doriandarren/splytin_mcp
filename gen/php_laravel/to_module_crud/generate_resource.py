@@ -33,7 +33,7 @@ def format_relationships(columns, singular_name_snake, plural_name_snake):
         for column in columns:
             if column["is_fk"]:
                 
-                column_name_case = column["relationship_name"].replace("_", "-")
+                column_kabad_case = column["related_table"].replace("_", "-")
                 
                 lines.append(f"""                '{column["relationship_name"]}' => [
                     'data' => [
@@ -41,7 +41,7 @@ def format_relationships(columns, singular_name_snake, plural_name_snake):
                         'id' => $this->{column["relationship_column"]}
                     ],
                     'links' => [
-                        'self' => route('{column["related_table"]}.show', ['{column_name_case}' => $this->{column["relationship_column"]}])
+                        'self' => route('{column_kabad_case}.show', ['{column["relationship_name"]}' => $this->{column["relationship_column"]}])
                     ]
                 ],""")
                 
@@ -71,7 +71,7 @@ def format_includes(columns):
         
         for column in columns:
             if column["is_fk"]:
-                lines.append(f"""                // new {column["related_model"]}Resource($this->whenLoaded('{column["related_table"]}')),""")
+                lines.append(f"""                // new {column["related_model"]}Resource($this->whenLoaded('{column["relationship_name"]}')),""")
                 
         lines.append(f"""            //],""")
 
@@ -136,12 +136,9 @@ class {singular_name}Resource extends JsonResource
                 'updated_at' => $this->updated_at,
             ],
 {format_relationships(columns, singular_name_snake, plural_name_snake)}
-
 {format_includes(columns)}
-
-            //'includes' => new UserResource($this->whenLoaded('author')),
             'links' => [
-                'self' => route('{plural_name_kebab}.show', ['{plural_name_snake}' => $this->{singular_name_snake}_id])
+                'self' => route('{plural_name_kebab}.show', ['{singular_name_snake}' => $this->id])
             ]
         ];
     }}

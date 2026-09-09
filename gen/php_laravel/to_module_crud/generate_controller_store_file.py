@@ -1,27 +1,10 @@
 import os
+from gen.helpers.helper_print import print_message, GREEN, CYAN
 
 
 def first_letter_lower(name):
     """Convierte la primera letra de un string a minúscula."""
     return name[0].lower() + name[1:]
-
-
-def create_controller_structure(
-    full_path, 
-    path_controller
-):
-    """
-    Crea la estructura de carpetas 'base_ruta/app/path_controller' en la ruta especificada.
-    """
-    # Crear la ruta completa base_ruta/app/path_controller
-    controller_folder_path = os.path.join(full_path, 'app', path_controller)
-
-    if not os.path.exists(controller_folder_path):
-        os.makedirs(controller_folder_path)
-        print(f"Estructura de carpetas '{controller_folder_path}' creada.")
-
-    return controller_folder_path
-
 
 
 
@@ -43,44 +26,44 @@ def format_attributes(columns, singular_name, singular_name_camel):
 
 
 
-
-
-def generate_controller_store_file(
-    full_path, 
-    namespace, 
-    version_api,
-    singular_name, 
-    plural_name, 
-    singular_name_camel,
-    plural_name_camel,
-    singular_name_kebab, 
-    plural_name_kebab, 
-    singular_name_snake, 
-    plural_name_snake, 
-    columns
-):
-    """
-    Genera un archivo de controlador PHP para el método 'store' basado en los nombres proporcionados y crea la estructura app/path_controller dentro de base_ruta.
-    """
-    
-    path_controller = "Http/Controllers/" + namespace + "/" + version_api + "/" + plural_name
-    
-    # Crear la estructura de carpetas llamando a create_controller_structure
-    controller_folder_path = create_controller_structure(full_path, path_controller)
-
-    # Nombre del archivo PHP será igual a singular_name
-    file_name = f'{singular_name}StoreController.php'
-    controller_file_path = os.path.join(controller_folder_path, file_name)
-
+def create_body_param_comments(columns):
     # Construir los comentarios dinámicos para @bodyParam usando las columnas
     body_param_comments = ""
     for i, column in enumerate(columns):
         body_param_comments += f"    * @bodyParam {column['name']} {column['type']} required"
         if i < len(columns) - 1:
             body_param_comments += "\n"
+    return body_param_comments
 
-    # Contenido del archivo PHP del controlador para 'store'
-    controller_content = f"""<?php
+
+
+def generate_controller_store_file(
+    full_path,
+    namespace,
+    version_api,
+    folder_group,
+    project_name,
+    singular_name,
+    plural_name,
+    singular_name_camel,
+    plural_name_camel,
+    singular_name_kebab,
+    plural_name_kebab,
+    singular_name_snake,
+    plural_name_snake,
+    columns
+):
+    """
+    Genera el archivo
+    """
+
+    folder_path = os.path.join(full_path, "app", "Http", "Controllers", namespace, version_api, plural_name)
+    file_path = os.path.join(folder_path, f'{singular_name}StoreController.php')
+
+    os.makedirs(folder_path, exist_ok=True)
+   
+
+    content = f"""<?php
 
 namespace App\\Http\\Controllers\\{namespace}\\{version_api}\\{plural_name};
 
@@ -107,7 +90,7 @@ class {singular_name}StoreController extends Controller
     /**
     * @header Authorization Bearer TOKEN 
     *
-{body_param_comments}
+{create_body_param_comments(columns)}
     *
     * @param Store{singular_name}Request $request
     * @return JsonResponse
@@ -144,10 +127,13 @@ class {singular_name}StoreController extends Controller
 }}
 """
 
-    # Escribir el archivo PHP con el contenido del controlador
     try:
-        with open(controller_file_path, 'w') as controller_file:
-            controller_file.write(controller_content)
-            print(f"Archivo PHP controlador '{file_name}' creado en: {controller_folder_path}")
+        with open(file_path, "w") as f:
+            f.write(content)
+        print_message(f"Archivo generado: {file_path}", GREEN)
     except Exception as e:
-        print(f"Error al crear el archivo PHP del controlador '{file_name}': {e}")
+        print_message(f"Error al generar el archivo {file_path}: {e}", CYAN)
+
+
+
+

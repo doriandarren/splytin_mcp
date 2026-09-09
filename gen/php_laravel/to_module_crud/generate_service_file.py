@@ -1,53 +1,43 @@
 import os
+from gen.helpers.helper_print import print_message, GREEN, CYAN
 
-def create_structure(base_ruta, path_model):
-    """
-    Crea la estructura de carpetas 'base_ruta/app/path_model' en la ruta especificada.
-    """
-    # Crear la ruta completa base_ruta/app/path_model
-    service_folder_path = os.path.join(base_ruta, 'app', path_model)
-
-    if not os.path.exists(service_folder_path):
-        os.makedirs(service_folder_path)
-        print(f"Estructura de carpetas '{service_folder_path}' creada.")
-
-    return service_folder_path
 
 
 def generate_service_file(
-    base_ruta, 
+    full_path,
     namespace,
     version_api,
-    singular_name, 
-    plural_name, 
-    singular_name_snake, 
-    plural_name_snake, 
+    folder_group,
+    singular_name,
+    plural_name,
+    singular_name_camel,
+    plural_name_camel,
+    singular_name_kebab,
+    plural_name_kebab,
+    singular_name_snake,
+    plural_name_snake,
     columns
 ):
     """
-    Genera un archivo de repositorio PHP basado en los nombres proporcionados y crea la estructura app/path_model dentro de base_ruta.
+    Genera el archivo
     """
-    
-    path_services = "Services/" + namespace + "/" + version_api + "/" + plural_name
-    
-    # Crear la estructura de carpetas llamando a create_repository_structure
-    service_folder_path = create_structure(base_ruta, path_services)
 
-    # Nombre del archivo PHP será igual a singular_name
-    file_name = f'{singular_name}Service.php'
-    service_file_path = os.path.join(service_folder_path, file_name)
+    folder_path = os.path.join(full_path, "Services", namespace, version_api, plural_name)
+    file_path = os.path.join(folder_path, f"{singular_name}Services.php")
 
+    os.makedirs(folder_path, exist_ok=True)
+    
     # Obtener los nombres de las columnas dinámicamente
     column_names = [column["name"] for column in columns]
+    
 
-    # Contenido del archivo PHP del repositorio adaptado
-    service_content = f"""<?php
+    content = f"""<?php
 
 namespace App\\Services\\{namespace}\\{version_api}\\{plural_name};
 
 use App\\Enums\\EnumApiSetup;
 use App\\Http\\Filters\\{namespace}\\{version_api}\\{plural_name}\\{singular_name}Filter;
-use App\\Models\\{namespace}\\{plural_name}\\{singular_name};
+use App\\Models\\{plural_name}\\{singular_name};
 
 class {singular_name}Service
 {{
@@ -99,7 +89,7 @@ class {singular_name}Service
 """
 
 
-    service_content += f"""
+    content += f"""
     /**
     * Show by Admin
 	* @param $id
@@ -148,9 +138,9 @@ class {singular_name}Service
 
     # Agregar las columnas dinámicamente en el método `store`
     for column in column_names:
-        service_content += f"        $objNew->{column} = $data->{column};\n"
+        content += f"        $objNew->{column} = $data->{column};\n"
 
-    service_content += f"""
+    content += f"""
         $objNew->save();
         return $objNew;
     }}
@@ -177,14 +167,14 @@ class {singular_name}Service
 
     # Separar las columnas dinámicamente en el método `update`
     for column in column_names:
-        service_content += f"""        if (isset($obj->{column})) {{
+        content += f"""        if (isset($obj->{column})) {{
             if ($obj->{column} != '' && !empty($obj->{column})) {{
                 $objOld->{column} = $obj->{column};
             }}
         }}
 
 """
-    service_content += f"""
+    content += f"""
         $objOld->save();
         return $objOld;
     }}
@@ -207,7 +197,7 @@ class {singular_name}Service
 
     # Agregar los `@param` dinámicos para cada columna
     for column in column_names:
-        service_content += f"    * @param ${column}\n"
+        content += f"    * @param ${column}\n"
         
     param_content = ""
     
@@ -215,7 +205,7 @@ class {singular_name}Service
         param_content += f"        ${column},\n"
     
 
-    service_content += f"""    * @return {singular_name}
+    content += f"""    * @return {singular_name}
     */
     public function set{singular_name}(
 {param_content}
@@ -226,18 +216,17 @@ class {singular_name}Service
 
     # Agregar las columnas dinámicamente en el método `set`
     for column in column_names:
-        service_content += f"        $obj->{column} = ${column};\n"
+        content += f"        $obj->{column} = ${column};\n"
 
-    service_content += f"""
+    content += f"""
         return $obj;
     }}
 }}
 """
 
-    # Escribir el archivo PHP con el contenido del repositorio
     try:
-        with open(service_file_path, 'w') as service_file:
-            service_file.write(service_content)
-            print(f"Archivo PHP repositorio '{file_name}' creado en: {service_folder_path}")
+        with open(file_path, "w") as f:
+            f.write(content)
+        print_message(f"Archivo generado: {file_path}", GREEN)
     except Exception as e:
-        print(f"Error al crear el archivo PHP del repositorio '{file_name}': {e}")
+        print_message(f"Error al generar el archivo {file_path}: {e}", CYAN)

@@ -19,10 +19,14 @@ def create_migration_structure(base_ruta, path_migration):
 
 
 def generate_migration_file(
-    base_ruta,
+    full_path,
     namespace,
+    version_api,
+    folder_group,
     singular_name,
     plural_name,
+    singular_name_camel,
+    plural_name_camel,
     singular_name_kebab,
     plural_name_kebab,
     singular_name_snake,
@@ -36,7 +40,7 @@ def generate_migration_file(
 
     path_migration = "database/migrations/"
 
-    migration_folder_path = create_migration_structure(base_ruta, path_migration)
+    migration_folder_path = create_migration_structure(full_path, path_migration)
 
     current_time = datetime.now().strftime('%Y_%m_%d_%H%M%S')
     file_name = f'{current_time}_create_{plural_name_snake}_table.php'

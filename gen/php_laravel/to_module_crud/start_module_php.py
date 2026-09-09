@@ -40,6 +40,8 @@ def start_module_php():
     full_path = input_with_validation("Proyecto", default_path)
     namespace = input_with_validation("Namespace (ERP / API / INVOICES)", default_namespace)
     version_api = input_with_validation("Version API", default_api)
+    folder_group = input("Grupo del módulo (opcional: SHARED / Invoices): ").strip() or None
+    
     singular_name = input_with_validation("Nombre singular", "AgendaUnloading")
     plural_name = input_with_validation("Nombre plural", "AgendaUnloadings")
     input_columns = input_with_validation(
@@ -51,16 +53,15 @@ def start_module_php():
     
     ## dd(columns)
     
-    
-    
     standard_module_crud_php(
-        full_path, 
-        namespace, 
-        version_api, 
-        singular_name, 
-        plural_name, 
-        columns, 
-        input_menu_checkbox
+        full_path=full_path, 
+        namespace=namespace, 
+        version_api=version_api, 
+        folder_group=folder_group,
+        singular_name=singular_name, 
+        plural_name=plural_name, 
+        columns=columns, 
+        input_menu_checkbox=input_menu_checkbox
     )
     
     pause()

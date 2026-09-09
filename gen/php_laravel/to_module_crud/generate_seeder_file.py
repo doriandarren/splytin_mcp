@@ -1,51 +1,41 @@
 import os
+from gen.helpers.helper_print import print_message, GREEN, CYAN
 
-def create_seeder_structure(base_ruta, path_seeder):
-    """
-    Crea la estructura de carpetas 'base_ruta/settings/migrations/sedeers' en la ruta especificada.
-    """
-    # Crear la ruta completa base_ruta/settings/migrations/sedeers
-    seeder_folder_path = os.path.join(base_ruta, path_seeder)
-
-    if not os.path.exists(seeder_folder_path):
-        os.makedirs(seeder_folder_path)
-        print(f"Estructura de carpetas '{seeder_folder_path}' creada.")
-
-    return seeder_folder_path
 
 
 def generate_seeder_file(
-    base_ruta, 
-    namespace, 
-    singular_name, 
-    plural_name, 
-    singular_name_snake, 
-    plural_name_snake, 
+    full_path,
+    namespace,
+    version_api,
+    project_name,
+    singular_name,
+    plural_name,
+    singular_name_camel,
+    plural_name_camel,
+    singular_name_kebab,
+    plural_name_kebab,
+    singular_name_snake,
+    plural_name_snake,
     columns
 ):
     """
-    Genera un archivo de seeder PHP basado en los nombres proporcionados y crea la estructura settings/migrations/sedeers dentro de base_ruta.
+    Genera el archivo
     """
-    
-    path_seeder = "database/seeders"
-    
-    # Crear la estructura de carpetas llamando a create_seeder_structure
-    seeder_folder_path = create_seeder_structure(base_ruta, path_seeder)
 
-    # Nombre del archivo PHP será igual a singular_nameSeeder
-    file_name = f'{singular_name}Seeder.php'
-    seeder_file_path = os.path.join(seeder_folder_path, file_name)
+    folder_path = os.path.join(full_path, "database", "seeders")
+    file_path = os.path.join(folder_path, f"{singular_name}Seeder.php")
 
+    os.makedirs(folder_path, exist_ok=True)
+    
     # Obtener los nombres de las columnas dinámicamente
     column_names = [column["name"] for column in columns]
 
-    # Contenido del archivo PHP del seeder adaptado
-    seeder_content = f"""<?php
+    content = f"""<?php
 
 namespace Database\\Seeders;
 
 use Illuminate\\Database\\Seeder;
-use App\\Models\\{namespace}\\{plural_name}\\{singular_name};
+use App\\Models\\{plural_name}\\{singular_name};
 
 class {singular_name}Seeder extends Seeder
 {{
@@ -63,17 +53,16 @@ class {singular_name}Seeder extends Seeder
 
     # Agregar las columnas dinámicamente en el método `run`
     for column in column_names:
-        seeder_content += f"            '{column}' => '{column}',\n"
+        content += f"            '{column}' => '{column}',\n"
 
-    seeder_content += f"""        ]);
+    content += f"""        ]);
     }}
 }}
 """
 
-    # Escribir el archivo PHP con el contenido del seeder
     try:
-        with open(seeder_file_path, 'w') as seeder_file:
-            seeder_file.write(seeder_content)
-            print(f"Archivo PHP seeder '{file_name}' creado en: {seeder_folder_path}")
+        with open(file_path, "w") as f:
+            f.write(content)
+        print_message(f"Archivo generado: {file_path}", GREEN)
     except Exception as e:
-        print(f"Error al crear el archivo PHP del seeder '{file_name}': {e}")
+        print_message(f"Error al generar el archivo {file_path}: {e}", CYAN)

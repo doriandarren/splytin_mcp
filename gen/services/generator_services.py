@@ -289,9 +289,6 @@ def create_php_project_service(
     from gen.php_laravel.to_create_project.fpdf_merge.generate_fpdf_merge import (
         generate_fpdf_merge,
     )
-    from gen.php_laravel.to_create_project.generate_base_controller import (
-        generate_base_controller,
-    )
     from gen.php_laravel.to_create_project.generate_by_command_line import (
         generate_by_command_line as generate_php_by_command_line,
     )
@@ -352,9 +349,13 @@ def create_php_project_service(
     generate_shared(full_path)
     generate_dashboard(full_path)
     generate_utilities(full_path)
+    
+    
+    
     update_model_user(full_path)
     update_role_user_model(full_path)
     update_ability_user_model(full_path)
+    
     update_app_php(full_path)
     update_bootstrap_app_php(full_path)
     update_readme(full_path)

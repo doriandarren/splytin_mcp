@@ -37,8 +37,14 @@ def generate_shared(full_path):
     ]
     
     
+    
+    
+    namespace = "API"
+    folder_group = "SHARED"
+    
+    
+    
     # Abilities
-    namespace = "SHARED"
     singular_name = "Ability"
     plural_name = "Abilities"
     input_columns = "ability_group_id:fk name:unique label"
@@ -48,7 +54,8 @@ def generate_shared(full_path):
     standard_module_crud_php(
         full_path=full_path, 
         namespace=namespace, 
-        version_api='V1', 
+        version_api='V1',
+        folder_group=folder_group,
         singular_name=singular_name, 
         plural_name=plural_name, 
         columns=columns, 
@@ -58,7 +65,6 @@ def generate_shared(full_path):
     
     
     # Abilities Groups
-    namespace = "SHARED"
     singular_name = "AbilityGroup"
     plural_name = "AbilityGroups"
     input_columns = "name:unique"
@@ -69,6 +75,7 @@ def generate_shared(full_path):
         full_path=full_path, 
         namespace=namespace, 
         version_api='V1', 
+        folder_group=folder_group,
         singular_name=singular_name, 
         plural_name=plural_name, 
         columns=columns, 
@@ -77,7 +84,6 @@ def generate_shared(full_path):
     
     
     # Abilities Users
-    namespace = "SHARED"
     singular_name = "AbilityUser"
     plural_name = "AbilityUsers"
     input_columns = "ability_group_id:fk user_id:fk"
@@ -87,7 +93,8 @@ def generate_shared(full_path):
     standard_module_crud_php(
         full_path=full_path, 
         namespace=namespace, 
-        version_api='V1', 
+        version_api='V1',
+        folder_group=folder_group,
         singular_name=singular_name, 
         plural_name=plural_name, 
         columns=columns, 
@@ -97,7 +104,6 @@ def generate_shared(full_path):
     
     
     # Countries
-    namespace = "SHARED"
     singular_name = "Country"
     plural_name = "Countries"
     input_columns = "common_name iso_name code_alpha_2 code_alpha_3 numerical_code phone_code"
@@ -107,7 +113,8 @@ def generate_shared(full_path):
     standard_module_crud_php(
         full_path=full_path, 
         namespace=namespace, 
-        version_api='V1', 
+        version_api='V1',
+        folder_group=folder_group,
         singular_name=singular_name, 
         plural_name=plural_name, 
         columns=columns, 
@@ -117,7 +124,6 @@ def generate_shared(full_path):
     
     
     # Role Users
-    namespace = "SHARED"
     singular_name = "RoleUser"
     plural_name = "RoleUsers"
     input_columns = "role_id:fk user_id:fk"
@@ -128,6 +134,7 @@ def generate_shared(full_path):
         full_path=full_path, 
         namespace=namespace, 
         version_api='V1', 
+        folder_group=folder_group,
         singular_name=singular_name, 
         plural_name=plural_name, 
         columns=columns, 
@@ -136,7 +143,6 @@ def generate_shared(full_path):
     
     
     # Role
-    namespace = "SHARED"
     singular_name = "Role"
     plural_name = "Roles"
     input_columns = "name:unique description"
@@ -146,7 +152,8 @@ def generate_shared(full_path):
     standard_module_crud_php(
         full_path=full_path, 
         namespace=namespace, 
-        version_api='V1', 
+        version_api='V1',
+        folder_group=folder_group,
         singular_name=singular_name, 
         plural_name=plural_name, 
         columns=columns, 
@@ -155,7 +162,6 @@ def generate_shared(full_path):
     
 
     # User Statuses
-    namespace = "SHARED"
     singular_name = "UserStatus"
     plural_name = "UserStatuses"
     input_columns = "name:unique"
@@ -165,7 +171,8 @@ def generate_shared(full_path):
     standard_module_crud_php(
         full_path=full_path, 
         namespace=namespace, 
-        version_api='V1', 
+        version_api='V1',
+        folder_group=folder_group,
         singular_name=singular_name, 
         plural_name=plural_name, 
         columns=columns, 
@@ -195,7 +202,6 @@ def generate_shared(full_path):
     
     
     # User
-    namespace = "SHARED"
     singular_name = "User"
     plural_name = "Users"
     input_columns = "user_status_id:fk name email:unique email_verified_at:timestamp password image_url"
@@ -205,7 +211,8 @@ def generate_shared(full_path):
     standard_module_crud_php(
         full_path=full_path, 
         namespace=namespace, 
-        version_api='V1', 
+        version_api='V1',
+        folder_group=folder_group,
         singular_name=singular_name, 
         plural_name=plural_name, 
         columns=columns, 

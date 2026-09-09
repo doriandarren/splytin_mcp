@@ -50,7 +50,7 @@ def generate_model_file(
     Genera el archivo
     """
     
-    folder_path = os.path.join(full_path, "app", "Models", namespace, plural_name)
+    folder_path = os.path.join(full_path, "app", "Models", plural_name)
     file_path = os.path.join(folder_path, f"{singular_name}.php")
 
     os.makedirs(folder_path, exist_ok=True)
@@ -58,7 +58,7 @@ def generate_model_file(
 
     content = f"""<?php
 
-namespace App\\Models\\{namespace}\\{plural_name};
+namespace App\\Models\\{plural_name};
 
 use Illuminate\\Database\\Eloquent\\Factories\\HasFactory;
 use Illuminate\\Database\\Eloquent\\Model;

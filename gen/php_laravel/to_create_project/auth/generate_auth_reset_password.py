@@ -221,35 +221,11 @@ class ResetPasswordNotification extends Notification
         
         
         
-
-        
-def update_model_user(full_path):
-    """
-    Genera el archivo
-    """
-    folder_path = os.path.join(full_path, "app", "Notifications", "Auth")
-    file_path = os.path.join(folder_path, "AuthResetPasswordNotification.php")
-
-    os.makedirs(folder_path, exist_ok=True)
-
-    content = r"""
-   
-"""
-
-    try:
-        with open(file_path, "w") as f:
-            f.write(content)
-        print_message(f"Archivo generado: {file_path}", GREEN)
-    except Exception as e:
-        print_message(f"Error al generar el archivo {file_path}: {e}", CYAN)        
-
-
-        
 def update_model_user(full_path):
     """
     Actualiza el archivo
     """
-    main_path = os.path.join(full_path, "Models", "User.php")
+    main_path = os.path.join(full_path, "app", "Models", "User.php")
 
     # Verificar si el archivo existe
     if not os.path.exists(main_path):

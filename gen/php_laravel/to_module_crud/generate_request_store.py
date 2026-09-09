@@ -135,6 +135,7 @@ def generate_request_store(
     full_path,
     namespace,
     version_api,
+    folder_group,
     project_name,
     singular_name,
     plural_name,
