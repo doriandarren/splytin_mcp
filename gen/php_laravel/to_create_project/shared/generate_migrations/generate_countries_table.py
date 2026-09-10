@@ -51,6 +51,8 @@ return new class extends Migration
 				$table->string('phone_code')->nullable();
 				$table->timestamps();
 				$table->softDeletes();
+				$table->userstamps();
+    
 			});
 		}
 	}

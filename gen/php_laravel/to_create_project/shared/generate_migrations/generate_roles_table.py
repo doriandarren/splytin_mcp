@@ -44,6 +44,7 @@ return new class extends Migration
                 $table->string('description')->nullable();
                 $table->timestamps();
                 $table->softDeletes();
+                $table->userstamps();
             });
         }
 
@@ -64,6 +65,7 @@ return new class extends Migration
 
                 $table->timestamps();
                 $table->softDeletes();
+                $table->userstamps();
 
             });
         }
@@ -77,6 +79,7 @@ return new class extends Migration
                 $table->unsignedBigInteger('ability_id')->unsigned();
                 $table->timestamps();
                 $table->softDeletes();
+                $table->userstamps();
 
                 $table->foreign('user_id')
                     ->references('id')
@@ -100,6 +103,7 @@ return new class extends Migration
                 $table->unsignedBigInteger('user_id')->unsigned();
                 $table->timestamps();
                 $table->softDeletes();
+                $table->userstamps();
 
                 $table->foreign('user_id')
                     ->references('id')

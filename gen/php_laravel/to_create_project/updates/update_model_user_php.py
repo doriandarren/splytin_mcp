@@ -31,11 +31,11 @@ def update_use(full_path):
         content = content.replace(
             r"""use Illuminate\Notifications\Notifiable;""",
             r"""use Illuminate\Notifications\Notifiable;
-use App\Models\Abilities\Ability;
-use App\Models\AbilityUsers\AbilityUser;
-use App\Models\Roles\Role;
-use App\Models\RoleUsers\RoleUser;
-use App\Models\UserStatuses\UserStatus;
+use App\Models\API\Abilities\Ability;
+use App\Models\API\AbilityUsers\AbilityUser;
+use App\Models\API\Roles\Role;
+use App\Models\API\RoleUsers\RoleUser;
+use App\Models\API\UserStatuses\UserStatus;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;

@@ -18,12 +18,12 @@ def update_ability_seeder(full_path):
 
 namespace Database\Seeders;
 
-use App\Enums\Dev\EnumExcludeTable;
-use App\Enums\EnumAbilitySuffix;
-use App\Models\Abilities\Ability;
-use App\Models\AbilityGroups\AbilityGroup;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use App\Enums\Dev\EnumExcludeTable;
+use App\Enums\EnumAbilitySuffix;
+use App\Models\API\Abilities\Ability;
+use App\Models\API\AbilityGroups\AbilityGroup;
 
 class AbilitySeeder extends Seeder
 {

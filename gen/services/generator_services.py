@@ -10,6 +10,7 @@ from gen.php_laravel.to_create_project.requests.generate_base_api_request import
 from gen.php_laravel.to_create_project.traits.generate_trait_api_response import generate_trait_api_response
 from gen.php_laravel.to_create_project.traits.generate_trait_tracks_users import generate_trait_tracks_users
 from gen.php_laravel.to_create_project.updates.update_ability_user_model import update_ability_user_model
+from gen.php_laravel.to_create_project.updates.update_app_service_provider import update_app_service_provider
 from gen.php_laravel.to_create_project.updates.update_role_user_model import update_role_user_model
 from gen.python_django.helpers import helper_domain
 from gen.python_django.to_create_project.core.generate_api_response import generate_api_response
@@ -345,10 +346,8 @@ def create_php_project_service(
     generate_maatwebsite_excel(full_path)
     generate_enums(full_path, project_name, domain_name, password)
     generate_batch_processes(full_path)
-    
     generate_trait_api_response(full_path)
-    generate_trait_tracks_users(full_track)
-    
+    generate_trait_tracks_users(full_path)
     generate_php_module_auth(full_path)
     update_route_api_php(full_path)
     generate_shared(full_path)
@@ -374,6 +373,7 @@ def create_php_project_service(
     generate_test_mail(full_path)
     generate_base_api_request(full_path)
     generate_api_controller(full_path)
+    update_app_service_provider(full_path)
 
     return {
         "generator": "php_project",

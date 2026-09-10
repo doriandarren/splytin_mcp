@@ -16,7 +16,7 @@ def update_country_seeder(full_path):
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use App\Models\Countries\Country;
+use App\Models\API\Countries\Country;
 
 class CountrySeeder extends Seeder
 {

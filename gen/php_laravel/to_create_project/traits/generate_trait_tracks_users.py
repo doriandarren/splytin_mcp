@@ -17,7 +17,7 @@ def generate_trait_tracks_users(full_path):
 
 namespace App\Traits;
 
-use App\Models\Shared\Users\User;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 trait TracksUsers

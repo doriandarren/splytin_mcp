@@ -29,6 +29,7 @@ def update_create_users_table(full_path):
                 $table->string('name')->unique();
                 $table->timestamps();
                 $table->softDeletes();
+                $table->userstamps();
             });
         }
         Schema::create('users', function (Blueprint $table) {"""
@@ -41,7 +42,10 @@ def update_create_users_table(full_path):
             """Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_status_id');
-            $table->foreign('user_status_id')->references('id')->on('user_statuses')->onDelete("cascade");"""
+            $table->foreign('user_status_id')->references('id')->on('user_statuses')->onDelete("cascade");
+            $table->unsignedBigInteger('created_by')->nullable()->index();
+            $table->unsignedBigInteger('updated_by')->nullable()->index();
+            $table->unsignedBigInteger('deleted_by')->nullable()->index();"""
         )
 
         # Reemplazos

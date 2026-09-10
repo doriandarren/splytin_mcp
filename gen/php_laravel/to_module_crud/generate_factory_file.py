@@ -20,7 +20,7 @@ def generate_factory_file(
     Genera el archivo
     """
 
-    folder_path = os.path.join(full_path, "database", "factories")
+    folder_path = os.path.join(full_path, "database", "factories", "API", plural_name)
     file_path = os.path.join(folder_path, f"{singular_name}Factory.php")
 
     os.makedirs(folder_path, exist_ok=True)
@@ -30,7 +30,7 @@ def generate_factory_file(
 
     content = f"""<?php
 
-namespace Database\\Factories\\{plural_name};
+namespace Database\\Factories\\API\\{plural_name};
 
 use Illuminate\\Database\\Eloquent\\Factories\\Factory;
 

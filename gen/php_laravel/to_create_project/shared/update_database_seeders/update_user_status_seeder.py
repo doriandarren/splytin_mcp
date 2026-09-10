@@ -15,9 +15,9 @@ def update_user_status_seeder(full_path):
 
 namespace Database\Seeders;
 
-use App\Enums\UserStatuses\EnumUserStatus;
-use App\Models\UserStatuses\UserStatus;
 use Illuminate\Database\Seeder;
+use App\Enums\UserStatuses\EnumUserStatus;
+use App\Models\API\UserStatuses\UserStatus;
 
 
 class UserStatusSeeder extends Seeder

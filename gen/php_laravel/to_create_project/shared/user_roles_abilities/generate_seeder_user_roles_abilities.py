@@ -26,15 +26,15 @@ def generate_seeder_user_roles_abilities(full_path):
 namespace Database\Seeders;
 
 
-use App\Enums\Dev\EnumDefaultCompany;
+use Illuminate\Database\Seeder;
 use App\Enums\EnumAbilityGroups;
+use App\Enums\Dev\EnumDefaultCompany;
 use App\Enums\Roles\EnumRole;
 use App\Enums\UserStatuses\EnumUserStatus;
 use App\Models\User;
-use App\Models\Roles\Role;
-use App\Models\Abilities\Ability;
-use App\Models\UserStatuses\UserStatus;
-use Illuminate\Database\Seeder;
+use App\Models\API\Roles\Role;
+use App\Models\API\Abilities\Ability;
+use App\Models\API\UserStatuses\UserStatus;
 
 
 
