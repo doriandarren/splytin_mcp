@@ -1,6 +1,28 @@
 import os
 from gen.helpers.helper_print import print_message, GREEN, CYAN
 
+
+
+def find_namespace(namespace, version_api, folder_group, plural_name, singular_name):
+    
+    text = f"""use App\\Http\\Controllers\\{namespace}\\{version_api}\\{plural_name}\\{singular_name}IndexController;
+use App\\Http\\Controllers\\{namespace}\\{version_api}\\{plural_name}\\{singular_name}ShowController;
+use App\\Http\\Controllers\\{namespace}\\{version_api}\\{plural_name}\\{singular_name}StoreController;
+use App\\Http\\Controllers\\{namespace}\\{version_api}\\{plural_name}\\{singular_name}UpdateController;
+use App\\Http\\Controllers\\{namespace}\\{version_api}\\{plural_name}\\{singular_name}DestroyController;"""
+    
+    if folder_group:
+        text = f"""use App\\Http\\Controllers\\{namespace}\\{version_api}\\{folder_group}\\{plural_name}\\{singular_name}IndexController;
+use App\\Http\\Controllers\\{namespace}\\{version_api}\\{folder_group}\\{plural_name}\\{singular_name}ShowController;
+use App\\Http\\Controllers\\{namespace}\\{version_api}\\{folder_group}\\{plural_name}\\{singular_name}StoreController;
+use App\\Http\\Controllers\\{namespace}\\{version_api}\\{folder_group}\\{plural_name}\\{singular_name}UpdateController;
+use App\\Http\\Controllers\\{namespace}\\{version_api}\\{folder_group}\\{plural_name}\\{singular_name}DestroyController;"""
+    
+    return text
+
+
+
+
 def generate_routes_file(
     full_path,
     namespace,
@@ -20,6 +42,7 @@ def generate_routes_file(
     Genera el archivo
     """
 
+
     folder_path = os.path.join(full_path, "routes", namespace, version_api)
     file_path = os.path.join(folder_path, f"{plural_name_snake}.php")
 
@@ -28,12 +51,7 @@ def generate_routes_file(
     content = f"""<?php
 
 use Illuminate\\Support\\Facades\\Route;
-//use App\\Enums\\EnumAbilitySuffix;
-use App\\Http\\Controllers\\{namespace}\\{version_api}\\{plural_name}\\{singular_name}IndexController;
-use App\\Http\\Controllers\\{namespace}\\{version_api}\\{plural_name}\\{singular_name}ShowController;
-use App\\Http\\Controllers\\{namespace}\\{version_api}\\{plural_name}\\{singular_name}StoreController;
-use App\\Http\\Controllers\\{namespace}\\{version_api}\\{plural_name}\\{singular_name}UpdateController;
-use App\\Http\\Controllers\\{namespace}\\{version_api}\\{plural_name}\\{singular_name}DestroyController;
+{find_namespace(namespace, version_api, folder_group, plural_name, singular_name)}
 
 
 /**
@@ -45,23 +63,18 @@ Route::prefix('{plural_name_kebab}')
     ->group(function () {{
 
         Route::get('/', {singular_name}IndexController::class)
-            //->middleware('abilities:{plural_name_snake}' . EnumAbilitySuffix::INDEX)
             ->name('index');
 
         Route::get('/{{{singular_name_snake}:id}}', {singular_name}ShowController::class)
-            //->middleware('abilities:{plural_name_snake}' . EnumAbilitySuffix::SHOW)
             ->name('show');
 
         Route::post('/', {singular_name}StoreController::class)
-            //->middleware('abilities:{plural_name_snake}' . EnumAbilitySuffix::STORE)
             ->name('store');
 
         Route::patch('/{{{singular_name_snake}:id}}', {singular_name}UpdateController::class)
-            //->middleware('abilities:{plural_name_snake}' . EnumAbilitySuffix::UPDATE)
             ->name('update');
 
         Route::delete('/{{{singular_name_snake}:id}}', {singular_name}DestroyController::class)
-            //->middleware('abilities:{plural_name_snake}' . EnumAbilitySuffix::DESTROY)
             ->name('destroy');
         
 }});

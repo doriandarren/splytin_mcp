@@ -346,16 +346,13 @@ def create_php_project_service(
     generate_batch_processes(full_path)
     generate_trait_api_response(full_path)
     generate_php_module_auth(full_path)
+    update_route_api_php(full_path)
     generate_shared(full_path)
     generate_dashboard(full_path)
     generate_utilities(full_path)
-    
-    
-    
     update_model_user(full_path)
     update_role_user_model(full_path)
     update_ability_user_model(full_path)
-    
     update_app_php(full_path)
     update_bootstrap_app_php(full_path)
     update_readme(full_path)
@@ -366,7 +363,6 @@ def create_php_project_service(
     generate_company_logos(full_path)
     update_welcome_blade(full_path, project_name, domain_name)
     generate_shared_postman_collections(full_path, project_name, domain_name, password)
-    update_route_api_php(full_path)
     update_database(full_path)
     update_envs(full_path, project_name, domain_name)
     generate_exception_handler_response(full_path)

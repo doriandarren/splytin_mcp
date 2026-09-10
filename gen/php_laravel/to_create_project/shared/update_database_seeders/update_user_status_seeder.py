@@ -16,7 +16,7 @@ def update_user_status_seeder(full_path):
 namespace Database\Seeders;
 
 use App\Enums\UserStatuses\EnumUserStatus;
-use App\Models\SHARED\UserStatuses\UserStatus;
+use App\Models\UserStatuses\UserStatus;
 use Illuminate\Database\Seeder;
 
 

@@ -71,7 +71,7 @@ Route::prefix(EnumApiSetup::API_VERSION )->group(function () {
     require base_path('routes/API/V1/dashboards.php');
     
     // Shared
-    require base_path('routes/SHARED/V1/dev.php');
+    require base_path('routes/API/V1/dev.php');
     
     // API
     // ...

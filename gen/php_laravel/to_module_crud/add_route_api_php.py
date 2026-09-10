@@ -8,7 +8,7 @@ def add_route_api_php(
     full_path,
     namespace,
     version_api,
-    project_name,
+    folder_group,
     singular_name,
     plural_name,
     singular_name_camel,
@@ -33,16 +33,25 @@ def add_route_api_php(
         # Leer el contenido del archivo
         with open(main_path, "r") as f:
             content = f.read()
+            
+            
+        marker = """    // ..."""
+
+        if marker not in content:
+            print_message(
+                f"No se encontró el marcador en {main_path}",
+                CYAN,
+            )
+            print(repr(marker))
+            return
+        
+        replacement = f"""    // ...
+    require base_path('routes/{namespace}/{version_api}/{plural_name_snake}.php');"""
 
         # Reemplazos
         content = content.replace(
-            f"""    // API
-    // ...
-""",
-            f"""    // API
-    // ...
-    require base_path('routes/{namespace}/{version_api}/{plural_name_snake}.php');
-"""
+            marker,
+            replacement
         )
 
         # Escribir el contenido actualizado
@@ -60,4 +69,4 @@ def add_route_api_php(
             CYAN
         )
 
-    
+

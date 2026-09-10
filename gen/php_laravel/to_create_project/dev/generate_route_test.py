@@ -9,7 +9,7 @@ def generate_route_test(full_path):
     Args:
         full_path (str): Ruta completa del proyecto.
     """
-    styles_path = os.path.join(full_path, "routes", "SHARED", "V1")
+    styles_path = os.path.join(full_path, "routes", "API", "V1")
 
     # Crear la carpeta si no existe
     if not os.path.exists(styles_path):

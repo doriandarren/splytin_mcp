@@ -16,7 +16,7 @@ def update_role_seeder(full_path):
 namespace Database\Seeders;
 
 use App\Enums\Roles\EnumRole;
-use App\Models\SHARED\Roles\Role;
+use App\Models\Roles\Role;
 use Illuminate\Database\Seeder;
 
 

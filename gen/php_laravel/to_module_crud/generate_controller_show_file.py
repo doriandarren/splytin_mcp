@@ -2,6 +2,17 @@ import os
 from gen.helpers.helper_print import print_message, GREEN, CYAN
 
 
+def find_namespace(namespace, version_api, folder_group, plural_name):
+    
+    text = f"namespace App\\Http\\Controllers\\{namespace}\\{version_api}\\{plural_name};"
+    
+    if folder_group:
+        text = f"namespace App\\Http\\Controllers\\{namespace}\\{version_api}\\{folder_group}\\{plural_name};"
+    
+    return text
+
+
+
 def generate_controller_show_file(
     full_path,
     namespace,
@@ -21,15 +32,29 @@ def generate_controller_show_file(
     """
     Genera el archivo
     """
+    
+    folder_parts = [
+        full_path,
+        "app",
+        "Http",
+        "Controllers",
+        namespace,
+        version_api,
+    ]
 
-    folder_path = os.path.join(full_path, "app", "Http", "Controllers", namespace, version_api, plural_name)
-    file_path = os.path.join(folder_path, f'{singular_name}ShowController.php')
+    if folder_group:
+        folder_parts.append(folder_group)
+
+    folder_parts.append(plural_name)
+
+    folder_path = os.path.join(*folder_parts)
+    file_path = os.path.join(folder_path, f"{singular_name}ShowController.php")
 
     os.makedirs(folder_path, exist_ok=True)
 
     content = f"""<?php
 
-namespace App\\Http\\Controllers\\{namespace}\\{version_api}\\{plural_name};
+{find_namespace(namespace, version_api, folder_group, plural_name)}
 
 use App\\Http\\Controllers\\Controller;
 use Illuminate\\Support\\Facades\\Auth;

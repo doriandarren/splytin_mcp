@@ -33,12 +33,12 @@ namespace App\Services\BatchProcesses\Abilities;
 
 use App\Enums\Dev\EnumExcludeTable;
 use App\Enums\EnumAbilitySuffix;
-use App\Models\SHARED\Abilities\Ability;
-use App\Models\SHARED\AbilityGroups\AbilityGroup;
+use App\Models\Abilities\Ability;
+use App\Models\AbilityGroups\AbilityGroup;
 use Illuminate\Support\Facades\DB;
 
 
-class BatchAbilityAndGroupRepository
+class BatchAbilityAndGroupService
 {
 
     public function createAbilities()
@@ -203,10 +203,10 @@ namespace App\Services\BatchProcesses\Abilities;
 
 use App\Enums\EnumAbilityGroups;
 use App\Enums\Roles\EnumRole;
-use App\Models\SHARED\Abilities\Ability;
-use App\Models\SHARED\AbilityGroups\AbilityGroup;
-use App\Models\SHARED\AbilityUsers\AbilityUser;
 use App\Models\User;
+use App\Models\Abilities\Ability;
+use App\Models\AbilityGroups\AbilityGroup;
+use App\Models\AbilityUsers\AbilityUser;
 use App\Services\AbilityUsers\AbilityUserService;
 
 
