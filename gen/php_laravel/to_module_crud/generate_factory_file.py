@@ -35,7 +35,7 @@ namespace Database\\Factories\\{plural_name};
 use Illuminate\\Database\\Eloquent\\Factories\\Factory;
 
 /**
-* @extends \\Illuminate\\Database\\Eloquent\\Factories\\Factory<\\App\\Models\\{plural_name}\\{singular_name}>
+* @extends \\Illuminate\\Database\\Eloquent\\Factories\\Factory<\\App\\Models\\{namespace}\\{plural_name}\\{singular_name}>
 */
 class {singular_name}Factory extends Factory
 {{

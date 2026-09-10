@@ -105,7 +105,7 @@ use Illuminate\\Http\\JsonResponse;
 use App\\Http\\Requests\\API\\V1\\Auth\\AuthRegisterRequest;
 use App\\Enums\\Roles\\EnumRole;
 use App\\Enums\\UserStatuses\\EnumUserStatus;
-use App\\Models\\Roles\\Role;
+use App\\Models\\API\\Roles\\Role;
 use App\\Models\\User;
 
 class AuthRegisterController extends ApiController

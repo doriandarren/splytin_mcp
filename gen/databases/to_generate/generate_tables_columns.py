@@ -63,14 +63,15 @@ def list_tables_and_columns_and_generate(host, user, password, database, port=33
 
             table_name_format = convert_word(table_name)
 
-            # Llamar al generador
-            standard_module_crud_php(
-                "API",
-                full_path,
-                table_name_format['singular'],
-                table_name_format['plural'],
-                cols
-            )
+            # Llamar al generador TODO revisar
+            # standard_module_crud_php(
+            #     "API",
+            #     full_path,
+            #     table_name_format['singular'],
+            #     table_name_format['plural'],
+            #     cols
+            # )
+            
 
     except Exception as e:
         print(f"❌ Error: {e}")

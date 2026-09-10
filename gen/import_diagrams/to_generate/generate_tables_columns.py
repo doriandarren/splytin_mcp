@@ -95,6 +95,8 @@ def generate_tables_columns(
         "V1"
     )
     
+    php_folder_group = None
+    
     # react_full_path = input_with_validation(
     #     "Proyecto [React - /Users/dorian/ReactProjects/app-1/ ]",
     #     "/Users/dorian/ReactProjects/app-1/"
@@ -128,8 +130,11 @@ def generate_tables_columns(
             php_full_path,
             php_namespace,
             php_version_api,
+            php_folder_group,
             singular_class,
             plural_class,
             columns
         )
+        
+        
         

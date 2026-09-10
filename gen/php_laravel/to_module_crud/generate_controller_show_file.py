@@ -59,7 +59,7 @@ def generate_controller_show_file(
 use App\\Http\\Controllers\\Api\\V1\\ApiController;
 use Illuminate\\Support\\Facades\\Auth;
 use Illuminate\\Http\\JsonResponse;
-use App\\Models\\{plural_name}\\{singular_name};
+use App\\Models\\{namespace}\\{plural_name}\\{singular_name};
 use App\\Services\\{namespace}\\{version_api}\\{plural_name}\\{singular_name}Service;
 use App\\Http\\Resources\\{namespace}\\{version_api}\\{plural_name}\\{singular_name}Resource;
 

@@ -87,6 +87,9 @@ return new class extends Migration
             migration_content += php_column_line(column)
 
     migration_content += f"""
+                $table->unsignedBigInteger('created_by')->nullable()->index();
+                $table->unsignedBigInteger('updated_by')->nullable()->index();
+                $table->unsignedBigInteger('deleted_by')->nullable()->index();
                 $table->timestamps();
                 $table->softDeletes();
             }});

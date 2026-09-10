@@ -37,7 +37,7 @@ namespace App\\Services\\{namespace}\\{version_api}\\{plural_name};
 
 use App\\Enums\\EnumApiSetup;
 use App\\Http\\Filters\\{namespace}\\{version_api}\\{plural_name}\\{singular_name}Filter;
-use App\\Models\\{plural_name}\\{singular_name};
+use App\\Models\\{namespace}\\{plural_name}\\{singular_name};
 
 class {singular_name}Service
 {{

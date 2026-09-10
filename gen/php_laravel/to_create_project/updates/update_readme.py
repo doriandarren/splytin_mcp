@@ -114,8 +114,6 @@ Barryvdh\\Snappy\\ServiceProvider::class,
 // Then publish the config file
 
 php artisan vendor:publish --provider="Barryvdh\\Snappy\\ServiceProvider"
-
-
 ```
 
 
@@ -131,9 +129,7 @@ File: TestController
 Folder app/Exports/Example/ExampleExport 
 
 ```sh
-
 composer require maatwebsite/excel:^3.1
-
 ```
 
 
@@ -146,82 +142,8 @@ composer require maatwebsite/excel:^3.1
 File: TestController
 
 ```sh
-
 composer require setasign/fpdf
 composer require setasign/fpdi
-
-
-```
-
-
-
-
-## Arquitectura DDD
-
-
-### Crear Carpeta "src"
-
-### Crear las estructuras siguientes:
-
-Ejemplo Dev:
-
-### Carpeta Bounded -> "Dev" y luego carpetas dentro:
-
-- Application
-- Domain
-- Infraestructure
-
-### Luego en Infraestructure crear carpetas:
-
-- Controllers
-- Routes
-- Services
-
-
-### Ir al composer.json y buscar ps-4 y agregar:
-
-```sh
-"Src\\\\": "src/"
-
-y luego:
-
-php artisan config:cache
-```
-
-### Implememtar rutas propias
-
-Copiar el contenido de los ejemplos:
-
-En la carpeta Infraestructure/Services crear archivo "RouteServiceProviders.php"
-En la carpeta Infraestructure/Routes crear archivo "Api.php"
-
-### Ir a config/app
-
-Agregar en el array de provider:
-
-```sh
-
-...
-
-/*
-* CUSTOM ROUTES SERVICE PROVIDERS
-*/
-Src\\Api\\Dev\\Infrastructure\\Services\\RouteServiceProvider::class,
-
-
-/*
- * CUSTOM DEPENDENCY SERVICE PROVIDERS
- */
-//Src\\Api\\Auth\\Infrastructure\\Services\\DependencyServiceProvider::class,
-
-...
-
-```
-
-Luego regenerar los namespaces:
-
-```sh
-composer dump-autoload
 ```
 
 """

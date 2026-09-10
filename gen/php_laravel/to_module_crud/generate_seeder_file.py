@@ -35,7 +35,7 @@ def generate_seeder_file(
 namespace Database\\Seeders;
 
 use Illuminate\\Database\\Seeder;
-use App\\Models\\{plural_name}\\{singular_name};
+use App\\Models\\{namespace}\\{plural_name}\\{singular_name};
 
 class {singular_name}Seeder extends Seeder
 {{

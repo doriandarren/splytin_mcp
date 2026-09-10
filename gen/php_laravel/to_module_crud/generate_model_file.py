@@ -50,7 +50,7 @@ def generate_model_file(
     Genera el archivo
     """
     
-    folder_path = os.path.join(full_path, "app", "Models", plural_name)
+    folder_path = os.path.join(full_path, "app", "Models", namespace, plural_name)
     file_path = os.path.join(folder_path, f"{singular_name}.php")
 
     os.makedirs(folder_path, exist_ok=True)
@@ -58,17 +58,19 @@ def generate_model_file(
 
     content = f"""<?php
 
-namespace App\\Models\\{plural_name};
+namespace App\\Models\\{namespace}\\{plural_name};
 
 use Illuminate\\Database\\Eloquent\\Factories\\HasFactory;
 use Illuminate\\Database\\Eloquent\\Model;
 use Illuminate\\Database\\Eloquent\\Builder;
+use App\\Traits\\TracksUsers;
 use App\\Http\\Filters\\API\\V1\\QueryFilter;
 {format_relation_uses(columns)}
 
 class {singular_name} extends Model
 {{
     use HasFactory;
+    use TracksUsers;
     // use SoftDeletes;
 
     protected $connection = '{namespace.lower()}';

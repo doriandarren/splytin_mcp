@@ -24,12 +24,12 @@ def generate_auth_user(full_path):
 
 namespace App\\Http\\Controllers\\API\\V1\\Auth;
 
-use App\\Http\\Controllers\\Controller;
+use App\\Http\\Controllers\\Api\\V1\\ApiController;
 use Illuminate\\Http\\JsonResponse;
 use Illuminate\\Http\\Request;
 use stdClass;
 
-class AuthUserController extends Controller
+class AuthUserController extends ApiController
 {
     /**
      * @param Request $request

@@ -24,7 +24,7 @@ def create_list_controller(full_path):
 
 namespace App\Http\Controllers\API\V1\Dashboards;
 
-use App\\Http\\Controllers\\Api\\V1\\ApiController;
+use App\Http\Controllers\Api\V1\ApiController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;

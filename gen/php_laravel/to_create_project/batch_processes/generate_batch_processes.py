@@ -31,11 +31,11 @@ def create_ability_and_group(full_path):
 
 namespace App\Services\BatchProcesses\Abilities;
 
+use Illuminate\Support\Facades\DB;
 use App\Enums\Dev\EnumExcludeTable;
 use App\Enums\EnumAbilitySuffix;
-use App\Models\Abilities\Ability;
-use App\Models\AbilityGroups\AbilityGroup;
-use Illuminate\Support\Facades\DB;
+use App\Models\API\Abilities\Ability;
+use App\Models\API\AbilityGroups\AbilityGroup;
 
 
 class BatchAbilityAndGroupService
@@ -204,10 +204,10 @@ namespace App\Services\BatchProcesses\Abilities;
 use App\Enums\EnumAbilityGroups;
 use App\Enums\Roles\EnumRole;
 use App\Models\User;
-use App\Models\Abilities\Ability;
-use App\Models\AbilityGroups\AbilityGroup;
-use App\Models\AbilityUsers\AbilityUser;
-use App\Services\AbilityUsers\AbilityUserService;
+use App\Models\API\Abilities\Ability;
+use App\Models\API\AbilityGroups\AbilityGroup;
+use App\Models\API\AbilityUsers\AbilityUser;
+use App\Services\API\V1\AbilityUsers\AbilityUserService;
 
 
 class BatchReloadDatabaseAbilitiesService
