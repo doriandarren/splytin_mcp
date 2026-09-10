@@ -56,14 +56,14 @@ def generate_controller_destroy_file(
 
 {find_namespace(namespace, version_api, folder_group, plural_name)}
 
-use App\\Http\\Controllers\\Controller;
+use App\\Http\\Controllers\\Api\\V1\\ApiController;
 use Illuminate\\Http\\Request;
 use Illuminate\\Support\\Facades\\Auth;
 use Illuminate\\Http\\JsonResponse;
-use App\\Models\\{namespace}\\{plural_name}\\{singular_name};
+use App\\Models\\{plural_name}\\{singular_name};
 use App\\Services\\{namespace}\\{version_api}\\{plural_name}\\{singular_name}Service;
 
-class {singular_name}DestroyController extends Controller
+class {singular_name}DestroyController extends ApiController
 {{
     
     /**

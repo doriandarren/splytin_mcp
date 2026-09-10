@@ -5,19 +5,19 @@ from gen.helpers.helper_print import print_message, GREEN, CYAN, run_command
 
 
 def generate_api_controller(full_path):
-    create_file_controller(full_path)
+    create_api_controller(full_path)
 
 
 
 
-def create_file_controller(full_path):
+def create_api_controller(full_path):
     """
     Genera un archivo
 
     Args:
         full_path (str): Ruta completa del proyecto.
     """
-    styles_path = os.path.join(full_path, "app", "Http", "Controllers")
+    styles_path = os.path.join(full_path, "app", "Http", "Controllers", "API", "V1")
 
     # Crear la carpeta si no existe
     if not os.path.exists(styles_path):
@@ -25,10 +25,48 @@ def create_file_controller(full_path):
         print_message(f"Carpeta creada: {styles_path}", GREEN)
 
     # Ruta completa del archivo
-    file_path = os.path.join(styles_path, "Controller.php")
+    file_path = os.path.join(styles_path, "ApiController.php")
 
     # Contenido por defecto
-    content = """
+    content = r"""<?php
+
+namespace App\Http\Controllers\Api\V1;
+
+use App\Http\Controllers\Controller;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use App\Traits\ApiResponses;
+
+class ApiController extends Controller
+{
+
+    use ApiResponses;
+
+    use AuthorizesRequests;
+
+    protected $policyClass;
+
+
+    public function include(string $relationship): bool
+    {
+        $param = request()->get('include');
+
+        if(!isset($param)){
+            return false;
+        }
+
+        $includeValues = explode(',', strtolower($param));
+
+        return in_array(strtolower($relationship), $includeValues);
+
+    }
+
+
+    public function isAble($ability, $targetModel)
+    {
+        return $this->authorize($ability, [$targetModel, $this->policyClass]);
+    }
+
+}
 """
 
     try:

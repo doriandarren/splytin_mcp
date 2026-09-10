@@ -5,9 +5,6 @@ from gen.helpers.helper_print import print_message, GREEN, CYAN
 
 def generate_trait_api_response(full_path):
     create_trait_api_response(full_path)
-    update_controller(full_path)
-
-
 
 
 
@@ -322,69 +319,4 @@ trait ApiResponses
         print_message(f"Archivo generado: {file_path}", GREEN)
     except Exception as e:
         print_message(f"Error al generar el archivo {file_path}: {e}", CYAN)
-        
-        
-        
-        
-        
-        
 
-
-
-        
-
-
-
-
-
-def update_controller(full_path):
-    """
-    Actualiza el archivo config/app.php
-    """
-
-    main_path = os.path.join(full_path, "app", "Http", "Controllers", "Controller.php")
-
-    # Verificar si el archivo existe
-    if not os.path.exists(main_path):
-        print_message(f"Error: {main_path} no existe.", CYAN)
-        return
-
-    try:
-        # Leer el contenido del archivo
-        with open(main_path, "r") as f:
-            content = f.read()
-            
-        
-
-        # Reemplazos
-        content = content.replace(
-            """namespace App\Http\Controllers;""",
-            """namespace App\Http\Controllers;
-
-use App\Traits\ApiResponses;"""
-        )
-        
-        
-        # Reemplazos
-        content = content.replace(
-            """}""",
-            """    use ApiResponses;
-}"""
-        )
-
-        # Escribir el contenido actualizado
-        with open(main_path, "w") as f:
-            f.write(content)
-
-        print_message(
-            f"{main_path} actualizado correctamente.",
-            GREEN
-        )
-
-    except Exception as e:
-        print_message(
-            f"Error al actualizar {main_path}: {e}",
-            CYAN
-        )
-        
-       

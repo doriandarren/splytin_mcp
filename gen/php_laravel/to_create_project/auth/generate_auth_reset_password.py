@@ -97,7 +97,7 @@ def create_reset_password(full_path):
 
 namespace App\\Http\\Controllers\\API\\V1\\Auth;
 
-use App\\Http\\Controllers\\Controller;
+use App\\Http\\Controllers\\Api\\V1\\ApiController;
 use App\\Http\\Requests\\API\\V1\\Auth\\AuthResetPasswordRequest;
 use Illuminate\\Http\\JsonResponse;
 use Illuminate\\Support\\Facades\\Hash;
@@ -105,7 +105,7 @@ use Illuminate\\Support\\Facades\\Password;
 use Illuminate\\Support\\Str;
 
 
-class AuthResetPasswordController extends Controller
+class AuthResetPasswordController extends ApiController
 {{
     
     

@@ -32,11 +32,11 @@ def create_logout(full_path):
 
 namespace App\\Http\\Controllers\\API\\V1\\Auth;
 
-use App\\Http\\Controllers\\Controller;
+use App\\Http\\Controllers\\Api\\V1\\ApiController;
 use Illuminate\\Http\\Request;
 use Illuminate\\Http\\JsonResponse;
 
-class AuthLogoutController extends Controller
+class AuthLogoutController extends ApiController
 {
     /**
      * @param Request $request

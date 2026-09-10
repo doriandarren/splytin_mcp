@@ -24,13 +24,13 @@ def create_list_controller(full_path):
 
 namespace App\Http\Controllers\API\V1\Dashboards;
 
-use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
+use App\\Http\\Controllers\\Api\\V1\\ApiController;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+use Illuminate\Http\JsonResponse;
 use App\Services\API\V1\Dashboards\DashboardService;
 
-class DashboardIndexController extends Controller
+class DashboardIndexController extends ApiController
 {
     private DashboardService $repository;
 

@@ -100,7 +100,7 @@ def create_register(full_path):
 
 namespace App\\Http\\Controllers\\API\\V1\\Auth;
 
-use App\\Http\\Controllers\\Controller;
+use App\\Http\\Controllers\\Api\\V1\\ApiController;
 use Illuminate\\Http\\JsonResponse;
 use App\\Http\\Requests\\API\\V1\\Auth\\AuthRegisterRequest;
 use App\\Enums\\Roles\\EnumRole;
@@ -108,7 +108,7 @@ use App\\Enums\\UserStatuses\\EnumUserStatus;
 use App\\Models\\Roles\\Role;
 use App\\Models\\User;
 
-class AuthRegisterController extends Controller
+class AuthRegisterController extends ApiController
 {{
     /**
      * @param AuthRegisterRequest $request

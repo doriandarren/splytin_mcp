@@ -81,14 +81,14 @@ def create_forgot_password(full_path):
 
 namespace App\\Http\\Controllers\\API\\V1\\Auth;
 
-use App\\Http\\Controllers\\Controller;
+use App\\Http\\Controllers\\Api\\V1\\ApiController;
 use App\\Http\\Requests\\API\\V1\\Auth\\AuthForgotPasswordRequest;
 use Illuminate\\Http\\JsonResponse;
 use Illuminate\\Support\\Facades\\Password;
 
 
 
-class AuthForgotPasswordController extends Controller
+class AuthForgotPasswordController extends ApiController
 {{
 
     public function __invoke(AuthForgotPasswordRequest $request): JsonResponse

@@ -85,7 +85,8 @@ def create_login(full_path):
 
 namespace App\\Http\\Controllers\\API\\V1\\Auth;
 
-use App\\Http\\Controllers\\Controller;
+
+use App\\Http\\Controllers\\Api\\V1\\ApiController;
 use Illuminate\\Support\\Facades\\Auth;
 use Illuminate\\Http\\JsonResponse;
 use App\\Enums\\Roles\\EnumRole;
@@ -94,7 +95,7 @@ use App\\Http\\Requests\\API\\V1\\Auth\\AuthLoginRequest;
 use App\\Models\\User;
 
 
-class AuthLoginController extends Controller
+class AuthLoginController extends ApiController
 {{
     /**
      *
