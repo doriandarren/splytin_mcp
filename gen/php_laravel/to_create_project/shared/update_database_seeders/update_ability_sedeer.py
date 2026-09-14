@@ -135,9 +135,9 @@ class AbilitySeeder extends Seeder
                 'ability_group_id' => $abilityGroupId,
             ]);
         }
-        if(!Ability::where('name', $tableName.EnumAbilitySuffix::DESTROY)->exists()){
+        if(!Ability::where('name', $tableName.EnumAbilitySuffix::DELETE)->exists()){
             Ability::factory()->create([
-                'name' => $tableName.EnumAbilitySuffix::DESTROY,
+                'name' => $tableName.EnumAbilitySuffix::DELETE,
                 'label' => 'Elimina modulo',
                 'ability_group_id' => $abilityGroupId,
             ]);

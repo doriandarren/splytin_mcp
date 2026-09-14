@@ -1,7 +1,64 @@
 import os
+from sys import api_version
 from gen.helpers.helper_print import print_message, GREEN, CYAN
 
+
+
+
 def generate_policy(
+    full_path,
+    namespace,
+    version_api,
+    project_name,
+    folder_group,
+    singular_name,
+    plural_name,
+    singular_name_camel,
+    plural_name_camel,
+    singular_name_kebab,
+    plural_name_kebab,
+    singular_name_snake,
+    plural_name_snake,
+    columns
+):
+    create_policy(
+        full_path,
+        namespace,
+        version_api,
+        project_name,
+        folder_group,
+        singular_name,
+        plural_name,
+        singular_name_camel,
+        plural_name_camel,
+        singular_name_kebab,
+        plural_name_kebab,
+        singular_name_snake,
+        plural_name_snake,
+        columns
+    )
+    
+    update_app_service_provider(
+        full_path,
+        namespace,
+        version_api,
+        project_name,
+        folder_group,
+        singular_name,
+        plural_name,
+        singular_name_camel,
+        plural_name_camel,
+        singular_name_kebab,
+        plural_name_kebab,
+        singular_name_snake,
+        plural_name_snake,
+        columns
+    )
+
+
+
+
+def create_policy(
     full_path,
     namespace,
     version_api,
@@ -31,7 +88,7 @@ def generate_policy(
 namespace App\\Policies\\{version_api}\\{plural_name};
 
 use App\\Models\\{namespace}\\{plural_name}\\{singular_name};
-use App\\Permissions\\V1\\Abilities;
+use App\\Permissions\\V1\\{plural_name}\\{singular_name}Permission;
 use App\\Models\\User;
 
 
@@ -45,14 +102,19 @@ class {singular_name}Policy
 
     public function update(User $user, {singular_name} ${singular_name_camel})
     {{
+        if ($user->tokenCan('*')) {{
+            return true;
+        }}
 
-        // if($user->tokenCan(Abilities::UPDATE_{singular_name_snake.upper()})){{
-        //     return true;
-        // }}else if($user->tokenCan(Abilities::UPDATE_OWN_{singular_name_snake.upper()})){{
-        //     return $user->id === ${singular_name_camel}->created_by;
-        // }}
+        if ($user->tokenCan({singular_name}Permission::UPDATE)) {{
+            return true;
+        }}
 
-        return $user->id === ${singular_name_camel}->created_by;
+        if ($user->tokenCan({singular_name}Permission::UPDATE_OWN)) {{
+            return $user->id === ${singular_name_camel}->created_by;
+        }}
+
+        return false;
     }}
     
 }}
@@ -64,3 +126,88 @@ class {singular_name}Policy
         print_message(f"Archivo generado: {file_path}", GREEN)
     except Exception as e:
         print_message(f"Error al generar el archivo {file_path}: {e}", CYAN)
+
+
+
+
+
+def update_app_service_provider(
+        full_path,
+        namespace,
+        version_api,
+        project_name,
+        folder_group,
+        singular_name,
+        plural_name,
+        singular_name_camel,
+        plural_name_camel,
+        singular_name_kebab,
+        plural_name_kebab,
+        singular_name_snake,
+        plural_name_snake,
+        columns
+):
+    """
+    Actualiza el archivo
+    """
+    main_path = os.path.join(full_path, "app", "Providers", "AppServiceProvider.php")
+
+    # Verificar si el archivo existe
+    if not os.path.exists(main_path):
+        print_message(f"Error: {main_path} no existe.", CYAN)
+        return
+
+    try:
+        # Leer el contenido del archivo
+        with open(main_path, "r") as f:
+            content = f.read()
+        
+        path_temp = f"App\\Models\\{namespace}\\{plural_name}\\{singular_name}"
+            
+        ## Only model User
+        if singular_name == 'User':
+            path_temp = f"App\\Models\\{singular_name}"
+            
+
+        # Reemplazos
+        content = content.replace(
+            """use Illuminate\Support\ServiceProvider;""",
+            f"""use {path_temp};
+use App\\Policies\\{version_api}\\{plural_name}\\{singular_name}Policy;
+use Illuminate\\Support\\ServiceProvider;"""
+        )
+        
+        
+        
+        
+        # Reemplazos
+        content = content.replace(
+            """    public function boot(): void
+    {""",
+            f"""    public function boot(): void
+    {{
+        // {singular_name}
+        Gate::policy({singular_name}::class, {singular_name}Policy::class);
+"""
+        )
+
+        # Escribir el contenido actualizado
+        with open(main_path, "w") as f:
+            f.write(content)
+
+        print_message(
+            f"{main_path} actualizado correctamente.",
+            GREEN
+        )
+
+    except Exception as e:
+        print_message(
+            f"Error al actualizar {main_path}: {e}",
+            CYAN
+        )
+
+    
+
+
+
+

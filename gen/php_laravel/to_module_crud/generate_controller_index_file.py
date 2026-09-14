@@ -61,7 +61,7 @@ def generate_controller_index_file(
 
 {find_namespace(namespace, version_api, folder_group, plural_name)}
 
-use App\\Http\\Controllers\\Api\\V1\\ApiController;
+use App\\Http\\Controllers\\API\\V1\\ApiController;
 use Illuminate\\Support\\Facades\\Auth;
 use Illuminate\\Http\\JsonResponse;
 use App\\Http\\Filters\\{version_api}\\{plural_name}\\{singular_name}Filter;

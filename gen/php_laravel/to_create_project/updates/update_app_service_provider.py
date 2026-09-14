@@ -40,7 +40,9 @@ def update_app_service_provider(full_path):
         content = content.replace(
             """use Illuminate\Support\ServiceProvider;""",
             """use Illuminate\Support\ServiceProvider;
-use Illuminate\Database\Schema\Blueprint;"""
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Gate;
+"""
         )
 
 

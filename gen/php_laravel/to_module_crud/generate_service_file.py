@@ -36,7 +36,7 @@ def generate_service_file(
 namespace App\\Services\\{version_api}\\{plural_name};
 
 use App\\Enums\\EnumApiSetup;
-use App\\Http\\Filters\\{namespace}\\{version_api}\\{plural_name}\\{singular_name}Filter;
+use App\\Http\\Filters\\{version_api}\\{plural_name}\\{singular_name}Filter;
 use App\\Models\\{namespace}\\{plural_name}\\{singular_name};
 
 class {singular_name}Service

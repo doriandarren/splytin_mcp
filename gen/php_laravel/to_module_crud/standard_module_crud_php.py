@@ -2,10 +2,10 @@ import os
 from gen.helpers.helper_menu import pause
 from gen.helpers.helper_print import camel_to_first_letter_lower, camel_to_kebab, camel_to_snake, dd
 from gen.helpers.helper_string import normalize_project_name
-from gen.php_laravel.to_module_crud.add_route_api_php import add_route_api_php
 from gen.php_laravel.to_module_crud.generate_controller_index_file import generate_controller_index_file
 from gen.php_laravel.to_module_crud.generate_index_filter import generate_index_filter
 from gen.php_laravel.to_module_crud.generate_model_file import generate_model_file
+from gen.php_laravel.to_module_crud.generate_permissions_abilities import generate_permissions_abilities
 from gen.php_laravel.to_module_crud.generate_policy import generate_policy
 from gen.php_laravel.to_module_crud.generate_request_store import generate_request_store
 from gen.php_laravel.to_module_crud.generate_request_update import generate_request_update
@@ -20,6 +20,7 @@ from gen.php_laravel.to_module_crud.generate_seeder_file import generate_seeder_
 from gen.php_laravel.to_module_crud.generate_factory_file import generate_factory_file
 from gen.php_laravel.to_module_crud.generate_postman_file import generate_postman_file
 from gen.php_laravel.to_module_crud.generate_service_file import generate_service_file
+from gen.php_laravel.to_module_crud.update.update_route_api_php import update_route_api_php
 
 
 def standard_module_crud_php(
@@ -292,7 +293,7 @@ def standard_module_crud_php(
                 columns
             )
             
-            add_route_api_php(
+            update_route_api_php(
                 full_path,
                 namespace,
                 version_api,
@@ -426,6 +427,34 @@ def standard_module_crud_php(
             plural_name_snake,
             columns
         )
+
+
+
+        
+        #--------------------------
+        # Permissions
+        #--------------------------
+        generate_permissions_abilities(
+            full_path,
+            namespace,
+            version_api,
+            folder_group,
+            project_name,
+            singular_name,
+            plural_name,
+            singular_name_camel,
+            plural_name_camel,
+            singular_name_kebab,
+            plural_name_kebab,
+            singular_name_snake,
+            plural_name_snake,
+            columns
+        )
+
+
+
+
+
 
 
     else:

@@ -92,7 +92,7 @@ def generate_controller_store_file(
 
 {find_namespace(namespace, version_api, folder_group, plural_name)}
 
-use App\\Http\\Controllers\\Api\\V1\\ApiController;
+use App\\Http\\Controllers\\API\\V1\\ApiController;
 use Illuminate\\Support\\Facades\\Auth;
 use Illuminate\\Http\\JsonResponse;
 use App\\Services\\{version_api}\\{plural_name}\\{singular_name}Service;
