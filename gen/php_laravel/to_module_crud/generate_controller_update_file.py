@@ -72,12 +72,15 @@ use App\\Http\\Controllers\\Api\\V1\\ApiController;
 use Illuminate\\Support\\Facades\\Auth;
 use Illuminate\\Http\\JsonResponse;
 use App\\Models\\{namespace}\\{plural_name}\\{singular_name};
-use App\\Services\\{namespace}\\{version_api}\\{plural_name}\\{singular_name}Service;
-use App\\Http\\Requests\\{namespace}\\{version_api}\\{plural_name}\\Update{singular_name}Request;
-use App\\Http\\Resources\\{namespace}\\{version_api}\\{plural_name}\\{singular_name}Resource;
+use App\\Services\\{version_api}\\{plural_name}\\{singular_name}Service;
+use App\\Policies\\{version_api}\\{plural_name}\\{singular_name}Policy;
+use App\\Http\\Requests\\{version_api}\\{plural_name}\\Update{singular_name}Request;
+use App\\Http\\Resources\\{version_api}\\{plural_name}\\{singular_name}Resource;
 
 class {singular_name}UpdateController extends ApiController
 {{
+    
+    protected $policyClass = {singular_name}Policy::class;
     
     /**
      * Construct
@@ -104,6 +107,8 @@ class {singular_name}UpdateController extends ApiController
         {singular_name} ${singular_name_camel}
     ): JsonResponse
     {{
+        
+        $this->isAble('update', ${singular_name_camel});
         
         $attributes = $request->mappedAttributes();
 

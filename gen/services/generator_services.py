@@ -3,6 +3,7 @@ from __future__ import annotations
 from typing import Any
 
 from gen.helpers.helper_columns import parse_columns_input
+from gen.php_laravel.to_create_project.abilities.generate_abilities import generate_abilities
 from gen.php_laravel.to_create_project.generate_api_controller import generate_api_controller
 from gen.php_laravel.to_create_project.generate_query_filter import generate_query_filter
 from gen.php_laravel.to_create_project.generate_test_email import generate_test_mail
@@ -374,6 +375,7 @@ def create_php_project_service(
     generate_base_api_request(full_path)
     generate_api_controller(full_path)
     update_app_service_provider(full_path)
+    generate_abilities(full_path)
 
     return {
         "generator": "php_project",

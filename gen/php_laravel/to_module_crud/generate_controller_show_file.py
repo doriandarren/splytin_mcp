@@ -60,8 +60,8 @@ use App\\Http\\Controllers\\Api\\V1\\ApiController;
 use Illuminate\\Support\\Facades\\Auth;
 use Illuminate\\Http\\JsonResponse;
 use App\\Models\\{namespace}\\{plural_name}\\{singular_name};
-use App\\Services\\{namespace}\\{version_api}\\{plural_name}\\{singular_name}Service;
-use App\\Http\\Resources\\{namespace}\\{version_api}\\{plural_name}\\{singular_name}Resource;
+use App\\Services\\{version_api}\\{plural_name}\\{singular_name}Service;
+use App\\Http\\Resources\\{version_api}\\{plural_name}\\{singular_name}Resource;
 
 class {singular_name}ShowController extends ApiController
 {{

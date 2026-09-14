@@ -22,7 +22,7 @@ def generate_service_file(
     Genera el archivo
     """
 
-    folder_path = os.path.join(full_path, "app", "Services", namespace, version_api, plural_name)
+    folder_path = os.path.join(full_path, "app", "Services", version_api, plural_name)
     file_path = os.path.join(folder_path, f"{singular_name}Service.php")
 
     os.makedirs(folder_path, exist_ok=True)
@@ -33,7 +33,7 @@ def generate_service_file(
 
     content = f"""<?php
 
-namespace App\\Services\\{namespace}\\{version_api}\\{plural_name};
+namespace App\\Services\\{version_api}\\{plural_name};
 
 use App\\Enums\\EnumApiSetup;
 use App\\Http\\Filters\\{namespace}\\{version_api}\\{plural_name}\\{singular_name}Filter;

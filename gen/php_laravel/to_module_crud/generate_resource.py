@@ -105,14 +105,14 @@ def generate_resource(
     Genera el archivo
     """
 
-    folder_path = os.path.join(full_path, "app", "Http", "Resources", namespace, version_api, plural_name)
+    folder_path = os.path.join(full_path, "app", "Http", "Resources", version_api, plural_name)
     file_path = os.path.join(folder_path, f"{singular_name}Resource.php")
 
     os.makedirs(folder_path, exist_ok=True)
 
     content = f"""<?php
 
-namespace App\\Http\\Resources\\{namespace}\\{version_api}\\{plural_name};
+namespace App\\Http\\Resources\\{version_api}\\{plural_name};
 
 use Illuminate\\Http\\Request;
 use Illuminate\\Http\\Resources\\Json\\JsonResource;

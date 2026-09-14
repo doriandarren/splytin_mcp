@@ -336,7 +336,7 @@ class EnumAbilityGroups
                 EnumAbilitySuffix::SHOW,
                 EnumAbilitySuffix::STORE,
                 EnumAbilitySuffix::UPDATE,
-                EnumAbilitySuffix::DESTROY,
+                EnumAbilitySuffix::DELETE,
             ],
         ],
         [
@@ -346,7 +346,7 @@ class EnumAbilityGroups
                 EnumAbilitySuffix::SHOW,
                 EnumAbilitySuffix::STORE,
                 EnumAbilitySuffix::UPDATE,
-                EnumAbilitySuffix::DESTROY,
+                EnumAbilitySuffix::DELETE,
             ],
         ],
         [
@@ -356,7 +356,7 @@ class EnumAbilityGroups
                 EnumAbilitySuffix::SHOW,
                 EnumAbilitySuffix::STORE,
                 EnumAbilitySuffix::UPDATE,
-                EnumAbilitySuffix::DESTROY,
+                EnumAbilitySuffix::DELETE,
             ],
         ],
         [
@@ -366,7 +366,7 @@ class EnumAbilityGroups
                 EnumAbilitySuffix::SHOW,
                 EnumAbilitySuffix::STORE,
                 EnumAbilitySuffix::UPDATE,
-                EnumAbilitySuffix::DESTROY,
+                EnumAbilitySuffix::DELETE,
             ],
         ],
         [
@@ -376,7 +376,7 @@ class EnumAbilityGroups
                 EnumAbilitySuffix::SHOW,
                 EnumAbilitySuffix::STORE,
                 EnumAbilitySuffix::UPDATE,
-                EnumAbilitySuffix::DESTROY,
+                EnumAbilitySuffix::DELETE,
             ],
         ],
 
@@ -450,10 +450,10 @@ abstract class EnumAbilitySuffix
      */
     const ALL = ':all';
     const INDEX = ':index';
+    const SHOW = ':show';
     const STORE = ':store';
     const UPDATE = ':update';
-    const DESTROY = ':destroy';
-    const SHOW = ':show';
+    const DELETE = ':delete';
 }
 """
 

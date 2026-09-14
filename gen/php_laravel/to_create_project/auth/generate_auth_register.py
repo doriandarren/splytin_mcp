@@ -13,14 +13,14 @@ def create_register_request(full_path):
     Genera el archivo
     """
 
-    folder_path = os.path.join(full_path, "app", "Http", "Requests", "API", "V1", "Auth")
+    folder_path = os.path.join(full_path, "app", "Http", "Requests", "V1", "Auth")
     file_path = os.path.join(folder_path, "AuthRegisterRequest.php")
 
     os.makedirs(folder_path, exist_ok=True)
 
     content = f"""<?php
 
-namespace App\\Http\\Requests\\API\\V1\\Auth;
+namespace App\\Http\\Requests\\V1\\Auth;
 
 use Illuminate\\Contracts\\Validation\\ValidationRule;
 use Illuminate\\Foundation\\Http\\FormRequest;
@@ -102,7 +102,7 @@ namespace App\\Http\\Controllers\\API\\V1\\Auth;
 
 use App\\Http\\Controllers\\Api\\V1\\ApiController;
 use Illuminate\\Http\\JsonResponse;
-use App\\Http\\Requests\\API\\V1\\Auth\\AuthRegisterRequest;
+use App\\Http\\Requests\\V1\\Auth\\AuthRegisterRequest;
 use App\\Enums\\Roles\\EnumRole;
 use App\\Enums\\UserStatuses\\EnumUserStatus;
 use App\\Models\\API\\Roles\\Role;

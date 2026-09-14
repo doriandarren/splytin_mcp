@@ -6,14 +6,14 @@ def generate_query_filter(full_path):
     Genera el archivo
     """
 
-    folder_path = os.path.join(full_path, "app", "Http", "Filters", "API", "V1")
+    folder_path = os.path.join(full_path, "app", "Http", "Filters", "V1")
     file_path = os.path.join(folder_path, "QueryFilter.php")
 
     os.makedirs(folder_path, exist_ok=True)
 
     content = r'''<?php
 
-namespace App\Http\Filters\API\V1;
+namespace App\Http\Filters\V1;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;

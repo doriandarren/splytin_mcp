@@ -6,6 +6,7 @@ from gen.php_laravel.to_module_crud.add_route_api_php import add_route_api_php
 from gen.php_laravel.to_module_crud.generate_controller_index_file import generate_controller_index_file
 from gen.php_laravel.to_module_crud.generate_index_filter import generate_index_filter
 from gen.php_laravel.to_module_crud.generate_model_file import generate_model_file
+from gen.php_laravel.to_module_crud.generate_policy import generate_policy
 from gen.php_laravel.to_module_crud.generate_request_store import generate_request_store
 from gen.php_laravel.to_module_crud.generate_request_update import generate_request_update
 from gen.php_laravel.to_module_crud.generate_resource import generate_resource
@@ -70,6 +71,9 @@ def standard_module_crud_php(
 
     if os.path.isdir(full_path):
         
+        #--------------------------
+        # Model
+        #--------------------------
         if "model" in input_menu_checkbox:
             generate_model_file(
                 full_path, 
@@ -80,6 +84,9 @@ def standard_module_crud_php(
                 columns
             )
 
+        #--------------------------
+        # Controller - Index
+        #--------------------------
         if "controller_index" in input_menu_checkbox:
             generate_controller_index_file(
                 full_path,
@@ -116,7 +123,9 @@ def standard_module_crud_php(
             )
             
             
-
+        #--------------------------
+        # Controller - Show
+        #--------------------------
         if "controller_show" in input_menu_checkbox:
             generate_controller_show_file(
                 full_path,
@@ -135,6 +144,10 @@ def standard_module_crud_php(
                 columns
             )
 
+
+        #--------------------------
+        # Controller - Store
+        #--------------------------
         if "controller_store" in input_menu_checkbox:
             
             # Generate Controller
@@ -174,6 +187,9 @@ def standard_module_crud_php(
             )
             
 
+        #--------------------------
+        # Controller - Update
+        #--------------------------
         if "controller_update" in input_menu_checkbox:
             
             ## Controller 
@@ -213,7 +229,9 @@ def standard_module_crud_php(
             )
             
             
-
+        #--------------------------
+        # Controller - Destroy
+        #--------------------------
         if "controller_destroy" in input_menu_checkbox:
             generate_controller_destroy_file(
                 full_path,
@@ -232,7 +250,10 @@ def standard_module_crud_php(
                 columns
             )
         
-
+        
+        #--------------------------
+        # Service
+        #--------------------------
         if "service" in input_menu_checkbox:
             generate_service_file(
                 full_path,
@@ -250,6 +271,10 @@ def standard_module_crud_php(
                 columns
             )
 
+
+        #--------------------------
+        # Route
+        #--------------------------
         if "routes" in input_menu_checkbox:
             generate_routes_file(
                 full_path,
@@ -284,6 +309,9 @@ def standard_module_crud_php(
             )
             
 
+        #--------------------------
+        # Migration
+        #--------------------------
         if "migration" in input_menu_checkbox:
             generate_migration_file(
                 full_path,
@@ -302,9 +330,9 @@ def standard_module_crud_php(
             )
 
 
-
-
-
+        #--------------------------
+        # Seeder
+        #--------------------------
         if "seeder" in input_menu_checkbox:
             generate_seeder_file(
                 full_path,
@@ -322,6 +350,10 @@ def standard_module_crud_php(
                 columns
             )
 
+
+        #--------------------------
+        # Factory
+        #--------------------------
         if "factory" in input_menu_checkbox:
             generate_factory_file(
                 full_path,
@@ -339,6 +371,10 @@ def standard_module_crud_php(
                 columns
             )
 
+
+        #--------------------------
+        # Postman
+        #--------------------------
         if "postman" in input_menu_checkbox:
             generate_postman_file(
                 full_path, 
@@ -348,8 +384,10 @@ def standard_module_crud_php(
                 plural_name_kebab, 
                 columns
             )
-            
-            
+        
+        #--------------------------
+        # Resource
+        #--------------------------
         if "resource" in input_menu_checkbox:
             generate_resource(
                 full_path,
@@ -366,6 +404,29 @@ def standard_module_crud_php(
                 plural_name_snake,
                 columns
             )
+
+
+        
+        #--------------------------
+        # Policy
+        #--------------------------
+        generate_policy(
+            full_path,
+            namespace,
+            version_api,
+            folder_group,
+            project_name,
+            singular_name,
+            plural_name,
+            singular_name_camel,
+            plural_name_camel,
+            singular_name_kebab,
+            plural_name_kebab,
+            singular_name_snake,
+            plural_name_snake,
+            columns
+        )
+
 
     else:
         print("La ruta proporcionada no es válida o no existe. Por favor, verifica y vuelve a intentarlo.")

@@ -41,7 +41,7 @@ def generate_index_filter(
     Genera el archivo
     """
 
-    folder_path = os.path.join(full_path, "app", "Http", "Filters", namespace, version_api, plural_name)
+    folder_path = os.path.join(full_path, "app", "Http", "Filters", version_api, plural_name)
     file_path = os.path.join(folder_path, f"{singular_name}Filter.php")
 
     os.makedirs(folder_path, exist_ok=True)
@@ -49,9 +49,9 @@ def generate_index_filter(
 
     content = f"""<?php
 
-namespace App\\Http\\Filters\\{namespace}\\{version_api}\\{plural_name};
+namespace App\\Http\\Filters\\{version_api}\\{plural_name};
 
-use App\\Http\\Filters\\API\\V1\\QueryFilter;
+use App\\Http\\Filters\\V1\\QueryFilter;
 
 
 class {singular_name}Filter extends QueryFilter

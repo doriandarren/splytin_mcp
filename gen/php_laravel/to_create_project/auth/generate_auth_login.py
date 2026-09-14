@@ -15,14 +15,14 @@ def create_login_request(full_path):
     Genera el archivo
     """
 
-    folder_path = os.path.join(full_path, "app", "Http", "Requests", "API", "V1", "Auth")
+    folder_path = os.path.join(full_path, "app", "Http", "Requests", "V1", "Auth")
     file_path = os.path.join(folder_path, "AuthLoginRequest.php")
 
     os.makedirs(folder_path, exist_ok=True)
 
     content = f"""<?php
 
-namespace App\\Http\\Requests\\API\\V1\\Auth;
+namespace App\\Http\\Requests\\V1\\Auth;
 
 use Illuminate\\Contracts\\Validation\\ValidationRule;
 use Illuminate\\Foundation\\Http\\FormRequest;
@@ -91,7 +91,7 @@ use Illuminate\\Support\\Facades\\Auth;
 use Illuminate\\Http\\JsonResponse;
 use App\\Enums\\Roles\\EnumRole;
 use App\\Utilities\\Messages\\MessageChannel;
-use App\\Http\\Requests\\API\\V1\\Auth\\AuthLoginRequest;
+use App\\Http\\Requests\\V1\\Auth\\AuthLoginRequest;
 use App\\Models\\User;
 
 

@@ -61,7 +61,7 @@ use Illuminate\\Http\\Request;
 use Illuminate\\Support\\Facades\\Auth;
 use Illuminate\\Http\\JsonResponse;
 use App\\Models\\{namespace}\\{plural_name}\\{singular_name};
-use App\\Services\\{namespace}\\{version_api}\\{plural_name}\\{singular_name}Service;
+use App\\Services\\{version_api}\\{plural_name}\\{singular_name}Service;
 
 class {singular_name}DestroyController extends ApiController
 {{
