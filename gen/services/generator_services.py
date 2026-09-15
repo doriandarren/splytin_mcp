@@ -4,6 +4,7 @@ from typing import Any
 
 from gen.helpers.helper_columns import parse_columns_input
 from gen.php_laravel.to_create_project.generate_api_controller import generate_api_controller
+from gen.php_laravel.to_create_project.generate_default_role_permissions import generate_default_role_permissions
 from gen.php_laravel.to_create_project.generate_query_filter import generate_query_filter
 from gen.php_laravel.to_create_project.generate_test_email import generate_test_mail
 from gen.php_laravel.to_create_project.requests.generate_base_api_request import generate_base_api_request
@@ -346,6 +347,7 @@ def create_php_project_service(
     generate_maatwebsite_excel(full_path)
     generate_enums(full_path, project_name, domain_name, password)
     generate_batch_processes(full_path)
+    generate_default_role_permissions(full_path)
     generate_trait_api_response(full_path)
     generate_trait_tracks_users(full_path)
     generate_php_module_auth(full_path)
@@ -374,6 +376,7 @@ def create_php_project_service(
     generate_base_api_request(full_path)
     generate_api_controller(full_path)
     update_app_service_provider(full_path)
+    
 
     return {
         "generator": "php_project",

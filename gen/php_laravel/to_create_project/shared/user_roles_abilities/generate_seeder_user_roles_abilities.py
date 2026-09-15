@@ -27,7 +27,7 @@ namespace Database\Seeders;
 
 
 use Illuminate\Database\Seeder;
-use App\Enums\EnumAbilityGroups;
+use App\Permissions\V1\DefaultRolePermissions\DefaultRolePermissions;
 use App\Enums\Dev\EnumDefaultCompany;
 use App\Enums\Roles\EnumRole;
 use App\Enums\UserStatuses\EnumUserStatus;
@@ -136,27 +136,25 @@ class UserRolesAbilitiesSeeder extends Seeder
 
 
     /**
-     * @param $user
-     * @param $roleName
+     * @param User $user
+     * @param string $roleName
      * @return void
      */
-    private function createAbilityUser($user, $roleName): void
+    private function createAbilityUser(User $user, string $roleName): void
     {
+        if ($roleName === EnumRole::ADMIN) {
+            $this->assignAbilities(
+                $user,
+                DefaultRolePermissions::admin()
+            );
 
-        /**
-         * Add Ability only Admin
-         */
-        if($roleName == EnumRole::ADMIN){
-
-            $ability = Ability::where('name', '*')->first();
-            $user->allowTo($ability);
-
+            return;
         }
 
         if ($roleName === EnumRole::MANAGER) {
             $this->assignAbilities(
                 $user,
-                EnumAbilityGroups::ABILITIES_GROUP_BY_MANAGER
+                DefaultRolePermissions::manager()
             );
 
             return;
@@ -165,41 +163,43 @@ class UserRolesAbilitiesSeeder extends Seeder
         if ($roleName === EnumRole::USER) {
             $this->assignAbilities(
                 $user,
-                EnumAbilityGroups::ABILITIES_GROUP_BY_USER
+                DefaultRolePermissions::user()
             );
 
             return;
         }
 
-        if ($roleName === EnumRole::ERP) {
-            $this->assignAbilities(
-                $user,
-                EnumAbilityGroups::ABILITIES_GROUP_BY_ERP
-            );
-        }
+        // if ($roleName === EnumRole::ERP) {
+        //     $this->assignAbilities(
+        //         $user,
+        //         DefaultRolePermissions::erp()
+        //     );
 
-
-
+        //     return;
+        // }
     }
 
 
-
-    private function assignAbilities(User $user, array $abilityGroups): void
+    /**
+     * Assign Abilities
+     *
+     * @param User $user
+     * @param array $abilities
+     * @return void
+     */
+    private function assignAbilities(User $user, array $abilities): void
     {
-        foreach ($abilityGroups as $abilityRecord) {
-            foreach ($abilityRecord['abilities'] as $abilitySuffix) {
-                $abilityName = $abilityRecord['name'] . $abilitySuffix;
+        foreach ($abilities as $abilityName) {
 
-                $abilityModel = Ability::where('name', $abilityName)->first();
+            $ability = Ability::where('name', $abilityName)->first();
 
-                if (!$abilityModel) {
-                    throw new \RuntimeException(
-                        "La habilidad '{$abilityName}' no existe en la tabla abilities."
-                    );
-                }
-
-                $user->allowTo($abilityModel);
+            if (!$ability) {
+                throw new \RuntimeException(
+                    "La habilidad '{$abilityName}' no existe en la tabla abilities."
+                );
             }
+
+            $user->allowTo($ability);
         }
     }
 

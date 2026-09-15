@@ -10,7 +10,6 @@ def generate_enums(full_path, project_name, domain_name, password):
     create_role(full_path)
     create_user(full_path, domain_name, password)
     create_user_status(full_path)
-    create_ability_groups(full_path)
     create_ability_suffix(full_path)
     create_api_setup(full_path)
     create_setting_paginate(full_path)
@@ -288,146 +287,6 @@ class EnumUserStatus
         print_message(f"Error al generar el archivo {file_path}: {e}", CYAN)
 
 
-def create_ability_groups(full_path):
-    """
-    Genera un archivo
-
-    Args:
-        full_path (str): Ruta completa del proyecto.
-    """
-    styles_path = os.path.join(full_path, "app", "Enums")
-
-    # Crear la carpeta si no existe
-    if not os.path.exists(styles_path):
-        os.makedirs(styles_path)
-        print_message(f"Carpeta creada: {styles_path}", GREEN)
-
-    # Ruta completa del archivo
-    file_path = os.path.join(styles_path, "EnumAbilityGroups.php")
-
-    # Contenido por defecto
-    content = """<?php
-
-namespace App\\Enums;
-
-class EnumAbilityGroups
-{
-
-    /************************************************************************
-     ************************************************************************
-     ****
-     * -----  RECUERDA ------
-     *
-     * Importante!!!! si se cambia los valores de este fichero, luego se tiene
-     * que ejecutar el siguiente script en el test para ACTUALIZAR la BD:
-     *
-     * public function __invoke()
-     * {
-     *      (new BatchAbilityAndGroupRepository())->createAbilities(); // este
-     * }
-     *
-     *
-     *************************************************************************
-     *************************************************************************
-     */
-
-
-
-    /**
-     * Role Default
-     */
-    const ABILITIES_GROUP_DEFAULT = [
-        [
-            'name' => 'ability_groups',
-            'abilities' => [
-                EnumAbilitySuffix::INDEX,
-                EnumAbilitySuffix::SHOW,
-                EnumAbilitySuffix::STORE,
-                EnumAbilitySuffix::UPDATE,
-                EnumAbilitySuffix::DELETE,
-            ],
-        ],
-        [
-            'name' => 'ability_user',
-            'abilities' => [
-                EnumAbilitySuffix::INDEX,
-                EnumAbilitySuffix::SHOW,
-                EnumAbilitySuffix::STORE,
-                EnumAbilitySuffix::UPDATE,
-                EnumAbilitySuffix::DELETE,
-            ],
-        ],
-        [
-            'name' => 'users',
-            'abilities' => [
-                EnumAbilitySuffix::INDEX,
-                EnumAbilitySuffix::SHOW,
-                EnumAbilitySuffix::STORE,
-                EnumAbilitySuffix::UPDATE,
-                EnumAbilitySuffix::DELETE,
-            ],
-        ],
-        [
-            'name' => 'user_statuses',
-            'abilities' => [
-                EnumAbilitySuffix::INDEX,
-                EnumAbilitySuffix::SHOW,
-                EnumAbilitySuffix::STORE,
-                EnumAbilitySuffix::UPDATE,
-                EnumAbilitySuffix::DELETE,
-            ],
-        ],
-        [
-            'name' => 'role_user',
-            'abilities' => [
-                EnumAbilitySuffix::INDEX,
-                EnumAbilitySuffix::SHOW,
-                EnumAbilitySuffix::STORE,
-                EnumAbilitySuffix::UPDATE,
-                EnumAbilitySuffix::DELETE,
-            ],
-        ],
-
-        //TODO agregar los demás
-
-    ];
-
-
-
-    /**
-     * Manager
-     */
-    const ABILITIES_GROUP_BY_MANAGER = self::ABILITIES_GROUP_DEFAULT;
-
-
-    /**
-     * User
-     */
-    const ABILITIES_GROUP_BY_USER = self::ABILITIES_GROUP_DEFAULT;
-
-
-    /**
-     * ERP
-     */
-    const ABILITIES_GROUP_BY_ERP = self::ABILITIES_GROUP_DEFAULT;
-
-
-    /**
-     * Administration
-     */
-    const ABILITIES_GROUP_BY_ADMINISTRATION = self::ABILITIES_GROUP_DEFAULT;
-
-}
-"""
-
-    try:
-        # Crear o sobrescribir el archivo con el contenido
-        with open(file_path, "w") as f:
-            f.write(content)
-        print_message(f"Archivo generado: {file_path}", GREEN)
-    except Exception as e:
-        print_message(f"Error al generar el archivo {file_path}: {e}", CYAN)
-
 
 def create_ability_suffix(full_path):
     """
@@ -463,8 +322,8 @@ abstract class EnumAbilitySuffix
     const UPDATE = ':update';
     const DELETE = ':delete';
     
-    const UPDATE_OWN = ':own:update';
-    const DELETE_OWN = ':own:delete';
+    const UPDATE_OWN = ':update_own';
+    const DELETE_OWN = ':delete_own';
 }
 """
 

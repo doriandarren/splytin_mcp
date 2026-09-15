@@ -25,6 +25,23 @@ def generate_permissions_abilities(
     file_path = os.path.join(folder_path, f"{singular_name}Permission.php")
 
     os.makedirs(folder_path, exist_ok=True)
+    
+    
+    change_name = [
+        'ability_users',
+        'role_users'
+    ]
+    
+    plural_name_snake_temp = plural_name_snake
+    
+    if plural_name_snake in change_name:
+        if plural_name_snake == 'ability_users':
+            plural_name_snake_temp = 'ability_user'
+        
+        if plural_name_snake == 'role_users':
+            plural_name_snake_temp = 'role_user'
+            
+    
 
     content = f"""<?php
 
@@ -37,15 +54,15 @@ final class {singular_name}Permission
 {{
 
     // Abilities
-    public const INDEX = '{singular_name_snake}' . EnumAbilitySuffix::INDEX;
-    public const SHOW = '{singular_name_snake}' . EnumAbilitySuffix::SHOW;
-    public const STORE = '{singular_name_snake}' . EnumAbilitySuffix::STORE;
-    public const UPDATE = '{singular_name_snake}' . EnumAbilitySuffix::UPDATE;
-    public const DELETE = '{singular_name_snake}' . EnumAbilitySuffix::DELETE;
+    public const INDEX = '{plural_name_snake_temp}' . EnumAbilitySuffix::INDEX;
+    public const SHOW = '{plural_name_snake_temp}' . EnumAbilitySuffix::SHOW;
+    public const STORE = '{plural_name_snake_temp}' . EnumAbilitySuffix::STORE;
+    public const UPDATE = '{plural_name_snake_temp}' . EnumAbilitySuffix::UPDATE;
+    public const DELETE = '{plural_name_snake_temp}' . EnumAbilitySuffix::DELETE;
 
     // Own
-    public const UPDATE_OWN = '{singular_name_snake}' . EnumAbilitySuffix::UPDATE_OWN;
-    public const DELETE_OWN = '{singular_name_snake}' . EnumAbilitySuffix::DELETE_OWN;
+    public const UPDATE_OWN = '{plural_name_snake_temp}' . EnumAbilitySuffix::UPDATE_OWN;
+    public const DELETE_OWN = '{plural_name_snake_temp}' . EnumAbilitySuffix::DELETE_OWN;
     
     
     /**
@@ -61,6 +78,45 @@ final class {singular_name}Permission
             self::STORE,
             self::UPDATE,
             self::DELETE,
+            self::UPDATE_OWN,
+            self::DELETE_OWN,
+        ];
+    }}
+    
+    
+    /**
+     * Admin
+     * Tiene permiso por defecto * en cada 
+     */
+    
+    
+    /**
+     * Manager
+     *
+     * @return array
+     */
+    public static function manager(): array
+    {{
+        return [
+            self::INDEX,
+            self::SHOW,
+            self::STORE,
+            self::UPDATE,
+            self::DELETE,
+        ];
+    }}
+
+    /**
+     * User
+     *
+     * @return array
+     */
+    public static function user(): array
+    {{
+        return [
+            self::INDEX,
+            self::SHOW,
+            self::STORE,
             self::UPDATE_OWN,
             self::DELETE_OWN,
         ];

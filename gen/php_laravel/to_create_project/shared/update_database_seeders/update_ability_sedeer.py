@@ -108,12 +108,18 @@ class AbilitySeeder extends Seeder
     }
 
 
+    /**
+     * Create Module Abilities
+     *
+     * @param $tableName
+     * @param $abilityGroupId
+     * @return void
+     */
     private function createModuleAbilities($tableName, $abilityGroupId)
     {
-
-        if(!Ability::where('name', $tableName.EnumAbilitySuffix::INDEX)->exists()){
+        if (!Ability::where('name', $tableName . EnumAbilitySuffix::INDEX)->exists()) {
             Ability::factory()->create([
-                'name' => $tableName.EnumAbilitySuffix::INDEX,
+                'name' => $tableName . EnumAbilitySuffix::INDEX,
                 'label' => 'Lista modulo',
                 'ability_group_id' => $abilityGroupId,
                 'created_by' => EnumDefaultCompany::SYSTEM_ID,
@@ -121,36 +127,39 @@ class AbilitySeeder extends Seeder
             ]);
         }
 
-        if(!Ability::where('name', $tableName.EnumAbilitySuffix::STORE)->exists()){
+        if (!Ability::where('name', $tableName . EnumAbilitySuffix::SHOW)->exists()) {
             Ability::factory()->create([
-                'name' => $tableName.EnumAbilitySuffix::STORE,
-                'label' => 'Crea modulo',
-                'ability_group_id' => $abilityGroupId,
-                'created_by' => EnumDefaultCompany::SYSTEM_ID,
-                'updated_by' => EnumDefaultCompany::SYSTEM_ID,
-            ]);
-        }
-        if(!Ability::where('name', $tableName.EnumAbilitySuffix::SHOW)->exists()){
-            Ability::factory()->create([
-                'name' => $tableName.EnumAbilitySuffix::SHOW,
+                'name' => $tableName . EnumAbilitySuffix::SHOW,
                 'label' => 'Ver modulo',
                 'ability_group_id' => $abilityGroupId,
                 'created_by' => EnumDefaultCompany::SYSTEM_ID,
                 'updated_by' => EnumDefaultCompany::SYSTEM_ID,
             ]);
         }
-        if(!Ability::where('name', $tableName.EnumAbilitySuffix::UPDATE)->exists()){
+
+        if (!Ability::where('name', $tableName . EnumAbilitySuffix::STORE)->exists()) {
             Ability::factory()->create([
-                'name' => $tableName.EnumAbilitySuffix::UPDATE,
+                'name' => $tableName . EnumAbilitySuffix::STORE,
+                'label' => 'Crea modulo',
+                'ability_group_id' => $abilityGroupId,
+                'created_by' => EnumDefaultCompany::SYSTEM_ID,
+                'updated_by' => EnumDefaultCompany::SYSTEM_ID,
+            ]);
+        }
+
+        if (!Ability::where('name', $tableName . EnumAbilitySuffix::UPDATE)->exists()) {
+            Ability::factory()->create([
+                'name' => $tableName . EnumAbilitySuffix::UPDATE,
                 'label' => 'Edita modulo',
                 'ability_group_id' => $abilityGroupId,
                 'created_by' => EnumDefaultCompany::SYSTEM_ID,
                 'updated_by' => EnumDefaultCompany::SYSTEM_ID,
             ]);
         }
-        if(!Ability::where('name', $tableName.EnumAbilitySuffix::DELETE)->exists()){
+
+        if (!Ability::where('name', $tableName . EnumAbilitySuffix::DELETE)->exists()) {
             Ability::factory()->create([
-                'name' => $tableName.EnumAbilitySuffix::DELETE,
+                'name' => $tableName . EnumAbilitySuffix::DELETE,
                 'label' => 'Elimina modulo',
                 'ability_group_id' => $abilityGroupId,
                 'created_by' => EnumDefaultCompany::SYSTEM_ID,
@@ -158,9 +167,34 @@ class AbilitySeeder extends Seeder
             ]);
         }
 
+        if (!Ability::where('name', $tableName . EnumAbilitySuffix::UPDATE_OWN)->exists()) {
+            Ability::factory()->create([
+                'name' => $tableName . EnumAbilitySuffix::UPDATE_OWN,
+                'label' => 'Edita propio modulo',
+                'ability_group_id' => $abilityGroupId,
+                'created_by' => EnumDefaultCompany::SYSTEM_ID,
+                'updated_by' => EnumDefaultCompany::SYSTEM_ID,
+            ]);
+        }
+
+        if (!Ability::where('name', $tableName . EnumAbilitySuffix::DELETE_OWN)->exists()) {
+            Ability::factory()->create([
+                'name' => $tableName . EnumAbilitySuffix::DELETE_OWN,
+                'label' => 'Elimina propio modulo',
+                'ability_group_id' => $abilityGroupId,
+                'created_by' => EnumDefaultCompany::SYSTEM_ID,
+                'updated_by' => EnumDefaultCompany::SYSTEM_ID,
+            ]);
+        }
     }
 
 
+    /**
+     * Create Ability Groups
+     *
+     * @param $name
+     * @return AbilityGroup | null
+     */
     private function createAbilityGroups($name)
     {
 
