@@ -21,6 +21,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use App\Enums\Dev\EnumExcludeTable;
+use App\Enums\Dev\EnumDefaultCompany;
 use App\Enums\EnumAbilitySuffix;
 use App\Models\API\Abilities\Ability;
 use App\Models\API\AbilityGroups\AbilityGroup;
@@ -56,6 +57,8 @@ class AbilitySeeder extends Seeder
         if(!AbilityGroup::where('name', 'All')->exists()){
             AbilityGroup::factory()->create([
                 'name' => 'All',
+                'created_by' => EnumDefaultCompany::SYSTEM_ID,
+                'updated_by' => EnumDefaultCompany::SYSTEM_ID,
             ]);
         }
 
@@ -65,6 +68,8 @@ class AbilitySeeder extends Seeder
                 'name' => '*',
                 'label' => 'All',
                 'ability_group_id' => 1,
+                'created_by' => EnumDefaultCompany::SYSTEM_ID,
+                'updated_by' => EnumDefaultCompany::SYSTEM_ID,
             ]);
         }
 
@@ -111,6 +116,8 @@ class AbilitySeeder extends Seeder
                 'name' => $tableName.EnumAbilitySuffix::INDEX,
                 'label' => 'Lista modulo',
                 'ability_group_id' => $abilityGroupId,
+                'created_by' => EnumDefaultCompany::SYSTEM_ID,
+                'updated_by' => EnumDefaultCompany::SYSTEM_ID,
             ]);
         }
 
@@ -119,6 +126,8 @@ class AbilitySeeder extends Seeder
                 'name' => $tableName.EnumAbilitySuffix::STORE,
                 'label' => 'Crea modulo',
                 'ability_group_id' => $abilityGroupId,
+                'created_by' => EnumDefaultCompany::SYSTEM_ID,
+                'updated_by' => EnumDefaultCompany::SYSTEM_ID,
             ]);
         }
         if(!Ability::where('name', $tableName.EnumAbilitySuffix::SHOW)->exists()){
@@ -126,6 +135,8 @@ class AbilitySeeder extends Seeder
                 'name' => $tableName.EnumAbilitySuffix::SHOW,
                 'label' => 'Ver modulo',
                 'ability_group_id' => $abilityGroupId,
+                'created_by' => EnumDefaultCompany::SYSTEM_ID,
+                'updated_by' => EnumDefaultCompany::SYSTEM_ID,
             ]);
         }
         if(!Ability::where('name', $tableName.EnumAbilitySuffix::UPDATE)->exists()){
@@ -133,6 +144,8 @@ class AbilitySeeder extends Seeder
                 'name' => $tableName.EnumAbilitySuffix::UPDATE,
                 'label' => 'Edita modulo',
                 'ability_group_id' => $abilityGroupId,
+                'created_by' => EnumDefaultCompany::SYSTEM_ID,
+                'updated_by' => EnumDefaultCompany::SYSTEM_ID,
             ]);
         }
         if(!Ability::where('name', $tableName.EnumAbilitySuffix::DELETE)->exists()){
@@ -140,6 +153,8 @@ class AbilitySeeder extends Seeder
                 'name' => $tableName.EnumAbilitySuffix::DELETE,
                 'label' => 'Elimina modulo',
                 'ability_group_id' => $abilityGroupId,
+                'created_by' => EnumDefaultCompany::SYSTEM_ID,
+                'updated_by' => EnumDefaultCompany::SYSTEM_ID,
             ]);
         }
 
@@ -152,6 +167,8 @@ class AbilitySeeder extends Seeder
         if(!AbilityGroup::where('name', $name)->exists()){
             $abilityGroup = AbilityGroup::factory()->create([
                 'name' => $name,
+                'created_by' => EnumDefaultCompany::SYSTEM_ID,
+                'updated_by' => EnumDefaultCompany::SYSTEM_ID,
             ]);
             return $abilityGroup;
         }

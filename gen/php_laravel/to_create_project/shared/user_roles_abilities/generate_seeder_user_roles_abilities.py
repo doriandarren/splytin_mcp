@@ -48,6 +48,12 @@ class UserRolesAbilitiesSeeder extends Seeder
      */
     public function run()
     {
+        
+        /**
+         * Create User
+         */
+        // SYSTEM
+        $this->createUser(EnumDefaultCompany::SYSTEM_NAME, EnumDefaultCompany::SYSTEM_EMAIL, EnumDefaultCompany::PASSWORD, EnumRole::ADMIN);
 
         /**
          * Create User
@@ -99,6 +105,10 @@ class UserRolesAbilitiesSeeder extends Seeder
         // Create User
         $userActiveId = UserStatus::where('name', EnumUserStatus::ACTIVE_NAME)->first()->id;
 
+        // User Inactive - SYSTEM
+        if($name === EnumDefaultCompany::SYSTEM_NAME){
+            $userActiveId = UserStatus::where('name', EnumUserStatus::INACTIVE_NAME)->first()->id;
+        }
 
         $user = User::where('email', $email)->first();
         if (!$user) {
@@ -109,6 +119,8 @@ class UserRolesAbilitiesSeeder extends Seeder
                 'password' => bcrypt($password), // password
                 'remember_token' => NULL,
                 'user_status_id' => $userActiveId,
+                'created_by' => EnumDefaultCompany::SYSTEM_ID,
+                'updated_by' => EnumDefaultCompany::SYSTEM_ID,
             ]);
         }
 

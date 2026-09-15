@@ -17,6 +17,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use App\Enums\Roles\EnumRole;
+use App\Enums\Dev\EnumDefaultCompany;
 use App\Models\API\Roles\Role;
 
 
@@ -35,6 +36,8 @@ class RoleSeeder extends Seeder
         Role::factory()->create([
             'name' => EnumRole::ADMIN,
             'description' => EnumRole::ADMIN_DESCRIPTION,
+            'created_by' => EnumDefaultCompany::SYSTEM_ID,
+            'updated_by' => EnumDefaultCompany::SYSTEM_ID,
         ]);
 
 
@@ -42,6 +45,8 @@ class RoleSeeder extends Seeder
         Role::factory()->create([
             'name' => EnumRole::MANAGER,
             'description' => EnumRole::MANAGER_DESCRIPTION,
+            'created_by' => EnumDefaultCompany::SYSTEM_ID,
+            'updated_by' => EnumDefaultCompany::SYSTEM_ID,
         ]);
 
 
@@ -49,6 +54,8 @@ class RoleSeeder extends Seeder
         Role::factory()->create([
             'name' => EnumRole::USER,
             'description' => EnumRole::USER_DESCRIPTION,
+            'created_by' => EnumDefaultCompany::SYSTEM_ID,
+            'updated_by' => EnumDefaultCompany::SYSTEM_ID,
         ]);
 
 
@@ -56,6 +63,8 @@ class RoleSeeder extends Seeder
         Role::factory()->create([
             'name' => EnumRole::ERP,
             'description' => EnumRole::ERP_DESCRIPTION,
+            'created_by' => EnumDefaultCompany::SYSTEM_ID,
+            'updated_by' => EnumDefaultCompany::SYSTEM_ID,
         ]);
 
 	}

@@ -17,6 +17,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use App\Enums\UserStatuses\EnumUserStatus;
+use App\Enums\Dev\EnumDefaultCompany;
 use App\Models\API\UserStatuses\UserStatus;
 
 
@@ -41,7 +42,11 @@ class UserStatusSeeder extends Seeder
         foreach ($userStatuses as $userStatus) {
             if (!UserStatus::where('name', $userStatus)->exists()) {
 
-                UserStatus::factory()->create(['name' => $userStatus]);
+                UserStatus::factory()->create([
+                    'name' => $userStatus,
+                    'created_by' => EnumDefaultCompany::SYSTEM_ID,
+                    'updated_by' => EnumDefaultCompany::SYSTEM_ID,
+                ]);
             }
         }
 

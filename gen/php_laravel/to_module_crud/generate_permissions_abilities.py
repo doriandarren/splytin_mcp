@@ -28,24 +28,43 @@ def generate_permissions_abilities(
 
     content = f"""<?php
 
-namespace App\\Permissions\\V1;
+namespace App\\Permissions\\{version_api}\\{plural_name};
 
 use App\\Enums\\EnumAbilitySuffix;
-use App\\Models\\User;
+
 
 final class {singular_name}Permission
 {{
 
     // Abilities
-    public const INDEX = '{singular_name_snake}:' . EnumAbilitySuffix::INDEX;
-    public const SHOW = '{singular_name_snake}:' . EnumAbilitySuffix::SHOW;
-    public const STORE = '{singular_name_snake}:' . EnumAbilitySuffix::STORE;
-    public const UPDATE = '{singular_name_snake}:' . EnumAbilitySuffix::UPDATE;
-    public const DELETE = '{singular_name_snake}:' . EnumAbilitySuffix::DELETE;
+    public const INDEX = '{singular_name_snake}' . EnumAbilitySuffix::INDEX;
+    public const SHOW = '{singular_name_snake}' . EnumAbilitySuffix::SHOW;
+    public const STORE = '{singular_name_snake}' . EnumAbilitySuffix::STORE;
+    public const UPDATE = '{singular_name_snake}' . EnumAbilitySuffix::UPDATE;
+    public const DELETE = '{singular_name_snake}' . EnumAbilitySuffix::DELETE;
 
     // Own
-    public const UPDATE_OWN = '{singular_name_snake}:own:' . EnumAbilitySuffix::UPDATE;
-    public const DELETE_OWN = '{singular_name_snake}:own:' . EnumAbilitySuffix::DELETE;
+    public const UPDATE_OWN = '{singular_name_snake}' . EnumAbilitySuffix::UPDATE_OWN;
+    public const DELETE_OWN = '{singular_name_snake}' . EnumAbilitySuffix::DELETE_OWN;
+    
+    
+    /**
+     * Function All
+     *
+     * @return array
+     */
+    public static function all(): array
+    {{
+        return [
+            self::INDEX,
+            self::SHOW,
+            self::STORE,
+            self::UPDATE,
+            self::DELETE,
+            self::UPDATE_OWN,
+            self::DELETE_OWN,
+        ];
+    }}
     
 }}
 """

@@ -52,6 +52,14 @@ class EnumDefaultCompany
 
 
     /**
+     * System
+     */
+    const SYSTEM_ID = 1;
+    const SYSTEM_NAME = 'System';
+    const SYSTEM_EMAIL = 'system@__DOMAIN_NAME__';
+    
+
+    /**
      * Admin
      */
     const ADMIN_NAME = 'Admin';
@@ -173,7 +181,7 @@ class EnumRole
     const MANAGER_DESCRIPTION = 'Manager';
     const USER_DESCRIPTION = 'User';
     const ERP_DESCRIPTION = 'Erp'; // role API connect
-    
+
 
     // ID's
     const ADMIN_ID = 1;
@@ -454,6 +462,9 @@ abstract class EnumAbilitySuffix
     const STORE = ':store';
     const UPDATE = ':update';
     const DELETE = ':delete';
+    
+    const UPDATE_OWN = ':own:update';
+    const DELETE_OWN = ':own:delete';
 }
 """
 

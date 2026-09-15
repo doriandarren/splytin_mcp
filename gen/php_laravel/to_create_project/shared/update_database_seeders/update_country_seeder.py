@@ -16,6 +16,7 @@ def update_country_seeder(full_path):
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use App\Enums\Dev\EnumDefaultCompany;
 use App\Models\API\Countries\Country;
 
 class CountrySeeder extends Seeder
@@ -39,6 +40,8 @@ class CountrySeeder extends Seeder
                 'code_alpha_3' => $item[3],
                 'numerical_code' => $item[4],
                 'phone_code' => $item[5],
+                'created_by' => EnumDefaultCompany::SYSTEM_ID,
+                'updated_by' => EnumDefaultCompany::SYSTEM_ID,
             ]);
         }
 
