@@ -60,11 +60,14 @@ use App\\Http\\Controllers\\API\\V1\\ApiController;
 use Illuminate\\Support\\Facades\\Auth;
 use Illuminate\\Http\\JsonResponse;
 use App\\Models\\{namespace}\\{plural_name}\\{singular_name};
+use App\\Policies\\{version_api}\\{plural_name}\\{singular_name}Policy;
 use App\\Services\\{version_api}\\{plural_name}\\{singular_name}Service;
 use App\\Http\\Resources\\{version_api}\\{plural_name}\\{singular_name}Resource;
 
 class {singular_name}ShowController extends ApiController
 {{
+    
+    protected $policyClass = {singular_name}Policy::class;
     
     /**
      * Construct
@@ -85,6 +88,9 @@ class {singular_name}ShowController extends ApiController
     */
     public function __invoke({singular_name} ${singular_name_snake}): JsonResponse
     {{
+        
+        $this->isAble('update', ${singular_name_camel});
+        
         if($this->isAdmin(Auth::user()->roles)){{
             
             $data = $this->service->show(${singular_name_snake}->id);

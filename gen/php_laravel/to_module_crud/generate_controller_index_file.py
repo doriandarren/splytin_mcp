@@ -65,6 +65,7 @@ use App\\Http\\Controllers\\API\\V1\\ApiController;
 use Illuminate\\Support\\Facades\\Auth;
 use Illuminate\\Http\\JsonResponse;
 use App\\Http\\Filters\\{version_api}\\{plural_name}\\{singular_name}Filter;
+use App\\Policies\\{version_api}\\{plural_name}\\{singular_name}Policy;
 use App\\Http\\Resources\\{version_api}\\{plural_name}\\{singular_name}Resource;
 use App\\Services\\{version_api}\\{plural_name}\\{singular_name}Service;
 
@@ -72,6 +73,8 @@ use App\\Services\\{version_api}\\{plural_name}\\{singular_name}Service;
 
 class {singular_name}IndexController extends ApiController
 {{
+    
+    protected $policyClass = {singular_name}Policy::class;
     
     /**
      * Construct
@@ -89,6 +92,8 @@ class {singular_name}IndexController extends ApiController
     */
     public function __invoke({singular_name}Filter $filter): JsonResponse
     {{
+        
+        $this->isAble('update', ${singular_name_camel});
         
         if ($this->isAdmin(Auth::user()->roles)) {{
             $data = $this->service->index($filter);

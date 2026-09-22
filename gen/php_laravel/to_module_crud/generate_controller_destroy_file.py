@@ -61,10 +61,13 @@ use Illuminate\\Http\\Request;
 use Illuminate\\Support\\Facades\\Auth;
 use Illuminate\\Http\\JsonResponse;
 use App\\Models\\{namespace}\\{plural_name}\\{singular_name};
+use App\\Policies\\{version_api}\\{plural_name}\\{singular_name}Policy;
 use App\\Services\\{version_api}\\{plural_name}\\{singular_name}Service;
 
 class {singular_name}DestroyController extends ApiController
 {{
+    
+    protected $policyClass = {singular_name}Policy::class;
     
     /**
      * Construct
@@ -87,6 +90,8 @@ class {singular_name}DestroyController extends ApiController
     */
     public function __invoke(Request $request, {singular_name} ${singular_name_snake}): JsonResponse
     {{
+        
+        $this->isAble('update', ${singular_name_camel});
 
         if($this->isAdmin(Auth::user()->roles)){{
 

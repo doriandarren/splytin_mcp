@@ -322,8 +322,8 @@ abstract class EnumAbilitySuffix
     const UPDATE = ':update';
     const DELETE = ':delete';
     
-    const UPDATE_OWN = ':update_own';
-    const DELETE_OWN = ':delete_own';
+    const UPDATE_OWN = ':own:update';
+    const DELETE_OWN = ':own:delete';
 }
 """
 
