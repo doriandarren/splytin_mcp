@@ -94,7 +94,7 @@ class {singular_name}IndexController extends ApiController
     public function __invoke({singular_name}Filter $filter): JsonResponse
     {{
         
-        // $this->isAble('show', ${singular_name}::class);
+        // $this->isAble('show', {singular_name}::class);
         
         if ($this->isAdmin(Auth::user()->roles)) {{
             $data = $this->service->index($filter);

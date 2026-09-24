@@ -127,7 +127,7 @@ class {singular_name}StoreController extends ApiController
     public function __invoke(Store{singular_name}Request $request): JsonResponse
     {{
         
-        $this->isAble('store', ${singular_name});
+        $this->isAble('store', {singular_name}::class);
         
         $attributes = $request->mappedAttributes();
 
