@@ -28,15 +28,15 @@ def format_relationships(columns, singular_name_snake, plural_name_snake):
     
     if flag:
         
-        lines.append(f"""            '// relationships' => [""")                
+        lines.append(f"""            //' relationships' => [""")                
         
         for column in columns:
             if column["is_fk"]:
                 
                 column_kabad_case = column["related_table"].replace("_", "-")
                 
-                lines.append(f"""                '//{column["relationship_name"]}' => [
-                    '//data' => [
+                lines.append(f"""                //'{column["relationship_name"]}' => [
+                    //'data' => [
                     //    'type' => '{column["relationship_name"]}',
                     //    'id' => $this->{column["relationship_column"]}
                     //],

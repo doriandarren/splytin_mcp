@@ -108,6 +108,12 @@ class {singular_name}Policy
     }}
     
     
+    public function index(User $user, {singular_name} ${singular_name_camel}): bool
+    {{
+        return $user->tokenCan('*')
+            || $user->tokenCan({singular_name}Permission::INDEX);
+    }}
+    
     public function view(User $user, {singular_name} ${singular_name_camel}): bool
     {{
         return $user->tokenCan('*')

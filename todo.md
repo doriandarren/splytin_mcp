@@ -3,7 +3,9 @@
 
 # Dorian tengo que terminar esto:
 
-- En php: revisar boostrap/app.php que hay cosas nuevas
+- Respuesta en auth/user y cambiar el show
+
+
 
 
 # Ejecutar nodulo:
