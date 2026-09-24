@@ -64,6 +64,7 @@ def generate_controller_index_file(
 use App\\Http\\Controllers\\API\\V1\\ApiController;
 use Illuminate\\Support\\Facades\\Auth;
 use Illuminate\\Http\\JsonResponse;
+use App\\Models\\{namespace}\\{plural_name}\\{singular_name};
 use App\\Http\\Filters\\{version_api}\\{plural_name}\\{singular_name}Filter;
 use App\\Policies\\{version_api}\\{plural_name}\\{singular_name}Policy;
 use App\\Http\\Resources\\{version_api}\\{plural_name}\\{singular_name}Resource;
@@ -93,7 +94,7 @@ class {singular_name}IndexController extends ApiController
     public function __invoke({singular_name}Filter $filter): JsonResponse
     {{
         
-        // $this->isAble('update', ${singular_name_camel});
+        // $this->isAble('show', ${singular_name}::class);
         
         if ($this->isAdmin(Auth::user()->roles)) {{
             $data = $this->service->index($filter);

@@ -91,7 +91,7 @@ class {singular_name}DestroyController extends ApiController
     public function __invoke(Request $request, {singular_name} ${singular_name_snake}): JsonResponse
     {{
         
-        $this->isAble('update', ${singular_name_camel});
+        $this->isAble('delete', ${singular_name_camel});
 
         if($this->isAdmin(Auth::user()->roles)){{
 

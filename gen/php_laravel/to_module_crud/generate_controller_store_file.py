@@ -95,6 +95,7 @@ def generate_controller_store_file(
 use App\\Http\\Controllers\\API\\V1\\ApiController;
 use Illuminate\\Support\\Facades\\Auth;
 use Illuminate\\Http\\JsonResponse;
+use App\\Models\\{namespace}\\{plural_name}\\{singular_name};
 use App\\Http\\Requests\\{version_api}\\{plural_name}\\Store{singular_name}Request;
 use App\\Policies\\{version_api}\\{plural_name}\\{singular_name}Policy;
 use App\\Services\\{version_api}\\{plural_name}\\{singular_name}Service;
@@ -126,7 +127,7 @@ class {singular_name}StoreController extends ApiController
     public function __invoke(Store{singular_name}Request $request): JsonResponse
     {{
         
-        $this->isAble('update', ${singular_name_camel});
+        $this->isAble('store', ${singular_name});
         
         $attributes = $request->mappedAttributes();
 
