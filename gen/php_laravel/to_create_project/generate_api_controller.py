@@ -61,7 +61,7 @@ class ApiController extends Controller
     }
 
 
-    public function isAble($ability, $targetModel)
+    public function isAble($ability, $targetModel = null)
     {
         return $this->authorize($ability, [$targetModel, $this->policyClass]);
     }

@@ -94,10 +94,32 @@ use App\\Models\\User;
 
 class {singular_name}Policy
 {{
+    
     /**
      * Create a new policy instance.
      */
     public function __construct(){{ }}
+    
+    
+    public function viewAny(User $user): bool
+    {{
+        return $user->tokenCan('*')
+            || $user->tokenCan({singular_name}Permission::INDEX);
+    }}
+    
+    
+    public function view(User $user, {singular_name} ${singular_name_camel}): bool
+    {{
+        return $user->tokenCan('*')
+            || $user->tokenCan({singular_name}Permission::SHOW);
+    }}
+
+    
+    public function create(User $user): bool
+    {{
+        return $user->tokenCan('*')
+            || $user->tokenCan({singular_name}Permission::STORE);
+    }}
 
 
     public function update(User $user, {singular_name} ${singular_name_camel})
@@ -111,6 +133,23 @@ class {singular_name}Policy
         }}
 
         if ($user->tokenCan({singular_name}Permission::UPDATE_OWN)) {{
+            return $user->id === ${singular_name_camel}->created_by;
+        }}
+
+        return false;
+    }}
+    
+    public function delete(User $user, {singular_name} ${singular_name_camel}): bool
+    {{
+        if ($user->tokenCan('*')) {{
+            return true;
+        }}
+
+        if ($user->tokenCan({singular_name}Permission::DELETE)) {{
+            return true;
+        }}
+
+        if ($user->tokenCan({singular_name}Permission::DELETE_OWN)) {{
             return $user->id === ${singular_name_camel}->created_by;
         }}
 
