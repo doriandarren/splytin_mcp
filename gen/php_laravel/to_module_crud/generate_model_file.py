@@ -64,7 +64,7 @@ use Illuminate\\Database\\Eloquent\\Factories\\HasFactory;
 use Illuminate\\Database\\Eloquent\\Model;
 use Illuminate\\Database\\Eloquent\\Builder;
 use App\\Traits\\TracksUsers;
-use App\\Http\\Filters\\API\\V1\\QueryFilter;
+use App\\Http\\Filters\\V1\\QueryFilter;
 {format_relation_uses(columns)}
 
 class {singular_name} extends Model

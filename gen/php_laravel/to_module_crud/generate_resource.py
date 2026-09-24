@@ -28,24 +28,24 @@ def format_relationships(columns, singular_name_snake, plural_name_snake):
     
     if flag:
         
-        lines.append(f"""            'relationships' => [""")                
+        lines.append(f"""            '// relationships' => [""")                
         
         for column in columns:
             if column["is_fk"]:
                 
                 column_kabad_case = column["related_table"].replace("_", "-")
                 
-                lines.append(f"""                '{column["relationship_name"]}' => [
-                    'data' => [
-                        'type' => '{column["relationship_name"]}',
-                        'id' => $this->{column["relationship_column"]}
-                    ],
-                    'links' => [
-                        'self' => route('{column_kabad_case}.show', ['{column["relationship_name"]}' => $this->{column["relationship_column"]}])
-                    ]
-                ],""")
+                lines.append(f"""                '//{column["relationship_name"]}' => [
+                    '//data' => [
+                    //    'type' => '{column["relationship_name"]}',
+                    //    'id' => $this->{column["relationship_column"]}
+                    //],
+                    //'links' => [
+                    //    'self' => route('{column_kabad_case}.show', ['{column["relationship_name"]}' => $this->{column["relationship_column"]}])
+                    //]
+                //],""")
                 
-        lines.append(f"""            ],""")
+        lines.append(f"""            // ],""")
 
 
     content = "\n".join(lines)
@@ -135,8 +135,8 @@ class {singular_name}Resource extends JsonResource
                 'created_at' => $this->created_at,
                 'updated_at' => $this->updated_at,
             ],
-{format_relationships(columns, singular_name_snake, plural_name_snake)}
 {format_includes(columns)}
+{format_relationships(columns, singular_name_snake, plural_name_snake)}
             'links' => [
                 'self' => route('{plural_name_kebab}.show', ['{singular_name_snake}' => $this->id])
             ]

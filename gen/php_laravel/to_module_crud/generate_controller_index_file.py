@@ -93,7 +93,7 @@ class {singular_name}IndexController extends ApiController
     public function __invoke({singular_name}Filter $filter): JsonResponse
     {{
         
-        $this->isAble('update', ${singular_name_camel});
+        // $this->isAble('update', ${singular_name_camel});
         
         if ($this->isAdmin(Auth::user()->roles)) {{
             $data = $this->service->index($filter);
