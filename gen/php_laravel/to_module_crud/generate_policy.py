@@ -121,7 +121,7 @@ class {singular_name}Policy
     }}
 
     
-    public function create(User $user): bool
+    public function store(User $user): bool
     {{
         return $user->tokenCan('*')
             || $user->tokenCan({singular_name}Permission::STORE);

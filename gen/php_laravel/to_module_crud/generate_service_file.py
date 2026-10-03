@@ -54,6 +54,7 @@ class {singular_name}Service
         
         return $filter
             ->apply({singular_name}::query())
+            ->orderBy('id', 'desc')
             ->paginate($perPage);
     }}
 
@@ -69,6 +70,7 @@ class {singular_name}Service
         
         return $filter
             ->apply({singular_name}::query())
+            ->orderBy('id', 'desc')
             ->paginate($perPage);
     }}
 
@@ -83,6 +85,7 @@ class {singular_name}Service
         
         return $filter
             ->apply({singular_name}::query())
+            ->orderBy('id', 'desc')
             ->paginate($perPage);
     }} 
         
