@@ -89,7 +89,7 @@ class {singular_name}ShowController extends ApiController
     public function __invoke({singular_name} ${singular_name_snake}): JsonResponse
     {{
         
-        $this->isAble('update', ${singular_name_camel});
+        $this->isAble('show', ${singular_name_camel});
         
         if($this->isAdmin(Auth::user()->roles)){{
             
