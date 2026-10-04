@@ -19,14 +19,22 @@ def format_relation_fields(columns):
 
 
 
-def format_relation_uses(columns):
+def format_relation_uses(namespace, columns):
     content = ''
     flag = False
     
     for column in columns:
+        
         if column["is_fk"]:
             flag = True
-            content += f"""use App\Models\API\{column["related_model_plural"]}\{column["related_model"]};\n"""  
+            
+            namespace_format = ''
+            if column["related_model"] == 'User':
+                namespace_format += f'\\User'
+            else:
+                namespace_format += f'\\{namespace}\\{column["related_model_plural"]}\\{column["related_model"]}'
+                
+            content += f"""use App\Models{namespace_format};\n"""  
             
         
     if flag:
@@ -67,7 +75,7 @@ use Illuminate\\Database\\Eloquent\\Model;
 use Illuminate\\Database\\Eloquent\\Builder;
 use App\\Traits\\TracksUsers;
 use App\\Http\\Filters\\V1\\QueryFilter;
-{format_relation_uses(columns)}
+{format_relation_uses(namespace, columns)}
 
 class {singular_name} extends Model
 {{
