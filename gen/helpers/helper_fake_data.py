@@ -1,24 +1,39 @@
 """
-TO USE / IMPLEMENTS: 
+- Example with all values:
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     fake = HelperFakeData()
-    generate_postman_file(
-        base_ruta=fake.project,
+
+    generate_controller_index_file(
+        full_path=fake.project,
+        namespace=fake.namespace,
+        version_api=fake.version_api,
+        folder_group=fake.folder_group,
+        project_name=fake.project_name,
         singular_name=fake.singular_name,
         plural_name=fake.plural_name,
+        singular_name_camel=fake.singular_name_camel,
+        plural_name_camel=fake.plural_name_camel,
         singular_name_kebab=fake.singular_name_kebab,
         plural_name_kebab=fake.plural_name_kebab,
+        singular_name_snake=fake.singular_name_snake,
+        plural_name_snake=fake.plural_name_snake,
         columns=fake.get_data(),
     )
+    
+- Execute: 
+
+python3 -m gen.php_laravel.to_module_crud.generate_postman_file
+
 """
 
-class HelperFakeData():
-    
+
+class HelperFakeData:
+
     def __init__(self):
-       
-        
         self.project = "/Users/dorian/PHPProjects/api.app1.com"
+        self.project_name = "api.app1.com"
+
         self.namespace = "API"
         self.version_api = "V1"
         self.folder_group = ""
@@ -26,23 +41,24 @@ class HelperFakeData():
         self.singular_name = "AgendaUnloading"
         self.plural_name = "AgendaUnloadings"
 
+        self.singular_name_camel = "agendaUnloading"
+        self.plural_name_camel = "agendaUnloadings"
+
         self.singular_name_kebab = "agenda-unloading"
         self.plural_name_kebab = "agenda-unloadings"
 
         self.singular_name_snake = "agenda_unloading"
         self.plural_name_snake = "agenda_unloadings"
-        
+
         self.data = []
+
         self.start()
-        
-    
+
     def get_data(self):
         return self.data
 
-
-
     def start(self):
-        
+
         self.set_data(
             is_fk=True,
             is_index=False,
@@ -54,6 +70,7 @@ class HelperFakeData():
             precision=None,
             raw_type="fk",
             related_model="User",
+            related_model_plural="Users",
             related_table="users",
             relationship_column="user_id",
             relationship_name="user",
@@ -61,21 +78,22 @@ class HelperFakeData():
             size=None,
             type="fk",
         )
-        
+
         self.set_data(
             is_fk=True,
             is_index=False,
             is_nullable=False,
             is_unique=False,
             is_unsigned=False,
-            name="ablity_group_id",
+            name="ability_group_id",
             options=["fk"],
             precision=None,
             raw_type="fk",
-            related_model="AblityGroup",
-            related_table="ablity_groups",
-            relationship_column="ablity_group_id",
-            relationship_name="ablity_group",
+            related_model="AbilityGroup",
+            related_model_plural="AbilityGroups",
+            related_table="ability_groups",
+            relationship_column="ability_group_id",
+            relationship_name="ability_group",
             scale=None,
             size=None,
             type="fk",
@@ -92,6 +110,7 @@ class HelperFakeData():
             precision=None,
             raw_type="string(30)",
             related_model=None,
+            related_model_plural=None,
             related_table=None,
             relationship_column=None,
             relationship_name=None,
@@ -111,6 +130,7 @@ class HelperFakeData():
             precision=10,
             raw_type="decimal(10,2)",
             related_model=None,
+            related_model_plural=None,
             related_table=None,
             relationship_column=None,
             relationship_name=None,
@@ -130,6 +150,7 @@ class HelperFakeData():
             precision=None,
             raw_type="float",
             related_model=None,
+            related_model_plural=None,
             related_table=None,
             relationship_column=None,
             relationship_name=None,
@@ -149,6 +170,7 @@ class HelperFakeData():
             precision=None,
             raw_type="varchar(10)",
             related_model=None,
+            related_model_plural=None,
             related_table=None,
             relationship_column=None,
             relationship_name=None,
@@ -168,6 +190,7 @@ class HelperFakeData():
             precision=None,
             raw_type="string",
             related_model=None,
+            related_model_plural=None,
             related_table=None,
             relationship_column=None,
             relationship_name=None,
@@ -187,6 +210,7 @@ class HelperFakeData():
             precision=None,
             raw_type="boolean",
             related_model=None,
+            related_model_plural=None,
             related_table=None,
             relationship_column=None,
             relationship_name=None,
@@ -198,12 +222,8 @@ class HelperFakeData():
 
 
 
-
-
-
-    
     def set_data(
-        self, 
+        self,
         is_fk,
         is_index,
         is_nullable,
@@ -214,33 +234,35 @@ class HelperFakeData():
         precision,
         raw_type,
         related_model,
+        related_model_plural,
         related_table,
         relationship_column,
         relationship_name,
         scale,
         size,
-        type
+        type,
     ):
-        
         obj = {}
-        obj['is_fk'] = is_fk
-        obj['is_index'] = is_index
-        obj['is_nullable'] = is_nullable
-        obj['is_unique'] = is_unique
-        obj['is_unsigned'] = is_unsigned
-        obj['name'] = name
-        obj['options'] = options
-        obj['precision'] = precision
-        obj['raw_type'] = raw_type
-        obj['related_model'] = related_model
-        obj['related_table'] = related_table
-        obj['relationship_column'] = relationship_column
-        obj['relationship_name'] = relationship_name
-        obj['scale'] = scale
-        obj['size'] = size
-        obj['type'] = type
-        
+
+        obj["is_fk"] = is_fk
+        obj["is_index"] = is_index
+        obj["is_nullable"] = is_nullable
+        obj["is_unique"] = is_unique
+        obj["is_unsigned"] = is_unsigned
+
+        obj["name"] = name
+        obj["options"] = options
+
+        obj["precision"] = precision
+        obj["raw_type"] = raw_type
+        obj["scale"] = scale
+        obj["size"] = size
+        obj["type"] = type
+
+        obj["related_model"] = related_model
+        obj["related_model_plural"] = related_model_plural
+        obj["related_table"] = related_table
+        obj["relationship_column"] = relationship_column
+        obj["relationship_name"] = relationship_name
+
         self.data.append(obj)
-
-
-    
