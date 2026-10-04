@@ -123,7 +123,9 @@ class AuthUserResource extends JsonResource
                 // new UserStatusResource($this->whenLoaded('user_status')),
             //],
             'relationships' => [
+                // Relación de muchos
                 'roles' => RoleResource::collection($this->roles),
+                // Relación de uno
                 'user_status' => new UserStatusResource($this->status),
             ],
             'links' => [
