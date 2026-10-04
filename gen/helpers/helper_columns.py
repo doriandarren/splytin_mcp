@@ -309,6 +309,13 @@ def parse_columns_input(input_columns: str):
             col["relationship_name"] = base
             col["relationship_column"] = name
             
+        else: 
+            col["related_table"] = None
+            col["related_model"] = None
+            col["related_model_plural"] = None
+            col["relationship_name"] = None
+            col["relationship_column"] = None
+            
 
         columns.append(col)
 

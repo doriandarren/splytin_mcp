@@ -20,7 +20,6 @@ from gen.php_laravel.to_module_crud.generate_seeder_file import generate_seeder_
 from gen.php_laravel.to_module_crud.generate_factory_file import generate_factory_file
 from gen.php_laravel.to_module_crud.generate_postman_file import generate_postman_file
 from gen.php_laravel.to_module_crud.generate_service_file import generate_service_file
-from gen.php_laravel.to_module_crud.update.update_route_api_php import update_route_api_php
 
 
 def standard_module_crud_php(
@@ -67,7 +66,7 @@ def standard_module_crud_php(
     project_name = normalize_project_name(temp_name)
     
     
-    ## dd(singular_name + " / " + plural_name + " / " + singular_name_kebab + " / " + plural_name_kebab + " / " + singular_name_snake + " / " + plural_name_snake)
+    ##dd(singular_name + " / " + plural_name + " / " + singular_name_kebab + " / " + plural_name_kebab + " / " + singular_name_snake + " / " + plural_name_snake)
     
 
     if os.path.isdir(full_path):
@@ -278,22 +277,6 @@ def standard_module_crud_php(
         #--------------------------
         if "routes" in input_menu_checkbox:
             generate_routes_file(
-                full_path,
-                namespace,
-                version_api,
-                folder_group,
-                singular_name,
-                plural_name,
-                singular_name_camel,
-                plural_name_camel,
-                singular_name_kebab,
-                plural_name_kebab,
-                singular_name_snake,
-                plural_name_snake,
-                columns
-            )
-            
-            update_route_api_php(
                 full_path,
                 namespace,
                 version_api,

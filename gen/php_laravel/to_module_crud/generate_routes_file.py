@@ -1,6 +1,53 @@
 import os
 from gen.helpers.helper_print import print_message, GREEN, CYAN
 
+def generate_routes_file(
+    full_path,
+    namespace,
+    version_api,
+    folder_group,
+    singular_name,
+    plural_name,
+    singular_name_camel,
+    plural_name_camel,
+    singular_name_kebab,
+    plural_name_kebab,
+    singular_name_snake,
+    plural_name_snake,
+    columns
+):
+    create_routes_file(
+        full_path,
+        namespace,
+        version_api,
+        folder_group,
+        singular_name,
+        plural_name,
+        singular_name_camel,
+        plural_name_camel,
+        singular_name_kebab,
+        plural_name_kebab,
+        singular_name_snake,
+        plural_name_snake,
+        columns
+    )
+
+    update_route_api_php(
+        full_path,
+        namespace,
+        version_api,
+        folder_group,
+        singular_name,
+        plural_name,
+        singular_name_camel,
+        plural_name_camel,
+        singular_name_kebab,
+        plural_name_kebab,
+        singular_name_snake,
+        plural_name_snake,
+        columns
+    )
+
 
 
 def find_namespace(namespace, version_api, folder_group, plural_name, singular_name):
@@ -23,7 +70,7 @@ use App\\Http\\Controllers\\{namespace}\\{version_api}\\{folder_group}\\{plural_
 
 
 
-def generate_routes_file(
+def create_routes_file(
     full_path,
     namespace,
     version_api,
@@ -88,4 +135,85 @@ Route::prefix('{plural_name_kebab}')
         print_message(f"Archivo generado: {file_path}", GREEN)
     except Exception as e:
         print_message(f"Error al generar el archivo {file_path}: {e}", CYAN)
+
+
+
+
+
+
+
+
+
+
+def update_route_api_php(
+    full_path,
+    namespace,
+    version_api,
+    folder_group,
+    singular_name,
+    plural_name,
+    singular_name_camel,
+    plural_name_camel,
+    singular_name_kebab,
+    plural_name_kebab,
+    singular_name_snake,
+    plural_name_snake,
+    columns
+):
+    """
+    Actualiza el archivo
+    """
+    main_path = os.path.join(full_path, "routes", "api.php")
+
+    # Verificar si el archivo existe
+    if not os.path.exists(main_path):
+        print_message(f"Error: {main_path} no existe.", CYAN)
+        return
+
+    try:
+        # Leer el contenido del archivo
+        with open(main_path, "r") as f:
+            content = f.read()
+        
+        
+        marker = """    // ..."""
+        string_replace = f"require base_path('routes/{namespace}/{version_api}/{plural_name_snake}.php');"
+        
+        
+        if marker not in content:
+            print_message(
+                f"No se encontró el marcador en {main_path}",
+                CYAN,
+            )
+            print(repr(marker))
+            return
+        
+        
+        if string_replace not in content:    
+            replacement = f"""    // ...
+    {string_replace}"""
+    
+            # Reemplazos
+            content = content.replace(
+                marker,
+                replacement
+            )
+            
+        
+
+        # Escribir el contenido actualizado
+        with open(main_path, "w") as f:
+            f.write(content)
+
+        print_message(
+            f"{main_path} actualizado correctamente.",
+            GREEN
+        )
+
+    except Exception as e:
+        print_message(
+            f"Error al actualizar {main_path}: {e}",
+            CYAN
+        )
+
 

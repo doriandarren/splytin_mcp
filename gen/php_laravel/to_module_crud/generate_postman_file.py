@@ -1,6 +1,8 @@
 import os
 import json
 
+from gen.helpers.helper_fake_data import HelperFakeData
+
 
 def create_postman_structure(base_ruta):
     """
@@ -79,6 +81,96 @@ def generate_index_query_params(columns):
 
 
 
+def create_store_relationships(columns):
+    attributes = {}
+    relationships = {}
+
+    data = {
+        "attributes": attributes
+    }
+
+    for column in columns:
+        # Attributes
+        if column["is_fk"]:
+            attributes[column["name"]] = 1
+
+        elif column["type"] == "decimal":
+            attributes[column["name"]] = "100.20"
+
+        elif column["type"] == "float":
+            attributes[column["name"]] = "26.30"
+
+        elif column["type"] == "integer":
+            attributes[column["name"]] = 6
+
+        elif column["type"] == "boolean":
+            attributes[column["name"]] = 1
+
+        else:
+            attributes[column["name"]] = f"New {column['name']}"
+
+        # Relationships
+        if column["is_fk"]:
+            relationships[column["relationship_name"]] = {
+                "data": {
+                    "id": 1
+                }
+            }
+
+    if relationships:
+        data["relationships"] = relationships
+
+    return json.dumps({
+        "data": data
+    }, indent=4)
+
+
+
+
+def create_update_relationships(columns):
+    attributes = {}
+    relationships = {}
+
+    data = {
+        "attributes": attributes
+    }
+
+    for column in columns:
+        # Attributes
+        if column["is_fk"]:
+            attributes[column["name"]] = 1
+
+        elif column["type"] == "decimal":
+            attributes[column["name"]] = "100.20"
+
+        elif column["type"] == "float":
+            attributes[column["name"]] = "26.30"
+
+        elif column["type"] == "integer":
+            attributes[column["name"]] = 4
+
+        elif column["type"] == "boolean":
+            attributes[column["name"]] = 1
+
+        else:
+            attributes[column["name"]] = f"Update {column['name']}"
+
+        # Relationships
+        if column["is_fk"]:
+            relationships[column["relationship_name"]] = {
+                "data": {
+                    "id": 1
+                }
+            }
+
+    if relationships:
+        data["relationships"] = relationships
+
+    return json.dumps({
+        "data": data
+    }, indent=4)
+
+
 
 def generate_postman_file(
     base_ruta,
@@ -102,14 +194,14 @@ def generate_postman_file(
         file_name
     )
 
-    # Obtener los nombres de las columnas dinámicamente
-    column_names = [
-        column["name"]
-        for column in columns
-    ]
-    
     
     query_params = generate_index_query_params(columns)
+     
+    store_body_params = create_store_relationships(columns)
+    update_body_params = create_update_relationships(columns)
+    
+    
+    
 
     # Crear estructura Postman
     postman_content = {
@@ -222,14 +314,7 @@ def generate_postman_file(
 
                             "body": {
                                 "mode": "raw",
-                                "raw": json.dumps({
-                                    "data": {
-                                        "attributes": {
-                                            column: f"New {column}"
-                                            for column in column_names
-                                        }
-                                    }
-                                }, indent=4),
+                                "raw": store_body_params,
                                 "options": {
                                     "raw": {
                                         "language": "json"
@@ -273,14 +358,7 @@ def generate_postman_file(
                             ],
                             "body": {
                                 "mode": "raw",
-                                "raw": json.dumps({
-                                    "data": {
-                                        "attributes": {
-                                            column: f"Update {column}"
-                                            for column in column_names
-                                        }
-                                    }
-                                }, indent=4),
+                                "raw": update_body_params,
                                 "options": {
                                     "raw": {
                                         "language": "json"
@@ -359,3 +437,20 @@ def generate_postman_file(
             f"Error al crear el archivo de colección "
             f"Postman '{file_name}': {e}"
         )
+        
+        
+
+
+if __name__ == '__main__': 
+       
+    fake = HelperFakeData()
+    generate_postman_file(
+        base_ruta=fake.project,
+        singular_name=fake.singular_name,
+        plural_name=fake.plural_name,
+        singular_name_kebab=fake.singular_name_kebab,
+        plural_name_kebab=fake.plural_name_kebab,
+        columns=fake.get_data(),
+    )
+
+

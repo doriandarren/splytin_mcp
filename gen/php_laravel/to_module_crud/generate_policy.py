@@ -4,7 +4,6 @@ from gen.helpers.helper_print import print_message, GREEN, CYAN
 
 
 
-
 def generate_policy(
     full_path,
     namespace,
@@ -207,34 +206,48 @@ def update_app_service_provider(
         with open(main_path, "r") as f:
             content = f.read()
         
+        ## TODO evitar que se duplique
+        
+        
         path_temp = f"App\\Models\\{namespace}\\{plural_name}\\{singular_name}"
             
         ## Only model User
         if singular_name == 'User':
             path_temp = f"App\\Models\\{singular_name}"
             
+            
+        model_import = f"use {path_temp};"
+        policy_import = f"use App\\Policies\\{version_api}\\{plural_name}\\{singular_name}Policy;"
+        policy_register = f"Gate::policy({singular_name}::class, {singular_name}Policy::class);"
 
-        # Reemplazos
-        content = content.replace(
-            """use Illuminate\Support\ServiceProvider;""",
-            f"""use {path_temp};
-use App\\Policies\\{version_api}\\{plural_name}\\{singular_name}Policy;
+        
+        # Añadir import del modelo
+        if model_import not in content:
+            content = content.replace(
+                "use Illuminate\\Support\\ServiceProvider;",
+                f"""{model_import}
 use Illuminate\\Support\\ServiceProvider;"""
-        )
-        
-        
-        
-        
-        # Reemplazos
-        content = content.replace(
-            """    public function boot(): void
+            )
+
+        # Añadir import de la policy
+        if policy_import not in content:
+            content = content.replace(
+                "use Illuminate\\Support\\ServiceProvider;",
+                f"""{policy_import}
+use Illuminate\\Support\\ServiceProvider;"""
+            )
+
+        # Registrar policy
+        if policy_register not in content:
+            content = content.replace(
+                """    public function boot(): void
     {""",
-            f"""    public function boot(): void
+                f"""    public function boot(): void
     {{
+        
         // {singular_name}
-        Gate::policy({singular_name}::class, {singular_name}Policy::class);
-"""
-        )
+        {policy_register}\n"""
+            )
 
         # Escribir el contenido actualizado
         with open(main_path, "w") as f:
@@ -250,9 +263,4 @@ use Illuminate\\Support\\ServiceProvider;"""
             f"Error al actualizar {main_path}: {e}",
             CYAN
         )
-
-    
-
-
-
 
