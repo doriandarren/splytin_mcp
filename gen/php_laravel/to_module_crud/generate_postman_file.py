@@ -155,7 +155,7 @@ def generate_postman_file(
                                     f"{{{{base_url}}}}{plural_name_kebab}"
                                 ],
                                 "path": [],
-                                "query": {query_params}
+                                "query": query_params
                             }
                         },
 

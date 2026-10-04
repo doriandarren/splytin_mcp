@@ -292,8 +292,20 @@ def parse_columns_input(input_columns: str):
             if base.endswith("_id"):
                 base = base[:-3]
 
-            col["related_table"] = pluralize(base)
-            col["related_model"] = snake_to_pascal(base)
+            fk_singular = snake_to_pascal(base)
+            fk_plural = pluralize(base)
+            
+            
+            a = fk_plural.split("_")
+            related_model_plural = ''
+            
+            for ele in a:
+                related_model_plural += ele[0].upper() + ele[1:]
+            
+
+            col["related_table"] = fk_plural
+            col["related_model"] = fk_singular
+            col["related_model_plural"] = related_model_plural
             col["relationship_name"] = base
             col["relationship_column"] = name
             

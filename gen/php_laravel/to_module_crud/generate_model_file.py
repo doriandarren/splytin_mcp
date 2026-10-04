@@ -8,11 +8,11 @@ def format_relation_fields(columns):
     
     for column in columns:
         if column["is_fk"]:
-            content += f"""    // public function {column["relationship_name"]}(): BelongsTo
-    // {{\n"""
-            content += f"""    //     return $this->belongsTo({column["related_model"]}::class, '{column["relationship_column"]}', 'id');"""
+            content += f"""    public function {column["relationship_name"]}(): BelongsTo
+    {{\n"""
+            content += f"""        return $this->belongsTo({column["related_model"]}::class, '{column["relationship_column"]}', 'id');"""
             content += f"""
-    // }}\n\n"""
+    }}\n\n"""
     
     
     return content
@@ -26,9 +26,11 @@ def format_relation_uses(columns):
     for column in columns:
         if column["is_fk"]:
             flag = True
+            content += f"""use App\Models\API\{column["related_model_plural"]}\{column["related_model"]};\n"""  
+            
         
     if flag:
-        content += f"""use Illuminate\\Database\\Eloquent\\Relations\\BelongsTo; """    
+        content += f"""use Illuminate\\Database\\Eloquent\\Relations\\BelongsTo; \n"""    
             
     return content
     
