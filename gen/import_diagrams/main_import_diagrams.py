@@ -5,7 +5,7 @@ from gen.import_diagrams.to_generate.generate_tables_columns import generate_tab
 from gen.import_diagrams.to_list.list_diagrams import list_diagrams
 from gen.import_diagrams.helpers.helper_assets_loader import list_xml_assets
 
-EXCLUDED_COLUMNS = {
+EXCLUDED_COLUMNS = [
     "id", 
     "created_by_id", 
     "created_by", 
@@ -13,11 +13,9 @@ EXCLUDED_COLUMNS = {
     "updated_by",
     "created_at", 
     "updated_at", 
-    "deleted_at"
-    "created_by", 
-    "updated_by", 
+    "deleted_at",
     "deleted_by"
-}
+]
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ASSETS_DIR = os.path.join(HERE, "assets")

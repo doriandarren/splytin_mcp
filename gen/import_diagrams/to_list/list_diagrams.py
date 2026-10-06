@@ -40,6 +40,7 @@ def list_diagrams(
     root = tree.getroot()
 
     excluded = {c.lower() for c in excluded_columns}
+    
     tables = {}
 
     # 1) Tablas (swimlane)
