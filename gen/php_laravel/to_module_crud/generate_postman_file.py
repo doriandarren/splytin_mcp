@@ -184,6 +184,8 @@ def generate_postman_file(
     Genera un archivo de colección Postman JSON
     basado en los nombres proporcionados.
     """
+    
+    plural_name_kebab = plural_name_kebab.rstrip("/")
 
     postman_folder_path = create_postman_structure(base_ruta)
 
@@ -246,7 +248,6 @@ def generate_postman_file(
                                 "host": [
                                     f"{{{{base_url}}}}{plural_name_kebab}"
                                 ],
-                                "path": [],
                                 "query": query_params
                             }
                         },
@@ -326,8 +327,7 @@ def generate_postman_file(
                                 "raw": f"{{{{base_url}}}}{plural_name_kebab}",
                                 "host": [
                                     f"{{{{base_url}}}}{plural_name_kebab}"
-                                ],
-                                "path": []
+                                ]
                             }
                         },
 

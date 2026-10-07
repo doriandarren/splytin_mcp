@@ -379,7 +379,6 @@ def generate_shared_postman_collections(full_path, project_name, domain_name, pa
 									"host": [
 										"{{base_url}}abilities"
 									],
-									"path": [],
 									"query": [
 										{
 											"key": "include",
@@ -516,9 +515,6 @@ def generate_shared_postman_collections(full_path, project_name, domain_name, pa
 									"raw": "{{base_url}}abilities",
 									"host": [
 										"{{base_url}}abilities"
-									],
-									"path": [
-										
 									]
 								}
 							},
@@ -622,7 +618,6 @@ def generate_shared_postman_collections(full_path, project_name, domain_name, pa
 									"host": [
 										"{{base_url}}ability-groups"
 									],
-									"path": [],
 									"query": [
 										{
 											"key": "include",
@@ -735,9 +730,6 @@ def generate_shared_postman_collections(full_path, project_name, domain_name, pa
 									"raw": "{{base_url}}ability-groups",
 									"host": [
 										"{{base_url}}ability-groups"
-									],
-									"path": [
-										
 									]
 								}
 							},
@@ -840,8 +832,7 @@ def generate_shared_postman_collections(full_path, project_name, domain_name, pa
 									"raw": "{{base_url}}ability-users",
 									"host": [
 										"{{base_url}}ability-users"
-									],
-									"path": [], 
+									], 
 									"query": [
 										{
 											"key": "include",
@@ -967,9 +958,6 @@ def generate_shared_postman_collections(full_path, project_name, domain_name, pa
 									"raw": "{{base_url}}ability-users",
 									"host": [
 										"{{base_url}}ability-users"
-									],
-									"path": [
-										
 									]
 								}
 							},
@@ -1073,7 +1061,6 @@ def generate_shared_postman_collections(full_path, project_name, domain_name, pa
 									"host": [
 										"{{base_url}}role-users"
 									],
-									"path": [],
 									"query": [
 										{
 											"key": "include",
@@ -1198,9 +1185,6 @@ def generate_shared_postman_collections(full_path, project_name, domain_name, pa
 									"raw": "{{base_url}}role-users",
 									"host": [
 										"{{base_url}}role-users"
-									],
-									"path": [
-										
 									]
 								}
 							},
@@ -1304,7 +1288,6 @@ def generate_shared_postman_collections(full_path, project_name, domain_name, pa
 									"host": [
 										"{{base_url}}roles"
 									],
-									"path": [],
 									"query": [
 										{
 											"key": "include",
@@ -1429,9 +1412,6 @@ def generate_shared_postman_collections(full_path, project_name, domain_name, pa
 									"raw": "{{base_url}}roles",
 									"host": [
 										"{{base_url}}roles"
-									],
-									"path": [
-										
 									]
 								}
 							},
@@ -1508,230 +1488,228 @@ def generate_shared_postman_collections(full_path, project_name, domain_name, pa
 					"name": "Users",
 					"item": [
 						{
-						"name": "Index",
-						"protocolProfileBehavior": {
-							"disableBodyPruning": true
-						},
-						"request": {
-							"method": "GET",
-							"header": [
-								{
-									"key": "Accept",
-									"value": "application/json"
-								},
-								{
-									"key": "Authorization",
-									"value": "Bearer {{token_api}}"
-								}
-							],
-							"body": {
-							"mode": "formdata",
-							"formdata": []
+							"name": "Index",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
 							},
-							"url": {
-							"raw": "{{base_url}}users",
-							"host": [
-								"{{base_url}}users"
-							],
-							"path": [],
-							"query": [
-								{
-								"key": "include",
-								"value": "",
-								"description": "Relationship",
-								"disabled": true
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{token_api}}"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": []
 								},
-								{
-								"key": "filter[user_status_id]",
-								"value": "1",
-								"description": "Filter by user_status_id",
-								"disabled": true
-								},
-								{
-								"key": "filter[name]",
-								"value": "",
-								"description": "Ej: Admin | *Admin*",
-								"disabled": true
-								},
-								{
-								"key": "filter[email]",
-								"value": "",
-								"description": "Ej: admin@__DOMAIN_NAME__ | *__DOMAIN_NAME__*",
-								"disabled": true
-								},
-								{
-								"key": "filter[email_verified_at]",
-								"value": "2026-08-01,2026-09-20",
-								"description": "Range by email_verified_at",
-								"disabled": true
-								},
-								{
-								"key": "filter[created_at]",
-								"value": "2026-08-01,2026-09-20",
-								"description": "Range by created_at",
-								"disabled": true
-								},
-								{
-								"key": "filter[updated_at]",
-								"value": "2026-08-01,2026-09-20",
-								"description": "Range by updated_at",
-								"disabled": true
-								},
-								{
-								"key": "sort",
-								"value": "name",
-								"description": "Sort by name",
-								"disabled": true
-								},
-								{
-								"key": "sort",
-								"value": "email",
-								"description": "Sort by email",
-								"disabled": true
-								},
-								{
-								"key": "sort",
-								"value": "created_at",
-								"description": "Sort by created_at",
-								"disabled": true
-								},
-								{
-								"key": "sort",
-								"value": "updated_at",
-								"description": "Sort by updated_at",
-								"disabled": true
+								"url": {
+									"raw": "{{base_url}}users",
+									"host": [
+										"{{base_url}}users"
+									],
+									"query": [
+										{
+											"key": "include",
+											"value": "",
+											"description": "Relationship",
+											"disabled": true
+										},
+										{
+											"key": "filter[user_status_id]",
+											"value": "1",
+											"description": "Filter by user_status_id",
+											"disabled": true
+										},
+										{
+											"key": "filter[name]",
+											"value": "",
+											"description": "Ej: Admin | *Admin*",
+											"disabled": true
+										},
+										{
+											"key": "filter[email]",
+											"value": "",
+											"description": "Ej: admin@__DOMAIN_NAME__ | *__DOMAIN_NAME__*",
+											"disabled": true
+										},
+										{
+											"key": "filter[email_verified_at]",
+											"value": "2026-08-01,2026-09-20",
+											"description": "Range by email_verified_at",
+											"disabled": true
+										},
+										{
+											"key": "filter[created_at]",
+											"value": "2026-08-01,2026-09-20",
+											"description": "Range by created_at",
+											"disabled": true
+										},
+										{
+											"key": "filter[updated_at]",
+											"value": "2026-08-01,2026-09-20",
+											"description": "Range by updated_at",
+											"disabled": true
+										},
+										{
+											"key": "sort",
+											"value": "name",
+											"description": "Sort by name",
+											"disabled": true
+										},
+										{
+											"key": "sort",
+											"value": "email",
+											"description": "Sort by email",
+											"disabled": true
+										},
+										{
+											"key": "sort",
+											"value": "created_at",
+											"description": "Sort by created_at",
+											"disabled": true
+										},
+										{
+											"key": "sort",
+											"value": "updated_at",
+											"description": "Sort by updated_at",
+											"disabled": true
+										}
+									]
 								}
-							]
-							}
-						},
-						"response": []
+							},
+							"response": []
 						},
 						{
-						"name": "Show",
-						"protocolProfileBehavior": {
-							"disableBodyPruning": true
-						},
-						"request": {
-							"method": "GET",
-							"header": [
-								{
-									"key": "Accept",
-									"value": "application/json"
-								},
-								{
-									"key": "Authorization",
-									"value": "Bearer {{token_api}}"
-								}
-							],
-							"body": {
-							"mode": "formdata",
-							"formdata": []
+							"name": "Show",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
 							},
-							"url": {
-							"raw": "{{base_url}}users/1",
-							"host": [
-								"{{base_url}}users"
-							],
-							"path": [
-								"1"
-							]
-							}
-						},
-						"response": []
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{token_api}}"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": []
+								},
+								"url": {
+									"raw": "{{base_url}}users/1",
+									"host": [
+										"{{base_url}}users"
+									],
+									"path": [
+										"1"
+									]
+								}
+							},
+							"response": []
 						},
 						{
-						"name": "Store",
-						"request": {
-							"method": "POST",
-							"header": [
-								{
-									"key": "Accept",
-									"value": "application/json"
+							"name": "Store",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{token_api}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"data\": {\n    \"attributes\": {\n      \"user_status_id\": 1,\n      \"name\": \"Admin New\",\n      \"email\": \"admin_new@__DOMAIN_NAME__\",\n      \"email_verified_at\": null,\n      \"password\": \"__PASSWORD__\",\n      \"image_url\": null\n    }\n  }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
 								},
-								{
-									"key": "Authorization",
-									"value": "Bearer {{token_api}}"
+								"url": {
+									"raw": "{{base_url}}users",
+									"host": [
+										"{{base_url}}users"
+									]
 								}
-							],
-							"body": {
-							"mode": "raw",
-							"raw": "{\n  \"data\": {\n    \"attributes\": {\n      \"user_status_id\": 1,\n      \"name\": \"Admin New\",\n      \"email\": \"admin_new@__DOMAIN_NAME__\",\n      \"email_verified_at\": null,\n      \"password\": \"__PASSWORD__\",\n      \"image_url\": null\n    }\n  }\n}",
-							"options": {
-								"raw": {
-								"language": "json"
-								}
-							}
 							},
-							"url": {
-							"raw": "{{base_url}}users",
-							"host": [
-								"{{base_url}}users"
-							],
-							"path": []
-							}
-						},
-						"response": []
+							"response": []
 						},
 						{
-						"name": "Update",
-						"request": {
-							"method": "PATCH",
-							"header": [
-								{
-									"key": "Accept",
-									"value": "application/json"
+							"name": "Update",
+							"request": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{token_api}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"data\": {\n    \"attributes\": {\n      \"user_status_id\": 1,\n      \"name\": \"Admin Updated\",\n      \"email\": \"admin@__DOMAIN_NAME__\",\n      \"email_verified_at\": null,\n      \"password\": \"__PASSWORD__\",\n      \"image_url\": null\n    }\n  }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
 								},
-								{
-									"key": "Authorization",
-									"value": "Bearer {{token_api}}"
+								"url": {
+									"raw": "{{base_url}}users/1",
+									"host": [
+										"{{base_url}}users"
+									],
+									"path": [
+										"1"
+									]
 								}
-							],
-							"body": {
-							"mode": "raw",
-							"raw": "{\n  \"data\": {\n    \"attributes\": {\n      \"user_status_id\": 1,\n      \"name\": \"Admin Updated\",\n      \"email\": \"admin@__DOMAIN_NAME__\",\n      \"email_verified_at\": null,\n      \"password\": \"__PASSWORD__\",\n      \"image_url\": null\n    }\n  }\n}",
-							"options": {
-								"raw": {
-								"language": "json"
-								}
-							}
 							},
-							"url": {
-							"raw": "{{base_url}}users/1",
-							"host": [
-								"{{base_url}}users"
-							],
-							"path": [
-								"1"
-							]
-							}
-						},
-						"response": []
+							"response": []
 						},
 						{
-						"name": "Delete",
-						"request": {
-							"method": "DELETE",
-							"header": [
-							{
-								"key": "Accept",
-								"value": "application/json"
+							"name": "Delete",
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{token_api}}"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}users/1",
+									"host": [
+										"{{base_url}}users"
+									],
+									"path": [
+										"1"
+									]
+								}
 							},
-							{
-								"key": "Authorization",
-								"value": "Bearer {{token_api}}"
-							}
-							],
-							"url": {
-							"raw": "{{base_url}}users/1",
-							"host": [
-								"{{base_url}}users"
-							],
-							"path": [
-								"1"
-							]
-							}
-						},
-						"response": []
+							"response": []
 						}
 					]
 				},
@@ -1766,7 +1744,6 @@ def generate_shared_postman_collections(full_path, project_name, domain_name, pa
 									"host": [
 										"{{base_url}}user-statuses"
 									],
-									"path": [],
 									"query": [
 										{
 											"key": "include",
@@ -1879,9 +1856,6 @@ def generate_shared_postman_collections(full_path, project_name, domain_name, pa
 									"raw": "{{base_url}}user-statuses",
 									"host": [
 										"{{base_url}}user-statuses"
-									],
-									"path": [
-										
 									]
 								}
 							},
@@ -2026,9 +2000,6 @@ def generate_shared_postman_collections(full_path, project_name, domain_name, pa
 							"raw": "{{base_url}}dashboards",
 							"host": [
 								"{{base_url}}dashboards"
-							],
-							"path": [
-								
 							]
 						}
 					},

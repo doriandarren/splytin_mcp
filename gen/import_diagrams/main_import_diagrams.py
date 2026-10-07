@@ -14,7 +14,7 @@ EXCLUDED_COLUMNS = [
     "created_at", 
     "updated_at", 
     "deleted_at",
-    "deleted_by"
+    "deleted_by",
 ]
 
 HERE = os.path.dirname(os.path.abspath(__file__))
