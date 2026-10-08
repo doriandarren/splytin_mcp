@@ -85,10 +85,10 @@ class {singular_name}DestroyController extends ApiController
     *
     *
     * @param Request $request
-    * @param {singular_name} ${singular_name_snake}
+    * @param {singular_name} ${singular_name_camel}
     * @return JsonResponse
     */
-    public function __invoke(Request $request, {singular_name} ${singular_name_snake}): JsonResponse
+    public function __invoke(Request $request, {singular_name} ${singular_name_camel}): JsonResponse
     {{
         
         $this->isAble('delete', ${singular_name_camel});
@@ -96,17 +96,17 @@ class {singular_name}DestroyController extends ApiController
         if($this->isAdmin(Auth::user()->roles)){{
 
             // By Admin
-            $data = $this->service->destroy(${singular_name_snake}->id);
+            $data = $this->service->destroy(${singular_name_camel}->id);
             
         }}if($this->isManager(Auth::user()->roles)){{
             
             // By Manager
-            $data = $this->service->destroy(${singular_name_snake}->id);
+            $data = $this->service->destroy(${singular_name_camel}->id);
 
         }}else{{
 
             // By User
-            $data = $this->service->destroy(${singular_name_snake}->id);
+            $data = $this->service->destroy(${singular_name_camel}->id);
 
         }}
         
