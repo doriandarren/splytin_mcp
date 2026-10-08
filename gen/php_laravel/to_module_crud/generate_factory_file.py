@@ -34,6 +34,8 @@ namespace Database\\Factories\\API\\{plural_name};
 
 use Illuminate\\Database\\Eloquent\\Factories\\Factory;
 
+use App\\Enums\\Dev\\EnumDefaultCompany;
+
 /**
 * @extends \\Illuminate\\Database\\Eloquent\\Factories\\Factory<\\App\\Models\\{namespace}\\{plural_name}\\{singular_name}>
 */

@@ -1,5 +1,4 @@
 import os
-from sys import api_version
 from gen.helpers.helper_print import print_message, GREEN, CYAN
 
 
@@ -81,12 +80,19 @@ def create_policy(
     file_path = os.path.join(folder_path, f"{singular_name}Policy.php")
 
     os.makedirs(folder_path, exist_ok=True)
+    
+    path_use = f'use App\\Models\\{namespace}\\{plural_name}\\{singular_name};'
+    
+    ## Only model User
+    if singular_name == 'User':
+        path_use = ''
+    
 
     content = f"""<?php
 
 namespace App\\Policies\\{version_api}\\{plural_name};
 
-use App\\Models\\{namespace}\\{plural_name}\\{singular_name};
+{path_use}
 use App\\Permissions\\V1\\{plural_name}\\{singular_name}Permission;
 use App\\Models\\User;
 
@@ -113,7 +119,7 @@ class {singular_name}Policy
             || $user->tokenCan({singular_name}Permission::INDEX);
     }}
     
-    public function show(User $user, {singular_name} ${singular_name_camel}): bool
+    public function show(User $user, {singular_name} $model): bool
     {{
         return $user->tokenCan('*')
             || $user->tokenCan({singular_name}Permission::SHOW);
@@ -127,7 +133,7 @@ class {singular_name}Policy
     }}
 
 
-    public function update(User $user, {singular_name} ${singular_name_camel})
+    public function update(User $user, {singular_name} $model)
     {{
         if ($user->tokenCan('*')) {{
             return true;
@@ -138,13 +144,13 @@ class {singular_name}Policy
         }}
 
         if ($user->tokenCan({singular_name}Permission::UPDATE_OWN)) {{
-            return $user->id === ${singular_name_camel}->created_by;
+            return $user->id === $model->created_by;
         }}
 
         return false;
     }}
     
-    public function delete(User $user, {singular_name} ${singular_name_camel}): bool
+    public function delete(User $user, {singular_name} $model): bool
     {{
         if ($user->tokenCan('*')) {{
             return true;
@@ -155,7 +161,7 @@ class {singular_name}Policy
         }}
 
         if ($user->tokenCan({singular_name}Permission::DELETE_OWN)) {{
-            return $user->id === ${singular_name_camel}->created_by;
+            return $user->id === $model->created_by;
         }}
 
         return false;

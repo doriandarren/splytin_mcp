@@ -36,6 +36,7 @@ namespace Database\\Seeders;
 
 use Illuminate\\Database\\Seeder;
 use App\\Models\\{namespace}\\{plural_name}\\{singular_name};
+use App\\Enums\\Dev\\EnumDefaultCompany;
 
 class {singular_name}Seeder extends Seeder
 {{
@@ -55,7 +56,9 @@ class {singular_name}Seeder extends Seeder
     for column in column_names:
         content += f"            '{column}' => '{column}',\n"
 
-    content += f"""        ]);
+    content += f"""        'created_by' => EnumDefaultCompany::SYSTEM_ID,
+        'updated_by' => EnumDefaultCompany::SYSTEM_ID,
+        ]);
     }}
 }}
 """
