@@ -30,7 +30,7 @@ def create_api_controller(full_path):
     # Contenido por defecto
     content = r"""<?php
 
-namespace App\Http\Controllers\Api\V1;
+namespace App\Http\Controllers\API\V1;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;

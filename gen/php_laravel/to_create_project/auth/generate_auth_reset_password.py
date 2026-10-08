@@ -172,7 +172,7 @@ def create_auth_reset_password_notification(full_path):
 
     content = r'''<?php
 
-namespace App\Notifications;
+namespace App\Notifications\Auth;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Messages\MailMessage;
