@@ -104,11 +104,20 @@ class {singular_name}IndexController extends ApiController
         $this->isAble('index', {singular_name}::class);
         
         if ($this->isAdmin(Auth::user()->roles)) {{
+            
+            // By Admin
             $data = $this->service->index($filter);
+            
         }} elseif ($this->isManager(Auth::user()->roles)) {{
+            
+            // By Manager
             $data = $this->service->indexByRoleManager($filter);
+            
         }} elseif ($this->isUser(Auth::user()->roles)) {{
+            
+            // By User
             $data = $this->service->indexByRoleUser($filter);
+            
         }}
         
         return $this->respondWithPaginatedData(

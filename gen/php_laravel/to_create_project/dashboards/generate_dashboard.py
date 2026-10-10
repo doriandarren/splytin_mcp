@@ -28,7 +28,7 @@ use App\Http\Controllers\Api\V1\ApiController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
-use App\Services\API\V1\Dashboards\DashboardService;
+use App\Services\V1\Dashboards\DashboardService;
 
 class DashboardIndexController extends ApiController
 {
@@ -50,11 +50,20 @@ class DashboardIndexController extends ApiController
         $data = [];
 
         if ($this->isAdmin(Auth::user()->roles)) {
+            
+            // By Admin
             $data = $this->repository->index();
+            
         } elseif ($this->isManager(Auth::user()->roles)) {
+            
+            // By Manager
             $data = $this->repository->indexByRoleManager();
+            
         } elseif ($this->isUser(Auth::user()->roles)) {
+            
+            // By User
             $data = $this->repository->indexByRoleUser();
+            
         }
 
         return $this->respondWithData('Dashboards Index', $data);
@@ -129,14 +138,14 @@ def create_service(full_path):
     Genera el archivo
     """
 
-    folder_path = os.path.join(full_path, "app", "Services", "API", "V1", "Dashboards")
+    folder_path = os.path.join(full_path, "app", "Services", "V1", "Dashboards")
     file_path = os.path.join(folder_path, "DashboardService.php")
 
     os.makedirs(folder_path, exist_ok=True)
 
     content = r'''<?php
 
-namespace App\Services\API\V1\Dashboards;
+namespace App\Services\V1\Dashboards;
 
 // use App\Enums\EnumApiSetup;
 
