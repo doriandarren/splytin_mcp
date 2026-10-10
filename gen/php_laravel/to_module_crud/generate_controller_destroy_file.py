@@ -51,6 +51,14 @@ def generate_controller_destroy_file(
     file_path = os.path.join(folder_path, f"{singular_name}DestroyController.php")
 
     os.makedirs(folder_path, exist_ok=True)
+    
+    
+    
+    path_use_model = f'use App\\Models\\{namespace}\\{plural_name}\\{singular_name};'
+            
+    if singular_name == 'User':
+        path_use_model = 'use App\\Models\\User;'
+    
 
     content = f"""<?php
 
@@ -60,7 +68,7 @@ use App\\Http\\Controllers\\API\\V1\\ApiController;
 use Illuminate\\Http\\Request;
 use Illuminate\\Support\\Facades\\Auth;
 use Illuminate\\Http\\JsonResponse;
-use App\\Models\\{namespace}\\{plural_name}\\{singular_name};
+{path_use_model}
 use App\\Policies\\{version_api}\\{plural_name}\\{singular_name}Policy;
 use App\\Services\\{version_api}\\{plural_name}\\{singular_name}Service;
 
