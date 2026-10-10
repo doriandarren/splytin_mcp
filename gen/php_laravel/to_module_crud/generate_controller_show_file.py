@@ -83,25 +83,25 @@ class {singular_name}ShowController extends ApiController
     * @header Authorization Bearer TOKEN 
     * @urlParam id required The ID of the table.
     *
-    * @param {singular_name} ${singular_name_snake}
+    * @param {singular_name} ${singular_name_camel}
     * @return JsonResponse
     */
-    public function __invoke({singular_name} ${singular_name_snake}): JsonResponse
+    public function __invoke({singular_name} ${singular_name_camel}): JsonResponse
     {{
         
         $this->isAble('show', ${singular_name_camel});
         
         if($this->isAdmin(Auth::user()->roles)){{
             
-            $data = $this->service->show(${singular_name_snake}->id);
+            $data = $this->service->show(${singular_name_camel}->id);
             
         }} else if($this->isManager(Auth::user()->roles)){{
             
-            $data = $this->service->showByRoleManager(${singular_name_snake}->id);
+            $data = $this->service->showByRoleManager(${singular_name_camel}->id);
             
         }} else {{
             
-            $data = $this->service->showByRoleUser(${singular_name_snake}->id);
+            $data = $this->service->showByRoleUser(${singular_name_camel}->id);
             
         }}
         

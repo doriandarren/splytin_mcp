@@ -81,18 +81,18 @@ def create_policy(
 
     os.makedirs(folder_path, exist_ok=True)
     
-    path_use = f'use App\\Models\\{namespace}\\{plural_name}\\{singular_name};'
+    path_use_model = f'use App\\Models\\{namespace}\\{plural_name}\\{singular_name};'
     
     ## Only model User
     if singular_name == 'User':
-        path_use = ''
+        path_use_model = ''
     
 
     content = f"""<?php
 
 namespace App\\Policies\\{version_api}\\{plural_name};
 
-{path_use}
+{path_use_model}
 use App\\Permissions\\V1\\{plural_name}\\{singular_name}Permission;
 use App\\Models\\User;
 

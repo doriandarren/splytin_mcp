@@ -3,8 +3,8 @@
 
 # Dorian tengo que terminar esto:
 
-- Respuesta en auth/user y cambiar el show
-
+- Cambiar User en el generador IndexUser - Service en el "use" cuando se importa el user 
+ 
 
 
 

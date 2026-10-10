@@ -30,6 +30,13 @@ def generate_service_file(
     # Obtener los nombres de las columnas dinámicamente
     column_names = [column["name"] for column in columns]
     
+    
+    path_use_model = f'use App\\Models\\{namespace}\\{plural_name}\\{singular_name};'
+    
+    if singular_name == 'User':
+        path_use_model = 'use App\\Models\\User;'
+    
+    
 
     content = f"""<?php
 
@@ -37,7 +44,7 @@ namespace App\\Services\\{version_api}\\{plural_name};
 
 use App\\Enums\\EnumApiSetup;
 use App\\Http\\Filters\\{version_api}\\{plural_name}\\{singular_name}Filter;
-use App\\Models\\{namespace}\\{plural_name}\\{singular_name};
+{path_use_model}
 
 class {singular_name}Service
 {{
