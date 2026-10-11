@@ -1,7 +1,12 @@
+import os
+from dotenv import load_dotenv
 from gen.helpers.helper_columns import parse_columns_input
 from gen.helpers.helper_menu import menu_checkbox, pause
 from gen.helpers.helper_print import input_with_validation
 from gen.react.to_create_module_crud.standard_module_crud_react import standard_module_crud_react
+
+
+load_dotenv()
 
 
 def start_module_react():
@@ -17,9 +22,8 @@ def start_module_react():
 
     input_menu_checkbox = menu_checkbox("Componentes: ", opt)
     
-    # default_path = "/Users/dorian/ReactProjects/app1.com"
-    # default_path = "/Users/dorian/ReactProjects/GlobalFleet/erp.globalfleet.es"
-    default_path = "/Users/milena/workspaces/workSpaceReact/blog.splytin.com"
+    
+    default_path = os.getenv("DEFAULT_PATH_PROJECT_REACT")
 
     fullt_path = input_with_validation("Carpeta Proyecto", default_path)
     singular_name = input_with_validation("Nombre singular", "AgendaUnloading")
