@@ -1,14 +1,21 @@
+import os
+from dotenv import load_dotenv
 from gen.helpers.helper_print import input_with_validation
 from gen.helpers.helper_menu import pause
 from gen.services.generator_services import create_python_django_project_service
 
 
+load_dotenv()
+
+
+
 def start_project_python_django():
     
     # Defaults
-    default_path = "/Users/dorian/PythonProjects"
-    default_project_name = "api.app.com"
+    default_project_name = os.getenv("DEFAULT_PROJECT_NAME_DJANGO")
+    default_path = os.getenv("DEFAULT_PATH_PROJECT_DJANGO")
     default_app_name = "main"
+
 
     # Inputs
     project_name = input_with_validation(

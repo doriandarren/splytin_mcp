@@ -1,7 +1,12 @@
+import os
+from dotenv import load_dotenv
 from gen.helpers.helper_columns import parse_columns_input
 from gen.helpers.helper_menu import menu_checkbox, pause
 from gen.helpers.helper_print import input_with_validation
 from gen.services.generator_services import create_python_django_crud_service
+
+
+load_dotenv()
 
 
 def start_module_crud_python_django():
@@ -15,12 +20,9 @@ def start_module_crud_python_django():
         ("Postman", "api_postman"),
     ]
     
-    #full_path_default = "/Users/dorian/PythonProjects/app1.com"
-    # full_path_default = "/Users/dorian/PythonProjects/python.generator"
-    full_path_default = "/Users/dorian/PythonProjects/python.splytin.com"
     
-    
-    app_main_default = "main"
+    default_full_path = os.get("DEFAULT_PATH_CRUD_DJANGO")
+    default_app_main = "main"
     
     singular_name_default = "AgendaUnloading"
     plural_name_default = "AgendaUnloadings"
@@ -29,8 +31,8 @@ def start_module_crud_python_django():
 
     input_menu_checkbox = menu_checkbox("Componentes: ", opt)
 
-    full_path = input_with_validation("Carpeta Proyecto", full_path_default)
-    app_main = input_with_validation("Nombre App principal", app_main_default)
+    full_path = input_with_validation("Carpeta Proyecto", default_full_path)
+    app_main = input_with_validation("Nombre App principal", default_app_main)
     singular_name = input_with_validation("Nombre singular", singular_name_default)
     plural_name = input_with_validation("Nombre plural", plural_name_default)
     input_columns = input_with_validation("Columnas", columns_default)
