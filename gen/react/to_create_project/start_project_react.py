@@ -11,7 +11,7 @@ load_dotenv()
 def start_project_react():
     
     # Defaults    
-    default_name = "erp.app1.com"
+    default_name = os.getenv("DEFAULT_PROJECT_NAME_REACT")
     default_path = os.getenv("DEFAULT_PATH_PROJECT_REACT")
 
     # Inputs

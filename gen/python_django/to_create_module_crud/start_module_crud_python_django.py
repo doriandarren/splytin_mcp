@@ -21,7 +21,7 @@ def start_module_crud_python_django():
     ]
     
     
-    default_full_path = os.get("DEFAULT_PATH_CRUD_DJANGO")
+    default_full_path = os.getenv("DEFAULT_PATH_CRUD_DJANGO")
     default_app_main = "main"
     
     singular_name_default = "AgendaUnloading"

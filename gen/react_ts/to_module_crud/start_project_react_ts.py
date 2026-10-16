@@ -1,12 +1,16 @@
+import os
+from dotenv import load_dotenv
 from helpers.helper_menu import pause
 from helpers.helper_print import input_with_validation
+
+load_dotenv()
 
 
 def start_project_react_ts():
     
     # Defaults
-    default_path = "/Users/dorian/ReactProjects"
-    default_name = "app-1"
+    default_path = os.getenv("DEFAULT_PATH_PROJECT_REACT")
+    default_name = os.getenv("DEFAULT_PROJECT_NAME_REACT")
 
     # Inputs
     project_name = input_with_validation(
