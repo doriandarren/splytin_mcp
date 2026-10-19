@@ -1,6 +1,10 @@
 import os
 from gen.helpers.helper_columns import parse_columns_input
-from gen.python_django.helpers.helper_file import helper_append_content, helper_create_init_file, helper_update_line
+from gen.python_django.helpers.helper_file import (
+    helper_append_content, 
+    helper_create_init_file, 
+    helper_update_line
+)
 from gen.python_django.to_create_module_crud.standard_module_crud_python_django import standard_module_crud_python_django
 from gen.helpers.helper_print import print_message, GREEN, CYAN, run_command
 
@@ -55,6 +59,7 @@ from rest_framework.permissions import IsAuthenticatedOrReadOnly
 
 from apps.devs.services.email_service import MailService
 from apps.devs.services.pdf_service import PdfService
+from core.messages.message_channel import MessageChannel
 
 class DevApiViewSet(BaseAPIView):
     permission_classes = [IsAuthenticatedOrReadOnly]
@@ -73,7 +78,23 @@ class DevApiViewSet(BaseAPIView):
             return self.respond_with_error(
                 message=str(e),
             )
-            
+
+
+
+class DevMessageChannelViewSet(BaseAPIView):    
+    def get(self, request):
+        return self.invoke(request)   
+    
+
+    def invoke(self, request):
+        """ Message Channel """
+        
+        MessageChannel.send("hola mundo")
+        
+        return self.respond_with_data(
+            message="Send"
+        )
+
 
 
 class DevEmailAPIView(BaseAPIView):

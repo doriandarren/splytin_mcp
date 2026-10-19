@@ -2,7 +2,7 @@ import os
 from dotenv import load_dotenv
 from gen.helpers.helper_columns import parse_columns_input
 from gen.helpers.helper_menu import menu_checkbox, pause
-from gen.helpers.helper_print import input_with_validation
+from gen.helpers.helper_print import input_with_validation, dd
 from gen.services.generator_services import create_python_django_crud_service
 
 
@@ -38,6 +38,9 @@ def start_module_crud_python_django():
     input_columns = input_with_validation("Columnas", columns_default)
     
     columns = parse_columns_input(input_columns)
+
+    ##dd(columns)
+    
     
     create_python_django_crud_service(
         full_path,
