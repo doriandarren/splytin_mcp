@@ -143,18 +143,29 @@ def create_seeder(full_path, domain_name):
     
 
     # Content
-    content = f'''from django.core.management.base import BaseCommand
+    content = f'''import os
+from dotenv import load_dotenv
+from django.core.management.base import BaseCommand, CommandError
 from django.contrib.auth import get_user_model
 
+load_dotenv()
 
 class Command(BaseCommand):
     help = "Crea o actualiza usuarios por defecto"
 
     def handle(self, *args, **kwargs):
+        
+        password = os.getenv("SEED_USER_PASSWORD")
+
+        if not password:
+            raise CommandError(
+                "La variable SEED_USER_PASSWORD no está configurada."
+            )
+    
         self.create_user(
             username="admin",
             email="admin@{domain_name}",
-            password="Tailandia2026",
+            password=password,
             first_name="Admin",
             last_name="Admin",
             is_staff=True,
@@ -164,7 +175,7 @@ class Command(BaseCommand):
         self.create_user(
             username="manager",
             email="manager@{domain_name}",
-            password="Tailandia2026",
+            password=password,
             first_name="Manager",
             last_name="Manager",
             is_staff=True,
@@ -174,7 +185,7 @@ class Command(BaseCommand):
         self.create_user(
             username="user",
             email="user@{domain_name}",
-            password="Tailandia2026",
+            password=password,
             first_name="User",
             last_name="User",
             is_staff=True,

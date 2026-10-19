@@ -86,6 +86,9 @@ EMAIL_HOST_USER=webmaster@{project_name_format}.com
 EMAIL_HOST_PASSWORD=
 DEFAULT_FROM_EMAIL=webmaster@{project_name_format}.com
 EMAIL_TIMEOUT=30
+
+# SEED USER
+SEED_USER_PASSWORD=Tailandia2026
 '''
 
     try:
@@ -130,6 +133,9 @@ EMAIL_HOST_USER=webmaster@{project_name_format}.com
 EMAIL_HOST_PASSWORD=
 DEFAULT_FROM_EMAIL=webmaster@{project_name_format}.com
 EMAIL_TIMEOUT=30
+
+# SEED USER
+SEED_USER_PASSWORD=
 '''
 
     try:

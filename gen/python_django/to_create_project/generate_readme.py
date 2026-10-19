@@ -16,26 +16,18 @@ def generate_readme(full_path, project_name, project_name_format, domain_name):
 ## Script para ejecutar el proyecto
 
 ```sh
-## Conda:
-conda create -n __PROJECT_NAME_FORMAT__ python=3.13
-conda activate __PROJECT_NAME_FORMAT__
-conda deactivate
-conda env list
-pip install -r requirements.txt
-conda env remove -n __PROJECT_NAME_FORMAT__
-
-
-## Venv
+## Crear el entorno - Venv
 python3 -m venv .venv
 source .venv/bin/activate 
-pip install --upgrade pip
-pip install -r requirements.txt
+python -m pip install --upgrade pip
+python -m pip install -r requirements.txt
 
-Crear raíz del proyecto: 
+# Crear raíz del proyecto: 
 - Archivo .env -> chmod 600 /var/www/vhosts/__DOMAIN_NAME__/__PROJECT_NAME__/.env
 - Carpeta logs
 - Carpeta media
 
+# Django
 python3 manage.py check                         # Chequear dependencias
 python3 manage.py makemigrations                # Migraciones
 python3 manage.py migrate                       # Aplicar migraciones
@@ -44,52 +36,31 @@ python3 manage.py seed_users                    # Crear superuser
 python3 manage.py runserver                     # Ejecutar servidor
 ```
 
+
 ## Crear entorno virtual Venv
 
 ```sh
-## Entorno virtual MacOs
-- python3 -m venv .venv
-- source .venv/bin/activate                     # Activar entorno
-- deactive                                      # Desactivar entorno
-
-## Entorno virtual Windows
-py -m venv .venv                               # Windows
-.\.venv\Scripts\activate                       # Windows
-py -m pip install --upgrade pip                # Windows
-deactivate                                     # Desactivar
-py -m pip xxx                                  # Usar este comando para instrucciones
-
-
-## Actualizar PIP
-pip install --upgrade pip
-
-
 ## Instala los requerimientos:
-pip freeze > requirements.txt                  # Crear archivo requerimientos -> Respaldo / Export
-pip install -r requirements.txt                # Instalar requerimientos Restore / Import
+python -m pip freeze > requirements.txt          # Crear archivo requerimientos -> Respaldo / Export
+python -m pip install -r requirements.txt        # Instalar requerimientos Restore / Import
 
-## Si No se tiene el archivo: requirements.txt
-pip install pipreqs                             # Install
-pipreqs . --force                               # Ejecutar
-
+## Si no se tiene el archivo: requirements.txt
+python -m pip install pipreqs                    # Install
+pipreqs . --force                                # Ejecutar
 
 ## Instalar paquetes
-pip freeze                                     # Ver Paquetes instalados
-py -m pip freeze                                # Para Windows
-pip install requests                           # Conexion API
-pip install schedule                           # CronJobs
-
+python -m pip freeze                            # Ver Paquetes instalados
 
 ## Si no funciona VSCode:
-( Cmd + Shift + P ) -> luego "Python: Select Interpreter" elegir ".venv/bin/python"
+(Cmd + Shift + P) -> luego "Python: Select Interpreter" elegir ".venv/bin/python"
 ```
 
 
 ## Commands
 
 ```sh
-python3 manage.py seed_user                     # Crear superuser
-python3 manage.py createsuperuser               # Consola Crear superuser
+python3 manage.py seed_user                      # Crear superuser
+python3 manage.py createsuperuser                # Consola Crear superuser
 
 python3 manage.py clear_migrations --dry-run     # Muestra las migraciones
 python3 manage.py clear_migrations               # Elimina las migraciones
@@ -100,22 +71,18 @@ python3 manage.py clear_migrations               # Elimina las migraciones
 ## Docker
 
 ```sh
-
-## levantar con Docker:
-docker compose up -d
-
-## Opcional:
+docker compose up -d                            ## levantar con Docker
 docker compose down -v                          ## Borra la BD
 docker compose up -d                            ## Se levanta de nuevo
-
 ```
 
 
-
-## Libraries
+## Packages / Libraries 
 
 ```sh
-pip install pdfkit                              # Crear PDF
+python -m pip install pdfkit                    # Crear PDF
+python -m pip install requests                  # Conexion API
+python -m pip install schedule                  # CronJobs
 ```
 
 
@@ -131,13 +98,10 @@ django-admin startproject nombre_proyecto .     # Crear PROJECT - No crea carpet
 python3 manage.py startapp nombre_app           # Crear app
 
 python manage.py migrate
-
 python3 manage.py runserver                     # Levantar el servidor
 python3 manage.py runserver 8001
-
-python3 manage.py seed_user                             # Seeder
-python3 manage.py createsuperuser                       # Consola Crear superuser
-
+python3 manage.py seed_user                     # Seeder
+python3 manage.py createsuperuser               # Consola Crear superuser
 ```
 
 ## Django + Celery + Beat + Redis
