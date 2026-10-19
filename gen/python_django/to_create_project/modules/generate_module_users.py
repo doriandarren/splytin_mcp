@@ -1,6 +1,11 @@
 import os
 from gen.helpers.helper_columns import parse_columns_input
-from gen.python_django.helpers.helper_file import helper_append_content, helper_create_init_file, helper_update_line, helper_update_list
+from gen.python_django.helpers.helper_file import (
+    helper_append_content, 
+    helper_create_init_file, 
+    helper_update_line, 
+    helper_update_list
+)
 from gen.python_django.to_create_module_crud.standard_module_crud_python_django import standard_module_crud_python_django
 from gen.helpers.helper_print import print_message, GREEN, CYAN
 

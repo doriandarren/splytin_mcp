@@ -59,8 +59,10 @@ from apps.devs.services.pdf_service import PdfService
 class DevApiViewSet(BaseAPIView):
     permission_classes = [IsAuthenticatedOrReadOnly]
     
-    ##@action(detail=False, methods=['get'], url_path='test')
     def get(self, request):
+        """
+            Dentro del mismo Get
+        """
         try:
             
             return self.respond_with_data(
@@ -72,9 +74,19 @@ class DevApiViewSet(BaseAPIView):
                 message=str(e),
             )
             
+
+
+class DevEmailAPIView(BaseAPIView):
+    permission_classes = [IsAuthenticatedOrReadOnly]
     
-    ##@action(detail=False, methods=['get'], url_path='test_email')
-    def invoke_email(self, request):
+    def get(self, request):
+        """
+            Se crea el metodo Get y se llama a invoke()
+        """
+        return self.invoke(request)
+    
+    
+    def invoke(self, request):
         """ EMAIL TEST 
             Envio de correo de prueba
         """
@@ -98,9 +110,22 @@ class DevApiViewSet(BaseAPIView):
             return self.respond_with_error(
                 message=str(e),
             )
+ 
+ 
+
+ 
+class DevPDFAPIView(BaseAPIView):
+    permission_classes = [IsAuthenticatedOrReadOnly]
     
-    ##@action(detail=False, methods=['get'], url_path='test_pdf')
-    def invoke_pdf(self, request):
+    
+    def get(self, request):
+        """
+            Se crea el metodo Get y se llama a invoke()
+        """
+        return self.invoke(request)
+            
+    
+    def invoke(self, request):
         """ 
             Generación de PDF de prueba.
         """

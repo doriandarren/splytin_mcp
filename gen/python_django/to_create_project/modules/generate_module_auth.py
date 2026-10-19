@@ -197,7 +197,6 @@ class AuthenticationSerializer(ModelSerializer):
         fields = [
             'id', 
             'email',
-            'password',
             'created_at',
             'updated_at',
             'created_by',
