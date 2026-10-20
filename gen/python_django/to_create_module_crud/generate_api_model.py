@@ -30,11 +30,11 @@ def map_column_type(column, plural_name_snake):
         related_table = column.get("related_table", "")
         related_model = column.get("related_model", "")
         field_name = column["name"].replace("_id", "")
-        return field_name, f'models.ForeignKey(
+        return field_name, f'''models.ForeignKey(
             "{related_table}.{related_model}", 
             on_delete=models.CASCADE, 
             related_name="{plural_name_snake}"
-        )'
+        )'''
 
     if column_type == "string":
         return column["name"], "models.CharField(max_length=255)"

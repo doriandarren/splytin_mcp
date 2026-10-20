@@ -14,17 +14,7 @@ from gen.helpers.helper_print import dd, print_message, GREEN, CYAN
 def generate_module_auth(full_path):
     """
     Genera el archivo
-    
-    EX:
-    - full_path: /Users/dorian/PythonProjects/python.splytin.com
-    - app_main: main 
-    - singular_name: AgendaUnloading 
-    - plural_name: AgendaUnloadings 
-    - columns: [{'name': 'user_id', 'type': 'fk', 'raw_type': 'fk', 'is_fk': True, 'related_table': 'users', 'related_model': 'User'}, {'name': 'name', 'type': 'string', 'raw_type': 'string', 'is_fk': False}, {'name': 'age', 'type': 'integer', 'raw_type': 'integer', 'is_fk': False}, {'name': 'description', 'type': 'string', 'raw_type': 'string', 'is_fk': False}] 
-    - input_menu_checkbox: ['api_route', 'api_serializer', 'api_wiewset', 'api_model', 'api_service']
-    
     """
-    
     
     app_main = "main"
     singular_name = "Authentication"

@@ -194,5 +194,3 @@ def update_settings(full_path, app_main):
         "INSTALLED_APPS", 
         f"'{app_main}',                             # Module main"
     )
-    
-

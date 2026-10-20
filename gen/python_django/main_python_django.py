@@ -34,10 +34,10 @@ def main_python_django():
 
         if opt == 'project':
             start_project_python_django()
-            
+        
         elif opt == 'crud':
             start_module_crud_python_django()
-            
+                        
         elif opt == 'back':
             print("\nVolviendo al menú anterior...\n")
             break
@@ -48,3 +48,4 @@ def main_python_django():
 
 if __name__ == "__main__":
     main_python_django()
+    

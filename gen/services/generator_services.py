@@ -2,7 +2,10 @@ from __future__ import annotations
 
 from typing import Any
 
+import os
+from dotenv import load_dotenv
 from gen.helpers.helper_columns import parse_columns_input
+from gen.helpers.helpers import dd
 from gen.php_laravel.to_create_project.generate_api_controller import generate_api_controller
 from gen.php_laravel.to_create_project.generate_default_role_permissions import generate_default_role_permissions
 from gen.php_laravel.to_create_project.generate_query_filter import generate_query_filter
@@ -16,12 +19,11 @@ from gen.php_laravel.to_create_project.updates.update_role_user_model import upd
 from gen.python_django.helpers import helper_domain
 from gen.python_django.to_create_project.core.generate_api_response import generate_api_response
 from gen.python_django.to_create_project.core.generate_custom_logging import generate_custom_logging
+from gen.python_django.to_create_project.generate_djangorestframework_jsonapi import generate_djangorestframework_jsonapi
 from gen.python_django.to_create_project.generate_postman import generate_postman
 from gen.python_django.to_create_project.generate_requirements_txt import generate_requirements_txt
 from gen.python_django.to_create_project.modules.generate_module_auth import generate_module_auth
 from gen.python_django.to_create_project.statics.generate_media import generate_media
-from dotenv import load_dotenv
-import os
 
 
 load_dotenv()
@@ -92,6 +94,7 @@ def create_python_django_project_service(
         generate_module_users,
     )
 
+
     full_path = _full_path(project_path, project_name)
     project_name_format = normalize_project_name(project_name)
     
@@ -103,8 +106,10 @@ def create_python_django_project_service(
     generate_readme(full_path, project_name, project_name_format, domain_name)
     generate_todo_md(full_path, project_name)
     
-    
+    ## Obtain VENV
     venv_python = get_venv_python(full_path)
+    
+    ##dd("pass")
 
 
     generate_django(full_path, project_name_format, app_main, venv_python)
@@ -119,10 +124,17 @@ def create_python_django_project_service(
     generate_http(full_path)
     generate_message_channel(full_path)
     generate_core_models(full_path)
+    
+    
+    
+    
     generate_page_home(full_path, project_name_format, app_main)
     
     generate_module_users(full_path, project_name, project_name_format, app_main, domain_name)
     generate_module_auth(full_path)
+    
+    
+    generate_djangorestframework_jsonapi(full_path, venv_python, app_main)
     
     generate_module_devs(full_path, project_name_format, app_main, venv_python)
     generate_cron(full_path, project_name_format, app_main, venv_python)
