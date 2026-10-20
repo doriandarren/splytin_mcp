@@ -1,18 +1,18 @@
 import os
+from gen.helpers.helper_file import HelperFile
 from gen.helpers.helper_print import print_message, GREEN, CYAN
 
 
-def generate_gitignore(full_path):
-    """
-    Genera el archivo
-    """
 
-    folder_path = os.path.join(full_path)
-    file_path = os.path.join(folder_path, ".gitignore")
+class PyGenerateIgnore:
+    
+    
+    def invoke(self, full_path):
+        """
+        Genera el archivo
+        """
 
-    os.makedirs(folder_path, exist_ok=True)
-
-    content = f'''# Byte-compiled / optimized / DLL files
+        content = f'''# Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
 *$py.class
@@ -111,9 +111,8 @@ node_modules/
 *~
 '''
 
-    try:
-        with open(file_path, "w") as f:
-            f.write(content)
-        print_message(f"Archivo generado: {file_path}", GREEN)
-    except Exception as e:
-        print_message(f"Error al generar el archivo {file_path}: {e}", CYAN)
+        HelperFile.write(
+            folder_path=full_path,
+            file_name=".gitignore",
+            content=content
+        )

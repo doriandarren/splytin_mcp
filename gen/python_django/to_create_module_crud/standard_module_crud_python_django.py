@@ -13,7 +13,14 @@ from gen.python_django.to_create_module_crud.generate_app import generate_app
 from gen.python_django.to_create_module_crud.update_installed_apps import update_installed_apps
 
 
-def standard_module_crud_python_django(full_path, app_main, singular_name, plural_name, columns, input_menu_checkbox=None):
+def standard_module_crud_python_django(
+    full_path, 
+    app_main, 
+    singular_name, 
+    plural_name, 
+    columns, 
+    input_menu_checkbox=None
+):
     """
     Crea el modulo
     

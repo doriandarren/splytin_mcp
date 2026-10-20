@@ -1,18 +1,16 @@
-import os
-from gen.helpers.helper_print import print_message, GREEN, CYAN
+from gen.helpers.helper_file import HelperFile
 
-def generate_readme(full_path, project_name, project_name_format, domain_name):
-    """
-    Genera el archivo
-    """
 
-    folder_path = os.path.join(full_path)
-    file_path = os.path.join(folder_path, "readme.md")
+class PyGenerateReadme:
+    
+    
+    def invoke(self, full_path, project_name, project_name_format, domain_name):
+        """
+        Genera el archivo readme.md.
+        """
 
-    os.makedirs(folder_path, exist_ok=True)
-
-    content = r'''# Project __PROJECT_NAME__
-
+        content = r'''# Project __PROJECT_NAME__
+                
 ## Script para ejecutar el proyecto
 
 ```sh
@@ -160,19 +158,19 @@ opc: 1
 touch tmp/restart.txt
 
 ```
-
 '''
 
+        # Reemplazar variables
+        content = content.replace("__PROJECT_NAME__", project_name)
+        content = content.replace(
+            "__PROJECT_NAME_FORMAT__",
+            project_name_format
+        )
+        content = content.replace("__DOMAIN_NAME__", domain_name)
 
-    content = content.replace("__PROJECT_NAME__", project_name)
-    content = content.replace("__PROJECT_NAME_FORMAT__", project_name_format)
-    content = content.replace("__DOMAIN_NAME__", domain_name)
-
-    
-
-    try:
-        with open(file_path, "w") as f:
-            f.write(content)
-        print_message(f"Archivo generado: {file_path}", GREEN)
-    except Exception as e:
-        print_message(f"Error al generar el archivo {file_path}: {e}", CYAN)
+        # Crear el archivo
+        HelperFile.write(
+            folder_path=full_path,
+            file_name="readme.md",
+            content=content
+        )

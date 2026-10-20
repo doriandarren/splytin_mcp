@@ -34,7 +34,7 @@ from apps.{plural_name_snake}.api.views import {singular_name}ApiViewSet
 router = DefaultRouter()
 
 router.register(
-    prefix='{plural_name_snake}',
+    prefix='{plural_name_kebab}',
     basename='{plural_name_snake}',
     viewset={singular_name}ApiViewSet
 )

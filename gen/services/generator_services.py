@@ -20,9 +20,14 @@ from gen.python_django.helpers import helper_domain
 from gen.python_django.to_create_project.core.generate_api_response import generate_api_response
 from gen.python_django.to_create_project.core.generate_custom_logging import generate_custom_logging
 from gen.python_django.to_create_project.generate_djangorestframework_jsonapi import generate_djangorestframework_jsonapi
-from gen.python_django.to_create_project.generate_postman import generate_postman
+from gen.python_django.to_create_project.py_generate_gitignore import PyGenerateIgnore
+from gen.python_django.to_create_project.py_generate_postman import PyGeneratePostman
 from gen.python_django.to_create_project.generate_requirements_txt import generate_requirements_txt
 from gen.python_django.to_create_project.modules.generate_module_auth import generate_module_auth
+from gen.python_django.to_create_project.py_generate_command_line import PyGenerateCommandLine
+from gen.python_django.to_create_project.py_generate_passenger_wsgi import PyGeneratePassengerWSGI
+from gen.python_django.to_create_project.py_generate_readme import PyGenerateReadme
+from gen.python_django.to_create_project.py_generate_todo_md import PyGenerateTodoMD
 from gen.python_django.to_create_project.statics.generate_media import generate_media
 
 
@@ -69,24 +74,15 @@ def create_python_django_project_service(
         generate_message_channel,
     )
     from gen.python_django.to_create_project.generate_api_doc import generate_api_doc
-    from gen.python_django.to_create_project.generate_by_command_line import (
-        generate_by_command_line as generate_python_django_by_command_line,
-    )
     from gen.python_django.to_create_project.generate_cors import generate_cors
     from gen.python_django.to_create_project.generate_cron import generate_cron
     from gen.python_django.to_create_project.generate_django import generate_django
     from gen.python_django.to_create_project.generate_env import generate_env
-    from gen.python_django.to_create_project.generate_gitignore import generate_gitignore
     from gen.python_django.to_create_project.generate_page_home import generate_page_home
-    from gen.python_django.to_create_project.generate_passenger_wsgi import (
-        generate_passenger_wsgi,
-    )
     from gen.python_django.to_create_project.generate_postgres import generate_postgres
-    from gen.python_django.to_create_project.generate_readme import generate_readme
     from gen.python_django.to_create_project.generate_static_files import (
         generate_static_files,
     )
-    from gen.python_django.to_create_project.generate_todo_md import generate_todo_md
     from gen.python_django.to_create_project.modules.generate_module_devs import (
         generate_module_devs,
     )
@@ -99,15 +95,35 @@ def create_python_django_project_service(
     project_name_format = normalize_project_name(project_name)
     
     domain_name = helper_domain.helper_domain_name(project_name)
-
-    generate_python_django_by_command_line(full_path, project_name_format, app_main)
-    generate_gitignore(full_path)
-    generate_passenger_wsgi(full_path, app_main)
-    generate_readme(full_path, project_name, project_name_format, domain_name)
-    generate_todo_md(full_path, project_name)
     
-    ## Obtain VENV
+    ## Get VENV
     venv_python = get_venv_python(full_path)
+    
+    
+    # CommandLine
+    obj = PyGenerateCommandLine()
+    obj.invoke(full_path, project_name_format, app_main)
+    
+    
+    # Gitignore
+    gitignore = PyGenerateIgnore()
+    gitignore.invoke(full_path)
+    
+    
+    # PassengerWSGI
+    obj = PyGeneratePassengerWSGI()
+    obj.invoke(full_path, app_main)
+    
+    
+    # Readme
+    obj = PyGenerateReadme()
+    obj.invoke(full_path, project_name, project_name_format, domain_name)
+    
+    # FileTODO
+    obj = PyGenerateTodoMD()
+    obj.invoke(full_path, project_name)
+    
+    
     
     ##dd("pass")
 
@@ -124,12 +140,7 @@ def create_python_django_project_service(
     generate_http(full_path)
     generate_message_channel(full_path)
     generate_core_models(full_path)
-    
-    
-    
-    
     generate_page_home(full_path, project_name_format, app_main)
-    
     generate_module_users(full_path, project_name, project_name_format, app_main, domain_name)
     generate_module_auth(full_path)
     
@@ -139,11 +150,16 @@ def create_python_django_project_service(
     generate_module_devs(full_path, project_name_format, app_main, venv_python)
     generate_cron(full_path, project_name_format, app_main, venv_python)
     generate_custom_logging(full_path, project_name_format, app_main, venv_python)
-    generate_postman(full_path, project_name, domain_name)
+    
+    # TODO
+    postman = PyGeneratePostman()
+    postman.invoke(full_path, project_name, domain_name)
+    
+    
+    
     generate_requirements_txt(full_path, venv_python)
     generate_api_response(full_path)
     
-        
 
     return {
         "generator": "python_django_project",
@@ -152,6 +168,9 @@ def create_python_django_project_service(
         "app_name": app_main,
         "full_path": full_path,
     }
+
+
+
 
 
 def create_python_django_crud_service(
@@ -187,6 +206,8 @@ def create_python_django_crud_service(
         "components": selected_components,
         "columns": normalized_columns,
     }
+
+
 
 
 def create_react_project_service(
@@ -276,6 +297,8 @@ def create_react_project_service(
         "project_name": project_name,
         "full_path": full_path,
     }
+
+
 
 
 def create_php_project_service(

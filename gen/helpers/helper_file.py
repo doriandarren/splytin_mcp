@@ -1,0 +1,30 @@
+import os
+from gen.helpers.helper_print import print_message, GREEN, CYAN
+
+
+class HelperFile:
+    
+    @staticmethod
+    def write(folder_path, file_name, content):
+        """
+        Genera el archivo
+        """
+
+         # Crear el directorio si no existe
+        os.makedirs(folder_path, exist_ok=True)
+
+        # Construir la ruta completa del archivo
+        file_path = os.path.join(folder_path, file_name)
+
+        try:
+            # Escribir el contenido del archivo
+            with open(file_path, "w", encoding="utf-8") as file:
+                file.write(content)
+
+            print_message(f"Archivo generado: {file_path}", GREEN)
+
+            return file_path
+
+        except OSError as error:
+            print_message(f"Error al generar el archivo {file_path}: {error}", CYAN)
+            return None
