@@ -1,7 +1,11 @@
 import os
-from gen.helpers.helper_print import print_message, GREEN, CYAN
+from gen.helpers.helper_file import HelperFile
 
-def generate_api_viewset(
+
+class DjGenerateApiViewset:
+
+    def invoke(
+        self,
         full_path,
         project_name,
         singular_name,
@@ -14,16 +18,13 @@ def generate_api_viewset(
         plural_first_camel,
         columns,
     ):
-    """
-    Genera el archivo
-    """
+        """
+        Genera el archivo.
+        """
 
-    folder_path = os.path.join(full_path,  "apps", plural_name_snake, "api")
-    file_path = os.path.join(folder_path, "views.py")
+        folder_path = os.path.join(full_path, "apps", plural_name_snake, "api")
 
-    os.makedirs(folder_path, exist_ok=True)
-
-    content = f'''from core.api.api_response import BaseModelViewSet
+        content = f'''from core.api.api_response import BaseModelViewSet
 from rest_framework.permissions import IsAuthenticated
 #from django_filters.rest_framework import DjangoFilterBackend
 
@@ -40,9 +41,10 @@ class {singular_name}ApiViewSet(BaseModelViewSet):
     #filterset_fields = ['category', 'active']
 '''
 
-    try:
-        with open(file_path, "w") as f:
-            f.write(content)
-        print_message(f"Archivo generado: {file_path}", GREEN)
-    except Exception as e:
-        print_message(f"Error al generar el archivo {file_path}: {e}", CYAN)
+        # Crear el archivo
+        HelperFile.write(
+            folder_path=folder_path,
+            file_name="views.py",
+            content=content
+        )
+

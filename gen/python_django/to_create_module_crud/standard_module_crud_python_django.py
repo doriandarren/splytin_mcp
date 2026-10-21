@@ -3,14 +3,14 @@ from gen.helpers.helper_print import camel_to_kebab, camel_to_snake
 from gen.helpers.helper_string import normalize_project_name
 from gen.helpers.helpers import dd
 from gen.python_django.helpers.helper_virtual_env import get_venv_python
-from gen.python_django.to_create_module_crud.generate_api_model import generate_api_model
-from gen.python_django.to_create_module_crud.generate_api_postman import generate_api_postman
-from gen.python_django.to_create_module_crud.generate_api_route import generate_api_route
-from gen.python_django.to_create_module_crud.generate_api_serializer import generate_api_serializer
-from gen.python_django.to_create_module_crud.generate_api_service import generate_api_service
-from gen.python_django.to_create_module_crud.generate_api_viewset import generate_api_viewset
-from gen.python_django.to_create_module_crud.generate_app import generate_app
-from gen.python_django.to_create_module_crud.update_installed_apps import update_installed_apps
+from gen.python_django.to_create_module_crud.dj_generate_api_model import DjGenerateApiModel
+from gen.python_django.to_create_module_crud.dj_generate_api_postman import DjGenerateApiPostman
+from gen.python_django.to_create_module_crud.dj_generate_api_route import DjGenerateApiRoute
+from gen.python_django.to_create_module_crud.dj_generate_api_serializer import DjGenerateApiSerializer
+from gen.python_django.to_create_module_crud.dj_generate_api_service import DjGenerateApiService
+from gen.python_django.to_create_module_crud.dj_generate_api_viewset import DjGenerateApiViewset
+from gen.python_django.to_create_module_crud.dj_generate_app import DjGenerateApp
+from gen.python_django.to_create_module_crud.dj_update_installed_apps import DjUpdateInstalledApps
 
 
 def standard_module_crud_python_django(
@@ -67,9 +67,12 @@ def standard_module_crud_python_django(
     
     
     
+    print("-" * 20)
+    print(f"Instalando APP: {singular_name}")
     
     # Update installed apps
-    update_installed_apps(
+    obj = DjUpdateInstalledApps()
+    obj.invoke(
         full_path, 
         app_main, 
         singular_name,
@@ -80,16 +83,20 @@ def standard_module_crud_python_django(
     
     
     # Generate app
-    generate_app(
+    obj = DjGenerateApp()
+    obj.invoke(
         full_path,
         plural_name_snake,
         venv_python,
         manage_py_path
     )
     
+    
+    
     ## Generate Route
     if "api_route" in input_menu_checkbox:
-        generate_api_route(
+        obj = DjGenerateApiRoute()
+        obj.invoke(
             full_path,
             project_name,
             app_main,
@@ -107,7 +114,8 @@ def standard_module_crud_python_django(
     
     ## Generate Serializer 
     if "api_serializer" in input_menu_checkbox:
-        generate_api_serializer(
+        obj = DjGenerateApiSerializer()
+        obj.invoke(
             full_path,
             project_name,
             singular_name,
@@ -124,7 +132,8 @@ def standard_module_crud_python_django(
     
     ## Generate Viewset
     if "api_wiewset" in input_menu_checkbox:
-        generate_api_viewset(
+        obj = DjGenerateApiViewset()
+        obj.invoke(
             full_path,
             project_name,
             singular_name,
@@ -140,7 +149,9 @@ def standard_module_crud_python_django(
     
     ## Generate Model
     if "api_model" in input_menu_checkbox:
-        generate_api_model(
+        
+        obj = DjGenerateApiModel()
+        obj.invoke(
             full_path,
             project_name,
             singular_name,
@@ -156,7 +167,8 @@ def standard_module_crud_python_django(
         
     ## Generate Service
     if "api_service" in input_menu_checkbox:
-        generate_api_service(
+        obj = DjGenerateApiService()
+        obj.invoke(
             full_path,
             project_name,
             singular_name,
@@ -174,7 +186,8 @@ def standard_module_crud_python_django(
     
     ## Generate Postman
     if "api_postman" in input_menu_checkbox:
-        generate_api_postman(
+        obj = DjGenerateApiPostman()
+        obj.invoke(
             full_path,
             project_name,
             singular_name,
@@ -188,3 +201,4 @@ def standard_module_crud_python_django(
             columns,
         )
     
+    print("-" * 20)

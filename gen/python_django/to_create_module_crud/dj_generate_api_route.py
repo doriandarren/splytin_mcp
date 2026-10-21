@@ -1,0 +1,119 @@
+import os
+from gen.python_django.helpers.helper_file import helper_create_init_file, helper_update_line, helper_update_list
+from gen.helpers.helper_print import print_message, GREEN, CYAN
+
+
+
+import os
+from gen.helpers.helper_file import HelperFile
+
+
+class DjGenerateApiRoute:
+
+
+    def invoke(
+            self,
+            full_path,
+            project_name,
+            app_main,
+            singular_name,
+            plural_name,
+            singular_name_kebab,
+            plural_name_kebab,
+            singular_name_snake,
+            plural_name_snake,
+            singular_first_camel,
+            plural_first_camel,
+            columns,
+        ):
+        """
+        Genera el archivo
+        """
+
+        folder_path = os.path.join(full_path, "apps", plural_name_snake, "api")
+        file_path = os.path.join(folder_path, "router.py")
+
+        os.makedirs(folder_path, exist_ok=True)
+        
+        helper_create_init_file(folder_path)
+
+        content = f'''from rest_framework.routers import DefaultRouter
+from apps.{plural_name_snake}.api.views import {singular_name}ApiViewSet
+
+router = DefaultRouter()
+
+router.register(
+    prefix='{plural_name_kebab}',
+    basename='{plural_name_snake}',
+    viewset={singular_name}ApiViewSet
+)
+
+urlpatterns = router.urls
+
+
+## Para agregar rutas manuales:
+# urlpatterns = router.urls + [
+#     path('{singular_name_snake}/current/', {singular_name}View.as_view(), name='{singular_name_kebab}-current'),
+# ]
+
+'''
+
+        try:
+            with open(file_path, "w") as f:
+                f.write(content)
+            print_message(f"Archivo generado: {file_path}", GREEN)
+        except Exception as e:
+            print_message(f"Error al generar el archivo {file_path}: {e}", CYAN)
+
+        
+        # Update urls.py
+        self.update_urls(
+            full_path,
+            project_name,
+            app_main,
+            singular_name,
+            plural_name,
+            singular_name_kebab,
+            plural_name_kebab,
+            singular_name_snake,
+            plural_name_snake,
+            singular_first_camel,
+            plural_first_camel,
+        )
+
+
+
+
+
+    def update_urls(
+        self, 
+        full_path,
+        project_name,
+        app_main,
+        singular_name,
+        plural_name,
+        singular_name_kebab,
+        plural_name_kebab,
+        singular_name_snake,
+        plural_name_snake,
+        singular_first_camel,
+        plural_first_camel,
+    ):
+        
+        helper_update_list(
+            full_path,
+            f"{app_main}/urls.py",
+            "urlpatterns = [",
+            f"    # {plural_name}"
+        )
+        
+        helper_update_list(
+            full_path, 
+            f"{app_main}/urls.py", 
+            "urlpatterns = [", 
+            f"    path('api/v1/', include('apps.{plural_name_snake}.api.router')),"
+        )
+        
+        print_message(f"Se ha actualizado el archivo {app_main}/urls.py", GREEN)
+
+
