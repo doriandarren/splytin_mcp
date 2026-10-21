@@ -1,5 +1,5 @@
 import os
-from gen.helpers.helper_print import camel_to_kebab, camel_to_snake
+from gen.helpers.helper_print import camel_to_kebab, camel_to_snake, print_cyan, print_message
 from gen.helpers.helper_string import normalize_project_name
 from gen.helpers.helpers import dd
 from gen.python_django.helpers.helper_virtual_env import get_venv_python
@@ -67,8 +67,8 @@ def standard_module_crud_python_django(
     
     
     
-    print("-" * 20)
-    print(f"Instalando APP: {singular_name}")
+    print_cyan("-" * 20)
+    print_cyan(f"Instalando APP: {singular_name}")
     
     # Update installed apps
     obj = DjUpdateInstalledApps()
@@ -201,4 +201,4 @@ def standard_module_crud_python_django(
             columns,
         )
     
-    print("-" * 20)
+    print_cyan("-" * 20)

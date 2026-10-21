@@ -22,9 +22,6 @@ RED   = "\033[0;31m"
 NC    = "\033[0m"  # Sin color
 
 
-def print_message(message, color=NC):
-    print(f"{color}{message}{NC}")
-
 
 
 
@@ -140,6 +137,31 @@ def capitalize_camel_case(name):
 def dd(data):
     pprint.pprint(data)
     sys.exit()
+
+
+
+
+
+
+
+def print_message(message, color=NC):
+    print(f"{color}{message}{NC}")
+    
+
+def print_green(message):
+    print_message(message, GREEN)
+
+
+def print_cyan(message):
+    print_message(message, CYAN)
+
+
+def print_red(message):
+    print_message(message, RED)
+
+
+def print_normal(message):
+    print_message(message, NC)
 
 
 

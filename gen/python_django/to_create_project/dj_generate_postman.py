@@ -1,8 +1,9 @@
 
-import json
 import os
+import json
 import uuid
 
+from gen.helpers.helper_file import HelperFile
 from gen.python_django.helpers.helper_postman_json import HelperPostmanJson
 
 
@@ -10,32 +11,49 @@ class DjGeneratePostman:
 
     def __init__(self):
         self.helper = HelperPostmanJson
-        
+
+        # Headers para peticiones JSON:API
         self.headers = [
-			self.helper.create_header(
-				"Accept", "application/vnd.api+json"
-			),
-			self.helper.create_header(
-				"Content-Type", "application/vnd.api+json"
-			)
-		]
-        
+            self.helper.create_header(
+                "Accept", "application/vnd.api+json"
+            ),
+            self.helper.create_header(
+                "Content-Type", "application/vnd.api+json"
+            )
+        ]
+
+        # Headers para peticiones con autenticación
         self.auth_headers = [
-			*self.headers,
-			self.helper.create_header(
-				"Authorization", "Token {{token_api}}"
-			)
-		]
+            *self.headers,
+            self.helper.create_header(
+                "Authorization", "Token {{token_api}}"
+            )
+        ]
+
+        # Headers para formularios
+        # Postman establecerá el Content-Type multipart automáticamente
+        self.form_headers = [
+            self.helper.create_header(
+                "Accept", "application/vnd.api+json"
+            )
+        ]
+        
+        
+        
+        
+        
 
     def create_authentication(self, domain_name):
-        """Genera la carpeta Authentication."""
+        """
+        Genera la carpeta Authentication.
+        """
 
-        # Restore Password
+        # Recuperar contraseña
         forgot = self.helper.create_item(
             name="forgot Password",
             method="POST",
             url="{{base_url}}auth/password/email/",
-            headers=self.headers,
+            headers=self.form_headers,
             body=self.helper.create_form_body([
                 self.helper.create_form_field(
                     "email", f"admin@{domain_name}"
@@ -47,10 +65,12 @@ class DjGeneratePostman:
             name="Restore Password",
             method="POST",
             url="{{base_url}}auth/password/restore/",
-            headers=self.headers,
+            headers=self.form_headers,
             body=self.helper.create_form_body([
                 self.helper.create_form_field("token"),
-                self.helper.create_form_field("password")
+                self.helper.create_form_field(
+                    "password", "{{password_api}}"
+                )
             ])
         )
 
@@ -70,20 +90,40 @@ class DjGeneratePostman:
         ])
 
         login = self.helper.create_item(
-            name="login",
+            name="Login",
             method="POST",
             url="{{base_url}}auth/login/",
-            headers=self.headers,
+            headers=self.form_headers,
             body=self.helper.create_form_body([
-                self.helper.create_form_field(
-                    "email", f"admin@{domain_name}"
-                ),
-                self.helper.create_form_field("password")
+                {
+                    "key": "email",
+                    "value": f"admin@{domain_name}",
+                    "type": "text",
+                    "disabled": False
+                },
+                {
+                    "key": "password",
+                    "value": "{{password_api}}",
+                    "type": "text",
+                    "disabled": False
+                },
+                {
+                    "key": "email",
+                    "value": f"manager@{domain_name}",
+                    "type": "text",
+                    "disabled": True
+                },
+                {
+                    "key": "email",
+                    "value": f"user@{domain_name}",
+                    "type": "text",
+                    "disabled": True
+                }
             ]),
             events=[token_script]
         )
 
-        # Usuario autenticado
+        # Obtener usuario autenticado
         show = self.helper.create_item(
             name="show",
             method="GET",
@@ -91,6 +131,7 @@ class DjGeneratePostman:
             headers=self.auth_headers
         )
 
+        # Cerrar sesión
         logout = self.helper.create_item(
             name="logout",
             method="GET",
@@ -100,11 +141,25 @@ class DjGeneratePostman:
 
         return self.helper.create_folder(
             name="Authentication",
-            items=[restore_folder, login, show, logout]
+            items=[
+                restore_folder,
+                login,
+                show,
+                logout
+            ]
         )
 
+
+
+
+
+
+
+
     def create_dev(self):
-        """Genera la carpeta Dev."""
+        """
+        Genera la carpeta Dev.
+        """
 
         test = self.helper.create_item(
             name="Test",
@@ -119,7 +174,9 @@ class DjGeneratePostman:
         )
 
     def create_dashboards(self):
-        """Genera la carpeta Dashboards."""
+        """
+        Genera la carpeta Dashboards.
+        """
 
         list_item = self.helper.create_item(
             name="List",
@@ -128,14 +185,15 @@ class DjGeneratePostman:
             headers=self.auth_headers
         )
 
-
         return self.helper.create_folder(
             name="Dashboards",
             items=[list_item]
         )
 
     def generate(self, project_name, domain_name, base_url=None):
-        """Construye la colección Postman completa."""
+        """
+        Construye la colección Postman.
+        """
 
         if base_url is None:
             base_url = f"http://{project_name}/api/v1/"
@@ -159,52 +217,23 @@ class DjGeneratePostman:
                 self.helper.create_variable(
                     "base_url", base_url
                 ),
-                self.helper.create_variable("token_api")
+                self.helper.create_variable("token_api"),
+                self.helper.create_variable("password_api")
             ]
         }
 
         return collection
-    
-    
-    
-    
-
-    def write_file(self, full_path, project_name, collection):
-        """Guarda la colección en un archivo JSON."""
-
-        folder_path = os.path.join(full_path, "SCRIPTS")
-
-        file_path = os.path.join(
-            folder_path,
-            f"API-{project_name}.postman.collection.json"
-        )
-
-        os.makedirs(folder_path, exist_ok=True)
-
-        try:
-            with open(file_path, "w", encoding="utf-8") as file:
-                json.dump(
-                    collection,
-                    file,
-                    indent=4,
-                    ensure_ascii=False
-                )
-
-            print(f"Archivo generado: {file_path}")
-            return file_path
-
-        except OSError as error:
-            print(f"Error al generar Postman: {error}")
-            raise
-        
-        
-        
-        
 
     def invoke(
-        self, full_path, project_name, domain_name, base_url=None
+        self,
+        full_path,
+        project_name,
+        domain_name,
+        base_url=None
     ):
-        """Ejecuta la generación y escritura."""
+        """
+        Genera y guarda el archivo Postman.
+        """
 
         collection = self.generate(
             project_name=project_name,
@@ -212,8 +241,17 @@ class DjGeneratePostman:
             base_url=base_url
         )
 
-        return self.write_file(
-            full_path=full_path,
-            project_name=project_name,
-            collection=collection
+        folder_path = os.path.join(full_path, "SCRIPTS")
+
+        content = json.dumps(
+            collection,
+            indent=4,
+            ensure_ascii=False
+        )
+
+        # Crear el archivo
+        HelperFile.write(
+            folder_path=folder_path,
+            file_name=f"API-{project_name}.postman.collection.json",
+            content=content
         )

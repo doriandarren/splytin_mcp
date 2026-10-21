@@ -20,7 +20,7 @@ class DjGenerateTodoMD:
         # Crear el archivo
         HelperFile.write(
             folder_path=full_path,
-            file_name="X.php",
+            file_name="todo.php",
             content=content
         )
 
