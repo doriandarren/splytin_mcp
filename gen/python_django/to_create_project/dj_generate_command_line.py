@@ -5,7 +5,7 @@ from gen.python_django.helpers.helper_virtual_env import get_venv_python
 
 
 
-class PyGenerateCommandLine():
+class DjGenerateCommandLine():
 
     def invoke(self, full_path, project_name_format, app_main):
         self.create_folder(full_path)
@@ -17,6 +17,9 @@ class PyGenerateCommandLine():
         
         # requirements.txt
         ## create_requirements(full_path, venv_python)
+        
+        return venv_python
+        
 
 
     def create_folder(self, full_path):

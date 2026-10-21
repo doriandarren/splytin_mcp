@@ -1,30 +1,26 @@
 import os
-from gen.python_django.helpers.helper_file import helper_append_content, helper_create_init_file
-from gen.helpers.helper_print import print_message, GREEN, CYAN
+from gen.python_django.helpers.helper_file import helper_append_content
+from gen.helpers.helper_file import HelperFile
 
 
 
-def generate_custom_logging(full_path, project_name_format, app_main, venv_python):
-    create_file(full_path, project_name_format, app_main, venv_python)
-    update_settings(full_path, project_name_format, app_main)
-    create_folder_logs(full_path, project_name_format, app_main)
+class DjGenerateCustomLogging:
+
+    def invoke(self, full_path, project_name_format, app_main, venv_python):
+        self.create_file(full_path, project_name_format, app_main, venv_python)
+        self.update_settings(full_path, project_name_format, app_main)
+        self.create_folder_logs(full_path, project_name_format, app_main)
 
 
-def create_file(full_path, project_name_format, app_main, venv_python):
-    """
-    Genera el archivo
-    """
 
-    folder_path = os.path.join(full_path, "core", "custom_logging")
-    file_path = os.path.join(folder_path, "logging_handlers.py")
+    def create_file(self, full_path, project_name_format, app_main, venv_python):
+        """
+        Genera el archivo.
+        """
 
-    os.makedirs(folder_path, exist_ok=True)
-    
-    # create init file
-    helper_create_init_file(folder_path)
-    
+        folder_path = os.path.join(full_path, "core", "custom_logging")
 
-    content = r'''import os
+        content = r'''import os
 import logging
 from datetime import datetime
 
@@ -62,16 +58,16 @@ class DailyFileHandler(logging.FileHandler):
         super().emit(record)
 '''
 
-    try:
-        with open(file_path, "w") as f:
-            f.write(content)
-        print_message(f"Archivo generado: {file_path}", GREEN)
-    except Exception as e:
-        print_message(f"Error al generar el archivo {file_path}: {e}", CYAN)
+        # Crear el archivo
+        HelperFile.write(
+            folder_path=folder_path,
+            file_name="logging_handlers.py",
+            content=content
+        )
+                
         
-        
-def update_settings(full_path, project_name_format, app_main):
-    str = r"""
+    def update_settings(self, full_path, project_name_format, app_main):
+        str = r"""
 ## Logging
 LOGGING = {
     "version": 1,
@@ -102,16 +98,16 @@ LOGGING = {
 }
 
 """
+        
+        helper_append_content(
+            full_path, 
+            f"{app_main}/settings.py", 
+            str
+        )
     
-    helper_append_content(
-        full_path, 
-        f"{app_main}/settings.py", 
-        str
-    )
     
     
-    
-def create_folder_logs(full_path, project_name_format, app_main):
-    logs_folder_path = os.path.join(full_path, "logs")
-    os.makedirs(logs_folder_path, exist_ok=True)
+    def create_folder_logs(self, full_path, project_name_format, app_main):
+        logs_folder_path = os.path.join(full_path, "logs")
+        os.makedirs(logs_folder_path, exist_ok=True)
     

@@ -1,60 +1,56 @@
 import os
 from gen.helpers.helper_columns import parse_columns_input
 from gen.python_django.helpers.helper_file import (
-    helper_append_content, 
-    helper_create_init_file, 
-    helper_update_line
+    helper_append_content
 )
 from gen.python_django.to_create_module_crud.standard_module_crud_python_django import standard_module_crud_python_django
 from gen.helpers.helper_print import print_message, GREEN, CYAN, run_command
+from gen.helpers.helper_file import HelperFile
 
 
-def generate_module_devs(full_path, project_name_format, app_main, venv_python):
+class DjGenerateModuleDevs:
+
     
-    create_module_devs(full_path, project_name_format, app_main)
-    update_file_api_views(full_path, project_name_format, app_main)
-    update_router(full_path)
+    def invoke(self, full_path, project_name_format, app_main, venv_python):
+        
+        self.create_module_devs(full_path, project_name_format, app_main)
+        self.update_file_api_views(full_path, project_name_format, app_main)
+        self.update_router(full_path)
+        
+        
+        
+        ## Emails
+        self.create_email_service(full_path, project_name_format, app_main)
+        self.append_email_settings(full_path, project_name_format, app_main)
+        self.create_email_html(full_path, project_name_format, app_main)
+
+
+        # PDF
+        self.install_pdf(full_path, venv_python)
+        self.create_pdf_service(full_path, project_name_format, app_main)
+        self.create_pdf_html(full_path, project_name_format, app_main)
     
     
+
+    def create_module_devs(self, full_path, project_name_format, app_main):
+        print_message(f"Generando el modulo de Users", CYAN)
+        singular_name = "Dev"
+        plural_name = "Devs"
+        columns = "test"
+        input_menu_checkbox = ['api_route', 'api_serializer', 'api_wiewset']
+        formatColumns = parse_columns_input(columns)
+        
+        standard_module_crud_python_django(full_path, app_main, singular_name, plural_name, formatColumns, input_menu_checkbox)
     
-    ## Emails
-    create_email_service(full_path, project_name_format, app_main)
-    append_email_settings(full_path, project_name_format, app_main)
-    create_email_html(full_path, project_name_format, app_main)
-
-
-    # PDF
-    install_pdf(full_path, venv_python)
-    create_pdf_service(full_path, project_name_format, app_main)
-    create_pdf_html(full_path, project_name_format, app_main)
     
+    def update_file_api_views(self, full_path, project_name_format, app_main):
+        """
+        Genera el archivo.
+        """
 
+        folder_path = os.path.join(full_path, "apps", "devs", "api")
 
-
-def create_module_devs(full_path, project_name_format, app_main):
-    """
-    Crea el modulo
-    """
-    print_message(f"Generando el modulo de Users", CYAN)
-    singular_name = "Dev"
-    plural_name = "Devs"
-    columns = "test"
-    input_menu_checkbox = ['api_route', 'api_serializer', 'api_wiewset']
-    formatColumns = parse_columns_input(columns)
-    
-    standard_module_crud_python_django(full_path, app_main, singular_name, plural_name, formatColumns, input_menu_checkbox)
-
-
-def update_file_api_views(full_path, project_name_format, app_main):
-    """
-    Actualiza el archivo
-    """
-    folder_path = os.path.join(full_path, "apps", "devs", "api")
-    file_path = os.path.join(folder_path, "views.py")
-
-    os.makedirs(folder_path, exist_ok=True)
-
-    content = r'''from core.api.api_response import BaseAPIView
+        content = r'''from core.api.api_response import BaseAPIView
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
 
 from apps.devs.services.email_service import MailService
@@ -194,24 +190,22 @@ class DevPDFAPIView(BaseAPIView):
 
 '''
 
-    try:
-        with open(file_path, "w") as f:
-            f.write(content)
-        print_message(f"Archivo generado: {file_path}", GREEN)
-    except Exception as e:
-        print_message(f"Error al generar el archivo {file_path}: {e}", CYAN)
+        # Crear el archivo
+        HelperFile.write(
+            folder_path=folder_path,
+            file_name="views.py",
+            content=content
+        )
+    
+    
+    def update_router(self, full_path):
+        """
+        Genera el archivo.
+        """
 
+        folder_path = os.path.join(full_path, "apps", "devs", "api")
 
-def update_router(full_path):
-    """
-    Actualiza el archivo
-    """
-    folder_path = os.path.join(full_path, "apps", "devs", "api")
-    file_path = os.path.join(folder_path, "router.py")
-
-    os.makedirs(folder_path, exist_ok=True)
-
-    content = r'''from django.urls import path
+        content = r'''from django.urls import path
 from apps.devs.api.views import DevApiViewSet
 
 urlpatterns = [
@@ -219,29 +213,28 @@ urlpatterns = [
 ]
 '''
 
-    try:
-        with open(file_path, "w") as f:
-            f.write(content)
-        print_message(f"Archivo generado: {file_path}", GREEN)
-    except Exception as e:
-        print_message(f"Error al generar el archivo {file_path}: {e}", CYAN)
-
-
-
-
-## Email service
-def create_email_service(full_path, project_name_format, app_main):
-    """
-    Actualiza el archivo
-    """
-    folder_path = os.path.join(full_path, "apps", "devs", "services")
-    file_path = os.path.join(folder_path, "email_service.py")
-
-    os.makedirs(folder_path, exist_ok=True)
+        # Crear el archivo
+        HelperFile.write(
+            folder_path=folder_path,
+            file_name="router.py",
+            content=content
+        )
     
-    helper_create_init_file(folder_path)
+    
+    
+    
+    
+    
+    ## Email service
+    
+    def create_email_service(self, full_path, project_name_format, app_main):
+        """
+        Genera el archivo.
+        """
 
-    content = r'''from django.conf import settings
+        folder_path = os.path.join(full_path, "apps", "devs", "services")
+
+        content = r'''from django.conf import settings
 from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string
 
@@ -272,17 +265,17 @@ class MailService:
         return True
 '''
 
-    try:
-        with open(file_path, "w") as f:
-            f.write(content)
-        print_message(f"Archivo generado: {file_path}", GREEN)
-    except Exception as e:
-        print_message(f"Error al generar el archivo {file_path}: {e}", CYAN)
-
+        # Crear el archivo
+        HelperFile.write(
+            folder_path=folder_path,
+            file_name="email_service.py",
+            content=content
+        )
     
-def append_email_settings(full_path, project_name_format, app_main):    
     
-    str = f"""\n# EMAIL SETTINGS
+    
+    def append_email_settings(self, full_path, project_name_format, app_main):
+        str = f"""\n# EMAIL SETTINGS
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 EMAIL_HOST = os.getenv("EMAIL_HOST", "smtp.ionos.es")
 EMAIL_PORT = int(os.getenv("EMAIL_PORT", 587))
@@ -292,27 +285,27 @@ EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER")
 EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD")
 DEFAULT_FROM_EMAIL = os.getenv("DEFAULT_FROM_EMAIL", EMAIL_HOST_USER)
 EMAIL_TIMEOUT = int(os.getenv("EMAIL_TIMEOUT", 30))
-    """
+"""
+            
+        helper_append_content(
+            full_path, 
+            f"{app_main}/settings.py", 
+            str
+        )
     
-    helper_append_content(
-        full_path, 
-        f"{app_main}/settings.py", 
-        str
-    )
-
-   
-def create_email_html(full_path, project_name_format, app_main):
-    """
-    Actualiza el archivo
-    """
-    folder_path = os.path.join(full_path, "templates", "emails")
-    file_path = os.path.join(folder_path, "test_email.html")
-
-    os.makedirs(folder_path, exist_ok=True)
     
-    project_name_upper = project_name_format.replace(" ", "_").upper()
+    
+    def create_email_html(self, full_path, project_name_format, app_main):
+        """
+        Genera el archivo.
+        """
 
-    content = f'''<!DOCTYPE html>
+        folder_path = os.path.join(full_path, "templates", "emails")
+        
+        project_name_upper = project_name_format.replace(" ", "_").upper()
+        
+
+        content = f'''<!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
@@ -411,36 +404,31 @@ def create_email_html(full_path, project_name_format, app_main):
 </html>
 '''
 
-    try:
-        with open(file_path, "w") as f:
-            f.write(content)
-        print_message(f"Archivo generado: {file_path}", GREEN)
-    except Exception as e:
-        print_message(f"Error al generar el archivo {file_path}: {e}", CYAN)
+        # Crear el archivo
+        HelperFile.write(
+            folder_path=folder_path,
+            file_name="test_email.html",
+            content=content
+        )
+    
+    
+    
+    ## PDF service 
+    
+    def install_pdf(self, full_path, venv_python):
+        print_message("Instalando pdfkit...", CYAN)
+        run_command(f'"{venv_python}" -m pip install pdfkit', cwd=full_path)
+        print_message("pdfkit instalado correctamente.", GREEN)
         
         
+    def create_pdf_service(self, full_path, project_name_format, app_main):
+        """
+        Genera el archivo.
+        """
 
-  
-## PDF service 
+        folder_path = os.path.join(full_path, "apps", "devs", "services")
 
-def install_pdf(full_path, venv_python):
-    print_message("Instalando pdfkit...", CYAN)
-    run_command(f'"{venv_python}" -m pip install pdfkit', cwd=full_path)
-    print_message("pdfkit instalado correctamente.", GREEN)
-
-
-
-def create_pdf_service(full_path, project_name_format, app_main):
-    """
-    Genera el archivo
-    """
-
-    folder_path = os.path.join(full_path, "apps", "devs", "services")
-    file_path = os.path.join(folder_path, "pdf_service.py")
-
-    os.makedirs(folder_path, exist_ok=True)
-
-    content = r'''import os
+        content = r'''import os
 import pdfkit
 
 from django.conf import settings
@@ -533,26 +521,22 @@ class PdfService:
         return file_path
 '''
 
-    try:
-        with open(file_path, "w") as f:
-            f.write(content)
-        print_message(f"Archivo generado: {file_path}", GREEN)
-    except Exception as e:
-        print_message(f"Error al generar el archivo {file_path}: {e}", CYAN)
+        # Crear el archivo
+        HelperFile.write(
+            folder_path=folder_path,
+            file_name="pdf_service.py",
+            content=content
+        )
+        
+        
+    def create_pdf_html(self, full_path, project_name_format, app_main):
+        """
+        Genera el archivo.
+        """
 
+        folder_path = os.path.join(full_path, "templates", "pdfs")
 
-
-def create_pdf_html(full_path, project_name_format, app_main):
-    """
-    Genera el archivo
-    """
-
-    folder_path = os.path.join(full_path, "templates", "pdfs")
-    file_path = os.path.join(folder_path, "test_pdf.html")
-
-    os.makedirs(folder_path, exist_ok=True)
-
-    content = r'''<!DOCTYPE html>
+        content = r'''<!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
@@ -592,10 +576,14 @@ def create_pdf_html(full_path, project_name_format, app_main):
 </html>
 '''
 
-    try:
-        with open(file_path, "w") as f:
-            f.write(content)
-        print_message(f"Archivo generado: {file_path}", GREEN)
-    except Exception as e:
-        print_message(f"Error al generar el archivo {file_path}: {e}", CYAN)
-        
+        # Crear el archivo
+        HelperFile.write(
+            folder_path=folder_path,
+            file_name="test_pdf.html",
+            content=content
+        )
+    
+
+
+
+

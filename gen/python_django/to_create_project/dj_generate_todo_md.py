@@ -1,7 +1,7 @@
 from gen.helpers.helper_file import HelperFile
 
 
-class PyGenerateTodoMD:
+class DjGenerateTodoMD:
 
     def invoke(self, full_path, project_name):
         """

@@ -4,7 +4,7 @@ from gen.helpers.helper_print import print_message, GREEN, CYAN
 
 
 
-class PyGenerateIgnore:
+class DjGenerateIgnore:
     
     
     def invoke(self, full_path):

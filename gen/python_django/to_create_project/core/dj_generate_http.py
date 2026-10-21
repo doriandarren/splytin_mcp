@@ -1,24 +1,43 @@
 import os
-from gen.helpers.helper_print import print_message, GREEN, CYAN
+from gen.helpers.helper_file import HelperFile
 
 
-def generate_http(full_path):
-    create_file_init(full_path)
-    create_http(full_path)
+class DjGenerateHttp:
+    
+    def invoke(self, full_path):
+        self.create_file_init(full_path)
+        self.create_http(full_path)
+    
+    
+    
 
+    def create_file_init(self, full_path):
+        """
+        Genera el archivo.
+        """
 
+        folder_path = os.path.join(full_path, "core", "http")
 
-def create_http(full_path):
-    """
-    Genera el archivo
-    """
+        content = ""
 
-    folder_path = os.path.join(full_path, "core", "http")
-    file_path = os.path.join(folder_path, "api_request.py")
-
-    os.makedirs(folder_path, exist_ok=True)
-
-    content = f'''import requests
+        # Crear el archivo
+        HelperFile.write(
+            folder_path=folder_path,
+            file_name="__init__.py",
+            content=content
+        )
+        
+        
+        
+        
+    def create_http(self, full_path):
+            """
+            Genera el archivo.
+            """
+    
+            folder_path = os.path.join(full_path, "core", "http")
+    
+            content = f'''import requests
 from typing import Optional
 
 
@@ -91,31 +110,10 @@ class ApiRequest:
         return r.json()
 
 '''
-
-    try:
-        with open(file_path, "w") as f:
-            f.write(content)
-        print_message(f"Archivo generado: {file_path}", GREEN)
-    except Exception as e:
-        print_message(f"Error al generar el archivo {file_path}: {e}", CYAN)
-        
-
-
-
-def create_file_init(full_path):
-    """
-    Genera el archivo init
-    """
-    folder_path = os.path.join(full_path, "core", "http")
-    file_path = os.path.join(folder_path, "__init__.py")
-
-    os.makedirs(folder_path, exist_ok=True)
-
-    content = f''''''
-
-    try:
-        with open(file_path, "w") as f:
-            f.write(content)
-        print_message(f"Archivo generado: {file_path}", GREEN)
-    except Exception as e:
-        print_message(f"Error al generar el archivo {file_path}: {e}", CYAN)
+    
+            # Crear el archivo
+            HelperFile.write(
+                folder_path=folder_path,
+                file_name="api_request.py",
+                content=content
+            )

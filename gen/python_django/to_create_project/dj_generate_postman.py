@@ -6,7 +6,7 @@ import uuid
 from gen.python_django.helpers.helper_postman_json import HelperPostmanJson
 
 
-class PyGeneratePostman:
+class DjGeneratePostman:
 
     def __init__(self):
         self.helper = HelperPostmanJson

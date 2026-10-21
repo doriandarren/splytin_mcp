@@ -1,46 +1,43 @@
 import os
-from gen.helpers.helper_print import print_message, GREEN, CYAN
+from gen.helpers.helper_file import HelperFile
 
 
-def generate_api_response(full_path):
-    create_api_init(full_path)
-    create_api_response(full_path)
+class DjGenerateApiResponse:
 
+    def invoke(self, full_path):
+        self.create_api_init(full_path)
+        self.create_api_response(full_path)
+        
 
+        
+    def create_api_init(self, full_path):
+        """
+        Genera el archivo.
+        """
 
-def create_api_init(full_path):
-    """
-    Genera el archivo init
-    """
+        folder_path = os.path.join(full_path, "core", "api")
 
-    folder_path = os.path.join(full_path, "core", "api")
-    file_path = os.path.join(folder_path, "__init__.py")
-
-    os.makedirs(folder_path, exist_ok=True)
-
-    content = f'''# core/api/__init__.py
+        content = f'''# core/api/__init__.py
 from .api_response import BaseApiResponse, BaseAPIView, BaseModelViewSet
 '''
 
-    try:
-        with open(file_path, "w") as f:
-            f.write(content)
-        print_message(f"Archivo generado: {file_path}", GREEN)
-    except Exception as e:
-        print_message(f"Error al generar el archivo {file_path}: {e}", CYAN)
+        # Crear el archivo
+        HelperFile.write(
+            folder_path=folder_path,
+            file_name="__init__.py",
+            content=content
+        )
+        
+        
+        
+    def create_api_response(self, full_path):
+        """
+        Genera el archivo.
+        """
 
+        folder_path = os.path.join(full_path, "core", "api")
 
-
-def create_api_response(full_path):
-    """
-    Genera el archivo
-    """
-    folder_path = os.path.join(full_path, "core", "api")
-    file_path = os.path.join(folder_path, "api_response.py")
-
-    os.makedirs(folder_path, exist_ok=True)
-
-    content = f'''# core/api/api_response.py
+        content = f'''# core/api/api_response.py
 
 from rest_framework import status
 from rest_framework.response import Response
@@ -148,9 +145,10 @@ class BaseModelViewSet(BaseApiResponse, ModelViewSet):
         )
 '''
 
-    try:
-        with open(file_path, "w") as f:
-            f.write(content)
-        print_message(f"Archivo generado: {file_path}", GREEN)
-    except Exception as e:
-        print_message(f"Error al generar el archivo {file_path}: {e}", CYAN)
+        # Crear el archivo
+        HelperFile.write(
+            folder_path=folder_path,
+            file_name="api_response.py",
+            content=content
+        )
+

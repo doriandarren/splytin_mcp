@@ -1,23 +1,43 @@
 import os
-from gen.helpers.helper_print import print_message, GREEN, CYAN
+from gen.helpers.helper_file import HelperFile
 
-def generate_core_models(full_path):
-    create_file_init(full_path)
-    create_file_models(full_path)
+
+class DjGenerateCoreModels:
     
+    
+    def invoke(self, full_path):
+        self.create_file_init(full_path)
+        self.create_file_models(full_path)
 
 
-def create_file_models(full_path):
-    """
-    Genera el archivo
-    """
 
-    folder_path = os.path.join(full_path, "core", "models")
-    file_path = os.path.join(folder_path, "models.py")
+    def create_file_init(self, full_path):
+        """
+        Genera el archivo.
+        """
 
-    os.makedirs(folder_path, exist_ok=True)
+        folder_path = os.path.join(full_path, "core", "models")
 
-    content = r'''from django.db import models
+        content = ""
+
+        # Crear el archivo
+        HelperFile.write(
+            folder_path=folder_path,
+            file_name="__init__.py",
+            content=content
+        )
+        
+        
+        
+        
+    def create_file_models(self, full_path):
+        """
+        Genera el archivo.
+        """
+
+        folder_path = os.path.join(full_path, "core", "models")
+
+        content = r'''from django.db import models
 from django.conf import settings
 from django.utils import timezone
 
@@ -115,30 +135,9 @@ class BaseModel(models.Model):
         )
 '''
 
-    try:
-        with open(file_path, "w") as f:
-            f.write(content)
-        print_message(f"Archivo generado: {file_path}", GREEN)
-    except Exception as e:
-        print_message(f"Error al generar el archivo {file_path}: {e}", CYAN)
-
-
-
-
-def create_file_init(full_path):
-    """
-    Genera el archivo init
-    """
-    folder_path = os.path.join(full_path, "core", "models")
-    file_path = os.path.join(folder_path, "__init__.py")
-
-    os.makedirs(folder_path, exist_ok=True)
-
-    content = f''''''
-
-    try:
-        with open(file_path, "w") as f:
-            f.write(content)
-        print_message(f"Archivo generado: {file_path}", GREEN)
-    except Exception as e:
-        print_message(f"Error al generar el archivo {file_path}: {e}", CYAN)
+        # Crear el archivo
+        HelperFile.write(
+            folder_path=folder_path,
+            file_name="models.py",
+            content=content
+        )
