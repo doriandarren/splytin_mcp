@@ -42,26 +42,30 @@ class DjGenerateModuleAuth:
         folder_path = os.path.join(full_path, "apps", "authentications", "api")
 
         content = f'''from django.urls import path
-from rest_framework.routers import DefaultRouter
+
 from apps.authentications.api.views import (
-    AuthenticationApiViewSet,
     CurrentUserView,
     LoginView,
-    LogoutView
+    LogoutView,
 )
 
-router_authentication = DefaultRouter()
-
-router_authentication.register(
-    prefix='authentications',
-    basename='authentications',
-    viewset=AuthenticationApiViewSet
-)
 
 urlpatterns = [
-    path('auth/login/', LoginView.as_view(), name='auth_login'),
-    path('auth/user/', CurrentUserView.as_view(), name='auth_user'),
-    path('auth/logout/', LogoutView.as_view(), name='auth_logout'),
+    path(
+        "auth/login/",
+        LoginView.as_view(),
+        name="auth_login"
+    ),
+    path(
+        "auth/user/",
+        CurrentUserView.as_view(),
+        name="auth_user"
+    ),
+    path(
+        "auth/logout/",
+        LogoutView.as_view(),
+        name="auth_logout"
+    ),
 ]
 '''
 
@@ -81,28 +85,49 @@ urlpatterns = [
 
         folder_path = os.path.join(full_path, "apps", "authentications", "api")
 
-        content = f'''from django.contrib.auth import authenticate
+        content = f'''
+from django.contrib.auth import authenticate
+
+from rest_framework import status
 from rest_framework.authtoken.models import Token
-from core.api import BaseAPIView, BaseModelViewSet
-from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAuthenticated, AllowAny
-from apps.authentications.models import Authentication
-from apps.users.api.serializers import UserSerializer
-from apps.authentications.api.serializers import AuthenticationSerializer
+from rest_framework.exceptions import AuthenticationFailed, ValidationError
+from rest_framework.parsers import JSONParser
+from rest_framework.permissions import AllowAny, IsAuthenticated
+from rest_framework.response import Response
+
+from core.api import BaseAPIView
 
 
-class AuthenticationApiViewSet(BaseModelViewSet):
-    permission_classes = [IsAuthenticatedOrReadOnly]
-    serializer_class = AuthenticationSerializer
-    queryset = Authentication.objects.all()
+# Parser para recibir documentos JSON:API
+class JSONAPIDocumentParser(JSONParser):
+    media_type = "application/vnd.api+json"
 
 
+# LOGIN
 class LoginView(BaseAPIView):
-    permission_classes = [AllowAny]
 
+    permission_classes = [AllowAny]
+    authentication_classes = []
+    parser_classes = [JSONAPIDocumentParser]
+    resource_name = False
 
     def post(self, request):
-        email = request.data.get("email")
-        password = request.data.get("password")
+
+        data = request.data.get("data")
+
+        if not isinstance(data, dict) or data.get("type") != "login":
+            raise ValidationError("Invalid JSON:API login document")
+
+        attributes = data.get("attributes")
+
+        if not isinstance(attributes, dict):
+            raise ValidationError("Invalid attributes")
+
+        email = attributes.get("email")
+        password = attributes.get("password")
+
+        if not email or not password:
+            raise ValidationError("Email and password are required")
 
         user = authenticate(
             request,
@@ -111,46 +136,54 @@ class LoginView(BaseAPIView):
         )
 
         if user is None:
-            return self.respond_with_error(
-                message="Invalid credentials",
-                status_code=401
-            )
+            raise AuthenticationFailed("Invalid credentials")
 
-        token, created = Token.objects.get_or_create(user=user)
+        token, _ = Token.objects.get_or_create(user=user)
 
-        serialize = UserSerializer(user)
-
-        return self.respond_with_data(
-            message="Login successfully",
-            data={{
-                "token": token.key,
-                "user": serialize.data
+        return Response({{
+            "data": {{
+                "type": "auth-tokens",
+                "id": token.key,
+                "attributes": {{
+                    "token": token.key
+                }}
             }}
-        )
+        }}, status=status.HTTP_200_OK)
 
 
+# USUARIO AUTENTICADO
 class CurrentUserView(BaseAPIView):
+
     permission_classes = [IsAuthenticated]
+    resource_name = False
 
     def get(self, request):
-        serialize = UserSerializer(request.user)
 
-        return self.respond_with_data(
-            message="Current user retrieved successfully",
-            data=serialize.data
-        )
+        user = request.user
+
+        return Response({{
+            "data": {{
+                "type": "users",
+                "id": str(user.pk),
+                "attributes": {{
+                    "email": user.email
+                }}
+            }}
+        }}, status=status.HTTP_200_OK)
 
 
+# LOGOUT
 class LogoutView(BaseAPIView):
+
     permission_classes = [IsAuthenticated]
+    resource_name = False
 
-    def get(self, request):
-        request.user.auth_token.delete()
+    def post(self, request):
 
-        return self.respond_with_data(
-            message="Logout successfully"
-        )
+        Token.objects.filter(user=request.user).delete()
 
+        return Response(status=status.HTTP_204_NO_CONTENT)
+        
 '''
 
         # Crear el archivo
@@ -170,7 +203,8 @@ class LogoutView(BaseAPIView):
 
         folder_path = os.path.join(full_path, "apps", "authentications", "api")
 
-        content = f'''from rest_framework.serializers import ModelSerializer
+        content = f'''#from rest_framework.serializers import ModelSerializer
+from rest_framework_json_api.serializers import ModelSerializer
 from apps.authentications.models import Authentication
 
 

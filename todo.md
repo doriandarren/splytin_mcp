@@ -455,3 +455,38 @@ npx astro add @jop-software/astro-cookieconsent
 
 
 ```
+
+
+
+
+
+
+
+
+
+
+
+
+
+django:
+
+Tengo una app ejemplo: apps/authentications. Adentro esta otro carpeta: apps/authentications/api y dentro 3 archivos: router.py, serializer.py y views.py. Aqui definere la logica para el API Rest. Y tambien tengo una carpeta: apps/authentications/services/authentication_service.py
+
+
+
+
+Tengo una app ejemplo: apps/ai_prompt_categories. Adentro esta otro carpeta: apps/ai_prompt_categories/api con 3 archivos: router.py, serializer.py y views.py. Tambien un archivo apps/ai_prompt_categories/services/ai_prompt_category_services.py. Que necesito? primero revisa si esta todo correcto y adaptado para json Api
+
+
+
+
+apps/
+└── ai_prompt_categories/
+    ├── api/
+    │   ├── router.py
+    │   ├── serializer.py
+    │   └── views.py
+    ├── services/
+    │   └── ai_prompt_category_services.py
+    ├── models.py
+    └── apps.py

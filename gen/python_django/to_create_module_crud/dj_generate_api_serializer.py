@@ -34,7 +34,8 @@ class DjGenerateApiSerializer:
         # format_cols = ",\n".join(f"'{col["name"]}'" for col in columns)
         
     
-        content = f'''from rest_framework.serializers import ModelSerializer
+        content = f'''#from rest_framework.serializers import ModelSerializer
+from rest_framework_json_api.serializers import ModelSerializer
 from apps.{plural_name_snake}.models import {singular_name}
 
 
@@ -51,6 +52,16 @@ class {singular_name}Serializer(ModelSerializer):
             'created_by',
             'updated_by',
         ]
+        
+        
+        read_only_fields = [
+            "id",
+            "created_at",
+            "updated_at",
+            "created_by",
+            "updated_by",
+        ]
+        
 '''
 
         # Crear el archivo

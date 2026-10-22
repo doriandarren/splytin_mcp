@@ -42,18 +42,22 @@ from django.conf import settings
 from django.utils import timezone
 
 
-# QuerySet personalizado para controlar eliminaciones masivas
+# QuerySet personalizado para eliminaciones lógicas y físicas
 class SoftDeleteQuerySet(models.QuerySet):
 
     def delete(self):
-        # Eliminación lógica de múltiples registros
-        return self.update(
-            deleted_at=timezone.now(),
-            updated_at=timezone.now()
+        now = timezone.now()
+
+        count = self.update(
+            deleted_at=now,
+            updated_at=now
         )
 
+        return count, {
+            self.model._meta.label: count
+        }
+
     def hard_delete(self):
-        # Eliminación física de múltiples registros
         return super().delete()
 
 
@@ -71,13 +75,15 @@ class AllObjectsManager(models.Manager.from_queryset(SoftDeleteQuerySet)):
     pass
 
 
+# Modelo base abstracto
 class BaseModel(models.Model):
 
+    # Fechas de auditoría
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-
     deleted_at = models.DateTimeField(null=True, blank=True)
 
+    # Usuarios de auditoría
     created_by = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.SET_NULL,
@@ -94,6 +100,7 @@ class BaseModel(models.Model):
         related_name="%(class)s_updated"
     )
 
+    # Managers
     objects = ActiveManager()
     all_objects = AllObjectsManager()
 
@@ -105,29 +112,38 @@ class BaseModel(models.Model):
     def is_deleted(self):
         return self.deleted_at is not None
 
+    # Eliminación lógica
     def soft_delete(self, user=None):
         self.deleted_at = timezone.now()
 
-        if user:
+        if user is not None:
             self.updated_by = user
 
         self.save(update_fields=[
-            "deleted_at", "updated_by", "updated_at"
+            "deleted_at",
+            "updated_by",
+            "updated_at"
         ])
 
+    # Restaurar registro eliminado
     def restore(self, user=None):
         self.deleted_at = None
 
-        if user:
+        if user is not None:
             self.updated_by = user
 
         self.save(update_fields=[
-            "deleted_at", "updated_by", "updated_at"
+            "deleted_at",
+            "updated_by",
+            "updated_at"
         ])
 
+    # Sobrescribir eliminación normal
     def delete(self, using=None, keep_parents=False):
         self.soft_delete()
+        return 1, {self._meta.label: 1}
 
+    # Eliminación física
     def hard_delete(self, using=None, keep_parents=False):
         return super().delete(
             using=using,

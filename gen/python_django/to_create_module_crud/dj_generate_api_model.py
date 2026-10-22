@@ -95,6 +95,10 @@ class {singular_name}(BaseModel):
     class Meta:
         verbose_name = "{singular_name}"
         verbose_name_plural = "{plural_name}"
+        
+    
+    class JSONAPIMeta:
+        resource_name = "{plural_name_kebab}"
 
     def __str__(self):
         return f"{{self.pk}}"

@@ -37,111 +37,66 @@ from .api_response import BaseApiResponse, BaseAPIView, BaseModelViewSet
 
         folder_path = os.path.join(full_path, "core", "api")
 
-        content = f'''# core/api/api_response.py
-
-from rest_framework import status
+        content = r'''
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.viewsets import ModelViewSet
 
 
+# Respuestas personalizadas (compatibilidad con APIs existentes)
 class BaseApiResponse:
 
-    def respond_with_data(self, message=None, data=None, success=True, status_code=200):
-        return Response({{
+    def respond_with_data(
+        self,
+        message=None,
+        data=None,
+        success=True,
+        status_code=200
+    ):
+        return Response({
             "data": data,
             "message": message,
             "success": success,
             "status_code": status_code,
-        }}, status=status_code)
+        }, status=status_code)
 
-    def respond_with_error(self, message="", errors=None, status_code=422):
-        return Response({{
+    def respond_with_error(
+        self,
+        message="",
+        errors=None,
+        status_code=422
+    ):
+        return Response({
             "data": None,
             "message": message,
             "errors": errors,
             "success": False,
             "status_code": status_code,
-        }}, status=status_code)
+        }, status=status_code)
 
 
+# APIView para endpoints existentes
 class BaseAPIView(BaseApiResponse, APIView):
     pass
 
 
+# ViewSet para modelos con auditoría y Soft Delete
 class BaseModelViewSet(BaseApiResponse, ModelViewSet):
 
-    def list(self, request, *args, **kwargs):
-        queryset = self.filter_queryset(self.get_queryset())
-
-        page = self.paginate_queryset(queryset)
-
-        if page is not None:
-            serializer = self.get_serializer(page, many=True)
-
-            return self.get_paginated_response({{
-                "data": serializer.data,
-                "message": "Records retrieved successfully",
-                "success": True,
-                "status_code": status.HTTP_200_OK,
-            }})
-
-        serializer = self.get_serializer(queryset, many=True)
-
-        return self.respond_with_data(
-            message="Records retrieved successfully",
-            data=serializer.data,
-            status_code=status.HTTP_200_OK
+    def perform_create(self, serializer):
+        serializer.save(
+            created_by=self.request.user,
+            updated_by=self.request.user
         )
 
-    def retrieve(self, request, *args, **kwargs):
-        instance = self.get_object()
-        serializer = self.get_serializer(instance)
-
-        return self.respond_with_data(
-            message="Record retrieved successfully",
-            data=serializer.data,
-            status_code=status.HTTP_200_OK
+    def perform_update(self, serializer):
+        serializer.save(
+            updated_by=self.request.user
         )
 
-    def create(self, request, *args, **kwargs):
-        serializer = self.get_serializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        self.perform_create(serializer)
-
-        return self.respond_with_data(
-            message="Record created successfully",
-            data=serializer.data,
-            status_code=status.HTTP_201_CREATED
-        )
-
-    def update(self, request, *args, **kwargs):
-        partial = kwargs.pop("partial", False)
-        instance = self.get_object()
-
-        serializer = self.get_serializer(
-            instance,
-            data=request.data,
-            partial=partial
-        )
-
-        serializer.is_valid(raise_exception=True)
-        self.perform_update(serializer)
-
-        return self.respond_with_data(
-            message="Record updated successfully",
-            data=serializer.data,
-            status_code=status.HTTP_200_OK
-        )
-
-    def destroy(self, request, *args, **kwargs):
-        instance = self.get_object()
-        self.perform_destroy(instance)
-
-        return self.respond_with_data(
-            message="Record deleted successfully",
-            data=None,
-            status_code=status.HTTP_200_OK
+    def perform_destroy(self, instance):
+        instance.soft_delete(
+            user=self.request.user
         )
 '''
 

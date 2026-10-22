@@ -3,8 +3,12 @@ import os
 import json
 import uuid
 
+from dotenv import load_dotenv
 from gen.helpers.helper_file import HelperFile
 from gen.python_django.helpers.helper_postman_json import HelperPostmanJson
+
+
+load_dotenv()
 
 
 class DjGeneratePostman:
@@ -35,12 +39,13 @@ class DjGeneratePostman:
         self.form_headers = [
             self.helper.create_header(
                 "Accept", "application/vnd.api+json"
+            ),
+            self.helper.create_header(
+                "Content-Type", "application/vnd.api+json"
             )
         ]
         
-        
-        
-        
+          
         
 
     def create_authentication(self, domain_name):
@@ -50,28 +55,34 @@ class DjGeneratePostman:
 
         # Recuperar contraseña
         forgot = self.helper.create_item(
-            name="forgot Password",
+            name="Forgot Password",
             method="POST",
             url="{{base_url}}auth/password/email/",
-            headers=self.form_headers,
-            body=self.helper.create_form_body([
-                self.helper.create_form_field(
-                    "email", f"admin@{domain_name}"
-                )
-            ])
+            headers=self.headers,
+            body=self.helper.create_raw_body({
+                "data": {
+                    "type": "password-reset-requests",
+                    "attributes": {
+                        "email": f"admin@{domain_name}"
+                    }
+                }
+            })
         )
 
         restore = self.helper.create_item(
             name="Restore Password",
             method="POST",
             url="{{base_url}}auth/password/restore/",
-            headers=self.form_headers,
-            body=self.helper.create_form_body([
-                self.helper.create_form_field("token"),
-                self.helper.create_form_field(
-                    "password", "{{password_api}}"
-                )
-            ])
+            headers=self.headers,
+            body=self.helper.create_raw_body({
+                "data": {
+                    "type": "password-resets",
+                    "attributes": {
+                        "token": "",
+                        "password": os.getenv("PASSWORD", "PASS")
+                    }
+                }
+            })
         )
 
         restore_folder = self.helper.create_folder(
@@ -93,36 +104,19 @@ class DjGeneratePostman:
             name="Login",
             method="POST",
             url="{{base_url}}auth/login/",
-            headers=self.form_headers,
-            body=self.helper.create_form_body([
-                {
-                    "key": "email",
-                    "value": f"admin@{domain_name}",
-                    "type": "text",
-                    "disabled": False
-                },
-                {
-                    "key": "password",
-                    "value": "{{password_api}}",
-                    "type": "text",
-                    "disabled": False
-                },
-                {
-                    "key": "email",
-                    "value": f"manager@{domain_name}",
-                    "type": "text",
-                    "disabled": True
-                },
-                {
-                    "key": "email",
-                    "value": f"user@{domain_name}",
-                    "type": "text",
-                    "disabled": True
+            headers=self.headers,
+            body=self.helper.create_raw_body({
+                "data": {
+                    "type": "login",
+                    "attributes": {
+                        "email": f"admin@{domain_name}",
+                        "password": os.getenv("PASSWORD", "PASS")
+                    }
                 }
-            ]),
+            }),
             events=[token_script]
         )
-
+        
         # Obtener usuario autenticado
         show = self.helper.create_item(
             name="show",
@@ -152,10 +146,6 @@ class DjGeneratePostman:
 
 
 
-
-
-
-
     def create_dev(self):
         """
         Genera la carpeta Dev.
@@ -173,6 +163,8 @@ class DjGeneratePostman:
             items=[test]
         )
 
+
+
     def create_dashboards(self):
         """
         Genera la carpeta Dashboards.
@@ -189,6 +181,8 @@ class DjGeneratePostman:
             name="Dashboards",
             items=[list_item]
         )
+
+
 
     def generate(self, project_name, domain_name, base_url=None):
         """
@@ -217,13 +211,13 @@ class DjGeneratePostman:
                 self.helper.create_variable(
                     "base_url", base_url
                 ),
-                self.helper.create_variable("token_api"),
-                self.helper.create_variable("password_api")
+                self.helper.create_variable("token_api")
             ]
         }
 
         return collection
 
+    
     def invoke(
         self,
         full_path,

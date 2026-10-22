@@ -153,7 +153,8 @@ class Command(BaseCommand):
 
         folder_path = os.path.join(full_path, "apps", "users", "api")
 
-        content = f'''from rest_framework.serializers import ModelSerializer
+        content = f'''#from rest_framework.serializers import ModelSerializer
+from rest_framework_json_api.serializers import ModelSerializer
 from apps.users.models import User
 
 

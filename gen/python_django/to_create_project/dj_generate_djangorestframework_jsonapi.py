@@ -106,6 +106,7 @@ REST_FRAMEWORK = {
 }""":
                 """# Django REST Framework - Token + JSON:API
 REST_FRAMEWORK = {
+
     # Authentication
     "DEFAULT_AUTHENTICATION_CLASSES": [
         "rest_framework.authentication.TokenAuthentication",
@@ -119,6 +120,9 @@ REST_FRAMEWORK = {
     # JSON:API - Requests
     "DEFAULT_PARSER_CLASSES": [
         "rest_framework_json_api.parsers.JSONParser",
+        "rest_framework.parsers.JSONParser",
+        "rest_framework.parsers.FormParser",
+        "rest_framework.parsers.MultiPartParser",
     ],
 
     # JSON:API - Metadata
@@ -128,6 +132,12 @@ REST_FRAMEWORK = {
     # JSON:API - Exceptions
     "EXCEPTION_HANDLER":
         "rest_framework_json_api.exceptions.exception_handler",
+
+    # JSON:API - Pagination
+    "DEFAULT_PAGINATION_CLASS":
+        "rest_framework_json_api.pagination.JsonApiPageNumberPagination",
+
+    "PAGE_SIZE": 10,
 }
 """,
             }
