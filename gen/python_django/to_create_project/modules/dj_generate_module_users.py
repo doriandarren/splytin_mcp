@@ -61,8 +61,14 @@ class DjGenerateModuleUsers:
         """
         Genera el archivo.
         """
-
+        
+        folder_path = os.path.join(full_path, "apps", "users", "management")
+        HelperFile.create_init_file(folder_path)
+        
+        
         folder_path = os.path.join(full_path, "apps", "users", "management", "commands")
+        HelperFile.create_init_file(folder_path)
+
 
         content = f'''import os
 from dotenv import load_dotenv

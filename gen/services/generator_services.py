@@ -26,6 +26,7 @@ from gen.python_django.to_create_project.core.dj_generate_core_file_init import 
 from gen.python_django.to_create_project.core.dj_generate_custom_logging import DjGenerateCustomLogging
 from gen.python_django.to_create_project.dj_generate_cors import DjGenerateCors
 from gen.python_django.to_create_project.dj_generate_cron import DjGenerateCron
+from gen.python_django.to_create_project.dj_generate_faker import DjGenerateFaker
 from gen.python_django.to_create_project.modules.dj_generate_module_auth import DjGenerateModuleAuth
 from gen.python_django.to_create_project.modules.dj_generate_module_devs import DjGenerateModuleDevs
 from gen.python_django.to_create_project.modules.dj_generate_module_users import DjGenerateModuleUsers
@@ -110,6 +111,11 @@ def create_python_django_project_service(
     # Django
     obj = DjGenerateDjango()
     obj.invoke(full_path, project_name_format, app_main, venv_python)
+    
+    
+    # Faker
+    obj = DjGenerateFaker()
+    obj.invoke(full_path, venv_python)
     
     
     # Env
@@ -198,21 +204,22 @@ def create_python_django_project_service(
     obj.invoke(full_path, project_name_format, app_main, venv_python)
     
     
+    # Logging
     obj = DjGenerateCustomLogging()
     obj.invoke(full_path, project_name_format, app_main, venv_python)
     
     
-    
-    # TODO
+    # Postman
     obj = DjGeneratePostman()
     obj.invoke(full_path, project_name, domain_name)
     
     
-    
+    # Requirements
     obj = DjGenerateRequirementsTxt()
     obj.invoke(full_path, venv_python)
     
     
+    # Api - Response
     obj = DjGenerateApiResponse()
     obj.invoke(full_path)
     
