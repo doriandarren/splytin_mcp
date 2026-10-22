@@ -6,6 +6,7 @@ from gen.python_django.helpers.helper_virtual_env import get_venv_python
 from gen.python_django.to_create_module_crud.dj_generate_api_model import DjGenerateApiModel
 from gen.python_django.to_create_module_crud.dj_generate_api_postman import DjGenerateApiPostman
 from gen.python_django.to_create_module_crud.dj_generate_api_route import DjGenerateApiRoute
+from gen.python_django.to_create_module_crud.dj_generate_api_seeder import DjGenerateApiSeeder
 from gen.python_django.to_create_module_crud.dj_generate_api_serializer import DjGenerateApiSerializer
 from gen.python_django.to_create_module_crud.dj_generate_api_service import DjGenerateApiService
 from gen.python_django.to_create_module_crud.dj_generate_api_viewset import DjGenerateApiViewset
@@ -108,7 +109,7 @@ def standard_module_crud_python_django(
             plural_name_snake,
             singular_first_camel,
             plural_first_camel,
-            columns,
+            columns
         )
         
     
@@ -126,7 +127,7 @@ def standard_module_crud_python_django(
             plural_name_snake,
             singular_first_camel,
             plural_first_camel,
-            columns,
+            columns
         )
         
     
@@ -144,12 +145,12 @@ def standard_module_crud_python_django(
             plural_name_snake,
             singular_first_camel,
             plural_first_camel,
-            columns,
+            columns
         )
     
     ## Generate Model
     if "api_model" in input_menu_checkbox:
-        
+        ## Model
         obj = DjGenerateApiModel()
         obj.invoke(
             full_path,
@@ -162,8 +163,28 @@ def standard_module_crud_python_django(
             plural_name_snake,
             singular_first_camel,
             plural_first_camel,
-            columns,
+            columns
         )
+         
+        
+        ## Seeder
+        obj = DjGenerateApiSeeder()
+        obj.invoke(
+            full_path,
+            project_name,
+            singular_name,
+            plural_name,
+            singular_name_kebab,
+            plural_name_kebab,
+            singular_name_snake,
+            plural_name_snake,
+            singular_first_camel,
+            plural_first_camel,
+            columns
+        )
+        
+        
+        
         
     ## Generate Service
     if "api_service" in input_menu_checkbox:
@@ -198,7 +219,7 @@ def standard_module_crud_python_django(
             plural_name_snake,
             singular_first_camel,
             plural_first_camel,
-            columns,
+            columns
         )
     
     print_cyan("-" * 20)

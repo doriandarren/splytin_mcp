@@ -28,3 +28,24 @@ class HelperFile:
         except OSError as error:
             print_message(f"Error al generar el archivo {file_path}: {error}", CYAN)
             return None
+        
+        
+    
+    @staticmethod
+    def create_init_file(folder_path):
+        """
+        Crea __init__.py si no existe.
+        """
+
+        os.makedirs(folder_path, exist_ok=True)
+
+        file_path = os.path.join(folder_path, "__init__.py")
+
+        if not os.path.exists(file_path):
+            return HelperFile.write(
+                folder_path=folder_path,
+                file_name="__init__.py",
+                content=""
+            )
+
+        return file_path
