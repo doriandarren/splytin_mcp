@@ -59,7 +59,7 @@ class DjGenerateApiSeeder:
                     model_expression = "get_user_model()"
                 else:
                     related_plural = column.get(
-                        "related_model_plural"
+                        "related_table"
                     )
 
                     if not related_plural:
@@ -151,8 +151,10 @@ class DjGenerateApiSeeder:
 
         fields_content = "\n".join(fields)
 
+        ## Agregar en los imports: 
         imports_content = "\n".join(sorted(fk_imports))
         setup_content = "\n".join(fk_setup)
+        
 
         content = f'''from faker import Faker
 from django.core.management.base import BaseCommand, CommandError
