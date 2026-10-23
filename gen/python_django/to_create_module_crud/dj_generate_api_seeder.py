@@ -189,7 +189,7 @@ class Command(BaseCommand):
 
             self.stdout.write(
                 self.style.SUCCESS(
-                    f"Registro creado: {{obj.pk}}"
+                    f"{singular_name} creado: {{obj.pk}}"
                 )
             )
 '''
