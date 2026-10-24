@@ -2,6 +2,7 @@ import sys
 import os
 
 from gen.helpers.helpers import dd
+from gen.react_ts.main_react_ts import MainReactTs
 
 BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 if BASE_DIR not in sys.path:
@@ -12,7 +13,7 @@ from gen.helpers.helper_print import print_header
 from gen.export_diagrams.main_export_diagrams import main_export_diagrams
 from gen.import_diagrams.main_import_diagrams import main_import_diagrams
 from gen.react.main_react import main_react
-from gen.react_ts.main_react_ts import main_react_ts
+
 from gen.php_laravel.main_laravel import main_laravel
 from gen.python_django.main_python_django import main_python_django
 from gen.databases.main_database import main_database
@@ -50,7 +51,8 @@ def start():
             case "react":
                 main_react()
             case "react_ts":
-                main_react_ts()
+                obj = MainReactTs()
+                obj.invoke()
             case "python_django":
                 main_python_django()
             case "kotlin":

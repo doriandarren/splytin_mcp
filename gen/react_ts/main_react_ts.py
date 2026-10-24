@@ -1,49 +1,43 @@
-import sys
-import os
-
-BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
-if BASE_DIR not in sys.path:
-    sys.path.append(BASE_DIR)
-
-from gen.react_ts.to_module_crud.start_project_react_ts import start_project_react_ts
-from helpers.helper_print import print_header
-from helpers.helper_menu import menu_list, clear_screen
+from gen.helpers.helper_print import print_header
+from gen.helpers.helper_menu import menu_list, clear_screen
+from gen.react_ts.to_create_module_crud.start_module_crud_react_ts import StartModuleCrudReactTs
+from gen.react_ts.to_create_project.start_project_react_ts import StartProjectReactTs
 
 
-def main_react_ts():
-    """Menú principal para generar código (proyectos / módulos)."""
 
-    while True:
-        clear_screen()
-        print_header("main_react_ts")
+class MainReactTs:
 
-        str_input = menu_list(
-            "¿Qué quieres crear?: ",
-            [
-                {"name": "Proyecto", "value": "project"},
-                {"name": "Módulo CRUD", "value": "crud"},
-                {"name": "Volver", "value": "back"},
-            ]
-        )
+    def invoke(self):
+        """Menú principal para generar código (proyectos / módulos)."""
 
-        opt = str_input.strip().lower()
+        while True:
+            clear_screen()
+            print_header("main_react_ts")
 
-        print(f"Crear un: {str_input} ")
+            str_input = menu_list(
+                "¿Qué quieres crear?: ",
+                [
+                    {"name": "Proyecto", "value": "project"},
+                    {"name": "Módulo CRUD", "value": "crud"},
+                    {"name": "Volver", "value": "back"},
+                ]
+            )
 
-        if opt == 'project':
-            start_project_react_ts()
-            
-        elif opt == 'crud':
-            pass
-            # start_module_X()
-            
-        elif opt == 'back':
-            print("\nVolviendo al menú anterior...\n")
-            break
+            opt = str_input.strip().lower()
 
-        else:
-            print("Opción no reconocida.")
+            print(f"Crear un: {str_input} ")
 
+            if opt == 'project':
+                obj = StartProjectReactTs()
+                obj.invoke()
+                
+            elif opt == 'crud':
+                obj = StartModuleCrudReactTs()
+                obj.invoke()
+                
+            elif opt == 'back':
+                print("\nVolviendo al menú anterior...\n")
+                break
 
-if __name__ == "__main__":
-    main_react_ts()
+            else:
+                print("Opción no reconocida.")
