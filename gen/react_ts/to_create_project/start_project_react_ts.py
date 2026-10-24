@@ -2,6 +2,7 @@ import os
 from dotenv import load_dotenv
 from gen.helpers.helper_menu import pause
 from gen.helpers.helper_print import input_with_validation
+from gen.react_ts.to_create_project.react_ts_command_line import ReactTsCommandLine
 
 load_dotenv()
 
@@ -24,8 +25,16 @@ class StartProjectReactTs:
 
         # Join Full Path
         full_path = f"{project_path}/{project_name}"
-        # TODO llamadas a las funciones "generate_"
-        # obj = XGenerateByCommandLine()
-        # obj.invoke(full_path)
+        
+        
+        
+        
+        
+        # Command Line
+        obj = ReactTsCommandLine()
+        obj.invoke(full_path)
+        
+        
+        
 
         pause()

@@ -25,32 +25,47 @@ NC    = "\033[0m"  # Sin color
 
 
 
+# def run_command(command, cwd=None):
+#     """Ejecuta un comando en la terminal."""
+#     try:
+#         result = subprocess.run(
+#             command,
+#             shell=True,
+#             check=True,
+#             cwd=cwd,
+#             text=True,
+#             stdout=subprocess.PIPE,
+#             stderr=subprocess.PIPE
+#         )
+#         if result.stdout:
+#             print(result.stdout.strip())
+#         if result.stderr:
+#             print_message(result.stderr.strip(), RED)
+#         return result.stdout
+#     except subprocess.CalledProcessError as e:
+#         print_message(f"Error ejecutando el comando: {command}", CYAN)
+#         if e.stdout:
+#             print(e.stdout.strip())
+#         if e.stderr:
+#             print_message(e.stderr.strip(), RED)
+#         raise e
+
+
+
 def run_command(command, cwd=None):
-    """Ejecuta un comando en la terminal."""
+    """Ejecuta comandos mostrando la salida en tiempo real."""
+
     try:
-        result = subprocess.run(
+        subprocess.run(
             command,
             shell=True,
             check=True,
-            cwd=cwd,
-            text=True,
-            stdout=subprocess.PIPE,
-            stderr=subprocess.PIPE
+            cwd=cwd
         )
-        if result.stdout:
-            print(result.stdout.strip())
-        if result.stderr:
-            print_message(result.stderr.strip(), RED)
-        return result.stdout
+
     except subprocess.CalledProcessError as e:
-        print_message(f"Error ejecutando el comando: {command}", CYAN)
-        if e.stdout:
-            print(e.stdout.strip())
-        if e.stderr:
-            print_message(e.stderr.strip(), RED)
-        raise e
-
-
+        print_red(f"Error ejecutando: {command}")
+        raise
 
 
 def run_command_debug(command, cwd=None):

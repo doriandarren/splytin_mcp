@@ -1,7 +1,7 @@
 import os
-from helpers.helper_menu import pause
-from helpers.helper_print import camel_to_first_letter_lower, camel_to_kebab, camel_to_snake
-from helpers.helper_string import normalize_project_name
+from gen.helpers.helper_menu import pause
+from gen.helpers.helper_print import camel_to_first_letter_lower, camel_to_kebab, camel_to_snake
+from gen.helpers.helper_string import normalize_project_name
 
 
 
@@ -11,12 +11,12 @@ class StandardModuleCrudReactTs:
         self,
         full_path,
         namespace,
-        version_api,
-        folder_group,
         singular_name,
         plural_name,
         columns,
-        input_menu_checkbox=None
+        input_menu_checkbox=None,
+        version_api=None,
+        folder_group=None
     ):
 
         # Input Default
@@ -37,7 +37,8 @@ class StandardModuleCrudReactTs:
 
         # TODO refactor
         # if "route" in input_menu_checkbox:
-        #     generate_route(
+        #     obj = XGenerateRoute()
+        #     obj.invoke(
         #         full_path,
         #         namespace,
         #         version_api,
@@ -56,7 +57,8 @@ class StandardModuleCrudReactTs:
 
 
         # if "list" in input_menu_checkbox:
-        #     generate_list_page(
+        #     obj = XGenerateListPage()
+        #     obj.invoke(
         #         full_path,
         #         namespace,
         #         version_api,
@@ -74,7 +76,8 @@ class StandardModuleCrudReactTs:
         #     )
 
         # if "create" in input_menu_checkbox:
-        #     generate_create_page(
+        #     obj = XGenerateCreatePage()
+        #     obj.invoke(
         #         full_path,
         #         namespace,
         #         version_api,
@@ -92,7 +95,8 @@ class StandardModuleCrudReactTs:
         #     )
 
         # if "edit" in input_menu_checkbox:
-        #     generate_edit_page(
+        #     obj = XGenerateEditPage()
+        #     obj.invoke(
         #         full_path,
         #         namespace,
         #         version_api,
@@ -110,7 +114,8 @@ class StandardModuleCrudReactTs:
         #     )
 
         # if "service" in input_menu_checkbox:
-        #     generate_service_file(
+        #     obj = XGenerateServiceFile()
+        #     obj.invoke(
         #         full_path,
         #         namespace,
         #         version_api,
@@ -126,4 +131,4 @@ class StandardModuleCrudReactTs:
         #         plural_name_snake,
         #         columns
         #     )
-        pause()
+        pause()   
