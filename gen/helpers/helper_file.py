@@ -49,3 +49,26 @@ class HelperFile:
             )
 
         return file_path
+    
+    
+    @staticmethod
+    def delete(folder_path, file_name):
+        """
+        Elimina un archivo si existe.
+        """
+
+        file_path = os.path.join(folder_path, file_name)
+
+        try:
+            if not os.path.isfile(file_path):
+                print_message(f"El archivo no existe: {file_path}", CYAN)
+                return False
+
+            os.remove(file_path)
+
+            print_message(f"Archivo eliminado: {file_path}", GREEN)
+            return True
+
+        except OSError as error:
+            print_message(f"Error al eliminar el archivo {file_path}: {error}", CYAN)
+            return False

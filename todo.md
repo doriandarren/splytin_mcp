@@ -490,3 +490,19 @@ apps/
     │   └── ai_prompt_category_services.py
     ├── models.py
     └── apps.py
+
+
+
+
+
+
+
+
+----------------------------------------
+
+
+- Crear las capetas 
+
+
+
+
