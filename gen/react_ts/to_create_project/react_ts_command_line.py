@@ -89,7 +89,7 @@ class ReactTsCommandLine():
         """
         Actualiza el archivo
         """
-        main_path = os.path.join(full_path, "main.tsx")
+        main_path = os.path.join(full_path, "src", "main.tsx")
     
         # Verificar si el archivo existe
         if not os.path.exists(main_path):
