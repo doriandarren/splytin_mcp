@@ -145,7 +145,7 @@ class ReactTsCommandLine():
 
         folder_path = os.path.join(full_path, "src")
 
-        content = r'''# index.css'''
+        content = r'''/* index.css */'''
 
         # Crear el archivo
         HelperFile.write(
