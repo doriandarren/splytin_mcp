@@ -67,13 +67,13 @@ class ReactTsCommandLine():
         )
         
 
-        content = r'''export const App = () => {
-  return (
-    <div>
-        <h1>App</h1>
-    </div>
-  )
-}'''
+        content = r'''import { RouterProvider } from "react-router"
+import { appRouter } from "./app.router"
+
+export const App = () => {
+  return <RouterProvider router={appRouter} />
+}
+'''
 
         # Crear el archivo
         HelperFile.write(

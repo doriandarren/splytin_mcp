@@ -82,13 +82,14 @@ py -m pip xxx                                  # Usar este comando para instrucc
 
 
 ## Actualizar
-pip install --upgrade pip
+python -m pip install --upgrade pip
 
 
 ## Instala los requerimientos:
-pip list
-pip freeze > requirements.txt                  # Crear archivo requerimientos -> Respaldo / Export
-pip install -r requirements.txt                # Instalar requerimientos Restore / Import
+python -m pip list
+python -m pip check                                     # Comprobar posibles incompatibilidades
+python -m pip freeze > requirements.txt                 # Crear archivo requerimientos -> Respaldo / Export
+python -m pip install -r requirements.txt               # Instalar requerimientos Restore / Import
 
 # Si No se tiene el archivo: requirements.txt
 pip install pipreqs                             # Install
@@ -100,14 +101,28 @@ pipreqs . --force                               # Ejecutar
 
 ```sh
 
-pip install questionary                                      # Console / Terminal
-pip install colorama                                         # Console / Terminal
-pip install requests                                         # Conexion API
-pip install schedule                                         # Cronjobs
-pip install inflect                                          # Pluralize
 
-pip install sqlalchemy psycopg2-binary alembic python-dotenv  # DB
-pip install pymysql                                           # DB
+# Console / Terminal
+python -m pip install questionary        # Menús interactivos
+python -m pip install colorama           # Colores en terminal
+
+# HTTP / API
+python -m pip install requests           # Peticiones HTTP y APIs
+
+# Scheduling / Cronjobs
+python -m pip install schedule           # Tareas programadas
+
+# Utilities
+python -m pip install inflect            # Singularización y pluralización
+python -m pip install python-dotenv      # Variables de entorno (.env)
+python -m pip install json5              # Lectura de JSON y JSONC
+
+# Database / ORM
+python -m pip install sqlalchemy         # ORM para bases de datos
+python -m pip install alembic            # Migraciones de bases de datos
+python -m pip install psycopg2-binary    # PostgreSQL
+python -m pip install pymysql            # MySQL / MariaDB
+
 
 ```
 
@@ -121,45 +136,4 @@ pymain -> pystart -> pystartproject -> pygenerate
 pymain -> pystart -> pystartmodule -> pystandard -> pygenerate
 ```
 
-# Pasos:
 
-```sh
-1. crear carpeta proyecto "xxx" y archivo "_ _ init _ _.py" y el archivo: "main_xxx"
-2. crear carpetas con sus respectivos archivos "_ _ init _ _.py":
-
-   - "to_create_module_crud"
-   - "to_create_project"
-
-3. crear dentro de la carpeta "to_create_project" el archivo: start_project_xxx.py
-4. crear dentro de la carpeta "to_create_module_crud" el archivo: start_module_xxx.py
-
-```
-
-# Format Example -> columns
-
-```sh
-[{'name': 'user_id', 'type': 'fk', 'is_fk': True, 'related_table': 'users', 'related_model': 'User'}, {'name': 'name', 'type': 'string', 'is_fk': False}, {'name': 'age', 'type': 'integer', 'is_fk': False}, {'name': 'description', 'type': 'string', 'is_fk': False}]
-```
-
-# Ejemplo: CRUD
-
-```sh
-
-/Users/dorian/PythonProjects/python.generator
-main
-AgendaUnloading
-AgendaUnloadings
-[{'name': 'user_id', 'type': 'fk', 'is_fk': True, 'related_table': 'users', 'related_model': 'User'}, {'name': 'name', 'type': 'string', 'is_fk': False}, {'name': 'age', 'type': 'integer', 'is_fk': False}, {'name': 'description', 'type': 'string', 'is_fk': False}]
-['api_route', 'api_serializer', 'api_wiewset', 'api_model', 'api_service']
-
-```
-
-# TODOS:
-
-PYTHON:
-
-- las cors: 'corsheaders.middleware.CorsMiddleware', # required for cors,
-  va encima de: 'django.middleware.common.CommonMiddleware',
-
-- En PHP: cuando se crea un proyecto, se tiene que cambiar en el ".env" y en el ".env.example" lo siguientes: "LOG_CHANNEL=daily"
-- en el archivo para API de postman hay que agregar en el Dev: el "execute"

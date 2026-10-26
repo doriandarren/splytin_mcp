@@ -40,7 +40,7 @@ export default AuthLayout;
         Genera el archivo.
         """
     
-        folder_path = os.path.join(full_path, "core", "src", "modules", "auth", "pages", "login")
+        folder_path = os.path.join(full_path, "src", "modules", "auth", "pages", "login")
     
         content = r'''export const LoginPage = () => {
   return (
@@ -63,7 +63,7 @@ export default AuthLayout;
         Genera el archivo.
         """
     
-        folder_path = os.path.join(full_path, "core", "src", "modules", "auth", "pages", "register")
+        folder_path = os.path.join(full_path, "src", "modules", "auth", "pages", "register")
     
         content = r'''export const RegisterPage = () => {
   return (

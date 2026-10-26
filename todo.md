@@ -205,6 +205,29 @@ python -m gen.python_django.to_create_project.generate_json_api
  }
 ]
 
+# Format Example -> columns
+
+```sh
+[{'name': 'user_id', 'type': 'fk', 'is_fk': True, 'related_table': 'users', 'related_model': 'User'}, {'name': 'name', 'type': 'string', 'is_fk': False}, {'name': 'age', 'type': 'integer', 'is_fk': False}, {'name': 'description', 'type': 'string', 'is_fk': False}]
+```
+
+# Ejemplo: CRUD
+
+```sh
+
+/Users/dorian/PythonProjects/python.generator
+main
+AgendaUnloading
+AgendaUnloadings
+[{'name': 'user_id', 'type': 'fk', 'is_fk': True, 'related_table': 'users', 'related_model': 'User'}, {'name': 'name', 'type': 'string', 'is_fk': False}, {'name': 'age', 'type': 'integer', 'is_fk': False}, {'name': 'description', 'type': 'string', 'is_fk': False}]
+['api_route', 'api_serializer', 'api_wiewset', 'api_model', 'api_service']
+
+```
+
+
+
+
+
 ```
 
 # Blender ---> Dariana haciendo:
@@ -501,15 +524,8 @@ apps/
 ----------------------------------------
 
 
-- Crear las capetas del proyecto en modules
 
-
-- Router:
-
-instalar: npm i react-router
-
-crear archivo: app.router.tsx
-
+- npx shadcn@latest init --preset b0 --template vite
 
 
 

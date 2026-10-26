@@ -2,8 +2,11 @@ import os
 from dotenv import load_dotenv
 from gen.helpers.helper_menu import pause
 from gen.helpers.helper_print import input_with_validation
+from gen.react_ts.to_create_project.modules.react_ts_module_dashboard import ReactTsModuleDashboard
+from gen.react_ts.to_create_project.react_ts_chadcn import ReactTsChadcn
 from gen.react_ts.to_create_project.react_ts_command_line import ReactTsCommandLine
-from gen.react_ts.to_create_project.react_ts_module_auth import ReactTsModuleAuth
+from gen.react_ts.to_create_project.modules.react_ts_module_auth import ReactTsModuleAuth
+from gen.react_ts.to_create_project.modules.react_ts_module_home import ReactTsModuleHome
 from gen.react_ts.to_create_project.react_ts_react_router import ReactTsReactRouter
 
 load_dotenv()
@@ -37,17 +40,31 @@ class StartProjectReactTs:
         obj.invoke(full_path)
         
         
-        # Create Module Auth
+        # Module Auth
         obj = ReactTsModuleAuth()
         obj.invoke(full_path)
         
-        # Create Module Home
+        
+        # Module Home
+        obj = ReactTsModuleHome()
+        obj.invoke(full_path)
+        
+        
+        # Module Dashboard
+        obj = ReactTsModuleDashboard()
+        obj.invoke(full_path)
         
         
         
         # React Router
         obj = ReactTsReactRouter()
         obj.invoke(full_path)
+        
+        
+        # Chadcn/ ui
+        obj = ReactTsChadcn()
+        obj.invoke(full_path)
+        
         
         
 
