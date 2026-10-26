@@ -501,7 +501,17 @@ apps/
 ----------------------------------------
 
 
-- Crear las capetas 
+- Crear las capetas del proyecto en modules
+
+
+- Router:
+
+instalar: npm i react-router
+
+crear archivo: app.router.tsx
+
+
+
 
 
 

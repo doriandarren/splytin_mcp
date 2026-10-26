@@ -36,7 +36,7 @@ class ReactTsCommandLine():
         if not os.path.isfile(os.path.join(full_path, "package.json")):
             raise RuntimeError("No se pudo crear el proyecto React.")
 
-        # Instalar dependencias dentro del proyecto
+        # Instalar dependencias
         run_command(
             "npm install",
             cwd=full_path
