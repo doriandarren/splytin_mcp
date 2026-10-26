@@ -6,7 +6,7 @@ from gen.helpers.helper_file import HelperFile
 class ReactTsGoogleFonts:
     def invoke(self, full_path, project_name):
         self.update_index_html(full_path, project_name)
-        self.update_index_css(full_path)
+        self.append_index_css(full_path)
       
 
     def update_index_html(self, full_path, project_name):
@@ -49,15 +49,37 @@ class ReactTsGoogleFonts:
         
         
     
-    def update_index_css(self, full_path):
+    def append_index_css(self, full_path):
       
-      content = """<@theme {
+      folder_path = os.path.join(full_path, "src")
+      
+      content = r"""
+
+@theme {
   --font-montserrat: "Montserrat Alternates", sans-serif;
 }"""
       
-      
       HelperFile.append(
-        full_path,
+        folder_path,
         "index.css",
         content
       )
+      
+      
+    def append_(self, full_path):
+        folder_path = os.path.join(full_path, "src")
+    
+        content = r"""#
+    """
+    
+        HelperFile.append(
+            folder_path,
+            "X.py",
+            content
+        )
+        
+        
+
+
+
+    

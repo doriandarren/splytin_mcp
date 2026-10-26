@@ -20,6 +20,8 @@ class ReactTsChadcn:
         # Chadcn
         self.install_chadcn_init(full_path)
         self.install_chadcn_component_all(full_path)
+        
+        
     
     
     def install_tailwind(self, full_path):
