@@ -7,6 +7,7 @@ from gen.react_ts.to_create_project.react_ts_chadcn import ReactTsChadcn
 from gen.react_ts.to_create_project.react_ts_command_line import ReactTsCommandLine
 from gen.react_ts.to_create_project.modules.react_ts_module_auth import ReactTsModuleAuth
 from gen.react_ts.to_create_project.modules.react_ts_module_home import ReactTsModuleHome
+from gen.react_ts.to_create_project.react_ts_google_fonts import ReactTsGoogleFonts
 from gen.react_ts.to_create_project.react_ts_react_router import ReactTsReactRouter
 
 load_dotenv()
@@ -64,6 +65,11 @@ class StartProjectReactTs:
         # Chadcn/ ui
         obj = ReactTsChadcn()
         obj.invoke(full_path)
+        
+        
+        # Google Fonts
+        obj = ReactTsGoogleFonts()
+        obj.invoke(full_path, project_name)
         
         
         

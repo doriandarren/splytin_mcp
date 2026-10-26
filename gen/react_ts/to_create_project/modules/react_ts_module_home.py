@@ -17,10 +17,13 @@ class ReactTsModuleHome:
 
         folder_path = os.path.join(full_path, "src", "modules", "public", "layouts")
 
-        content = r'''export const PublicLayout = () => {
-  return (
-    <div>PublicLayout</div>
-  )
+        content = r'''import { Outlet } from "react-router"
+
+export const PublicLayout = () => {
+  return <div>
+    PublicLayout
+    <Outlet />
+  </div>
 }
 '''
 
@@ -41,10 +44,13 @@ class ReactTsModuleHome:
     
             folder_path = os.path.join(full_path, "src", "modules", "public", "pages", "home")
     
-            content = r'''export const HomePage = () => {
-  return (
-    <div>HomePage</div>
-  )
+            content = r'''import { Button } from "@/components/ui/button"
+
+export const HomePage = () => {
+  return <div>
+    HomePage
+    <Button>Button</Button>
+  </div>
 }
 '''
     

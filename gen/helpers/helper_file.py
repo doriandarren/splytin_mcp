@@ -72,3 +72,30 @@ class HelperFile:
         except OSError as error:
             print_message(f"Error al eliminar el archivo {file_path}: {error}", CYAN)
             return False
+
+
+
+
+    @staticmethod
+    def append(folder_path, file_name, content):
+        """
+        Agrega contenido al final de un archivo existente.
+        """
+
+        file_path = os.path.join(folder_path, file_name)
+
+        try:
+            if not os.path.isfile(file_path):
+                print_message(f"El archivo no existe: {file_path}", CYAN)
+                return False
+
+            # Agregar contenido al final del archivo
+            with open(file_path, "a", encoding="utf-8") as file:
+                file.write(content)
+
+            print_message(f"Contenido agregado: {file_path}", GREEN)
+            return True
+
+        except OSError as error:
+            print_message(f"Error al modificar el archivo {file_path}: {error}", CYAN)
+            return False
