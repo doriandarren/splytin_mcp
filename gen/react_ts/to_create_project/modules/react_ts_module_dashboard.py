@@ -18,8 +18,14 @@ class ReactTsModuleDashboard:
 
         folder_path = os.path.join(full_path, "src", "modules", "private", "layouts")
 
-        content = r'''const AdminLayout = () => {
-  return <div>AdminLayout</div>;
+        content = r'''import { Outlet } from "react-router";
+
+const AdminLayout = () => {
+  return (
+    <>
+      <Outlet />
+    </>
+  );
 };
 
 
@@ -40,7 +46,7 @@ export default AdminLayout;
         Genera el archivo.
         """
 
-        folder_path = os.path.join(full_path, "src", "modules", "private", "pages", "dashboard")
+        folder_path = os.path.join(full_path, "src", "modules", "private", "dashboard", "pages")
 
         content = r'''export const DashboardPage = () => {
   return (

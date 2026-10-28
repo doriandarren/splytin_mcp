@@ -75,7 +75,6 @@ class ReactTsChadcn:
             file_path=file_path,
             new_data={
                 "compilerOptions": {
-                    "baseUrl": ".",
                     "paths": {
                         "@/*": ["./src/*"]
                     }

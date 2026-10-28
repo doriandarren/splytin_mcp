@@ -31,11 +31,11 @@ class ReactTsReactRouter:
     
         content = r'''import { lazy } from "react";
 import { createBrowserRouter, Navigate } from "react-router";
-import { HomePage } from "./modules/public/pages/home/HomePage";
+import { HomePage } from "./modules/public/home/pages/HomePage";
 import { PublicLayout } from "./modules/public/layouts/PublicLayout";
-import { LoginPage } from "./modules/auth/pages/login/LoginPage";
-import { RegisterPage } from "./modules/auth/pages/register/RegisterPage";
-import { DashboardPage } from "./modules/private/pages/dashboard/DashboardPage";
+import { LoginPage } from "./modules/auth/login/pages/LoginPage";
+import { RegisterPage } from "./modules/auth/register/pages/RegisterPage";
+import { DashboardPage } from "./modules/private/dashboard/pages/DashboardPage";
 
 
 const AuthLayout = lazy( () => import('./modules/auth/layouts/AuthLayout'))

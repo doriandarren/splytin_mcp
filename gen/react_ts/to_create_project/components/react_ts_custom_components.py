@@ -2,7 +2,7 @@ import os
 from gen.helpers.helper_file import HelperFile
 
 
-class ReactTsComponents:
+class ReactTsCustomComponents:
     
 
     def invoke(self, full_path):

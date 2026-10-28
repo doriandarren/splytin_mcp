@@ -2,7 +2,8 @@ import os
 from dotenv import load_dotenv
 from gen.helpers.helper_menu import pause
 from gen.helpers.helper_print import input_with_validation
-from gen.react_ts.to_create_project.components.react_ts_components import ReactTsComponents
+from gen.react_ts.to_create_project.components.react_ts_component_public import ReactTsComponentPublic
+from gen.react_ts.to_create_project.components.react_ts_custom_components import ReactTsCustomComponents
 from gen.react_ts.to_create_project.modules.react_ts_module_dashboard import ReactTsModuleDashboard
 from gen.react_ts.to_create_project.react_ts_chadcn import ReactTsChadcn
 from gen.react_ts.to_create_project.react_ts_command_line import ReactTsCommandLine
@@ -47,14 +48,27 @@ class StartProjectReactTs:
         obj.invoke(full_path)
         
         
+        # Components Public
+        obj = ReactTsComponentPublic()
+        obj.invoke(full_path)
+        
         # Module Home
         obj = ReactTsModuleHome()
+        obj.invoke(full_path)
+        
+        
+        
+        
+        # Components Custom
+        obj = ReactTsCustomComponents()
         obj.invoke(full_path)
         
         
         # Module Dashboard
         obj = ReactTsModuleDashboard()
         obj.invoke(full_path)
+        
+        
         
         
         
@@ -73,13 +87,9 @@ class StartProjectReactTs:
         obj.invoke(full_path, project_name)
         
         
-        # Components
-        obj = ReactTsComponents()
-        obj.invoke(full_path)
         
         
-        
-        
+
         
 
         pause()

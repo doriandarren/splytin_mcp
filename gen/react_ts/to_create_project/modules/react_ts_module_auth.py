@@ -19,8 +19,14 @@ class ReactTsModuleAuth:
 
         folder_path = os.path.join(full_path, "src", "modules", "auth", "layouts")
 
-        content = r'''const AuthLayout = () => {
-  return <div>AuthLayout</div>;
+        content = r'''import { Outlet } from "react-router";
+
+const AuthLayout = () => {
+  return (
+    <>
+      <Outlet />
+    </>
+  );
 };
 
 export default AuthLayout;
@@ -40,7 +46,7 @@ export default AuthLayout;
         Genera el archivo.
         """
     
-        folder_path = os.path.join(full_path, "src", "modules", "auth", "pages", "login")
+        folder_path = os.path.join(full_path, "src", "modules", "auth", "login", "pages")
     
         content = r'''export const LoginPage = () => {
   return (
@@ -63,7 +69,7 @@ export default AuthLayout;
         Genera el archivo.
         """
     
-        folder_path = os.path.join(full_path, "src", "modules", "auth", "pages", "register")
+        folder_path = os.path.join(full_path, "src", "modules", "auth", "register", "pages")
     
         content = r'''export const RegisterPage = () => {
   return (
