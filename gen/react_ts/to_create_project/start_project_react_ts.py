@@ -5,10 +5,13 @@ from gen.helpers.helper_print import input_with_validation
 from gen.react_ts.to_create_project.components.react_ts_component_public import ReactTsComponentPublic
 from gen.react_ts.to_create_project.components.react_ts_custom_components import ReactTsCustomComponents
 from gen.react_ts.to_create_project.modules.react_ts_module_dashboard import ReactTsModuleDashboard
+from gen.react_ts.to_create_project.react_ts_api import ReactTsApi
 from gen.react_ts.to_create_project.react_ts_chadcn import ReactTsChadcn
 from gen.react_ts.to_create_project.react_ts_command_line import ReactTsCommandLine
 from gen.react_ts.to_create_project.modules.react_ts_module_auth import ReactTsModuleAuth
 from gen.react_ts.to_create_project.modules.react_ts_module_home import ReactTsModuleHome
+from gen.react_ts.to_create_project.react_ts_env import ReactTsEnv
+from gen.react_ts.to_create_project.react_ts_gitignore import ReactTsGitignore
 from gen.react_ts.to_create_project.react_ts_google_fonts import ReactTsGoogleFonts
 from gen.react_ts.to_create_project.react_ts_react_router import ReactTsReactRouter
 
@@ -41,6 +44,18 @@ class StartProjectReactTs:
         # Command Line
         obj = ReactTsCommandLine()
         obj.invoke(full_path)
+        
+        
+        # Env
+        obj = ReactTsEnv()
+        obj.invoke(full_path)
+        
+        
+        # Gitignore
+        obj = ReactTsGitignore()
+        obj.invoke(full_path)
+        
+    
         
         
         # Module Auth
@@ -87,6 +102,9 @@ class StartProjectReactTs:
         obj.invoke(full_path, project_name)
         
         
+        # API
+        obj = ReactTsApi()
+        obj.invoke(full_path)
         
         
 

@@ -70,12 +70,17 @@ class ReactTsCommandLine():
         )
         
 
-        content = r'''import { RouterProvider } from "react-router"
-import { appRouter } from "./app.router"
+        content = r'''import { Suspense } from "react";
+import { RouterProvider } from "react-router";
+import { appRouter } from "./app.router";
 
 export const App = () => {
-  return <RouterProvider router={appRouter} />
-}
+  return (
+    <Suspense fallback={<div>Cargando...</div>}>
+      <RouterProvider router={appRouter} />
+    </Suspense>
+  );
+};
 '''
 
         # Crear el archivo
