@@ -31,27 +31,65 @@ use Illuminate\Http\JsonResponse;
 
 class HandlerResponse
 {
-
-    /**
-     * @param $message
-     * @param $statusCode
-     * @param null $errors
-     * @return JsonResponse
-     */
-    public static function respondWithError($message, $statusCode, $errors=null): JsonResponse
+    public static function respondWithValidationErrors(array $errors, int $statusCode = 422): JsonResponse
     {
-        $data = [
-            'data' => null,
-            'message' => $message,
-            'errors' => $errors,
-            'status_code' => $statusCode,
-            'success' => false
-        ];
-        return response()->json($data, $statusCode);
+        $items = [];
+
+        foreach ($errors as $field => $messages) {
+            foreach ((array) $messages as $message) {
+                $items[] = [
+                    'detail' => (string) $message,
+                    'status' => (string) $statusCode,
+                    'code' => 'invalid',
+                    'meta' => ['field' => (string) $field],
+                ];
+            }
+        }
+
+        return new JsonResponse(
+            ['errors' => $items],
+            $statusCode,
+            ['Content-Type' => 'application/vnd.api+json']
+        );
     }
 
-}
+    public static function respondWithError($message, $statusCode, $errors = null): JsonResponse
+    {
+        $details = [];
+        if (is_array($errors)) {
+            array_walk_recursive($errors, function ($detail) use (&$details) {
+                if (is_string($detail) && $detail !== '') {
+                    $details[] = $detail;
+                }
+            });
+        } elseif (is_string($errors) && $errors !== '') {
+            $details[] = $errors;
+        }
 
+        if ($details === []) {
+            $details[] = (string) $message;
+        }
+
+        $statusCode = (int) $statusCode;
+        $errorCode = match ($statusCode) {
+            401 => 'not_authenticated',
+            403 => 'permission_denied',
+            404 => 'not_found',
+            405 => 'method_not_allowed',
+            409 => 'conflict',
+            400, 422 => 'invalid',
+            default => 'error',
+        };
+
+        return new JsonResponse([
+            'errors' => array_map(fn (string $detail) => [
+                'detail' => $detail,
+                'status' => (string) $statusCode,
+                'code' => $errorCode,
+            ], $details),
+        ], $statusCode, ['Content-Type' => 'application/vnd.api+json']);
+    }
+}
 """
 
     try:

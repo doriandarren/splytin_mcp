@@ -42,6 +42,7 @@ use Illuminate\Auth\AuthenticationException;
 use Illuminate\Database\QueryException;
 use App\Exceptions\HandlerResponse;
 use App\Utilities\Messages\MessageChannel;
+use Illuminate\Validation\ValidationException;
 """
         )
 
@@ -67,7 +68,21 @@ use App\Utilities\Messages\MessageChannel;
         # Exceptions
         content = content.replace(
             r"""->withExceptions(function (Exceptions $exceptions): void {""",
+            
             r"""->withExceptions(function (Exceptions $exceptions): void {
+        
+        // Validation Forms
+        $exceptions->render(function (ValidationException $exception, Request $request) {
+            if (! $request->is('api/*')) {
+                return null;
+            }
+
+            return HandlerResponse::respondWithValidationErrors(
+                $exception->errors(),
+                $exception->status
+            );
+        });        
+        
         // BadMethodCallException
         $exceptions->render(function (BadMethodCallException $e, Request $request) {
             if ($request->is('api/*')) {

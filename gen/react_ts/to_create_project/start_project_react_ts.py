@@ -77,5 +77,9 @@ class StartProjectReactTs:
         obj = ReactTsComponents()
         obj.invoke(full_path)
         
+        
+        
+        
+        
 
         pause()

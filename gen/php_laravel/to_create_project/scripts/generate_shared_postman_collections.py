@@ -125,8 +125,11 @@ def generate_shared_postman_collections(full_path, project_name, domain_name, pa
 									"listen": "test",
 									"script": {
 										"exec": [
-											"let response = JSON.parse(pm.response.text());",
-											"pm.collectionVariables.set(\"token_api\", response.data.token);"
+											"const response = pm.response.json();",
+											"const token = response?.data?.attributes?.token ?? response?.data?.token ?? response?.token;",
+											"if (token) {",
+											"    pm.collectionVariables.set("token_api", token);",
+											"}"
 										],
 										"type": "text/javascript",
 										"packages": {}
@@ -193,8 +196,11 @@ def generate_shared_postman_collections(full_path, project_name, domain_name, pa
 							"listen": "test",
 							"script": {
 								"exec": [
-									"let response = JSON.parse(pm.response.text());",
-									"pm.collectionVariables.set(\"token_api\", response.data.token);"
+									"const response = pm.response.json();",
+									"const token = response?.data?.attributes?.token ?? response?.data?.token ?? response?.token;",
+									"if (token) {",
+									"    pm.collectionVariables.set("token_api", token);",
+									"}"
 								],
 								"type": "text/javascript",
 								"packages": {}

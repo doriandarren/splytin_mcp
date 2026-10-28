@@ -18,12 +18,12 @@ def create_trait_api_response(full_path):
 
     os.makedirs(folder_path, exist_ok=True)
 
-    content = """<?php
+    content = r"""<?php
 
-namespace App\\Traits;
+namespace App\Traits;
 
-use App\\Enums\\Roles\\EnumRole;
-use Illuminate\\Http\\JsonResponse;
+use App\Enums\Roles\EnumRole;
+use Illuminate\Http\JsonResponse;
 
 
 trait ApiResponses
@@ -81,13 +81,39 @@ trait ApiResponses
     ): JsonResponse {
         $this->setCode($code);
 
+        // Accept the existing ['e' => '...'] and field => messages formats.
+        $details = [];
+        if (is_array($errors)) {
+            array_walk_recursive($errors, function ($detail) use (&$details) {
+                if (is_string($detail) && $detail !== '') {
+                    $details[] = $detail;
+                }
+            });
+        } elseif (is_string($errors) && $errors !== '') {
+            $details[] = $errors;
+        }
+
+        if ($details === []) {
+            $details[] = $message;
+        }
+
+        $errorCode = match ($code) {
+            401 => 'authentication_failed',
+            403 => 'permission_denied',
+            404 => 'not_found',
+            409 => 'conflict',
+            400, 422 => 'invalid',
+            default => 'error',
+        };
+
         return $this->respond([
-            'data' => null,
-            'message' => $message,
-            'errors' => $errors,
-            'success' => false,
-            'status_code' => $code,
-        ]);
+            'errors' => array_map(fn (string $detail) => [
+                'detail' => $detail,
+                'status' => (string) $code,
+                'source' => ['pointer' => '/data'],
+                'code' => $errorCode,
+            ], $details),
+        ], ['Content-Type' => 'application/vnd.api+json']);
     }
 
     /*************************************
@@ -173,23 +199,24 @@ trait ApiResponses
 
         $response = [
             'data' => [
-                'token' => $token,
-                'token_type' => 'Bearer',
+                'type' => 'auth-tokens',
+                'id' => $token,
+                'attributes' => [
+                    'token' => $token,
+                ],
             ],
-            'message' => $message,
-            'status_code' => 200,
-            'success' => true,
         ];
 
+        // Keep optional user information inside a permitted JSON:API member.
         if ($user !== null) {
-            $response['user'] = $user;
+            $response['meta'] = ['user' => $user];
         }
 
-        return $this->respond($response);
+        return $this->respond($response, [
+            'Content-Type' => 'application/vnd.api+json',
+        ]);
     }
-    
-    
-    
+
 
     /*************************************
      *  RESPONSE 400
