@@ -21,7 +21,7 @@ class ReactTsApi:
     
         folder_path = os.path.join(full_path, "src", "api")
     
-        content = r'''// src/api/api.ts
+        content = r'''// src/api/api-error.ts
 import type { JsonApiError } from './json-api.types';
 
 type ApiErrorKind = 'http' | 'network' | 'timeout' | 'invalid-response' | 'configuration';
@@ -90,103 +90,183 @@ export function readJsonApiErrors(value: unknown): JsonApiError[] {
     
         folder_path = os.path.join(full_path, "src", "api")
     
-        content = r'''// src/api/api-error.ts
-import { ApiError, readJsonApiErrors } from './api-error';
+        content = r'''// src/api/api.ts
+import { ApiError, readJsonApiErrors } from "./api-error";
+import { authTokenStorage } from "@/modules/auth/services/authTokenStorage";
+import { useAuthStore } from "@/modules/auth/stores/authStore";
 
 export interface ApiOptions {
-  method?: 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
+  method?: "GET" | "POST" | "PUT" | "PATCH" | "DELETE";
   body?: unknown;
   token?: string | null;
   signal?: AbortSignal;
+  contentType?: "json" | "jsonapi";
+  skipAuth?: boolean;
 }
 
 const REQUEST_TIMEOUT_MS = 15_000;
 
 function getUrl(endpoint: string): string {
   const baseUrl = import.meta.env.VITE_API_URL?.trim();
+
   if (!baseUrl) {
-    throw new ApiError('Falta configurar VITE_API_URL.', { kind: 'configuration' });
+    throw new ApiError("Falta configurar VITE_API_URL.", {
+      kind: "configuration",
+    });
   }
+
   try {
-    const base = new URL(`${baseUrl.replace(/\/+$/, '')}/`);
-    const url = new URL(endpoint.replace(/^\/+/, ''), base);
-    if (!['http:', 'https:'].includes(base.protocol) ||
-        url.origin !== base.origin || !url.pathname.startsWith(base.pathname)) {
-      throw new Error('Invalid API URL');
+    const base = new URL(`${baseUrl.replace(/\/+$/, "")}/`);
+    const url = new URL(endpoint.replace(/^\/+/, ""), base);
+
+    if (
+      !["http:", "https:"].includes(base.protocol) ||
+      url.origin !== base.origin ||
+      !url.pathname.startsWith(base.pathname)
+    ) {
+      throw new Error("Invalid API URL");
     }
+
     return url.toString();
   } catch {
-    throw new ApiError('La URL de la API o el endpoint no es válido.', {
-      kind: 'configuration',
-    });
+    throw new ApiError(
+      "La URL de la API o el endpoint no es válido.",
+      { kind: "configuration" }
+    );
   }
 }
 
 async function request(
   endpoint: string,
   options: ApiOptions,
-  responseType: 'json' | 'blob',
+  responseType: "json" | "blob"
 ): Promise<unknown> {
   const url = getUrl(endpoint);
+
   const headers = new Headers({
-    Accept: responseType === 'json' ? 'application/vnd.api+json' : '*/*',
+    Accept:
+      responseType === "json"
+        ? "application/vnd.api+json"
+        : "*/*",
   });
-  // El login acepta un objeto JSON normal; la respuesta sigue JSON:API.
-  if (options.body !== undefined) headers.set('Content-Type', 'application/json');
-  if (options.token) headers.set('Authorization', `Bearer ${options.token}`);
+
+  // Content-Type configurable para endpoints no JSON:API.
+  if (options.body !== undefined) {
+    headers.set(
+      "Content-Type",
+      options.contentType === "json"
+        ? "application/json"
+        : "application/vnd.api+json"
+    );
+  }
+
+  // Obtener automáticamente el token de la sesión.
+  const token = options.skipAuth
+    ? null
+    : options.token !== undefined
+      ? options.token
+      : authTokenStorage.get();
+
+  if (token) {
+    const scheme = import.meta.env.VITE_AUTH_SCHEME || "Bearer";
+    headers.set("Authorization", `${scheme} ${token}`);
+  }
 
   const timeout = AbortSignal.timeout(REQUEST_TIMEOUT_MS);
-  const signal = options.signal ? AbortSignal.any([options.signal, timeout]) : timeout;
+
+  const signal = options.signal
+    ? AbortSignal.any([options.signal, timeout])
+    : timeout;
 
   try {
     const response = await fetch(url, {
-      method: options.method ?? 'GET',
+      method: options.method ?? "GET",
       headers,
-      body: options.body === undefined ? undefined : JSON.stringify(options.body),
+      body:
+        options.body === undefined
+          ? undefined
+          : JSON.stringify(options.body),
       signal,
     });
 
-    if (response.ok && responseType === 'blob') return await response.blob();
+    // Gestionar token rechazado por Django.
+    // No cerrar una sesión nueva por una respuesta antigua.
+    if (response.status === 401 && token) {
+      if (authTokenStorage.get() === token) {
+        useAuthStore.getState().logout();
+      }
+    }
+
+    if (response.ok && responseType === "blob") {
+      return await response.blob();
+    }
 
     const text = await response.text();
+
     let payload: unknown;
+
     try {
       payload = text ? JSON.parse(text) : undefined;
     } catch {
       throw new ApiError(
-        response.ok ? 'La API no devolvió un JSON válido.' : `Error HTTP ${response.status}.`,
-        { status: response.status, kind: response.ok ? 'invalid-response' : 'http' },
+        response.ok
+          ? "La API no devolvió un JSON válido."
+          : `Error HTTP ${response.status}.`,
+        {
+          status: response.status,
+          kind: response.ok ? "invalid-response" : "http",
+        }
       );
     }
 
     const errors = readJsonApiErrors(payload);
+
     if (!response.ok || errors.length > 0) {
       throw new ApiError(
-        errors[0]?.detail ?? errors[0]?.title ?? `Error HTTP ${response.status}.`,
-        { status: response.status, errors },
+        errors[0]?.detail ??
+          errors[0]?.title ??
+          `Error HTTP ${response.status}.`,
+        {
+          status: response.status,
+          errors,
+        }
       );
     }
+
     return payload;
   } catch (error) {
     if (error instanceof ApiError) throw error;
+
     if (options.signal?.aborted) throw error;
+
     if (timeout.aborted) {
-      throw new ApiError('La API ha tardado demasiado en responder.', { kind: 'timeout' });
+      throw new ApiError(
+        "La API ha tardado demasiado en responder.",
+        { kind: "timeout" }
+      );
     }
-    throw new ApiError('No se pudo conectar con la API.', { kind: 'network' });
+
+    throw new ApiError(
+      "No se pudo conectar con la API.",
+      { kind: "network" }
+    );
   }
 }
 
-/** Devuelve el documento completo; undefined representa una respuesta sin cuerpo. */
 export async function api<T = unknown>(
   endpoint: string,
-  options: ApiOptions = {},
+  options: ApiOptions = {}
 ): Promise<T | undefined> {
-  return await request(endpoint, options, 'json') as T | undefined;
+  return (await request(endpoint, options, "json")) as
+    | T
+    | undefined;
 }
 
-export async function apiBlob(endpoint: string, options: ApiOptions = {}): Promise<Blob> {
-  return await request(endpoint, options, 'blob') as Blob;
+export async function apiBlob(
+  endpoint: string,
+  options: ApiOptions = {}
+): Promise<Blob> {
+  return (await request(endpoint, options, "blob")) as Blob;
 }
 '''
         

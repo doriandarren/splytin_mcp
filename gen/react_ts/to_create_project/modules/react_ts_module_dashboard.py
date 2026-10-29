@@ -18,16 +18,42 @@ class ReactTsModuleDashboard:
 
         folder_path = os.path.join(full_path, "src", "modules", "private", "layouts")
 
-        content = r'''import { Outlet } from "react-router";
+        content = r'''import { Outlet, useNavigate } from "react-router";
+import { LogOut, PanelsTopLeft } from "lucide-react";
+
+import { Button } from "@/components/ui/button";
+import { useAuthStore } from "@/modules/auth/stores/authStore";
 
 const AdminLayout = () => {
+  const navigate = useNavigate();
+
+  const logout = useAuthStore((state) => state.logout);
+
+  const handleLogout = () => {
+    logout();
+    void navigate("/auth/login", { replace: true });
+  };
+
   return (
-    <>
-      <Outlet />
-    </>
+    <div className="min-h-screen bg-background">
+      <header className="flex items-center justify-between border-b px-6 py-4">
+        <div className="flex items-center gap-2 font-semibold">
+          <PanelsTopLeft className="size-5" />
+          Splytin ERP
+        </div>
+
+        <Button variant="outline" onClick={handleLogout}>
+          <LogOut className="size-4" />
+          Cerrar sesión
+        </Button>
+      </header>
+
+      <main className="p-6">
+        <Outlet />
+      </main>
+    </div>
   );
 };
-
 
 export default AdminLayout;
 '''

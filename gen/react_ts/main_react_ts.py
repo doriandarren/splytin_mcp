@@ -12,7 +12,7 @@ class MainReactTs:
 
         while True:
             clear_screen()
-            print_header("main_react_ts")
+            print_header("REACT TYPESCRIPT")
 
             str_input = menu_list(
                 "¿Qué quieres crear?: ",
