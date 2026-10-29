@@ -26,7 +26,7 @@ class ReactTsReactRouter:
         """
         Genera el archivo.
         """
-    
+        
         folder_path = os.path.join(full_path, "src")
     
         content = r'''import { lazy } from "react";
@@ -36,6 +36,7 @@ import { PublicLayout } from "./modules/public/layouts/PublicLayout";
 import { LoginPage } from "./modules/auth/login/pages/LoginPage";
 import { RegisterPage } from "./modules/auth/register/pages/RegisterPage";
 import { DashboardPage } from "./modules/private/dashboard/pages/DashboardPage";
+import { ProtectedRoute } from "./modules/auth/components/ProtectedRoute";
 
 
 const AuthLayout = lazy( () => import('./modules/auth/layouts/AuthLayout'))
@@ -72,22 +73,28 @@ export const appRouter = createBrowserRouter([
         ]
     },
 
-    // Private Routes
+    // Private routes
     {
-        path: '/admin',
-        element: <AdminLayout />,
+        element: <ProtectedRoute />,
         children: [
+        {
+            path: "/admin",
+            element: <AdminLayout />,
+            children: [
             {
                 index: true,
-                element: <DashboardPage />
+                element: <DashboardPage />,
             },
-        ]
+            ],
+        },
+        ],
     },
+
 
     // 
     {
         path: '*',
-        element: <Navigate to='/' />,
+        element: <Navigate to='/' replace />,
     }
 
 ])

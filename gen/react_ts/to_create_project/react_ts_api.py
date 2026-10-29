@@ -21,7 +21,8 @@ class ReactTsApi:
     
         folder_path = os.path.join(full_path, "src", "api")
     
-        content = r'''import type { JsonApiError } from './json-api.types';
+        content = r'''// src/api/api.ts
+import type { JsonApiError } from './json-api.types';
 
 type ApiErrorKind = 'http' | 'network' | 'timeout' | 'invalid-response' | 'configuration';
 
@@ -83,13 +84,14 @@ export function readJsonApiErrors(value: unknown): JsonApiError[] {
         
         
     def create_api_ts(self, full_path):
-            """
-            Genera el archivo.
-            """
-        
-            folder_path = os.path.join(full_path, "src", "api")
-        
-            content = r'''import { ApiError, readJsonApiErrors } from './api-error';
+        """
+        Genera el archivo.
+        """
+    
+        folder_path = os.path.join(full_path, "src", "api")
+    
+        content = r'''// src/api/api-error.ts
+import { ApiError, readJsonApiErrors } from './api-error';
 
 export interface ApiOptions {
   method?: 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
@@ -188,22 +190,23 @@ export async function apiBlob(endpoint: string, options: ApiOptions = {}): Promi
 }
 '''
         
-            # Crear el archivo
-            HelperFile.write(
-                folder_path=folder_path,
-                file_name="api.ts",
-                content=content
-            )
+        # Crear el archivo
+        HelperFile.write(
+            folder_path=folder_path,
+            file_name="api.ts",
+            content=content
+        )
             
     
     def create_json_api_types_ts(self, full_path):
-            """
-            Genera el archivo.
-            """
-        
-            folder_path = os.path.join(full_path, "src", "api")
-        
-            content = r'''export interface JsonApiResource<TAttributes, TType extends string = string> {
+        """
+        Genera el archivo.
+        """
+    
+        folder_path = os.path.join(full_path, "src", "api")
+    
+        content = r'''// src/api/json-api.types.ts
+export interface JsonApiResource<TAttributes, TType extends string = string> {
   type: TType;
   id: string;
   attributes: TAttributes;
@@ -231,11 +234,11 @@ export interface JsonApiErrorDocument {
 }
 '''
         
-            # Crear el archivo
-            HelperFile.write(
-                folder_path=folder_path,
-                file_name="json-api.types.ts",
-                content=content
-            )
+        # Crear el archivo
+        HelperFile.write(
+            folder_path=folder_path,
+            file_name="json-api.types.ts",
+            content=content
+        )
             
     

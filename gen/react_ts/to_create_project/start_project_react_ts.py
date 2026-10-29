@@ -14,6 +14,7 @@ from gen.react_ts.to_create_project.react_ts_env import ReactTsEnv
 from gen.react_ts.to_create_project.react_ts_gitignore import ReactTsGitignore
 from gen.react_ts.to_create_project.react_ts_google_fonts import ReactTsGoogleFonts
 from gen.react_ts.to_create_project.react_ts_react_router import ReactTsReactRouter
+from gen.react_ts.to_create_project.react_ts_zustand import ReactTsZustand
 
 load_dotenv()
 
@@ -92,7 +93,7 @@ class StartProjectReactTs:
         obj.invoke(full_path)
         
         
-        # Chadcn/ ui
+        # Chadcn/ ui and lucide-react
         obj = ReactTsChadcn()
         obj.invoke(full_path)
         
@@ -107,7 +108,10 @@ class StartProjectReactTs:
         obj.invoke(full_path)
         
         
-
+        
+        # Zustand
+        obj = ReactTsZustand()
+        obj.invoke(full_path)
         
 
         pause()

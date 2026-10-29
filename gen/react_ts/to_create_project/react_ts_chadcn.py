@@ -21,6 +21,9 @@ class ReactTsChadcn:
         self.install_chadcn_init(full_path)
         self.install_chadcn_component_all(full_path)
         
+        # lucide-react
+        self.install_lucide_react(full_path)
+        
         
     
     
@@ -162,4 +165,14 @@ export default defineConfig({
             cwd=full_path
         )
         print_green("tailwindcss creado correctamente.")
+
+
+
+    def install_lucide_react(self, full_path):
+        ## npm install lucide-react
+        run_command(
+            "npm install lucide-react",
+            cwd=full_path
+        )
+        print_green("lucide-react creado correctamente.")
 
