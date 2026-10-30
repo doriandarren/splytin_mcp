@@ -93,7 +93,6 @@ export function readJsonApiErrors(value: unknown): JsonApiError[] {
         content = r'''// src/api/api.ts
 import { ApiError, readJsonApiErrors } from "./api-error";
 import { authTokenStorage } from "@/modules/auth/services/authTokenStorage";
-import { useAuthStore } from "@/modules/auth/stores/authStore";
 
 export interface ApiOptions {
   method?: "GET" | "POST" | "PUT" | "PATCH" | "DELETE";
@@ -188,14 +187,6 @@ async function request(
           : JSON.stringify(options.body),
       signal,
     });
-
-    // Gestionar token rechazado por Django.
-    // No cerrar una sesión nueva por una respuesta antigua.
-    if (response.status === 401 && token) {
-      if (authTokenStorage.get() === token) {
-        useAuthStore.getState().logout();
-      }
-    }
 
     if (response.ok && responseType === "blob") {
       return await response.blob();

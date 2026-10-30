@@ -20,6 +20,16 @@ class ReactTsModuleAuth:
         self.create_auth_user_types_ts(full_path)
         self.create_auth_user_service(full_path)
         
+        
+        #Protected Routes
+        self.create_protected_route_tsx(full_path)
+        self.create_auth_store_ts(full_path)
+        
+        # hooks
+        self.create_hooks_use_auth_user(full_path)
+        
+        #queries
+        self.create_auth_user_query_ts(full_path)
 
 
 
@@ -32,15 +42,13 @@ class ReactTsModuleAuth:
 
         content = r'''import { Outlet } from "react-router";
 
-const AuthLayout = () => {
+export const AuthLayout = () => {
   return (
     <>
       <Outlet />
     </>
   );
 };
-
-export default AuthLayout;
 '''
 
         # Crear el archivo
@@ -453,8 +461,6 @@ export const LoginPage = () => {
     
     
     
-    
-    
     def create_file_register_page_tsx(self, full_path):
         """
         Genera el archivo.
@@ -476,7 +482,6 @@ export const LoginPage = () => {
             file_name="RegisterPage.tsx",
             content=content
         )
-    
     
     
     
@@ -713,8 +718,7 @@ export interface AuthUserResponse {
     
     
     
-    
-    
+
     
     def create_auth_user_service(self, full_path):
         """
@@ -760,3 +764,344 @@ export const getAuthUser = async (
             content=content
         )
     
+    
+    
+    def create_protected_route_tsx(self, full_path):
+        """
+        Genera el archivo.
+        """
+
+        folder_path = os.path.join(full_path, "src", "modules", "auth", "components")
+
+        content = r'''// auth/components/ProtectedRoute.tsx
+import { useEffect } from "react";
+import { Navigate, Outlet, useLocation } from "react-router";
+import { useAuthStore } from "../stores/authStore";
+
+export const ProtectedRoute = () => {
+  const location = useLocation();
+
+  const status = useAuthStore((state) => state.status);
+  const checkSession = useAuthStore(
+    (state) => state.checkSession
+  );
+
+  useEffect(() => {
+    if (status === "checking") {
+      void checkSession();
+    }
+  }, [status, checkSession]);
+
+  if (status === "checking") {
+    return (
+      <div className="flex min-h-screen items-center justify-center">
+        <p className="text-muted-foreground">
+          Verificando sesión...
+        </p>
+      </div>
+    );
+  }
+
+  if (status === "error") {
+    return (
+      <div className="flex min-h-screen flex-col items-center justify-center gap-4">
+        <h2 className="text-xl font-semibold">
+          No se pudo verificar la sesión
+        </h2>
+
+        <p className="text-sm text-muted-foreground">
+          Comprueba tu conexión e inténtalo de nuevo.
+        </p>
+
+        <button
+          type="button"
+          className="rounded-md bg-primary px-4 py-2 text-primary-foreground"
+          onClick={() => void checkSession()}
+        >
+          Reintentar
+        </button>
+      </div>
+    );
+  }
+
+  if (status === "unauthenticated") {
+    return (
+      <Navigate
+        to="/auth/login"
+        replace
+        state={{ from: location }}
+      />
+    );
+  }
+
+  return <Outlet />;
+};
+'''
+        
+        # Crear el archivo
+        HelperFile.write(
+            folder_path=folder_path,
+            file_name="ProtectedRoute.tsx",
+            content=content
+        )
+        
+        
+        
+        
+    def create_auth_store_ts(self, full_path):
+        """
+        Genera el archivo.
+        """
+
+        folder_path = os.path.join(full_path, "src", "modules", "auth", "stores")
+
+        content = r'''// auth/stores/authStore.ts
+
+import { create } from "zustand";
+
+import { ApiError } from "@/api/api-error";
+import { queryClient } from "@/providers/QueryProvider";
+
+import { authTokenStorage } from "../services/authTokenStorage";
+import { authUserQuery } from "../queries/authUserQuery";
+
+import type { AuthUser } from "../types/auth-user.types";
+
+// Estados posibles de autenticación
+type AuthStatus =
+  | "checking"
+  | "authenticated"
+  | "unauthenticated"
+  | "error";
+
+interface AuthState {
+  status: AuthStatus;
+  isAuthenticated: boolean;
+  user: AuthUser | null;
+
+  setAuthenticated: (value: boolean) => void;
+  checkSession: () => Promise<void>;
+  logout: () => void;
+}
+
+// Evita peticiones duplicadas
+let pendingCheck: Promise<void> | null = null;
+
+// Identifica los cambios de sesión
+let sessionVersion = 0;
+
+// Limpia las consultas privadas de autenticación
+function clearAuthQueries() {
+  void queryClient.cancelQueries({
+    queryKey: ["auth"],
+  });
+
+  queryClient.removeQueries({
+    queryKey: ["auth"],
+  });
+}
+
+export const useAuthStore = create<AuthState>((set, get) => ({
+  // Al iniciar la aplicación comprobamos si existe un token
+  status: authTokenStorage.get()
+    ? "checking"
+    : "unauthenticated",
+
+  isAuthenticated: false,
+  user: null,
+
+  /**
+   * Se ejecuta después del login.
+   *
+   * El token ya debe estar guardado en authTokenStorage.
+   */
+  setAuthenticated: (value) => {
+    sessionVersion++;
+    pendingCheck = null;
+
+    clearAuthQueries();
+
+    set({
+      status: value ? "checking" : "unauthenticated",
+      isAuthenticated: false,
+      user: null,
+    });
+  },
+
+  /**
+   * Cierra la sesión.
+   *
+   * - Elimina el token.
+   * - Limpia los datos privados de la caché.
+   * - Restablece Zustand.
+   */
+  logout: () => {
+    sessionVersion++;
+    pendingCheck = null;
+
+    authTokenStorage.clear();
+    clearAuthQueries();
+
+    set({
+      status: "unauthenticated",
+      isAuthenticated: false,
+      user: null,
+    });
+  },
+
+  /**
+   * Comprueba la sesión mediante GET auth/user.
+   *
+   * Utiliza TanStack Query para compartir la caché
+   * con useAuthUser() y ProfilePage.
+   */
+  checkSession: () => {
+    const token = authTokenStorage.get();
+
+    // Sin token no existe sesión
+    if (!token) {
+      get().logout();
+      return Promise.resolve();
+    }
+
+    // Sesión ya verificada
+    if (get().status === "authenticated") {
+      return Promise.resolve();
+    }
+
+    // Reutilizar la petición en curso
+    if (pendingCheck) {
+      return pendingCheck;
+    }
+
+    const version = ++sessionVersion;
+
+    set({
+      status: "checking",
+      isAuthenticated: false,
+      user: null,
+    });
+
+    const request = (async () => {
+      try {
+        // Consulta compartida con TanStack Query
+        const response = await queryClient.fetchQuery(
+          authUserQuery()
+        );
+
+        // Ignorar respuestas de sesiones anteriores
+        if (
+          version !== sessionVersion ||
+          authTokenStorage.get() !== token
+        ) {
+          return;
+        }
+
+        // Sesión validada correctamente
+        set({
+          status: "authenticated",
+          isAuthenticated: true,
+          user: response.data,
+        });
+      } catch (error) {
+        // Ignorar errores de sesiones anteriores
+        if (
+          version !== sessionVersion ||
+          authTokenStorage.get() !== token
+        ) {
+          return;
+        }
+
+        // Token rechazado por el backend
+        if (
+          error instanceof ApiError &&
+          error.status === 401
+        ) {
+          get().logout();
+          return;
+        }
+
+        // Error de conexión, timeout u otro error
+        // No eliminamos el token automáticamente
+        set({
+          status: "error",
+          isAuthenticated: false,
+          user: null,
+        });
+      }
+    })();
+
+    pendingCheck = request;
+
+    void request.finally(() => {
+      if (pendingCheck === request) {
+        pendingCheck = null;
+      }
+    });
+
+    return request;
+  },
+}));
+'''
+
+        # Crear el archivo
+        HelperFile.write(
+            folder_path=folder_path,
+            file_name="authStore.ts",
+            content=content
+        )
+      
+
+
+    def create_hooks_use_auth_user(self, full_path):
+        """
+        Genera el archivo.
+        """
+    
+        folder_path = os.path.join(full_path, "src", "modules", "auth", "hooks")
+    
+        content = r'''// auth/hooks/useAuthUser.ts
+import { useQuery } from "@tanstack/react-query";
+import { authUserQuery } from "../queries/authUserQuery";
+
+export const useAuthUser = () => {
+  return useQuery(authUserQuery());
+};
+'''
+    
+        # Crear el archivo
+        HelperFile.write(
+            folder_path=folder_path,
+            file_name="useAuthUser.ts",
+            content=content
+        )
+
+
+
+
+    def create_auth_user_query_ts(self, full_path):
+        """
+        Genera el archivo.
+        """
+    
+        folder_path = os.path.join(full_path, "src", "modules", "auth", "queries")
+    
+        content = r'''// auth/queries/authUserQuery.ts
+import { queryOptions } from "@tanstack/react-query";
+import { getAuthUser } from "../services/authUserService";
+
+export const authUserQuery = () =>
+  queryOptions({
+    queryKey: ["auth", "user"],
+    queryFn: ({ signal }) => getAuthUser(signal),
+    staleTime: 60 * 1000,
+    retry: false,
+});
+'''
+    
+        # Crear el archivo
+        HelperFile.write(
+            folder_path=folder_path,
+            file_name="authUserQuery.ts",
+            content=content
+        )

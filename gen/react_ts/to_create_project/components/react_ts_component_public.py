@@ -21,12 +21,16 @@ class ReactTsComponentPublic:
         folder_path = os.path.join(full_path, "src", "modules", "public", "components")
 
         content = r'''import { useState } from "react";
-import { Search, ShoppingBag, Menu } from "lucide-react";
+import { Search, ShoppingBag, Menu, LogIn } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { useNavigate } from "react-router";
 
 const CustomHeader = () => {
   const [cartCount] = useState(3);
+
+  const navigate = useNavigate();
+
   return (
     <header className="sticky top-0 z-50 w-full border-b backdrop-blur bg-slate-50">
       <div className="container mx-auto px-4 lg:px-8">
@@ -92,6 +96,16 @@ const CustomHeader = () => {
                   {cartCount}
                 </span>
               )}
+            </Button>
+
+            <Button 
+              variant="ghost" 
+              size="icon" 
+              className="relative" 
+              onClick={ () => navigate("auth/login")}
+              aria-label="Iniciar sesión"
+            >
+              <LogIn  />
             </Button>
           </div>
         </div>

@@ -5,6 +5,7 @@ from gen.helpers.helper_print import input_with_validation
 from gen.react_ts.to_create_project.components.react_ts_component_public import ReactTsComponentPublic
 from gen.react_ts.to_create_project.components.react_ts_custom_components import ReactTsCustomComponents
 from gen.react_ts.to_create_project.modules.react_ts_module_dashboard import ReactTsModuleDashboard
+from gen.react_ts.to_create_project.modules.react_ts_profile import ReactTsProfile
 from gen.react_ts.to_create_project.react_ts_api import ReactTsApi
 from gen.react_ts.to_create_project.react_ts_chadcn import ReactTsChadcn
 from gen.react_ts.to_create_project.react_ts_command_line import ReactTsCommandLine
@@ -14,6 +15,7 @@ from gen.react_ts.to_create_project.react_ts_env import ReactTsEnv
 from gen.react_ts.to_create_project.react_ts_gitignore import ReactTsGitignore
 from gen.react_ts.to_create_project.react_ts_google_fonts import ReactTsGoogleFonts
 from gen.react_ts.to_create_project.react_ts_react_router import ReactTsReactRouter
+from gen.react_ts.to_create_project.react_ts_tanstack_query import ReactTsTanstackQuery
 from gen.react_ts.to_create_project.react_ts_zustand import ReactTsZustand
 
 load_dotenv()
@@ -85,9 +87,6 @@ class StartProjectReactTs:
         obj.invoke(full_path)
         
         
-        
-        
-        
         # React Router
         obj = ReactTsReactRouter()
         obj.invoke(full_path)
@@ -112,6 +111,19 @@ class StartProjectReactTs:
         # Zustand
         obj = ReactTsZustand()
         obj.invoke(full_path)
+        
+        
+        
+        # @tanstack/react-query
+        obj = ReactTsTanstackQuery()
+        obj.invoke(full_path)
+        
+        
+        # Module Profile
+        obj = ReactTsProfile()
+        obj.invoke(full_path)
+        
+        
         
 
         pause()

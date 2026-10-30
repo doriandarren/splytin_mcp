@@ -31,15 +31,18 @@ class ReactTsReactRouter:
     
         content = r'''import { lazy } from "react";
 import { createBrowserRouter, Navigate } from "react-router";
+// Public Routes
 import { HomePage } from "./modules/public/home/pages/HomePage";
 import { PublicLayout } from "./modules/public/layouts/PublicLayout";
+import { AuthLayout } from './modules/auth/layouts/AuthLayout';
 import { LoginPage } from "./modules/auth/login/pages/LoginPage";
 import { RegisterPage } from "./modules/auth/register/pages/RegisterPage";
+// Private Roures
 import { DashboardPage } from "./modules/private/dashboard/pages/DashboardPage";
 import { ProtectedRoute } from "./modules/auth/components/ProtectedRoute";
+import { ProfilePage } from "./modules/private/profiles/pages/ProfilePage";
 
 
-const AuthLayout = lazy( () => import('./modules/auth/layouts/AuthLayout'))
 const AdminLayout = lazy( () => import('./modules/private/layouts/AdminLayout'))
 
 
@@ -81,10 +84,14 @@ export const appRouter = createBrowserRouter([
             path: "/admin",
             element: <AdminLayout />,
             children: [
-            {
-                index: true,
-                element: <DashboardPage />,
-            },
+                {
+                    index: true,
+                    element: <DashboardPage />,
+                },
+                {
+                    path: "profile",
+                    element: <ProfilePage />,
+                },
             ],
         },
         ],
