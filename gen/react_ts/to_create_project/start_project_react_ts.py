@@ -5,6 +5,7 @@ from gen.helpers.helper_print import input_with_validation
 from gen.react_ts.to_create_project.components.react_ts_component_public import ReactTsComponentPublic
 from gen.react_ts.to_create_project.components.react_ts_custom_components import ReactTsCustomComponents
 from gen.react_ts.to_create_project.modules.react_ts_module_dashboard import ReactTsModuleDashboard
+from gen.react_ts.to_create_project.modules.react_ts_module_system import ReactTsModuleSystem
 from gen.react_ts.to_create_project.modules.react_ts_profile import ReactTsProfile
 from gen.react_ts.to_create_project.react_ts_api import ReactTsApi
 from gen.react_ts.to_create_project.react_ts_chadcn import ReactTsChadcn
@@ -126,6 +127,9 @@ class StartProjectReactTs:
         obj.invoke(full_path)
         
         
+        # Module Systems (Fake)
+        obj = ReactTsModuleSystem()
+        obj.invoke(full_path)       
         
 
         pause()

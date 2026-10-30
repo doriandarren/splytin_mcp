@@ -42,7 +42,10 @@ import { RegisterPage } from "./modules/auth/register/pages/RegisterPage";
 import { DashboardPage } from "./modules/private/dashboard/pages/DashboardPage";
 import { ProtectedRoute } from "./modules/auth/components/ProtectedRoute";
 import { ProfilePage } from "./modules/private/profiles/pages/ProfilePage";
-import { SystemPage } from "./modules/private/systems/pages/SystemPage";
+// CRUD IMPORTS
+
+
+
 
 const AdminLayout = lazy(() => import("./modules/private/layouts/AdminLayout"));
 
@@ -91,10 +94,7 @@ export const appRouter = createBrowserRouter([
             path: "profile",
             element: <ProfilePage />,
           },
-          {
-            path: "systems",
-            element: <SystemPage />,
-          },
+          // CRUD ROUTES
         ],
       },
     ],

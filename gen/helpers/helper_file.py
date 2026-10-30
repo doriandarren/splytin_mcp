@@ -99,3 +99,54 @@ class HelperFile:
         except OSError as error:
             print_message(f"Error al modificar el archivo {file_path}: {error}", CYAN)
             return False
+
+
+
+    @staticmethod
+    def replace(folder_path, file_name, old_content, new_content):
+        """
+        Busca un texto dentro de un archivo y lo reemplaza.
+
+        Retorna True si se reemplazó correctamente.
+        Retorna False si ocurre un error.
+        """
+
+        file_path = os.path.join(folder_path, file_name)
+
+        try:
+            if not os.path.isfile(file_path):
+                print_message(f"El archivo no existe: {file_path}", CYAN)
+                return False
+
+            # Leer el archivo
+            with open(file_path, "r", encoding="utf-8") as file:
+                content = file.read()
+
+            # Comprobar si existe el texto
+            if old_content not in content:
+                print_message(
+                    f"No se encontró el texto en: {file_path}",
+                    CYAN
+                )
+                return False
+
+            # Reemplazar solamente la primera coincidencia
+            new_file_content = content.replace(
+                old_content,
+                new_content,
+                1
+            )
+
+            # Guardar el archivo actualizado
+            with open(file_path, "w", encoding="utf-8") as file:
+                file.write(new_file_content)
+
+            print_message(f"Archivo actualizado: {file_path}", GREEN)
+            return True
+
+        except OSError as error:
+            print_message(
+                f"Error al modificar el archivo {file_path}: {error}",
+                CYAN
+            )
+            return False

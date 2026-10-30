@@ -2,6 +2,12 @@ import os
 from gen.helpers.helper_menu import pause
 from gen.helpers.helper_print import camel_to_first_letter_lower, camel_to_kebab, camel_to_snake
 from gen.helpers.helper_string import normalize_project_name
+from gen.react_ts.to_create_module_crud.react_ts_crud_hook import ReactTsCrudHook
+from gen.react_ts.to_create_module_crud.react_ts_crud_page import ReactTsCrudPage
+from gen.react_ts.to_create_module_crud.react_ts_crud_query import ReactTsCrudQuery
+from gen.react_ts.to_create_module_crud.react_ts_crud_route import ReactTsCrudRoute
+from gen.react_ts.to_create_module_crud.react_ts_crud_system_service import ReactTsCrudSystemService
+from gen.react_ts.to_create_module_crud.react_ts_crud_types import ReactTsCrudTypes
 
 
 
@@ -38,97 +44,150 @@ class StandardModuleCrudReactTs:
         # TODO refactor
         # if "route" in input_menu_checkbox:
         #     obj = XGenerateRoute()
-        #     obj.invoke(
-        #         full_path,
-        #         namespace,
-        #         version_api,
-        #         folder_group,
-        #         project_name,
-        #         singular_name,
-        #         plural_name,
-        #         singular_name_camel,
-        #         plural_name_camel,
-        #         singular_name_kebab,
-        #         plural_name_kebab,
-        #         singular_name_snake,
-        #         plural_name_snake,
-        #         columns
-        #     )
+            # obj.invoke(
+            #     full_path,
+            #     namespace,
+            #     version_api,
+            #     folder_group,
+            #     project_name,
+            #     singular_name,
+            #     plural_name,
+            #     singular_name_camel,
+            #     plural_name_camel,
+            #     singular_name_kebab,
+            #     plural_name_kebab,
+            #     singular_name_snake,
+            #     plural_name_snake,
+            #     columns
+            # )
 
 
-        # if "list" in input_menu_checkbox:
-        #     obj = XGenerateListPage()
-        #     obj.invoke(
-        #         full_path,
-        #         namespace,
-        #         version_api,
-        #         folder_group,
-        #         project_name,
-        #         singular_name,
-        #         plural_name,
-        #         singular_name_camel,
-        #         plural_name_camel,
-        #         singular_name_kebab,
-        #         plural_name_kebab,
-        #         singular_name_snake,
-        #         plural_name_snake,
-        #         columns
-        #     )
+        # Types
+        obj = ReactTsCrudTypes()
+        obj.invoke(
+            full_path,
+            namespace,
+            version_api,
+            folder_group,
+            project_name,
+            singular_name,
+            plural_name,
+            singular_name_camel,
+            plural_name_camel,
+            singular_name_kebab,
+            plural_name_kebab,
+            singular_name_snake,
+            plural_name_snake,
+            columns
+        )
+        
+        
+        # Service
+        obj = ReactTsCrudSystemService()
+        obj.invoke(
+            full_path,
+            namespace,
+            version_api,
+            folder_group,
+            project_name,
+            singular_name,
+            plural_name,
+            singular_name_camel,
+            plural_name_camel,
+            singular_name_kebab,
+            plural_name_kebab,
+            singular_name_snake,
+            plural_name_snake,
+            columns
+        )
+        
+        
+        # Query
+        obj = ReactTsCrudQuery()
+        obj.invoke(
+            full_path,
+            namespace,
+            version_api,
+            folder_group,
+            project_name,
+            singular_name,
+            plural_name,
+            singular_name_camel,
+            plural_name_camel,
+            singular_name_kebab,
+            plural_name_kebab,
+            singular_name_snake,
+            plural_name_snake,
+            columns
+        )
+        
+        
+        
+        # Hook
+        obj = ReactTsCrudHook()
+        obj.invoke(
+            full_path,
+            namespace,
+            version_api,
+            folder_group,
+            project_name,
+            singular_name,
+            plural_name,
+            singular_name_camel,
+            plural_name_camel,
+            singular_name_kebab,
+            plural_name_kebab,
+            singular_name_snake,
+            plural_name_snake,
+            columns
+        )
+        
+        
+        
+        # Hook
+        obj = ReactTsCrudPage()
+        obj.invoke(
+            full_path,
+            namespace,
+            version_api,
+            folder_group,
+            project_name,
+            singular_name,
+            plural_name,
+            singular_name_camel,
+            plural_name_camel,
+            singular_name_kebab,
+            plural_name_kebab,
+            singular_name_snake,
+            plural_name_snake,
+            columns
+        )
+                
 
-        # if "create" in input_menu_checkbox:
-        #     obj = XGenerateCreatePage()
-        #     obj.invoke(
-        #         full_path,
-        #         namespace,
-        #         version_api,
-        #         folder_group,
-        #         project_name,
-        #         singular_name,
-        #         plural_name,
-        #         singular_name_camel,
-        #         plural_name_camel,
-        #         singular_name_kebab,
-        #         plural_name_kebab,
-        #         singular_name_snake,
-        #         plural_name_snake,
-        #         columns
-        #     )
 
-        # if "edit" in input_menu_checkbox:
-        #     obj = XGenerateEditPage()
-        #     obj.invoke(
-        #         full_path,
-        #         namespace,
-        #         version_api,
-        #         folder_group,
-        #         project_name,
-        #         singular_name,
-        #         plural_name,
-        #         singular_name_camel,
-        #         plural_name_camel,
-        #         singular_name_kebab,
-        #         plural_name_kebab,
-        #         singular_name_snake,
-        #         plural_name_snake,
-        #         columns
-        #     )
+        
+        
+        # Route
+        obj = ReactTsCrudRoute()
+        obj.invoke(
+            full_path,
+            namespace,
+            version_api,
+            folder_group,
+            project_name,
+            singular_name,
+            plural_name,
+            singular_name_camel,
+            plural_name_camel,
+            singular_name_kebab,
+            plural_name_kebab,
+            singular_name_snake,
+            plural_name_snake,
+            columns
+        )
 
-        # if "service" in input_menu_checkbox:
-        #     obj = XGenerateServiceFile()
-        #     obj.invoke(
-        #         full_path,
-        #         namespace,
-        #         version_api,
-        #         folder_group,
-        #         project_name,
-        #         singular_name,
-        #         plural_name,
-        #         singular_name_camel,
-        #         plural_name_camel,
-        #         singular_name_kebab,
-        #         plural_name_kebab,
-        #         singular_name_snake,
-        #         plural_name_snake,
-        #         columns
-        #     )
+        
+        
+
+
         pause()   

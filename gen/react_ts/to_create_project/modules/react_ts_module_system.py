@@ -1,32 +1,30 @@
 import os
-from gen.helpers.helper_file import HelperFile
+from gen.helpers.helper_columns import parse_columns_input
+from gen.react_ts.to_create_module_crud.standard_module_crud_react_ts import StandardModuleCrudReactTs
 
 
 class ReactTsModuleSystem:
     
     def invoke(self, full_path):
-        self.create_system_tsx(full_path)
+        self.create_crud(full_path)
         
         
 
-    def create_system_tsx(self, full_path):
+    def create_crud(self, full_path):
         """
-        Genera el archivo.
+        Genera CRUD
         """
+        
+        columns = parse_columns_input("name status version")
 
-        folder_path = os.path.join(full_path, "src", "modules", "private", "systems", "pages")
-
-        content = r'''// src/modules/private/systems/pages/SystemPage.tsx
-export const SystemPage = () => {
-  return (
-    <div>SystemPage</div>
-  )
-}
-'''
-
-        # Crear el archivo
-        HelperFile.write(
-            folder_path=folder_path,
-            file_name="SystemPage.tsx",
-            content=content
+        obj = StandardModuleCrudReactTs()
+        obj.invoke(
+            full_path=full_path,
+            namespace="private",
+            singular_name="System",
+            plural_name="Systems",
+            columns=columns,
+            input_menu_checkbox=None,
+            version_api="V1",
+            folder_group="api"
         )

@@ -24,21 +24,28 @@ class StartModuleCrudReactTs:
         ]
 
         input_menu_checkbox = menu_checkbox("Componentes: ", opt)
-        default_namespace = "API"
+        default_namespace = "private"
         default_version_api = "V1"
         default_folder_group = "api"
 
-        default_path = os.getenv("DEFAULT_PATH_PROJECT_REACT_TS")
+        default_path = os.getenv("DEFAULT_PATH_CRUD_REACT_TS")
 
         full_path = input_with_validation("Carpeta Proyecto", default_path)
         namespace = input_with_validation("Namespace (ERP / API / INVOICES)", default_namespace)
-        singular_name = input_with_validation("Nombre singular", "AgendaUnloading")
-        plural_name = input_with_validation("Nombre plural", "AgendaUnloadings")
-        input_columns = input_with_validation("Columnas: ", "user_id:fk name age:integer description")
+        
+        # singular_name = input_with_validation("Nombre singular", "AgendaUnloading")
+        # plural_name = input_with_validation("Nombre plural", "AgendaUnloadings")
+        # input_columns = input_with_validation("Columnas: ", "user_id:fk name age:integer description")
+        
+        singular_name = input_with_validation("Nombre singular", "System")
+        plural_name = input_with_validation("Nombre plural", "Systems")
+        input_columns = input_with_validation("Columnas: ", "name status version")
+        
+        
+        
 
         columns = parse_columns_input(input_columns)
 
-        # TODO refactor
         obj = StandardModuleCrudReactTs()
         obj.invoke(
             full_path=full_path,

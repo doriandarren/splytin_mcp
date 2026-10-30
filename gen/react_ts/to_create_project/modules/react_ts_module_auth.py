@@ -30,6 +30,9 @@ class ReactTsModuleAuth:
         
         #queries
         self.create_auth_user_query_ts(full_path)
+        
+        # Utils
+        self.create_auth_permissions_ts(full_path)
 
 
 
@@ -1077,8 +1080,6 @@ export const useAuthUser = () => {
         )
 
 
-
-
     def create_auth_user_query_ts(self, full_path):
         """
         Genera el archivo.
@@ -1103,5 +1104,78 @@ export const authUserQuery = () =>
         HelperFile.write(
             folder_path=folder_path,
             file_name="authUserQuery.ts",
+            content=content
+        )
+
+
+
+
+    def create_auth_permissions_ts(self, full_path):
+        """
+        Genera el archivo.
+        """
+    
+        folder_path = os.path.join(full_path, "src", "modules", "auth", "utils")
+    
+        content = r'''// src/modules/auth/utils/authPermissions.ts
+import type { AuthUser } from "../types/auth-user.types";
+
+/**
+ * Roles disponibles en la aplicación.
+ */
+export type Role = "admin" | "manager" | "user";
+
+/**
+ * Obtiene los roles del usuario autenticado.
+ */
+export const getUserRoles = (user: AuthUser | null): string[] => {
+  if (!user) return [];
+
+  return (
+    user.relationships?.roles?.map(
+      (role) => role.attributes.name
+    ) ?? []
+  );
+};
+
+/**
+ * Comprueba si el usuario tiene alguno de los roles indicados.
+ *
+ * Ejemplo:
+ * hasRole(user, ["admin", "manager"])
+ */
+export const hasRole = (
+  user: AuthUser | null,
+  roles: Role[]
+): boolean => {
+  const userRoles = getUserRoles(user);
+
+  return roles.some((role) => userRoles.includes(role));
+};
+
+/**
+ * Comprueba si el usuario tiene todos los roles indicados.
+ */
+export const hasAllRoles = (
+  user: AuthUser | null,
+  roles: Role[]
+): boolean => {
+  const userRoles = getUserRoles(user);
+
+  return roles.every((role) => userRoles.includes(role));
+};
+
+/**
+ * Comprueba si el usuario es administrador.
+ */
+export const isAdmin = (user: AuthUser | null): boolean => {
+  return hasRole(user, ["admin"]);
+};
+'''
+    
+        # Crear el archivo
+        HelperFile.write(
+            folder_path=folder_path,
+            file_name="authPermissions.ts",
             content=content
         )
