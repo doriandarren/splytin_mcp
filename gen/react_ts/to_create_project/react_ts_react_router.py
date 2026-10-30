@@ -29,82 +29,83 @@ class ReactTsReactRouter:
         
         folder_path = os.path.join(full_path, "src")
     
-        content = r'''import { lazy } from "react";
+        content = r'''// src/app.router.tsx
+import { lazy } from "react";
 import { createBrowserRouter, Navigate } from "react-router";
 // Public Routes
 import { HomePage } from "./modules/public/home/pages/HomePage";
 import { PublicLayout } from "./modules/public/layouts/PublicLayout";
-import { AuthLayout } from './modules/auth/layouts/AuthLayout';
+import { AuthLayout } from "./modules/auth/layouts/AuthLayout";
 import { LoginPage } from "./modules/auth/login/pages/LoginPage";
 import { RegisterPage } from "./modules/auth/register/pages/RegisterPage";
 // Private Roures
 import { DashboardPage } from "./modules/private/dashboard/pages/DashboardPage";
 import { ProtectedRoute } from "./modules/auth/components/ProtectedRoute";
 import { ProfilePage } from "./modules/private/profiles/pages/ProfilePage";
+import { SystemPage } from "./modules/private/systems/pages/SystemPage";
 
-
-const AdminLayout = lazy( () => import('./modules/private/layouts/AdminLayout'))
-
+const AdminLayout = lazy(() => import("./modules/private/layouts/AdminLayout"));
 
 export const appRouter = createBrowserRouter([
-    // Public routes
-    {
-        path: '/',
-        element: <PublicLayout />,
-        children: [
-            {
-                index: true,
-                element: <HomePage />
-            },
-        ]
-    },
+  // Public routes
+  {
+    path: "/",
+    element: <PublicLayout />,
+    children: [
+      {
+        index: true,
+        element: <HomePage />,
+      },
+    ],
+  },
 
+  // Auth Routes
+  {
+    path: "/auth",
+    element: <AuthLayout />,
+    children: [
+      {
+        path: "login",
+        element: <LoginPage />,
+      },
+      {
+        path: "register",
+        element: <RegisterPage />,
+      },
+    ],
+  },
 
-    // Auth Routes
-    {
-        path: '/auth',
-        element: <AuthLayout />,
+  // Private routes
+  {
+    element: <ProtectedRoute />,
+    children: [
+      {
+        path: "/admin",
+        element: <AdminLayout />,
         children: [
-            {
-                path: 'login',
-                element: <LoginPage />
-            },
-            {
-                path: 'register',
-                element: <RegisterPage />
-            }
-        ]
-    },
-
-    // Private routes
-    {
-        element: <ProtectedRoute />,
-        children: [
-        {
-            path: "/admin",
-            element: <AdminLayout />,
-            children: [
-                {
-                    index: true,
-                    element: <DashboardPage />,
-                },
-                {
-                    path: "profile",
-                    element: <ProfilePage />,
-                },
-            ],
-        },
+          {
+            index: true,
+            element: <DashboardPage />,
+          },
+          {
+            path: "profile",
+            element: <ProfilePage />,
+          },
+          {
+            path: "systems",
+            element: <SystemPage />,
+          },
         ],
-    },
+      },
+    ],
+  },
 
-
-    // 
-    {
-        path: '*',
-        element: <Navigate to='/' replace />,
-    }
-
-])
+  //
+  {
+    path: "*",
+    element: <Navigate to="/" replace />,
+  },
+]);
 '''
     
         # Crear el archivo
