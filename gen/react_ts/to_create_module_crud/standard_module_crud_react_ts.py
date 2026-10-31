@@ -187,7 +187,4 @@ class StandardModuleCrudReactTs:
         )
 
         
-        
-
-
         pause()   
