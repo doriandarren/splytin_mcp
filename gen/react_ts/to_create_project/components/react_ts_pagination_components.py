@@ -2,7 +2,7 @@ import os
 from gen.helpers.helper_file import HelperFile
 
 
-class ReactTsCustomComponents:
+class ReactTsPaginationComponents:
     
 
     def invoke(self, full_path):
@@ -18,7 +18,7 @@ class ReactTsCustomComponents:
         Genera el archivo.
         """
         
-        folder_path = os.path.join(full_path, "src", "components", "custom")
+        folder_path = os.path.join(full_path, "src", "components", "pagination")
     
         content = r'''import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { Button } from '../ui/button';
@@ -83,5 +83,24 @@ export const CustomPagination = ({ totalPages }: Props) => {
         HelperFile.write(
             folder_path=folder_path,
             file_name="CustomPagination.tsx",
+            content=content
+        )
+        
+        
+        
+    def create_file(self, full_path):
+        """
+        Genera el archivo.
+        """
+    
+        folder_path = os.path.join(full_path, "src", "components", "pagination")
+    
+        content = r'''# 
+'''
+    
+        # Crear el archivo
+        HelperFile.write(
+            folder_path=folder_path,
+            file_name="pagination.types.ts",
             content=content
         )

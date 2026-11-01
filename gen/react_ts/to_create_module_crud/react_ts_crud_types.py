@@ -1,8 +1,75 @@
+
 import os
 from gen.helpers.helper_file import HelperFile
 
 
 class ReactTsCrudTypes:
+
+    @staticmethod
+    def get_ts_type(column):
+        """
+        Convierte los tipos de la base de datos
+        a tipos TypeScript.
+        """
+
+        column_type = column.get("type", "string")
+
+        type_mapping = {
+            "string": "string",
+            "text": "string",
+            "char": "string",
+            "uuid": "string",
+            "enum": "string",
+            "integer": "number",
+            "int": "number",
+            "bigint": "number",
+            "smallint": "number",
+            "decimal": "number",
+            "float": "number",
+            "double": "number",
+            "boolean": "boolean",
+            "date": "string",
+            "datetime": "string",
+            "timestamp": "string",
+            "time": "string",
+            "json": "Record<string, unknown>",
+            "fk": "number",
+        }
+
+        ts_type = type_mapping.get(column_type, "unknown")
+
+        if column.get("is_nullable", False):
+            ts_type += " | null"
+
+        return ts_type
+
+    @staticmethod
+    def generate_attributes(columns):
+        """
+        Genera los atributos TypeScript
+        a partir de las columnas.
+        """
+
+        attributes = []
+
+        for column in columns:
+            column_name = column["name"]
+            ts_type = ReactTsCrudTypes.get_ts_type(column)
+
+            attributes.append(
+                f"  {column_name}: {ts_type};"
+            )
+
+        # Campos automáticos de Laravel
+        existing_names = {column["name"] for column in columns}
+
+        if "created_at" not in existing_names:
+            attributes.append("  created_at: string;")
+
+        if "updated_at" not in existing_names:
+            attributes.append("  updated_at: string;")
+
+        return "\n".join(attributes)
 
     def invoke(
         self,
@@ -22,40 +89,38 @@ class ReactTsCrudTypes:
         columns,
     ):
         """
-        Genera el archivo.
+        Genera el archivo de tipos TypeScript
+        para un recurso CRUD.
         """
 
-        folder_path = os.path.join(full_path, "src", "modules", namespace, plural_name_snake, "types")
+        folder_path = os.path.join(
+            full_path,
+            "src",
+            "modules",
+            namespace,
+            plural_name_snake,
+            "types"
+        )
+
+        attributes = self.generate_attributes(columns)
 
         content = f'''// src/modules/{namespace}/{plural_name_snake}/types/{singular_name_snake}.types.ts
 
 /**
- * Estados posibles de un sistema.
- */
-export type {singular_name}Status =
-  | "activo"
-  | "inactivo"
-  | "en mantenimiento";
-
-/**
- * Atributos de un sistema.
+ * Atributos del recurso {singular_name}.
  */
 export interface {singular_name}Attributes {{
-  name: string;
-  status: {singular_name}Status;
-  version: string;
-  created_at: string;
-  updated_at: string;
+{attributes}
 }}
 
 /**
- * Recurso {singular_name} devuelto por Laravel.
+ * Recurso {singular_name} devuelto por la API.
  */
 export interface {singular_name}Resource {{
-  type: "{singular_name_snake}";
-  id: number;
+  type: "{plural_name_kebab}";
+  id: string;
   attributes: {singular_name}Attributes;
-  links: {{
+  links?: {{
     self: string;
   }};
 }}
@@ -76,14 +141,14 @@ export interface {singular_name}PaginationMeta {{
  * Enlaces de paginación.
  */
 export interface {singular_name}PaginationLinks {{
-  first: string;
-  last: string;
+  first: string | null;
+  last: string | null;
   prev: string | null;
   next: string | null;
 }}
 
 /**
- * Respuesta del listado de sistemas.
+ * Respuesta del listado de {plural_name}.
  */
 export interface {plural_name}Response {{
   data: {singular_name}Resource[];
@@ -94,10 +159,21 @@ export interface {plural_name}Response {{
   success?: boolean;
 }}
 
+/**
+ * Datos para crear un recurso.
+ */
+export type Create{singular_name}Input = Omit<
+  {singular_name}Attributes,
+  "created_at" | "updated_at"
+>;
+
+/**
+ * Datos para actualizar un recurso.
+ */
+export type Update{singular_name}Input = Partial<Create{singular_name}Input>;
 '''
 
-        # Crear el archivo
-        HelperFile.write(
+        return HelperFile.write(
             folder_path=folder_path,
             file_name=f"{singular_name_snake}.types.ts",
             content=content

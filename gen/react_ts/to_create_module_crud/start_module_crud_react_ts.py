@@ -42,7 +42,6 @@ class StartModuleCrudReactTs:
         input_columns = input_with_validation("Columnas: ", "name status version")
         
         
-        
 
         columns = parse_columns_input(input_columns)
 
