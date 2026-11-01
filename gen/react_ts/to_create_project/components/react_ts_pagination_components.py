@@ -9,6 +9,7 @@ class ReactTsPaginationComponents:
         
         # Components
         self.create_file_custom_pagination_tsx(full_path)
+        self.create_file_pagination_types_ts(full_path)
         
         
     
@@ -88,14 +89,49 @@ export const CustomPagination = ({ totalPages }: Props) => {
         
         
         
-    def create_file(self, full_path):
+    def create_file_pagination_types_ts(self, full_path):
         """
         Genera el archivo.
         """
     
         folder_path = os.path.join(full_path, "src", "components", "pagination")
     
-        content = r'''# 
+        content = r'''// src/components/pagination/pagination.types.ts
+/**
+ * Metadatos de paginación devueltos por la API.
+ */
+export interface PaginationMeta {
+  current_page: number;
+  per_page: number;
+  last_page: number;
+  total: number;
+  from: number | null;
+  to: number | null;
+}
+
+/**
+ * Enlaces de navegación entre páginas.
+ */
+export interface PaginationLinks {
+  first: string;
+  last: string;
+  prev: string | null;
+  next: string | null;
+}
+
+/**
+ * Respuesta genérica de una colección paginada.
+ *
+ * T representa el recurso que devuelve cada módulo.
+ */
+export interface PaginatedResponse<T> {
+  data: T[];
+  meta: PaginationMeta;
+  links: PaginationLinks;
+  message?: string;
+  status_code?: number;
+  success?: boolean;
+}
 '''
     
         # Crear el archivo

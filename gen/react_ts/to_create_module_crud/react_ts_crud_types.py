@@ -105,6 +105,7 @@ class ReactTsCrudTypes:
         attributes = self.generate_attributes(columns)
 
         content = f'''// src/modules/{namespace}/{plural_name_snake}/types/{singular_name_snake}.types.ts
+import type {{ PaginatedResponse }} from "@/components/pagination/pagination.types";
 
 /**
  * Atributos del recurso {singular_name}.
@@ -125,39 +126,11 @@ export interface {singular_name}Resource {{
   }};
 }}
 
-/**
- * Metadatos de paginación.
- */
-export interface {singular_name}PaginationMeta {{
-  current_page: number;
-  per_page: number;
-  last_page: number;
-  total: number;
-  from: number | null;
-  to: number | null;
-}}
 
 /**
- * Enlaces de paginación.
+ * Respuesta paginada del listado de sistemas.
  */
-export interface {singular_name}PaginationLinks {{
-  first: string | null;
-  last: string | null;
-  prev: string | null;
-  next: string | null;
-}}
-
-/**
- * Respuesta del listado de {plural_name}.
- */
-export interface {plural_name}Response {{
-  data: {singular_name}Resource[];
-  meta: {singular_name}PaginationMeta;
-  links: {singular_name}PaginationLinks;
-  message?: string;
-  status_code?: number;
-  success?: boolean;
-}}
+export type {plural_name}Response = PaginatedResponse<{singular_name}Resource>;
 
 /**
  * Datos para crear un recurso.
@@ -171,6 +144,9 @@ export type Create{singular_name}Input = Omit<
  * Datos para actualizar un recurso.
  */
 export type Update{singular_name}Input = Partial<Create{singular_name}Input>;
+
+
+
 '''
 
         return HelperFile.write(

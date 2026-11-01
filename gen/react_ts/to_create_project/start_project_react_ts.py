@@ -4,6 +4,7 @@ from gen.helpers.helper_menu import pause
 from gen.helpers.helper_print import input_with_validation
 from gen.react_ts.to_create_project.components.react_ts_component_public import ReactTsComponentPublic
 from gen.react_ts.to_create_project.components.react_ts_pagination_components import ReactTsPaginationComponents
+from gen.react_ts.to_create_project.components.react_ts_table_component import ReactTsTableComponent
 from gen.react_ts.to_create_project.modules.react_ts_module_dashboard import ReactTsModuleDashboard
 from gen.react_ts.to_create_project.modules.react_ts_module_system import ReactTsModuleSystem
 from gen.react_ts.to_create_project.modules.react_ts_profile import ReactTsProfile
@@ -81,6 +82,11 @@ class StartProjectReactTs:
         
         # Components Pagination
         obj = ReactTsPaginationComponents()
+        obj.invoke(full_path)
+        
+        
+        # Components Table
+        obj = ReactTsTableComponent()
         obj.invoke(full_path)
         
         

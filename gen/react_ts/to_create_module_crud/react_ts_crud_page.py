@@ -1,8 +1,100 @@
+
 import os
+import json
 from gen.helpers.helper_file import HelperFile
 
 
 class ReactTsCrudPage:
+
+    @staticmethod
+    def get_column_render(column):
+        """
+        Genera el render de una columna
+        según su tipo de dato.
+        """
+
+        name = column["name"]
+        column_type = column.get("type", "string")
+        value = f"item.attributes.{name}"
+
+        if column.get("is_fk", False):
+            column_type = "fk"
+
+        if column_type == "boolean":
+            return (
+                f'{value} == null ? "-" : '
+                f'{value} ? "Sí" : "No"'
+            )
+
+        if column_type in ("date", "datetime", "timestamp"):
+            return (
+                f'{value} ? '
+                f'new Date({value}).toLocaleDateString("es-ES") '
+                f': "-"'
+            )
+
+        if column_type in ("decimal", "float", "double"):
+            return (
+                f'{value} == null ? "-" : '
+                f'Number({value}).toLocaleString("es-ES")'
+            )
+
+        if column_type == "json":
+            return f'{value} == null ? "-" : JSON.stringify({value})'
+
+        return f'{value} ?? "-"'
+
+    @staticmethod
+    def generate_columns(columns):
+        """
+        Genera las columnas dinámicas para CustomTable.
+
+        Los nombres de key y header se mantienen
+        exactamente como aparecen en columns.
+        """
+
+        result = [
+            '  {',
+            '    key: "id",',
+            '    header: "id",',
+            '    render: (item) => item.id,',
+            '  },'
+        ]
+
+        existing_names = {"id"}
+
+        for column in columns:
+            name = column["name"]
+
+            if name in existing_names:
+                continue
+
+            existing_names.add(name)
+
+            render = ReactTsCrudPage.get_column_render(column)
+
+            result.extend([
+                '  {',
+                f'    key: {json.dumps(name, ensure_ascii=False)},',
+                f'    header: {json.dumps(name, ensure_ascii=False)},',
+                f'    render: (item) => {render},',
+                '  },'
+            ])
+
+        # Añadir created_at si no está en columns
+        if "created_at" not in existing_names:
+            result.extend([
+                '  {',
+                '    key: "created_at",',
+                '    header: "created_at",',
+                '    render: (item) =>',
+                '      item.attributes.created_at',
+                '        ? new Date(item.attributes.created_at).toLocaleDateString("es-ES")',
+                '        : "-",',
+                '  },'
+            ])
+
+        return "\n".join(result)
 
     def invoke(
         self,
@@ -22,168 +114,87 @@ class ReactTsCrudPage:
         columns,
     ):
         """
-        Genera el archivo.
+        Genera una página CRUD React + TypeScript
+        utilizando el componente CustomTable.
         """
 
-        folder_path = os.path.join(full_path, "src", "modules", namespace, plural_name_snake, "pages")
-                        
-        content = f'''// src/modules/{namespace}/{plural_name_snake}/pages/{singular_name}Page.tsx 
+        folder_path = os.path.join(
+            full_path,
+            "src",
+            "modules",
+            namespace,
+            plural_name_snake,
+            "pages"
+        )
 
-import {{ useState }} from "react";
-import {{ ChevronLeft, ChevronRight, RefreshCw }} from "lucide-react";
+        component_name = f"{singular_name}Page"
+        resource_name = f"{singular_name}Resource"
+        hook_name = f"use{plural_name}"
 
-import {{ Button }} from "@/components/ui/button";
-import {{ useSystems }} from "../hooks/useSystems";
+        table_columns = self.generate_columns(columns)
 
-export const {singular_name}Page = () => {{
-  const [page, setPage] = useState(1);
+        content = r'''// src/modules/__NAMESPACE__/__PLURAL_SNAKE__/pages/__COMPONENT__.tsx
 
-  const {{
-    data,
-    isPending,
-    isError,
-    isFetching,
-    isPlaceholderData,
-    refetch,
-  }} = useSystems(page);
+import { useSearchParams } from "react-router";
 
-  if (isPending) {{
-    return <p className="p-6">Cargando sistemas...</p>;
-  }}
+import { CustomTable } from "@/components/table/CustomTable";
+import type { TableColumn } from "@/components/table/table.types";
 
-  if (isError || !data) {{
-    return (
-      <div className="space-y-4 p-6">
-        <p className="text-destructive">
-          No se pudieron obtener los sistemas.
-        </p>
+import type { __RESOURCE__ } from "../types/__SINGULAR_SNAKE__.types";
+import { __HOOK__ } from "../hooks/__HOOK__";
 
-        <Button onClick={{() => void refetch()}}>
-          Reintentar
-        </Button>
-      </div>
-    );
-  }}
+const columns: TableColumn<__RESOURCE__>[] = [
+__TABLE_COLUMNS__
+];
 
-  const systems = data.data;
-  const meta = data.meta;
+export const __COMPONENT__ = () => {
+  const [searchParams] = useSearchParams();
+
+  const rawPage = Number(searchParams.get("page") ?? "1");
+
+  const page =
+    Number.isSafeInteger(rawPage) && rawPage > 0
+      ? rawPage
+      : 1;
+
+  const query = __HOOK__(page);
 
   return (
-    <div className="space-y-6 p-6">
-      <div className="flex flex-wrap items-center justify-between gap-3">
-        <div>
-          <h1 className="text-3xl font-bold">Sistemas</h1>
-
-          <p className="text-sm text-muted-foreground">
-            Total de sistemas: {{meta.total}}
-          </p>
-        </div>
-
-        <Button
-          variant="outline"
-          onClick={{() => void refetch()}}
-          disabled={{isFetching}}
-        >
-          <RefreshCw
-            className={{`size-4 ${{isFetching ? "animate-spin" : ""}}`}}
-          />
-          Actualizar
-        </Button>
-      </div>
-
-      <div className="overflow-x-auto rounded-xl border">
-        <table className="w-full text-sm">
-          <thead className="border-b bg-muted/50">
-            <tr>
-              <th className="px-4 py-3 text-left">ID</th>
-              <th className="px-4 py-3 text-left">Nombre</th>
-              <th className="px-4 py-3 text-left">Estado</th>
-              <th className="px-4 py-3 text-left">Versión</th>
-              <th className="px-4 py-3 text-left">Creación</th>
-            </tr>
-          </thead>
-
-          <tbody>
-            {{systems.map((system) => (
-              <tr
-                key={{system.id}}
-                className="border-b last:border-0 hover:bg-muted/30"
-              >
-                <td className="px-4 py-3">{{system.id}}</td>
-
-                <td className="px-4 py-3 font-medium">
-                  {{system.attributes.name}}
-                </td>
-
-                <td className="px-4 py-3">
-                  {{system.attributes.status}}
-                </td>
-
-                <td className="px-4 py-3">
-                  {{system.attributes.version}}
-                </td>
-
-                <td className="px-4 py-3">
-                  {{new Date(
-                    system.attributes.created_at
-                  ).toLocaleDateString("es-ES")}}
-                </td>
-              </tr>
-            ))}}
-
-            {{systems.length === 0 && (
-              <tr>
-                <td
-                  colSpan={{5}}
-                  className="px-4 py-10 text-center text-muted-foreground"
-                >
-                  No hay sistemas registrados.
-                </td>
-              </tr>
-            )}}
-          </tbody>
-        </table>
-      </div>
-
-      <div className="flex items-center justify-between gap-3">
-        <p className="text-sm text-muted-foreground">
-          Página {{meta.current_page}} de {{meta.last_page}}
-        </p>
-
-        <div className="flex gap-2">
-          <Button
-            variant="outline"
-            size="sm"
-            disabled={{page <= 1 || isFetching}}
-            onClick={{() => setPage((p) => Math.max(1, p - 1))}}
-          >
-            <ChevronLeft className="size-4" />
-            Anterior
-          </Button>
-
-          <Button
-            variant="outline"
-            size="sm"
-            disabled={{
-              isPlaceholderData ||
-              page >= meta.last_page ||
-              isFetching
-            }}
-            onClick={{() => setPage((p) => p + 1)}}
-          >
-            Siguiente
-            <ChevronRight className="size-4" />
-          </Button>
-        </div>
-      </div>
-    </div>
+    <CustomTable<__RESOURCE__>
+      title="__PLURAL_TITLE__"
+      description={`Total de __PLURAL_LABEL__: ${query.data?.meta?.total ?? 0}`}
+      columns={columns}
+      data={query.data?.data ?? []}
+      getRowKey={(item) => item.id}
+      meta={query.data?.meta}
+      isLoading={query.isPending}
+      isFetching={query.isFetching}
+      isPlaceholderData={query.isPlaceholderData}
+      isError={query.isError || (!query.isPending && !query.data)}
+      onRefresh={() => void query.refetch()}
+      emptyMessage="No hay registros."
+    />
   );
-}};        
+};
 '''
 
-        # Crear el archivo
-        HelperFile.write(
+        replacements = {
+            "__NAMESPACE__": namespace,
+            "__PLURAL_SNAKE__": plural_name_snake,
+            "__SINGULAR_SNAKE__": singular_name_snake,
+            "__COMPONENT__": component_name,
+            "__RESOURCE__": resource_name,
+            "__HOOK__": hook_name,
+            "__TABLE_COLUMNS__": table_columns,
+            "__PLURAL_TITLE__": plural_name,
+            "__PLURAL_LABEL__": plural_name_snake,
+        }
+
+        for old_value, new_value in replacements.items():
+            content = content.replace(old_value, new_value)
+
+        return HelperFile.write(
             folder_path=folder_path,
-            file_name=f"{singular_name}Page.tsx",
+            file_name=f"{component_name}.tsx",
             content=content
         )
