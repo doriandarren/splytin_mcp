@@ -20,16 +20,17 @@ class ReactTsTableComponent:
 
         content = r'''// src/components/table/CustomTable.tsx
 import { RefreshCw } from "lucide-react";
-
 import { Button } from "@/components/ui/button";
 import { CustomPagination } from "@/components/pagination/CustomPagination";
-
 import type { CustomTableProps } from "./table.types";
+
+
 
 export function CustomTable<T>({
   title,
   description,
   data,
+  headerActions,
   columns,
   getRowKey,
   meta,
@@ -43,15 +44,9 @@ export function CustomTable<T>({
   if (isError) {
     return (
       <div className="space-y-4 p-6">
-        <p className="text-destructive">
-          No se pudieron cargar los registros.
-        </p>
+        <p className="text-destructive">No se pudieron cargar los registros.</p>
 
-        {onRefresh && (
-          <Button onClick={onRefresh}>
-            Reintentar
-          </Button>
-        )}
+        {onRefresh && <Button onClick={onRefresh}>Reintentar</Button>}
       </div>
     );
   }
@@ -61,33 +56,28 @@ export function CustomTable<T>({
       {/* Cabecera */}
       <div className="flex flex-wrap items-center justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-bold">
-            {title}
-          </h1>
+          <h1 className="text-3xl font-bold">{title}</h1>
 
           {description && (
-            <p className="text-sm text-muted-foreground">
-              {description}
-            </p>
+            <p className="text-sm text-muted-foreground">{description}</p>
           )}
         </div>
 
-        {onRefresh && (
-          <Button
-            variant="outline"
-            onClick={onRefresh}
-            disabled={isFetching}
-          >
-            <RefreshCw
-              className={
-                isFetching
-                  ? "size-4 animate-spin"
-                  : "size-4"
-              }
-            />
-            Actualizar
-          </Button>
-        )}
+        {/* Acciones de la cabecera */}
+        <div className="flex flex-wrap items-center gap-2">
+          {/* Botones personalizados */}
+          {headerActions}
+
+          {/* Botón actualizar */}
+          {onRefresh && (
+            <Button variant="outline" onClick={onRefresh} disabled={isFetching}>
+              <RefreshCw
+                className={isFetching ? "size-4 animate-spin" : "size-4"}
+              />
+              Actualizar
+            </Button>
+          )}
+        </div>
       </div>
 
       {/* Tabla */}
@@ -114,10 +104,7 @@ export function CustomTable<T>({
             <tbody>
               {isLoading ? (
                 <tr>
-                  <td
-                    colSpan={columns.length}
-                    className="h-24 text-center"
-                  >
+                  <td colSpan={columns.length} className="h-24 text-center">
                     Cargando registros...
                   </td>
                 </tr>
@@ -137,10 +124,7 @@ export function CustomTable<T>({
                     className="border-b transition-colors hover:bg-muted/50 last:border-0"
                   >
                     {columns.map((column) => (
-                      <td
-                        key={column.key}
-                        className="p-4 align-middle"
-                      >
+                      <td key={column.key} className="p-4 align-middle">
                         {column.render(item)}
                       </td>
                     ))}
@@ -159,9 +143,7 @@ export function CustomTable<T>({
             Página {meta.current_page} de {meta.last_page}
           </p>
 
-          <CustomPagination
-            totalPages={meta.last_page}
-          />
+          <CustomPagination totalPages={meta.last_page} />
         </div>
       )}
 
@@ -226,6 +208,8 @@ export interface CustomTableProps<T> {
   onRefresh?: () => void;
 
   emptyMessage?: string;
+  
+  headerActions?: ReactNode;
 }
 '''
     

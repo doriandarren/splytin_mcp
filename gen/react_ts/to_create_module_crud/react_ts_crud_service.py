@@ -2,7 +2,7 @@ import os
 from gen.helpers.helper_file import HelperFile
 
 
-class ReactTsCrudSystemService:
+class ReactTsCrudService:
 
     def invoke(
         self,
@@ -32,10 +32,14 @@ class ReactTsCrudSystemService:
 import {{ api }} from "@/api/api";
 import {{ ApiError }} from "@/api/api-error";
 
-import type {{ {plural_name}Response }} from "../types/{singular_name_snake}.types";
+import type {{ 
+  Create{singular_name}eInput, 
+  {singular_name}Resource, 
+  {plural_name}Response,
+}} from "../types/{singular_name_snake}.types";
 
 /**
- * Obtiene el listado paginado.
+ * Get List
  *
  * GET /api/v1/{plural_name_snake}?page=1
  */
@@ -58,7 +62,7 @@ export async function get{plural_name}(
     typeof response.meta.total !== "number"
   ) {{
     throw new ApiError(
-      "La API no devolvió un listado de sistemas válido.",
+      "La API no devolvió un listado válido.",
       {{
         kind: "invalid-response",
       }}
@@ -67,6 +71,36 @@ export async function get{plural_name}(
 
   return response;
 }}
+
+
+/**
+ * Create
+ * @param input Create
+ * @returns 
+ */
+export async function create{singular_name}(
+  input: Create{singular_name}Input
+): Promise<{singular_name}Resource> {{
+  const response = await api<{{ data: {singular_name}Resource }}>("{singular_name_kebab}", {{
+    method: "POST",
+    body: {{
+      data: {{
+        type: "{singular_name_kebab}",
+        attributes: input,
+      }},
+    }},
+  }});
+
+  if (!response?.data) {{
+    throw new ApiError(
+      "La API no devolvió el registro creado.",
+      {{ kind: "invalid-response" }}
+    );
+  }}
+
+  return response.data;
+}}
+
 '''
 
         # Crear el archivo

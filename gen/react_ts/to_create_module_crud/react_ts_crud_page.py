@@ -96,6 +96,7 @@ class ReactTsCrudPage:
 
         return "\n".join(result)
 
+    
     def invoke(
         self,
         full_path,
@@ -133,65 +134,60 @@ class ReactTsCrudPage:
 
         table_columns = self.generate_columns(columns)
 
-        content = r'''// src/modules/__NAMESPACE__/__PLURAL_SNAKE__/pages/__COMPONENT__.tsx
+        content = f'''// src/modules/{namespace}/{plural_name_snake}/pages/{component_name}.tsx
+import {{ Link, useSearchParams }} from "react-router";
+import {{ Plus }} from "lucide-react";
+import {{ CustomTable }} from "@/components/table/CustomTable";
+import type {{ TableColumn }} from "@/components/table/table.types";
+import type {{ {resource_name} }} from "../types/{singular_name_snake}.types";
+import {{ {hook_name} }} from "../hooks/{hook_name}";
 
-import { useSearchParams } from "react-router";
 
-import { CustomTable } from "@/components/table/CustomTable";
-import type { TableColumn } from "@/components/table/table.types";
-
-import type { __RESOURCE__ } from "../types/__SINGULAR_SNAKE__.types";
-import { __HOOK__ } from "../hooks/__HOOK__";
-
-const columns: TableColumn<__RESOURCE__>[] = [
-__TABLE_COLUMNS__
+const columns: TableColumn<{resource_name}>[] = [
+{table_columns}
 ];
 
-export const __COMPONENT__ = () => {
-  const [searchParams] = useSearchParams();
 
-  const rawPage = Number(searchParams.get("page") ?? "1");
+export const {component_name} = () => {{
+    const [searchParams] = useSearchParams();
 
-  const page =
-    Number.isSafeInteger(rawPage) && rawPage > 0
-      ? rawPage
-      : 1;
+    const rawPage = Number(searchParams.get("page") ?? "1");
 
-  const query = __HOOK__(page);
+    const page =
+        Number.isSafeInteger(rawPage) && rawPage > 0
+        ? rawPage
+        : 1;
 
-  return (
-    <CustomTable<__RESOURCE__>
-      title="__PLURAL_TITLE__"
-      description={`Total de __PLURAL_LABEL__: ${query.data?.meta?.total ?? 0}`}
-      columns={columns}
-      data={query.data?.data ?? []}
-      getRowKey={(item) => item.id}
-      meta={query.data?.meta}
-      isLoading={query.isPending}
-      isFetching={query.isFetching}
-      isPlaceholderData={query.isPlaceholderData}
-      isError={query.isError || (!query.isPending && !query.data)}
-      onRefresh={() => void query.refetch()}
-      emptyMessage="No hay registros."
-    />
-  );
-};
-'''
+    const query = {hook_name}(page);
 
-        replacements = {
-            "__NAMESPACE__": namespace,
-            "__PLURAL_SNAKE__": plural_name_snake,
-            "__SINGULAR_SNAKE__": singular_name_snake,
-            "__COMPONENT__": component_name,
-            "__RESOURCE__": resource_name,
-            "__HOOK__": hook_name,
-            "__TABLE_COLUMNS__": table_columns,
-            "__PLURAL_TITLE__": plural_name,
-            "__PLURAL_LABEL__": plural_name_snake,
-        }
-
-        for old_value, new_value in replacements.items():
-            content = content.replace(old_value, new_value)
+    return (
+        <CustomTable<{resource_name}>
+            title="{plural_name}"
+            description={{`Total de {plural_name_snake}: ${{query.data?.meta?.total ?? 0}}`}}
+            columns={{columns}}
+            data={{query.data?.data ?? []}}
+            getRowKey={{(item) => item.id}}
+            meta={{query.data?.meta}}
+            isLoading={{query.isPending}}
+            isFetching={{query.isFetching}}
+            isPlaceholderData={{query.isPlaceholderData}}
+            isError={{query.isError || (!query.isPending && !query.data)}}
+            onRefresh={{() => void query.refetch()}}
+            emptyMessage="No hay registros."
+            
+            // Botones personalizados del encabezado
+            headerActions={{
+            <Button
+                render={{<Link to="/admin/systems/create" />}}
+            >
+                <Plus className="size-4" />
+                Nuevo sistema
+            </Button>
+        }}
+        />
+    );
+}};
+    '''
 
         return HelperFile.write(
             folder_path=folder_path,
