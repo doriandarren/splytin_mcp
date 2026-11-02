@@ -137,10 +137,12 @@ class ReactTsCrudPage:
         content = f'''// src/modules/{namespace}/{plural_name_snake}/pages/{component_name}.tsx
 import {{ Link, useSearchParams }} from "react-router";
 import {{ Plus }} from "lucide-react";
+import {{ Button }} from "@/components/ui/button";
 import {{ CustomTable }} from "@/components/table/CustomTable";
 import type {{ TableColumn }} from "@/components/table/table.types";
 import type {{ {resource_name} }} from "../types/{singular_name_snake}.types";
 import {{ {hook_name} }} from "../hooks/{hook_name}";
+
 
 
 const columns: TableColumn<{resource_name}>[] = [
@@ -178,7 +180,7 @@ export const {component_name} = () => {{
             // Botones personalizados del encabezado
             headerActions={{
             <Button
-                render={{<Link to="/admin/systems/create" />}}
+                render={{<Link to="/admin/{plural_name_kebab}/create" />}}
             >
                 <Plus className="size-4" />
                 Nuevo sistema
