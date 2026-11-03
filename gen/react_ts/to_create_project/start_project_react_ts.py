@@ -18,6 +18,7 @@ from gen.react_ts.to_create_project.react_ts_gitignore import ReactTsGitignore
 from gen.react_ts.to_create_project.react_ts_google_fonts import ReactTsGoogleFonts
 from gen.react_ts.to_create_project.react_ts_react_router import ReactTsReactRouter
 from gen.react_ts.to_create_project.react_ts_tanstack_query import ReactTsTanstackQuery
+from gen.react_ts.to_create_project.react_ts_zod_react_hook_form import ReactTsZodReactHookForm
 from gen.react_ts.to_create_project.react_ts_zustand import ReactTsZustand
 
 load_dotenv()
@@ -90,8 +91,6 @@ class StartProjectReactTs:
         obj.invoke(full_path)
         
         
-        
-        
         # Module Dashboard
         obj = ReactTsModuleDashboard()
         obj.invoke(full_path)
@@ -129,6 +128,14 @@ class StartProjectReactTs:
         obj.invoke(full_path)
         
         
+        # Zod + React Hook Form
+        obj = ReactTsZodReactHookForm()
+        obj.invoke(full_path)
+        
+        
+        
+                
+        
         # Module Profile
         obj = ReactTsProfile()
         obj.invoke(full_path)
@@ -137,6 +144,8 @@ class StartProjectReactTs:
         # Module Systems (Fake)
         obj = ReactTsModuleSystem()
         obj.invoke(full_path)       
+        
+        
         
 
         pause()

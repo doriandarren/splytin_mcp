@@ -27,7 +27,7 @@ class ReactTsCrudService:
 
         folder_path = os.path.join(full_path, "src", "modules", namespace, plural_name_snake, "services")
 
-        content = f'''// src/modules/{namespace}/{plural_name_snake}/services/{singular_name_snake}Service.ts
+        content = f'''// src/modules/{namespace}/{plural_name_snake}/services/{singular_name_camel}Service.ts
 
 import {{ api }} from "@/api/api";
 import {{ ApiError }} from "@/api/api-error";
@@ -36,7 +36,7 @@ import type {{
   Create{singular_name}eInput, 
   {singular_name}Resource, 
   {plural_name}Response,
-}} from "../types/{singular_name_snake}.types";
+}} from "../types/{singular_name_camel}.types";
 
 /**
  * Get List

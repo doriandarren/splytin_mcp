@@ -165,7 +165,7 @@ class StandardModuleCrudReactTs:
         )
         
         
-        # Page - List
+        # Page - Create
         obj = ReactTsCrudCreate()
         obj.invoke(
             full_path,
@@ -183,8 +183,8 @@ class StandardModuleCrudReactTs:
             plural_name_snake,
             columns
         )
-                
-
+        
+        
 
         
         
@@ -205,7 +205,4 @@ class StandardModuleCrudReactTs:
             singular_name_snake,
             plural_name_snake,
             columns
-        )
-
-        
-        pause()   
+        )  
