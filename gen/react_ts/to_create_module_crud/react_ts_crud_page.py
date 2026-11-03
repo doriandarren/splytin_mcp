@@ -1,102 +1,12 @@
 
 import os
-import json
+
 from gen.helpers.helper_file import HelperFile
+from gen.react_ts.helpers.helper_react_ts_list_page import HelperReactTsListPage
 
 
 class ReactTsCrudPage:
 
-    @staticmethod
-    def get_column_render(column):
-        """
-        Genera el render de una columna
-        según su tipo de dato.
-        """
-
-        name = column["name"]
-        column_type = column.get("type", "string")
-        value = f"item.attributes.{name}"
-
-        if column.get("is_fk", False):
-            column_type = "fk"
-
-        if column_type == "boolean":
-            return (
-                f'{value} == null ? "-" : '
-                f'{value} ? "Sí" : "No"'
-            )
-
-        if column_type in ("date", "datetime", "timestamp"):
-            return (
-                f'{value} ? '
-                f'new Date({value}).toLocaleDateString("es-ES") '
-                f': "-"'
-            )
-
-        if column_type in ("decimal", "float", "double"):
-            return (
-                f'{value} == null ? "-" : '
-                f'Number({value}).toLocaleString("es-ES")'
-            )
-
-        if column_type == "json":
-            return f'{value} == null ? "-" : JSON.stringify({value})'
-
-        return f'{value} ?? "-"'
-
-    @staticmethod
-    def generate_columns(columns):
-        """
-        Genera las columnas dinámicas para CustomTable.
-
-        Los nombres de key y header se mantienen
-        exactamente como aparecen en columns.
-        """
-
-        result = [
-            '  {',
-            '    key: "id",',
-            '    header: "id",',
-            '    render: (item) => item.id,',
-            '  },'
-        ]
-
-        existing_names = {"id"}
-
-        for column in columns:
-            name = column["name"]
-
-            if name in existing_names:
-                continue
-
-            existing_names.add(name)
-
-            render = ReactTsCrudPage.get_column_render(column)
-
-            result.extend([
-                '  {',
-                f'    key: {json.dumps(name, ensure_ascii=False)},',
-                f'    header: {json.dumps(name, ensure_ascii=False)},',
-                f'    render: (item) => {render},',
-                '  },'
-            ])
-
-        # Añadir created_at si no está en columns
-        if "created_at" not in existing_names:
-            result.extend([
-                '  {',
-                '    key: "created_at",',
-                '    header: "created_at",',
-                '    render: (item) =>',
-                '      item.attributes.created_at',
-                '        ? new Date(item.attributes.created_at).toLocaleDateString("es-ES")',
-                '        : "-",',
-                '  },'
-            ])
-
-        return "\n".join(result)
-
-    
     def invoke(
         self,
         full_path,
@@ -115,8 +25,121 @@ class ReactTsCrudPage:
         columns,
     ):
         """
-        Genera una página CRUD React + TypeScript
-        utilizando el componente CustomTable.
+        Genera la página de listado y el hook Delete.
+        """
+
+        self.create_pages_tsx(
+            full_path,
+            namespace,
+            version_api,
+            folder_group,
+            project_name,
+            singular_name,
+            plural_name,
+            singular_name_camel,
+            plural_name_camel,
+            singular_name_kebab,
+            plural_name_kebab,
+            singular_name_snake,
+            plural_name_snake,
+            columns,
+        )
+
+        self.create_hook_use_ts(
+            full_path,
+            namespace,
+            version_api,
+            folder_group,
+            project_name,
+            singular_name,
+            plural_name,
+            singular_name_camel,
+            plural_name_camel,
+            singular_name_kebab,
+            plural_name_kebab,
+            singular_name_snake,
+            plural_name_snake,
+            columns,
+        )
+
+    def create_hook_use_ts(
+        self,
+        full_path,
+        namespace,
+        version_api,
+        folder_group,
+        project_name,
+        singular_name,
+        plural_name,
+        singular_name_camel,
+        plural_name_camel,
+        singular_name_kebab,
+        plural_name_kebab,
+        singular_name_snake,
+        plural_name_snake,
+        columns
+    ):
+        """
+        Genera el hook para eliminar registros.
+        """
+
+        folder_path = os.path.join(
+            full_path,
+            "src",
+            "modules",
+            namespace,
+            plural_name_snake,
+            "hooks"
+        )
+
+        content = f'''// src/modules/{namespace}/{plural_name_snake}/hooks/useDelete{singular_name}.ts
+
+import {{ useMutation, useQueryClient }} from "@tanstack/react-query";
+
+import {{ delete{singular_name} }} from "../services/{plural_name_camel}Service";
+import {{ {plural_name_camel}Keys }} from "../queries/{plural_name_camel}Queries";
+
+export const useDelete{singular_name} = () => {{
+  const queryClient = useQueryClient();
+
+  return useMutation({{
+    mutationFn: delete{singular_name},
+
+    onSuccess: async () => {{
+      await queryClient.invalidateQueries({{
+        queryKey: {plural_name_camel}Keys.lists(),
+      }});
+    }},
+  }});
+}};
+'''
+
+        HelperFile.write(
+            folder_path=folder_path,
+            file_name=f"useDelete{singular_name}.ts",
+            content=content
+        )
+
+    def create_pages_tsx(
+        self,
+        full_path,
+        namespace,
+        version_api,
+        folder_group,
+        project_name,
+        singular_name,
+        plural_name,
+        singular_name_camel,
+        plural_name_camel,
+        singular_name_kebab,
+        plural_name_kebab,
+        singular_name_snake,
+        plural_name_snake,
+        columns,
+    ):
+        """
+        Genera la página de listado CRUD
+        con CustomTable, Create, Edit y Delete.
         """
 
         folder_path = os.path.join(
@@ -128,71 +151,85 @@ class ReactTsCrudPage:
             "pages"
         )
 
-        component_name = f"{singular_name}Page"
-        resource_name = f"{singular_name}Resource"
-        hook_name = f"use{plural_name}"
+        content = f'''// src/modules/{namespace}/{plural_name_snake}/pages/{singular_name}Page.tsx
 
-        table_columns = self.generate_columns(columns)
-
-        content = f'''// src/modules/{namespace}/{plural_name_snake}/pages/{component_name}.tsx
 import {{ Link, useSearchParams }} from "react-router";
-import {{ Plus }} from "lucide-react";
+import {{ Plus, Pencil, Trash2 }} from "lucide-react";
+
 import {{ Button }} from "@/components/ui/button";
 import {{ CustomTable }} from "@/components/table/CustomTable";
 import type {{ TableColumn }} from "@/components/table/table.types";
-import type {{ {resource_name} }} from "../types/{singular_name_snake}.types";
-import {{ {hook_name} }} from "../hooks/{hook_name}";
 
+import type {{ {singular_name}Resource }} from "../types/{singular_name_snake}.types";
 
+import {{ use{plural_name} }} from "../hooks/use{plural_name}";
+import {{ useDelete{singular_name} }} from "../hooks/useDelete{singular_name}";
 
-const columns: TableColumn<{resource_name}>[] = [
-{table_columns}
+const columns = (
+  onDelete: (id: string) => void,
+  isDeleting: boolean
+): TableColumn<{singular_name}Resource>[] => [
+{HelperReactTsListPage.generate_columns(columns, plural_name_kebab)}
 ];
 
+export const {singular_name}Page = () => {{
+  const [searchParams] = useSearchParams();
 
-export const {component_name} = () => {{
-    const [searchParams] = useSearchParams();
+  const rawPage = Number(searchParams.get("page") ?? "1");
 
-    const rawPage = Number(searchParams.get("page") ?? "1");
+  const page =
+    Number.isSafeInteger(rawPage) && rawPage > 0
+      ? rawPage
+      : 1;
 
-    const page =
-        Number.isSafeInteger(rawPage) && rawPage > 0
-        ? rawPage
-        : 1;
+  // Listado
+  const query = use{plural_name}(page);
 
-    const query = {hook_name}(page);
+  // Eliminar
+  const deleteItem = useDelete{singular_name}();
 
-    return (
-        <CustomTable<{resource_name}>
-            title="{plural_name}"
-            description={{`Total de {plural_name_snake}: ${{query.data?.meta?.total ?? 0}}`}}
-            columns={{columns}}
-            data={{query.data?.data ?? []}}
-            getRowKey={{(item) => item.id}}
-            meta={{query.data?.meta}}
-            isLoading={{query.isPending}}
-            isFetching={{query.isFetching}}
-            isPlaceholderData={{query.isPlaceholderData}}
-            isError={{query.isError || (!query.isPending && !query.data)}}
-            onRefresh={{() => void query.refetch()}}
-            emptyMessage="No hay registros."
-            
-            // Botones personalizados del encabezado
-            headerActions={{
-            <Button
-                render={{<Link to="/admin/{plural_name_kebab}/create" />}}
-            >
-                <Plus className="size-4" />
-                Nuevo sistema
-            </Button>
-        }}
-        />
-    );
+  const handleDelete = async (id: string) => {{
+    if (!window.confirm("¿Seguro que deseas eliminar este registro?")) {{
+      return;
+    }}
+
+    try {{
+      await deleteItem.mutateAsync(id);
+    }} catch (error) {{
+      console.error("Error al eliminar el registro:", error);
+    }}
+  }};
+
+  return (
+    <CustomTable<{singular_name}Resource>
+      title="{plural_name}"
+      description={{`Total de {plural_name_snake}: ${{query.data?.meta?.total ?? 0}}`}}
+      columns={{columns(handleDelete, deleteItem.isPending)}}
+      data={{query.data?.data ?? []}}
+      getRowKey={{(item) => item.id}}
+      meta={{query.data?.meta}}
+      isLoading={{query.isPending}}
+      isFetching={{query.isFetching}}
+      isPlaceholderData={{query.isPlaceholderData}}
+      isError={{query.isError || (!query.isPending && !query.data)}}
+      onRefresh={{() => void query.refetch()}}
+      emptyMessage="No hay registros."
+      headerActions={{
+        <Button
+          nativeButton={{false}}
+          render={{<Link to="/admin/{plural_name_kebab}/create" />}}
+        >
+          <Plus className="size-4" />
+          Nuevo {singular_name}
+        </Button>
+      }}
+    />
+  );
 }};
-    '''
+'''
 
-        return HelperFile.write(
+        HelperFile.write(
             folder_path=folder_path,
-            file_name=f"{component_name}.tsx",
+            file_name=f"{singular_name}Page.tsx",
             content=content
         )

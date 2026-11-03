@@ -9,6 +9,7 @@ from gen.react_ts.to_create_module_crud.react_ts_crud_query import ReactTsCrudQu
 from gen.react_ts.to_create_module_crud.react_ts_crud_route import ReactTsCrudRoute
 from gen.react_ts.to_create_module_crud.react_ts_crud_service import ReactTsCrudService
 from gen.react_ts.to_create_module_crud.react_ts_crud_types import ReactTsCrudTypes
+from gen.react_ts.to_create_module_crud.react_ts_crud_update import ReactTsCrudUpdate
 
 
 
@@ -184,6 +185,26 @@ class StandardModuleCrudReactTs:
             columns
         )
         
+        
+        
+        ## Page - Update
+        obj = ReactTsCrudUpdate()
+        obj.invoke(
+            full_path,
+            namespace,
+            version_api,
+            folder_group,
+            project_name,
+            singular_name,
+            plural_name,
+            singular_name_camel,
+            plural_name_camel,
+            singular_name_kebab,
+            plural_name_kebab,
+            singular_name_snake,
+            plural_name_snake,
+            columns
+        )
         
 
         

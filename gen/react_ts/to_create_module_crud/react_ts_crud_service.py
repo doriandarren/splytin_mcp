@@ -28,14 +28,14 @@ class ReactTsCrudService:
         folder_path = os.path.join(full_path, "src", "modules", namespace, plural_name_snake, "services")
 
         content = f'''// src/modules/{namespace}/{plural_name_snake}/services/{singular_name_camel}Service.ts
-
 import {{ api }} from "@/api/api";
 import {{ ApiError }} from "@/api/api-error";
 
 import type {{ 
-  Create{singular_name}eInput, 
   {singular_name}Resource, 
   {plural_name}Response,
+  Create{singular_name}Input, 
+  Update{singular_name}Input,
 }} from "../types/{singular_name_camel}.types";
 
 /**
@@ -48,7 +48,7 @@ export async function get{plural_name}(
   signal?: AbortSignal
 ): Promise<{plural_name}Response> {{
   const response = await api<{plural_name}Response>(
-    `{plural_name_snake}?page=${{page}}`,
+    `{plural_name_kebab}?page=${{page}}`,
     {{
       method: "GET",
       signal,
@@ -73,23 +73,26 @@ export async function get{plural_name}(
 }}
 
 
+
 /**
  * Create
- * @param input Create
- * @returns 
+ *
+ * POST /api/v1/{plural_name_kebab}
  */
 export async function create{singular_name}(
   input: Create{singular_name}Input
 ): Promise<{singular_name}Resource> {{
-  const response = await api<{{ data: {singular_name}Resource }}>("{singular_name_kebab}", {{
-    method: "POST",
-    body: {{
-      data: {{
-        type: "{singular_name_kebab}",
-        attributes: input,
+  const response = await api<{{ data: {singular_name}Resource }}>(
+    "{plural_name_camel}",
+    {{
+      method: "POST",
+      body: {{
+        data: {{
+          attributes: input,
+        }},
       }},
-    }},
-  }});
+    }}
+  );
 
   if (!response?.data) {{
     throw new ApiError(
@@ -99,6 +102,83 @@ export async function create{singular_name}(
   }}
 
   return response.data;
+}}
+
+
+
+
+
+
+/**
+ * Obtener un sistema por ID.
+ */
+export async function get{singular_name}(
+  id: string,
+  signal?: AbortSignal
+): Promise<{singular_name}Resource> {{
+  const response = await api<{{
+    data: {singular_name}Resource;
+  }}>(`{plural_name_kebab}/${{encodeURIComponent(id)}}`, {{
+    method: "GET",
+    signal,
+  }});
+
+  if (!response?.data) {{
+    throw new ApiError(
+      "La API no devolvió registro solicitado.",
+      {{ kind: "invalid-response" }}
+    );
+  }}
+
+  return response.data;
+}}
+
+
+/**
+ * Actualizar un sistema.
+ */
+export async function update{singular_name}(
+  id: string,
+  input: Update{singular_name}Input
+): Promise<{singular_name}Resource> {{
+  const response = await api<{{
+    data: {singular_name}Resource;
+  }}>(`{plural_name_kebab}/${{encodeURIComponent(id)}}`, {{
+    method: "PATCH",
+    body: {{
+      data: {{
+        type: "{plural_name_kebab}",
+        id,
+        attributes: input,
+      }},
+    }},
+  }});
+  
+  if (!response?.data) {{
+    throw new ApiError(
+      "La API no devolvió registro actualizado.",
+      {{ kind: "invalid-response" }}
+    );
+  }}
+
+  return response.data;
+}}
+
+
+/**
+ * Delete
+ *
+ * DELETE /api/{version_api}/{plural_name_kebab}/:id
+ */
+export async function delete{singular_name}(
+  id: string
+): Promise<void> {{
+  await api<void>(
+    `{plural_name_kebab}/${{encodeURIComponent(id)}}`,
+    {{
+      method: "DELETE",
+    }}
+  );
 }}
 
 '''
