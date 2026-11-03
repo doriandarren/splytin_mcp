@@ -17,6 +17,7 @@ from gen.react_ts.to_create_project.react_ts_env import ReactTsEnv
 from gen.react_ts.to_create_project.react_ts_gitignore import ReactTsGitignore
 from gen.react_ts.to_create_project.react_ts_google_fonts import ReactTsGoogleFonts
 from gen.react_ts.to_create_project.react_ts_react_router import ReactTsReactRouter
+from gen.react_ts.to_create_project.react_ts_sonner import ReactTsSonner
 from gen.react_ts.to_create_project.react_ts_tanstack_query import ReactTsTanstackQuery
 from gen.react_ts.to_create_project.react_ts_zod_react_hook_form import ReactTsZodReactHookForm
 from gen.react_ts.to_create_project.react_ts_zustand import ReactTsZustand
@@ -134,6 +135,12 @@ class StartProjectReactTs:
         
         
         
+        # Sonner - Toast
+        obj = ReactTsSonner()
+        obj.invoke(full_path)
+        
+        
+        
                 
         
         # Module Profile
@@ -144,6 +151,8 @@ class StartProjectReactTs:
         # Module Systems (Fake)
         obj = ReactTsModuleSystem()
         obj.invoke(full_path)       
+        
+        
         
         
         

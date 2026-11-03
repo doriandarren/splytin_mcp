@@ -118,15 +118,14 @@ class ReactTsCrudCreate:
         content = f'''// src/modules/{namespace}/{plural_name_snake}/pages/{singular_name}CreatePage.tsx
 import {{ useNavigate }} from "react-router";
 import {{ ArrowLeft, Save }} from "lucide-react";
-
+import {{ alerta }} from "@/components/alerts/alerta";
 import {{ useForm }} from "react-hook-form";
 import {{ zodResolver }} from "@hookform/resolvers/zod";
-
 import {{ Button }} from "@/components/ui/button";
 import {{ Input }} from "@/components/ui/input";
 import {{ Label }} from "@/components/ui/label";
-
 import {{ useCreate{singular_name} }} from "../hooks/useCreate{singular_name}";
+
 
 import {{
   {singular_name_camel}Schema,
@@ -154,7 +153,7 @@ export const {singular_name}CreatePage = () => {{
   const onSubmit = async (values: {singular_name}FormValues) => {{
     try {{
       await createItem.mutateAsync(values);
-
+      alerta.success("Registro creado correctamente");
       navigate("/admin/{plural_name_kebab}");
     }} catch {{
       // El error se muestra en el formulario.

@@ -4,7 +4,7 @@ from gen.helpers.helper_print import camel_to_first_letter_lower, camel_to_kebab
 from gen.helpers.helper_string import normalize_project_name
 from gen.react_ts.to_create_module_crud.react_ts_crud_create import ReactTsCrudCreate
 from gen.react_ts.to_create_module_crud.react_ts_crud_hook import ReactTsCrudHook
-from gen.react_ts.to_create_module_crud.react_ts_crud_page import ReactTsCrudPage
+from gen.react_ts.to_create_module_crud.react_ts_crud_list import ReactTsCrudList
 from gen.react_ts.to_create_module_crud.react_ts_crud_query import ReactTsCrudQuery
 from gen.react_ts.to_create_module_crud.react_ts_crud_route import ReactTsCrudRoute
 from gen.react_ts.to_create_module_crud.react_ts_crud_service import ReactTsCrudService
@@ -147,7 +147,7 @@ class StandardModuleCrudReactTs:
         
         
         # Page - List
-        obj = ReactTsCrudPage()
+        obj = ReactTsCrudList()
         obj.invoke(
             full_path,
             namespace,

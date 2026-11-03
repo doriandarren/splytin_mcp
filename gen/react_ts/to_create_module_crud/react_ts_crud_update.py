@@ -255,21 +255,20 @@ export const useUpdate{singular_name} = () => {{
 import {{ useEffect }} from "react";
 import {{ useNavigate, useParams }} from "react-router";
 import {{ ArrowLeft, Save }} from "lucide-react";
-
+import {{ alerta }} from "@/components/alerts/alerta";
 import {{ useForm }} from "react-hook-form";
 import {{ zodResolver }} from "@hookform/resolvers/zod";
-
 import {{ Button }} from "@/components/ui/button";
 import {{ Input }} from "@/components/ui/input";
 import {{ Label }} from "@/components/ui/label";
-
 import {{ use{singular_name} }} from "../hooks/use{singular_name}";
 import {{ useUpdate{singular_name} }} from "../hooks/useUpdate{singular_name}";
-
 import {{
   {singular_name_camel}Schema,
   type {singular_name}FormValues,
 }} from "../schemas/{singular_name_camel}.schema";
+
+
 
 export const {singular_name}UpdatePage = () => {{
   const navigate = useNavigate();
@@ -309,6 +308,7 @@ export const {singular_name}UpdatePage = () => {{
         input: values,
       }});
 
+      alerta.success("Registro actualizado correctamente");
       navigate("/admin/{plural_name_kebab}");
     }} catch {{
       // El error se muestra en el formulario.

@@ -5,7 +5,7 @@ from gen.helpers.helper_file import HelperFile
 from gen.react_ts.helpers.helper_react_ts_list_page import HelperReactTsListPage
 
 
-class ReactTsCrudPage:
+class ReactTsCrudList:
 
     def invoke(
         self,
@@ -152,18 +152,17 @@ export const useDelete{singular_name} = () => {{
         )
 
         content = f'''// src/modules/{namespace}/{plural_name_snake}/pages/{singular_name}Page.tsx
-
 import {{ Link, useSearchParams }} from "react-router";
 import {{ Plus, Pencil, Trash2 }} from "lucide-react";
-
+import {{ alerta }} from "@/components/alerts/alerta";
 import {{ Button }} from "@/components/ui/button";
 import {{ CustomTable }} from "@/components/table/CustomTable";
 import type {{ TableColumn }} from "@/components/table/table.types";
-
 import type {{ {singular_name}Resource }} from "../types/{singular_name_snake}.types";
-
 import {{ use{plural_name} }} from "../hooks/use{plural_name}";
 import {{ useDelete{singular_name} }} from "../hooks/useDelete{singular_name}";
+
+
 
 const columns = (
   onDelete: (id: string) => void,
@@ -195,6 +194,7 @@ export const {singular_name}Page = () => {{
 
     try {{
       await deleteItem.mutateAsync(id);
+      alerta.success("Registro eliminado correctamente");
     }} catch (error) {{
       console.error("Error al eliminar el registro:", error);
     }}
