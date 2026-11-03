@@ -89,70 +89,35 @@ export const alerta = {
 
             new_content = content
 
-            # 1. Agregar import QueryProvider
-            if 'import { QueryProvider } from "./providers/QueryProvider";' not in new_content:
-                new_content = new_content.replace(
-                    'import { appRouter } from "./app.router";',
-                    '''import { appRouter } from "./app.router";
-    import { QueryProvider } from "./providers/QueryProvider";''',
-                    1
-                )
-
-            # 2. Agregar import Toaster
+            # Agregar import Toaster
             if 'import { Toaster } from "@/components/ui/sonner";' not in new_content:
                 new_content = new_content.replace(
                     'import { QueryProvider } from "./providers/QueryProvider";',
                     '''import { QueryProvider } from "./providers/QueryProvider";
-    import { Toaster } from "@/components/ui/sonner";''',
-                    1
-                )
-
-            # 3. Agregar QueryProvider si no existe
-            if "<QueryProvider>" not in new_content:
-                new_content = new_content.replace(
-                    """<Suspense fallback={<div>Cargando...</div>}>
-        <RouterProvider router={appRouter} />
-        </Suspense>""",
-                    """<QueryProvider>
-        <Suspense fallback={<div>Cargando...</div>}>
-            <RouterProvider router={appRouter} />
-        </Suspense>
-        </QueryProvider>""",
+import { Toaster } from "@/components/ui/sonner";''',
                     1
                 )
 
             # 4. Agregar Toaster si no existe
             if "<Toaster" not in new_content:
-                new_content = new_content.replace(
-                    """export const App = () => {
-    return (""",
-                    """export const App = () => {
-    return (""",
-                    1
-                )
-
+                
                 # Añadir Fragment y Toaster
                 new_content = new_content.replace(
                     """  return (
-        <QueryProvider>""",
+    <QueryProvider>""",
                     """  return (
-        <>
-        <QueryProvider>""",
+    <>
+      <QueryProvider>""",
                     1
                 )
 
                 new_content = new_content.replace(
                     """    </QueryProvider>
-    );""",
+  );""",
                     """      </QueryProvider>
-        <Toaster
-            position="top-right"
-            richColors
-            closeButton
-            duration={4000}
-        />
-        </>
-    );""",
+      <Toaster position="top-right" richColors closeButton duration={4000} />
+    </>
+  );""",
                     1
                 )
 
