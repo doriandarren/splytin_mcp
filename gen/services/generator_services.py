@@ -27,6 +27,7 @@ from gen.python_django.to_create_project.core.dj_generate_custom_logging import 
 from gen.python_django.to_create_project.dj_generate_cors import DjGenerateCors
 from gen.python_django.to_create_project.dj_generate_cron import DjGenerateCron
 from gen.python_django.to_create_project.dj_generate_faker import DjGenerateFaker
+from gen.python_django.to_create_project.dj_generate_gunicorn_and_whitenoise import DjGenerateGunicornAndWhitenoise
 from gen.python_django.to_create_project.modules.dj_generate_module_auth import DjGenerateModuleAuth
 from gen.python_django.to_create_project.modules.dj_generate_module_devs import DjGenerateModuleDevs
 from gen.python_django.to_create_project.modules.dj_generate_module_users import DjGenerateModuleUsers
@@ -108,6 +109,8 @@ def create_python_django_project_service(
     obj.invoke(full_path, project_name)
     
     
+    
+    
     # Django
     obj = DjGenerateDjango()
     obj.invoke(full_path, project_name_format, app_main, venv_python)
@@ -151,6 +154,12 @@ def create_python_django_project_service(
     # Cors
     obj = DjGenerateCors()
     obj.invoke(full_path, project_name_format, app_main, venv_python)
+    
+    
+    # gunicorn whitenoise
+    obj = DjGenerateGunicornAndWhitenoise()
+    obj.invoke(full_path, app_main, venv_python)
+    
     
     
     # File Helpers
@@ -214,14 +223,17 @@ def create_python_django_project_service(
     obj.invoke(full_path, project_name, domain_name)
     
     
-    # Requirements
-    obj = DjGenerateRequirementsTxt()
-    obj.invoke(full_path, venv_python)
-    
     
     # Api - Response
     obj = DjGenerateApiResponse()
     obj.invoke(full_path)
+    
+    
+    
+    
+    # Requirements
+    obj = DjGenerateRequirementsTxt()
+    obj.invoke(full_path, venv_python)
     
 
     return {
