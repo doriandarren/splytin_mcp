@@ -4,21 +4,21 @@ from gen.helpers.helper_print import camel_to_first_letter_lower, camel_to_kebab
 from gen.helpers.helper_string import normalize_project_name
 from gen.php_laravel.to_module_crud.laravel_crud_filter import LaravelCrudFilter
 from gen.php_laravel.to_module_crud.laravel_crud_model import LaravelCrudModel
-from gen.php_laravel.to_module_crud.generate_permissions_abilities import generate_permissions_abilities
-from gen.php_laravel.to_module_crud.generate_policy import generate_policy
-from gen.php_laravel.to_module_crud.generate_request_store import generate_request_store
-from gen.php_laravel.to_module_crud.generate_request_update import generate_request_update
-from gen.php_laravel.to_module_crud.generate_resource import generate_resource
-from gen.php_laravel.to_module_crud.generate_routes_file import generate_routes_file
+from gen.php_laravel.to_module_crud.laravel_crud_permissions_abilities import LaravelCrudPermission
+from gen.php_laravel.to_module_crud.laravel_crud_policy import LaravelCrudPolicy
+from gen.php_laravel.to_module_crud.laravel_crud_request_store import LaravelCrudRequestStore
+from gen.php_laravel.to_module_crud.laravel_crud_request_update import LaravelCrudRequestUpdate
+from gen.php_laravel.to_module_crud.laravel_crud_resource import LaravelCrudResource
+from gen.php_laravel.to_module_crud.laravel_crud_routes import LaravelCrudRoute
 from gen.php_laravel.to_module_crud.laravel_crud_controller_show import LaravelCrudControllerShow
 from gen.php_laravel.to_module_crud.laravel_crud_controller_store import LaravelCrudControllerStore
 from gen.php_laravel.to_module_crud.laravel_crud_controller_update import LaravelCrudControllerUpdate
-from gen.php_laravel.to_module_crud.generate_seeder_file import generate_seeder_file
-from gen.php_laravel.to_module_crud.generate_factory_file import generate_factory_file
+from gen.php_laravel.to_module_crud.laravel_crud_seeder import LaravelCrudSeeder
+from gen.php_laravel.to_module_crud.laravel_crud_factory import LaravelCrudFactory
 from gen.php_laravel.to_module_crud.laravel_crud_controller_destroy import LaravelCrudControllerDestroy
 from gen.php_laravel.to_module_crud.laravel_crud_controller_index import LaravelCrudControllerIndex
 from gen.php_laravel.to_module_crud.laravel_crud_postman import LaravelCrudPostman
-from gen.php_laravel.to_module_crud.generate_service_file import generate_service_file
+from gen.php_laravel.to_module_crud.laravel_crud_service import LaravelCrudService
 from gen.php_laravel.to_module_crud.laravel_crud_migration import LaravelCrudMigration
 
 
@@ -176,9 +176,9 @@ def standard_module_crud_php(
             columns
         )
         
-        ## TODO Pendiente
         ## Create Request
-        generate_request_store(
+        obj = LaravelCrudRequestStore()
+        obj.invoke(
             full_path,
             namespace,
             version_api,
@@ -220,9 +220,10 @@ def standard_module_crud_php(
         )
         
         
-        ## TODO pendiente 
+        
         ## Generate Request
-        generate_request_update(
+        obj = LaravelCrudRequestUpdate()
+        obj.invoke(
             full_path,
             namespace,
             version_api,
@@ -267,7 +268,8 @@ def standard_module_crud_php(
     # Service
     #--------------------------
     if "service" in input_menu_checkbox:
-        generate_service_file(
+        obj = LaravelCrudService()
+        obj.invoke(
             full_path,
             namespace,
             version_api,
@@ -288,7 +290,8 @@ def standard_module_crud_php(
     # Route
     #--------------------------
     if "routes" in input_menu_checkbox:
-        generate_routes_file(
+        obj = LaravelCrudRoute()
+        obj.invoke(
             full_path,
             namespace,
             version_api,
@@ -331,7 +334,8 @@ def standard_module_crud_php(
     # Seeder
     #--------------------------
     if "seeder" in input_menu_checkbox:
-        generate_seeder_file(
+        obj = LaravelCrudSeeder()
+        obj.invoke(
             full_path,
             namespace,
             version_api,
@@ -352,7 +356,8 @@ def standard_module_crud_php(
     # Factory
     #--------------------------
     if "factory" in input_menu_checkbox:
-        generate_factory_file(
+        obj = LaravelCrudFactory()
+        obj.invoke(
             full_path,
             namespace,
             version_api,
@@ -387,7 +392,8 @@ def standard_module_crud_php(
     # Resource
     #--------------------------
     if "resource" in input_menu_checkbox:
-        generate_resource(
+        obj = LaravelCrudResource()
+        obj.invoke(
             full_path,
             namespace,
             version_api,
@@ -408,7 +414,8 @@ def standard_module_crud_php(
     #--------------------------
     # Policy
     #--------------------------
-    generate_policy(
+    obj = LaravelCrudPolicy()
+    obj.invoke(
         full_path,
         namespace,
         version_api,
@@ -431,7 +438,8 @@ def standard_module_crud_php(
     #--------------------------
     # Permissions
     #--------------------------
-    generate_permissions_abilities(
+    obj = LaravelCrudPermission()
+    obj.invoke(
         full_path,
         namespace,
         version_api,
