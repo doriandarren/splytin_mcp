@@ -38,8 +38,8 @@ def start_project_python_django():
     
     
     ## TODO borrar luego solo para PRuebas:
-    # full_path = f"{project_path}/{project_name}"
-    # HelperDataFake.createCRUD(full_path, app_name)
+    full_path = f"{project_path}/{project_name}"
+    HelperDataFake.createCRUD(full_path, app_name)
     
     
 

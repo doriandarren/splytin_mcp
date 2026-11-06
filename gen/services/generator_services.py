@@ -6,6 +6,7 @@ import os
 from dotenv import load_dotenv
 from gen.helpers.helper_columns import parse_columns_input
 from gen.helpers.helpers import dd
+from gen.php_laravel.to_create_project.fake.laravel_fake_data import LaravelFakeData
 from gen.php_laravel.to_create_project.generate_api_controller import generate_api_controller
 from gen.php_laravel.to_create_project.generate_default_role_permissions import generate_default_role_permissions
 from gen.php_laravel.to_create_project.generate_query_filter import generate_query_filter
@@ -109,8 +110,6 @@ def create_python_django_project_service(
     obj.invoke(full_path, project_name)
     
     
-    
-    
     # Django
     obj = DjGenerateDjango()
     obj.invoke(full_path, project_name_format, app_main, venv_python)
@@ -161,7 +160,6 @@ def create_python_django_project_service(
     obj.invoke(full_path, app_main, venv_python)
     
     
-    
     # File Helpers
     obj = DjGenerateFileHelpers()
     obj.invoke(full_path)
@@ -185,7 +183,6 @@ def create_python_django_project_service(
     # Home Page
     obj = DjGeneratePageHome()
     obj.invoke(full_path, project_name_format, app_main)
-    
     
     
     # Module - User
@@ -223,17 +220,16 @@ def create_python_django_project_service(
     obj.invoke(full_path, project_name, domain_name)
     
     
-    
     # Api - Response
     obj = DjGenerateApiResponse()
     obj.invoke(full_path)
     
     
-    
-    
     # Requirements
     obj = DjGenerateRequirementsTxt()
     obj.invoke(full_path, venv_python)
+    
+    
     
 
     return {
@@ -486,6 +482,11 @@ def create_php_project_service(
     generate_base_api_request(full_path)
     generate_api_controller(full_path)
     update_app_service_provider(full_path)
+    
+    
+    # Fake Data
+    obj = LaravelFakeData()
+    obj.invoke(full_path)
     
 
     return {
