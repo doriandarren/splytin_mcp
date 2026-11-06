@@ -29,6 +29,9 @@ from gen.python_django.to_create_project.dj_generate_cors import DjGenerateCors
 from gen.python_django.to_create_project.dj_generate_cron import DjGenerateCron
 from gen.python_django.to_create_project.dj_generate_faker import DjGenerateFaker
 from gen.python_django.to_create_project.dj_generate_gunicorn_and_whitenoise import DjGenerateGunicornAndWhitenoise
+from gen.python_django.to_create_project.setting_file.dj_allowed_hosts import DjAllowedHosts
+from gen.python_django.to_create_project.setting_file.dj_debug import DjDebug
+from gen.python_django.to_create_project.setting_file.dj_secret_key import DjSecretKey
 from gen.python_django.to_create_project.modules.dj_generate_module_auth import DjGenerateModuleAuth
 from gen.python_django.to_create_project.modules.dj_generate_module_devs import DjGenerateModuleDevs
 from gen.python_django.to_create_project.modules.dj_generate_module_users import DjGenerateModuleUsers
@@ -115,8 +118,6 @@ def create_python_django_project_service(
     obj.invoke(full_path, project_name_format, app_main, venv_python)
     
     
-    obj = Dj
-    
     # Faker
     obj = DjGenerateFaker()
     obj.invoke(full_path, venv_python)
@@ -124,7 +125,24 @@ def create_python_django_project_service(
     
     # Env
     obj = DjGenerateEnv()
-    obj.invoke(full_path, project_name_format, app_main, venv_python)
+    obj.invoke(full_path, project_name_format, project_name, app_main, venv_python)
+    
+    
+    # Secret Key
+    obj = DjSecretKey()
+    obj.invoke(full_path, app_main, venv_python)
+    
+    
+    # Debug
+    obj = DjDebug()
+    obj.invoke(full_path, app_main)
+    
+    
+    # Allowed Hosts
+    obj = DjAllowedHosts()
+    obj.invoke(full_path, app_main)
+    
+    
     
     
     # Media
@@ -132,7 +150,7 @@ def create_python_django_project_service(
     obj.invoke(full_path, project_name_format, app_main, venv_python)
     
     
-    #Static Files
+    # Static Files
     obj = DjGenerateStaticFiles()
     obj.invoke(full_path, app_main)
     
@@ -142,12 +160,12 @@ def create_python_django_project_service(
     obj.invoke(full_path, project_name_format, app_main, venv_python)
     
     
-    # APIDoc
+    # API Doc
     obj = DjGenerateApiDoc()
     obj.invoke(full_path, project_name_format, app_main, venv_python)
     
     
-    # CoreFileInit
+    # Core FileInit
     obj = DjGenerateCoreFileInit()
     obj.invoke(full_path)
     
@@ -157,7 +175,7 @@ def create_python_django_project_service(
     obj.invoke(full_path, project_name_format, app_main, venv_python)
     
     
-    # gunicorn whitenoise
+    # Gunicorn Whitenoise
     obj = DjGenerateGunicornAndWhitenoise()
     obj.invoke(full_path, app_main, venv_python)
     

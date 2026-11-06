@@ -1,5 +1,5 @@
 import os
-from gen.helpers.helper_print import print_message, GREEN, CYAN, run_command
+from gen.helpers.helper_print import print_cyan, print_green, print_message, GREEN, CYAN, run_command
 from gen.python_django.helpers.helper_file import helper_add_import, helper_append_content, helper_replace_block
 
 from gen.helpers.helper_file import HelperFile
@@ -9,26 +9,24 @@ from gen.helpers.helper_file import HelperFile
 class DjGenerateEnv:
     
 
-    def invoke(self, full_path, project_name_format, app_main, venv_python):
+    def invoke(self, full_path, project_name_format, project_name, app_main, venv_python):
         
         self.install_env(full_path, venv_python)
         self.update_settings(full_path, app_main)
         
-        self.create_env(full_path, project_name_format)
-        self.create_env_example(full_path, project_name_format)
+        self.create_env(full_path, project_name_format, project_name)
+        self.create_env_example(full_path, project_name_format, project_name)
 
 
 
     def install_env(self, full_path, venv_python):
-        print_message("Instalando python-dotenv...", CYAN)
+        print_cyan("Instalando python-dotenv...")
         run_command(f'"{venv_python}" -m pip install python-dotenv', cwd=full_path)
-        print_message("python-dotenv instalado correctamente.", GREEN)
+        print_green("python-dotenv instalado correctamente.")
 
 
 
     def update_settings(self, full_path, app_name):
-        
-        
         helper_add_import(
             full_path, 
             f"{app_name}/settings.py", 
@@ -58,13 +56,15 @@ MESSAGE_CHANNEL_URL = os.getenv("MESSAGE_CHANNEL_URL")
         
         
         
-    def create_env(self, full_path, project_name_format):
+    def create_env(self, full_path, project_name_format, project_name):
         """
         Genera el archivo .env
         """
 
         content = f'''APP_NAME={project_name_format}
 APP_ENV=local
+SECRET_KEY=
+ALLOWED_HOSTS={project_name}       # Production: {project_name}
 MESSAGE_CHANNEL_URL=
 
 # DEBUG
@@ -102,13 +102,15 @@ SEED_USER_PASSWORD=Tailandia2026
 
 
 
-    def create_env_example(self, full_path, project_name_format):
+    def create_env_example(self, full_path, project_name_format, project_name):
         """
         Genera el archivo .env.example
         """
 
         content = f'''APP_NAME={project_name_format}
 APP_ENV=local
+SECRET_KEY=
+ALLOWED_HOSTS={project_name}       # Production: {project_name}
 MESSAGE_CHANNEL_URL=
 
 # DEBUG

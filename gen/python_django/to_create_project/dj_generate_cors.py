@@ -40,15 +40,6 @@ class DjGenerateCors:
             "    'corsheaders.middleware.CorsMiddleware',"
         )
         
-        
-        helper_replace_block(
-            full_path,
-            f"{app_main}/settings.py",
-            "ALLOWED_HOSTS",
-            f"ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '{project_name_format}.com']"
-        )
-        
-        
         helper_append_content(
             full_path, 
             f"{app_main}/settings.py", 
