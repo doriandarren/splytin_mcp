@@ -69,7 +69,7 @@ def standard_module_crud_python_django(
     
     
     print_cyan("-" * 20)
-    print_cyan(f"Instalando APP: {singular_name}")
+    print_cyan(f"Instalando MODULE: {singular_name}")
     
     # Update installed apps
     obj = DjUpdateInstalledApps()

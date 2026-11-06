@@ -1,6 +1,6 @@
 import os
 from gen.helpers.helper_menu import pause
-from gen.helpers.helper_print import camel_to_first_letter_lower, camel_to_kebab, camel_to_snake, dd
+from gen.helpers.helper_print import camel_to_first_letter_lower, camel_to_kebab, camel_to_snake, dd, print_cyan
 from gen.helpers.helper_string import normalize_project_name
 from gen.php_laravel.to_module_crud.generate_controller_index_file import generate_controller_index_file
 from gen.php_laravel.to_module_crud.generate_index_filter import generate_index_filter
@@ -11,15 +11,15 @@ from gen.php_laravel.to_module_crud.generate_request_store import generate_reque
 from gen.php_laravel.to_module_crud.generate_request_update import generate_request_update
 from gen.php_laravel.to_module_crud.generate_resource import generate_resource
 from gen.php_laravel.to_module_crud.generate_routes_file import generate_routes_file
-from gen.php_laravel.to_module_crud.generate_migration_file import generate_migration_file
 from gen.php_laravel.to_module_crud.generate_controller_show_file import generate_controller_show_file
 from gen.php_laravel.to_module_crud.generate_controller_store_file import generate_controller_store_file
 from gen.php_laravel.to_module_crud.generate_controller_update_file import generate_controller_update_file
 from gen.php_laravel.to_module_crud.generate_controller_destroy_file import generate_controller_destroy_file
 from gen.php_laravel.to_module_crud.generate_seeder_file import generate_seeder_file
 from gen.php_laravel.to_module_crud.generate_factory_file import generate_factory_file
-from gen.php_laravel.to_module_crud.generate_postman_file import generate_postman_file
+from gen.php_laravel.to_module_crud.laravel_crud_postman import LaravelCrudPostman
 from gen.php_laravel.to_module_crud.generate_service_file import generate_service_file
+from gen.php_laravel.to_module_crud.laravel_crud_migration import LaravelCrudMigration
 
 
 def standard_module_crud_php(
@@ -68,333 +68,69 @@ def standard_module_crud_php(
     
     ##dd(singular_name + " / " + plural_name + " / " + singular_name_kebab + " / " + plural_name_kebab + " / " + singular_name_snake + " / " + plural_name_snake)
     
-
-    if os.path.isdir(full_path):
-        
-        #--------------------------
-        # Model
-        #--------------------------
-        if "model" in input_menu_checkbox:
-            generate_model_file(
-                full_path, 
-                namespace,
-                singular_name, 
-                plural_name, 
-                plural_name_snake,
-                columns
-            )
-
-        #--------------------------
-        # Controller - Index
-        #--------------------------
-        if "controller_index" in input_menu_checkbox:
-            generate_controller_index_file(
-                full_path,
-                namespace,
-                version_api,
-                folder_group,
-                project_name,
-                singular_name,
-                plural_name,
-                singular_name_camel,
-                plural_name_camel,
-                singular_name_kebab,
-                plural_name_kebab,
-                singular_name_snake,
-                plural_name_snake,
-                columns
-            )
-            
-            generate_index_filter(
-                full_path,
-                namespace,
-                version_api,
-                folder_group,
-                project_name,
-                singular_name,
-                plural_name,
-                singular_name_camel,
-                plural_name_camel,
-                singular_name_kebab,
-                plural_name_kebab,
-                singular_name_snake,
-                plural_name_snake,
-                columns
-            )
-            
-            
-        #--------------------------
-        # Controller - Show
-        #--------------------------
-        if "controller_show" in input_menu_checkbox:
-            generate_controller_show_file(
-                full_path,
-                namespace,
-                version_api,
-                folder_group,
-                project_name,
-                singular_name,
-                plural_name,
-                singular_name_camel,
-                plural_name_camel,
-                singular_name_kebab,
-                plural_name_kebab,
-                singular_name_snake,
-                plural_name_snake,
-                columns
-            )
-
-
-        #--------------------------
-        # Controller - Store
-        #--------------------------
-        if "controller_store" in input_menu_checkbox:
-            
-            # Generate Controller
-            generate_controller_store_file(
-                full_path,
-                namespace,
-                version_api,
-                folder_group,
-                project_name,
-                singular_name,
-                plural_name,
-                singular_name_camel,
-                plural_name_camel,
-                singular_name_kebab,
-                plural_name_kebab,
-                singular_name_snake,
-                plural_name_snake,
-                columns
-            )
-            
-            ## Generate Request
-            generate_request_store(
-                full_path,
-                namespace,
-                version_api,
-                folder_group,
-                project_name,
-                singular_name,
-                plural_name,
-                singular_name_camel,
-                plural_name_camel,
-                singular_name_kebab,
-                plural_name_kebab,
-                singular_name_snake,
-                plural_name_snake,
-                columns
-            )
-            
-
-        #--------------------------
-        # Controller - Update
-        #--------------------------
-        if "controller_update" in input_menu_checkbox:
-            
-            ## Controller 
-            generate_controller_update_file(
-                full_path,
-                namespace,
-                version_api,
-                folder_group,
-                project_name,
-                singular_name,
-                plural_name,
-                singular_name_camel,
-                plural_name_camel,
-                singular_name_kebab,
-                plural_name_kebab,
-                singular_name_snake,
-                plural_name_snake,
-                columns
-            )
-            
-            ## Generate Request
-            generate_request_update(
-                full_path,
-                namespace,
-                version_api,
-                folder_group,
-                project_name,
-                singular_name,
-                plural_name,
-                singular_name_camel,
-                plural_name_camel,
-                singular_name_kebab,
-                plural_name_kebab,
-                singular_name_snake,
-                plural_name_snake,
-                columns
-            )
-            
-            
-        #--------------------------
-        # Controller - Destroy
-        #--------------------------
-        if "controller_destroy" in input_menu_checkbox:
-            generate_controller_destroy_file(
-                full_path,
-                namespace,
-                version_api,
-                folder_group,
-                project_name,
-                singular_name,
-                plural_name,
-                singular_name_camel,
-                plural_name_camel,
-                singular_name_kebab,
-                plural_name_kebab,
-                singular_name_snake,
-                plural_name_snake,
-                columns
-            )
-        
-        
-        #--------------------------
-        # Service
-        #--------------------------
-        if "service" in input_menu_checkbox:
-            generate_service_file(
-                full_path,
-                namespace,
-                version_api,
-                folder_group,
-                singular_name,
-                plural_name,
-                singular_name_camel,
-                plural_name_camel,
-                singular_name_kebab,
-                plural_name_kebab,
-                singular_name_snake,
-                plural_name_snake,
-                columns
-            )
-
-
-        #--------------------------
-        # Route
-        #--------------------------
-        if "routes" in input_menu_checkbox:
-            generate_routes_file(
-                full_path,
-                namespace,
-                version_api,
-                folder_group,
-                singular_name,
-                plural_name,
-                singular_name_camel,
-                plural_name_camel,
-                singular_name_kebab,
-                plural_name_kebab,
-                singular_name_snake,
-                plural_name_snake,
-                columns
-            )
-            
-
-        #--------------------------
-        # Migration
-        #--------------------------
-        if "migration" in input_menu_checkbox:
-            generate_migration_file(
-                full_path,
-                namespace,
-                version_api,
-                folder_group,
-                singular_name,
-                plural_name,
-                singular_name_camel,
-                plural_name_camel,
-                singular_name_kebab,
-                plural_name_kebab,
-                singular_name_snake,
-                plural_name_snake,
-                columns
-            )
-
-
-        #--------------------------
-        # Seeder
-        #--------------------------
-        if "seeder" in input_menu_checkbox:
-            generate_seeder_file(
-                full_path,
-                namespace,
-                version_api,
-                project_name,
-                singular_name,
-                plural_name,
-                singular_name_camel,
-                plural_name_camel,
-                singular_name_kebab,
-                plural_name_kebab,
-                singular_name_snake,
-                plural_name_snake,
-                columns
-            )
-
-
-        #--------------------------
-        # Factory
-        #--------------------------
-        if "factory" in input_menu_checkbox:
-            generate_factory_file(
-                full_path,
-                namespace,
-                version_api,
-                project_name,
-                singular_name,
-                plural_name,
-                singular_name_camel,
-                plural_name_camel,
-                singular_name_kebab,
-                plural_name_kebab,
-                singular_name_snake,
-                plural_name_snake,
-                columns
-            )
-
-
-        #--------------------------
-        # Postman
-        #--------------------------
-        if "postman" in input_menu_checkbox:
-            generate_postman_file(
-                full_path, 
-                singular_name, 
-                plural_name,
-                singular_name_kebab, 
-                plural_name_kebab, 
-                columns
-            )
-        
-        #--------------------------
-        # Resource
-        #--------------------------
-        if "resource" in input_menu_checkbox:
-            generate_resource(
-                full_path,
-                namespace,
-                version_api,
-                project_name,
-                singular_name,
-                plural_name,
-                singular_name_camel,
-                plural_name_camel,
-                singular_name_kebab,
-                plural_name_kebab,
-                singular_name_snake,
-                plural_name_snake,
-                columns
-            )
-
+    
+    print_cyan("-" * 20)
+    print_cyan(f"Instalando APP: {singular_name}")
+    
 
         
-        #--------------------------
-        # Policy
-        #--------------------------
-        generate_policy(
+    #--------------------------
+    # Model
+    #--------------------------
+    if "model" in input_menu_checkbox:
+        generate_model_file(
+            full_path, 
+            namespace,
+            singular_name, 
+            plural_name, 
+            plural_name_snake,
+            columns
+        )
+
+    #--------------------------
+    # Controller - Index
+    #--------------------------
+    if "controller_index" in input_menu_checkbox:
+        generate_controller_index_file(
+            full_path,
+            namespace,
+            version_api,
+            folder_group,
+            project_name,
+            singular_name,
+            plural_name,
+            singular_name_camel,
+            plural_name_camel,
+            singular_name_kebab,
+            plural_name_kebab,
+            singular_name_snake,
+            plural_name_snake,
+            columns
+        )
+        
+        generate_index_filter(
+            full_path,
+            namespace,
+            version_api,
+            folder_group,
+            project_name,
+            singular_name,
+            plural_name,
+            singular_name_camel,
+            plural_name_camel,
+            singular_name_kebab,
+            plural_name_kebab,
+            singular_name_snake,
+            plural_name_snake,
+            columns
+        )
+        
+        
+    #--------------------------
+    # Controller - Show
+    #--------------------------
+    if "controller_show" in input_menu_checkbox:
+        generate_controller_show_file(
             full_path,
             namespace,
             version_api,
@@ -412,12 +148,13 @@ def standard_module_crud_php(
         )
 
 
-
+    #--------------------------
+    # Controller - Store
+    #--------------------------
+    if "controller_store" in input_menu_checkbox:
         
-        #--------------------------
-        # Permissions
-        #--------------------------
-        generate_permissions_abilities(
+        # Generate Controller
+        generate_controller_store_file(
             full_path,
             namespace,
             version_api,
@@ -433,12 +170,275 @@ def standard_module_crud_php(
             plural_name_snake,
             columns
         )
+        
+        ## Generate Request
+        generate_request_store(
+            full_path,
+            namespace,
+            version_api,
+            folder_group,
+            project_name,
+            singular_name,
+            plural_name,
+            singular_name_camel,
+            plural_name_camel,
+            singular_name_kebab,
+            plural_name_kebab,
+            singular_name_snake,
+            plural_name_snake,
+            columns
+        )
+        
+
+    #--------------------------
+    # Controller - Update
+    #--------------------------
+    if "controller_update" in input_menu_checkbox:
+        
+        ## Controller 
+        generate_controller_update_file(
+            full_path,
+            namespace,
+            version_api,
+            folder_group,
+            project_name,
+            singular_name,
+            plural_name,
+            singular_name_camel,
+            plural_name_camel,
+            singular_name_kebab,
+            plural_name_kebab,
+            singular_name_snake,
+            plural_name_snake,
+            columns
+        )
+        
+        ## Generate Request
+        generate_request_update(
+            full_path,
+            namespace,
+            version_api,
+            folder_group,
+            project_name,
+            singular_name,
+            plural_name,
+            singular_name_camel,
+            plural_name_camel,
+            singular_name_kebab,
+            plural_name_kebab,
+            singular_name_snake,
+            plural_name_snake,
+            columns
+        )
+        
+        
+    #--------------------------
+    # Controller - Destroy
+    #--------------------------
+    if "controller_destroy" in input_menu_checkbox:
+        generate_controller_destroy_file(
+            full_path,
+            namespace,
+            version_api,
+            folder_group,
+            project_name,
+            singular_name,
+            plural_name,
+            singular_name_camel,
+            plural_name_camel,
+            singular_name_kebab,
+            plural_name_kebab,
+            singular_name_snake,
+            plural_name_snake,
+            columns
+        )
+    
+    
+    #--------------------------
+    # Service
+    #--------------------------
+    if "service" in input_menu_checkbox:
+        generate_service_file(
+            full_path,
+            namespace,
+            version_api,
+            folder_group,
+            singular_name,
+            plural_name,
+            singular_name_camel,
+            plural_name_camel,
+            singular_name_kebab,
+            plural_name_kebab,
+            singular_name_snake,
+            plural_name_snake,
+            columns
+        )
+
+
+    #--------------------------
+    # Route
+    #--------------------------
+    if "routes" in input_menu_checkbox:
+        generate_routes_file(
+            full_path,
+            namespace,
+            version_api,
+            folder_group,
+            singular_name,
+            plural_name,
+            singular_name_camel,
+            plural_name_camel,
+            singular_name_kebab,
+            plural_name_kebab,
+            singular_name_snake,
+            plural_name_snake,
+            columns
+        )
+        
+
+    #--------------------------
+    # Migration
+    #--------------------------
+    if "migration" in input_menu_checkbox:
+        obj = LaravelCrudMigration()
+        obj.invoke(
+            full_path,
+            namespace,
+            version_api,
+            folder_group,
+            singular_name,
+            plural_name,
+            singular_name_camel,
+            plural_name_camel,
+            singular_name_kebab,
+            plural_name_kebab,
+            singular_name_snake,
+            plural_name_snake,
+            columns
+        )
+
+
+    #--------------------------
+    # Seeder
+    #--------------------------
+    if "seeder" in input_menu_checkbox:
+        generate_seeder_file(
+            full_path,
+            namespace,
+            version_api,
+            project_name,
+            singular_name,
+            plural_name,
+            singular_name_camel,
+            plural_name_camel,
+            singular_name_kebab,
+            plural_name_kebab,
+            singular_name_snake,
+            plural_name_snake,
+            columns
+        )
+
+
+    #--------------------------
+    # Factory
+    #--------------------------
+    if "factory" in input_menu_checkbox:
+        generate_factory_file(
+            full_path,
+            namespace,
+            version_api,
+            project_name,
+            singular_name,
+            plural_name,
+            singular_name_camel,
+            plural_name_camel,
+            singular_name_kebab,
+            plural_name_kebab,
+            singular_name_snake,
+            plural_name_snake,
+            columns
+        )
+
+
+    #--------------------------
+    # Postman
+    #--------------------------
+    if "postman" in input_menu_checkbox:
+        obj = LaravelCrudPostman()
+        obj.invoke(
+            full_path, 
+            singular_name, 
+            plural_name,
+            singular_name_kebab, 
+            plural_name_kebab, 
+            columns
+        )
+    
+    #--------------------------
+    # Resource
+    #--------------------------
+    if "resource" in input_menu_checkbox:
+        generate_resource(
+            full_path,
+            namespace,
+            version_api,
+            project_name,
+            singular_name,
+            plural_name,
+            singular_name_camel,
+            plural_name_camel,
+            singular_name_kebab,
+            plural_name_kebab,
+            singular_name_snake,
+            plural_name_snake,
+            columns
+        )
+
+
+    
+    #--------------------------
+    # Policy
+    #--------------------------
+    generate_policy(
+        full_path,
+        namespace,
+        version_api,
+        folder_group,
+        project_name,
+        singular_name,
+        plural_name,
+        singular_name_camel,
+        plural_name_camel,
+        singular_name_kebab,
+        plural_name_kebab,
+        singular_name_snake,
+        plural_name_snake,
+        columns
+    )
 
 
 
+    
+    #--------------------------
+    # Permissions
+    #--------------------------
+    generate_permissions_abilities(
+        full_path,
+        namespace,
+        version_api,
+        folder_group,
+        project_name,
+        singular_name,
+        plural_name,
+        singular_name_camel,
+        plural_name_camel,
+        singular_name_kebab,
+        plural_name_kebab,
+        singular_name_snake,
+        plural_name_snake,
+        columns
+    )
+        
+        
+    print_cyan("-" * 20)
 
-
-
-
-    else:
-        print("La ruta proporcionada no es válida o no existe. Por favor, verifica y vuelve a intentarlo.")
