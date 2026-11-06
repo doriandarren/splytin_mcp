@@ -26,7 +26,7 @@ class LaravelCrudPostman:
         # Ruta y nombre del archivo
         # ---------------------------------
 
-        folder_path = os.path.join(full_path)
+        folder_path = os.path.join(full_path, "public", "SCRIPTS")
 
         plural_name_kebab = plural_name_kebab.rstrip("/")
 

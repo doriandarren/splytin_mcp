@@ -2,21 +2,21 @@ import os
 from gen.helpers.helper_menu import pause
 from gen.helpers.helper_print import camel_to_first_letter_lower, camel_to_kebab, camel_to_snake, dd, print_cyan
 from gen.helpers.helper_string import normalize_project_name
-from gen.php_laravel.to_module_crud.generate_controller_index_file import generate_controller_index_file
-from gen.php_laravel.to_module_crud.generate_index_filter import generate_index_filter
-from gen.php_laravel.to_module_crud.generate_model_file import generate_model_file
+from gen.php_laravel.to_module_crud.laravel_crud_filter import LaravelCrudFilter
+from gen.php_laravel.to_module_crud.laravel_crud_model import LaravelCrudModel
 from gen.php_laravel.to_module_crud.generate_permissions_abilities import generate_permissions_abilities
 from gen.php_laravel.to_module_crud.generate_policy import generate_policy
 from gen.php_laravel.to_module_crud.generate_request_store import generate_request_store
 from gen.php_laravel.to_module_crud.generate_request_update import generate_request_update
 from gen.php_laravel.to_module_crud.generate_resource import generate_resource
 from gen.php_laravel.to_module_crud.generate_routes_file import generate_routes_file
-from gen.php_laravel.to_module_crud.generate_controller_show_file import generate_controller_show_file
-from gen.php_laravel.to_module_crud.generate_controller_store_file import generate_controller_store_file
-from gen.php_laravel.to_module_crud.generate_controller_update_file import generate_controller_update_file
-from gen.php_laravel.to_module_crud.generate_controller_destroy_file import generate_controller_destroy_file
+from gen.php_laravel.to_module_crud.laravel_crud_controller_show import LaravelCrudControllerShow
+from gen.php_laravel.to_module_crud.laravel_crud_controller_store import LaravelCrudControllerStore
+from gen.php_laravel.to_module_crud.laravel_crud_controller_update import LaravelCrudControllerUpdate
 from gen.php_laravel.to_module_crud.generate_seeder_file import generate_seeder_file
 from gen.php_laravel.to_module_crud.generate_factory_file import generate_factory_file
+from gen.php_laravel.to_module_crud.laravel_crud_controller_destroy import LaravelCrudControllerDestroy
+from gen.php_laravel.to_module_crud.laravel_crud_controller_index import LaravelCrudControllerIndex
 from gen.php_laravel.to_module_crud.laravel_crud_postman import LaravelCrudPostman
 from gen.php_laravel.to_module_crud.generate_service_file import generate_service_file
 from gen.php_laravel.to_module_crud.laravel_crud_migration import LaravelCrudMigration
@@ -78,7 +78,8 @@ def standard_module_crud_php(
     # Model
     #--------------------------
     if "model" in input_menu_checkbox:
-        generate_model_file(
+        obj = LaravelCrudModel()
+        obj.invoke(
             full_path, 
             namespace,
             singular_name, 
@@ -91,7 +92,9 @@ def standard_module_crud_php(
     # Controller - Index
     #--------------------------
     if "controller_index" in input_menu_checkbox:
-        generate_controller_index_file(
+        
+        obj = LaravelCrudControllerIndex()
+        obj.invoke(
             full_path,
             namespace,
             version_api,
@@ -108,7 +111,8 @@ def standard_module_crud_php(
             columns
         )
         
-        generate_index_filter(
+        obj = LaravelCrudFilter()
+        obj.invoke(
             full_path,
             namespace,
             version_api,
@@ -130,7 +134,8 @@ def standard_module_crud_php(
     # Controller - Show
     #--------------------------
     if "controller_show" in input_menu_checkbox:
-        generate_controller_show_file(
+        obj = LaravelCrudControllerShow()
+        obj.invoke(
             full_path,
             namespace,
             version_api,
@@ -152,9 +157,9 @@ def standard_module_crud_php(
     # Controller - Store
     #--------------------------
     if "controller_store" in input_menu_checkbox:
-        
-        # Generate Controller
-        generate_controller_store_file(
+        ## Create Controller
+        obj = LaravelCrudControllerStore()
+        obj.invoke(
             full_path,
             namespace,
             version_api,
@@ -171,7 +176,8 @@ def standard_module_crud_php(
             columns
         )
         
-        ## Generate Request
+        ## TODO Pendiente
+        ## Create Request
         generate_request_store(
             full_path,
             namespace,
@@ -194,9 +200,9 @@ def standard_module_crud_php(
     # Controller - Update
     #--------------------------
     if "controller_update" in input_menu_checkbox:
-        
-        ## Controller 
-        generate_controller_update_file(
+        ## Create Controller 
+        obj = LaravelCrudControllerUpdate()
+        obj.invoke(
             full_path,
             namespace,
             version_api,
@@ -213,6 +219,8 @@ def standard_module_crud_php(
             columns
         )
         
+        
+        ## TODO pendiente 
         ## Generate Request
         generate_request_update(
             full_path,
@@ -236,7 +244,8 @@ def standard_module_crud_php(
     # Controller - Destroy
     #--------------------------
     if "controller_destroy" in input_menu_checkbox:
-        generate_controller_destroy_file(
+        obj = LaravelCrudControllerDestroy()
+        obj.invoke(
             full_path,
             namespace,
             version_api,

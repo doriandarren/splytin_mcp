@@ -1,5 +1,5 @@
 import os
-from gen.helpers.helper_columns import parse_columns_input
+from gen.helpers.helper_columns import HelperColumns, parse_columns_input
 from gen.helpers.helper_print import print_message, GREEN, CYAN
 
 from gen.php_laravel.to_create_project.shared.generate_migrations.generate_ability_groups_table import generate_ability_groups_table
@@ -49,7 +49,7 @@ def generate_shared(full_path):
     plural_name = "Abilities"
     input_columns = "ability_group_id:fk name:unique label"
     
-    columns = parse_columns_input(input_columns)
+    columns = HelperColumns.parse_columns_input(input_columns)
     
     standard_module_crud_php(
         full_path=full_path, 
@@ -69,7 +69,7 @@ def generate_shared(full_path):
     plural_name = "AbilityGroups"
     input_columns = "name:unique"
     
-    columns = parse_columns_input(input_columns)
+    columns = HelperColumns.parse_columns_input(input_columns)
     
     standard_module_crud_php(
         full_path=full_path, 
@@ -88,7 +88,7 @@ def generate_shared(full_path):
     plural_name = "AbilityUsers"
     input_columns = "ability_group_id:fk user_id:fk"
     
-    columns = parse_columns_input(input_columns)
+    columns = HelperColumns.parse_columns_input(input_columns)
     
     standard_module_crud_php(
         full_path=full_path, 
@@ -108,7 +108,7 @@ def generate_shared(full_path):
     plural_name = "Countries"
     input_columns = "common_name iso_name code_alpha_2 code_alpha_3 numerical_code phone_code"
     
-    columns = parse_columns_input(input_columns)
+    columns = HelperColumns.parse_columns_input(input_columns)
     
     standard_module_crud_php(
         full_path=full_path, 
@@ -128,7 +128,7 @@ def generate_shared(full_path):
     plural_name = "RoleUsers"
     input_columns = "role_id:fk user_id:fk"
     
-    columns = parse_columns_input(input_columns)
+    columns = HelperColumns.parse_columns_input(input_columns)
     
     standard_module_crud_php(
         full_path=full_path, 
@@ -147,7 +147,7 @@ def generate_shared(full_path):
     plural_name = "Roles"
     input_columns = "name:unique description"
     
-    columns = parse_columns_input(input_columns)
+    columns = HelperColumns.parse_columns_input(input_columns)
     
     standard_module_crud_php(
         full_path=full_path, 
@@ -166,7 +166,7 @@ def generate_shared(full_path):
     plural_name = "UserStatuses"
     input_columns = "name:unique"
     
-    columns = parse_columns_input(input_columns)
+    columns = HelperColumns.parse_columns_input(input_columns)
     
     standard_module_crud_php(
         full_path=full_path, 
@@ -206,7 +206,7 @@ def generate_shared(full_path):
     plural_name = "Users"
     input_columns = "user_status_id:fk name email:unique email_verified_at:timestamp password image_url"
     
-    columns = parse_columns_input(input_columns)
+    columns = HelperColumns.parse_columns_input(input_columns)
     
     standard_module_crud_php(
         full_path=full_path, 
