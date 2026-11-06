@@ -3,7 +3,7 @@ import os
 from gen.helpers.helper_columns import parse_columns_input
 from gen.helpers.helper_string import normalize_project_name
 from gen.python_django.helpers.helper_virtual_env import get_venv_python
-from gen.python_django.to_create_module_crud.dj_generate_api_seeder import DjGenerateApiSeeder
+from gen.python_django.to_create_module_crud.dj_crud_api_seeder import DjGenerateApiSeeder
 
 
 

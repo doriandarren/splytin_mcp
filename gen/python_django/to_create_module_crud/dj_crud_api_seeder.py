@@ -2,7 +2,7 @@ import os
 from gen.helpers.helper_file import HelperFile
 
 
-class DjGenerateApiSeeder:
+class DjCrudApiSeeder:
 
     def invoke(
         self,

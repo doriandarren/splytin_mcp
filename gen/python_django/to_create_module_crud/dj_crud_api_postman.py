@@ -6,7 +6,7 @@ import uuid
 from gen.helpers.helper_file import HelperFile
 
 
-class DjGenerateApiPostman:
+class DjCrudApiPostman:
 
     def invoke(
         self,

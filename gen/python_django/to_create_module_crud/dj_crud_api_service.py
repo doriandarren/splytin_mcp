@@ -4,7 +4,7 @@ from gen.helpers.helper_file import HelperFile
 
 
 
-class DjGenerateApiService:
+class DjCrudApiService:
 
     def invoke(
         self,

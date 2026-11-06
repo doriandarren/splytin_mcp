@@ -15,7 +15,7 @@ from gen.helpers.helper_print import print_message, GREEN, CYAN
 
 
 
-class DjGenerateApiModel:
+class DjCrudApiModel:
     
     def map_column_type(self, column, plural_name_snake):
         column_type = column.get("type")

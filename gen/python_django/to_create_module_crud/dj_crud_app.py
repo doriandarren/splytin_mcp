@@ -3,7 +3,7 @@ from gen.helpers.helper_print import print_message, GREEN, CYAN, run_command_deb
 from gen.python_django.helpers.helper_file import helper_create_init_file
 
 
-class DjGenerateApp:
+class DjCrudApp:
 
     def invoke(self, full_path, plural_name_snake, venv_python, manage_py_path=None):
         self.install_app(full_path, plural_name_snake, venv_python)

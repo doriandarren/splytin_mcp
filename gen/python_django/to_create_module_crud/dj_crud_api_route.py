@@ -8,7 +8,7 @@ import os
 from gen.helpers.helper_file import HelperFile
 
 
-class DjGenerateApiRoute:
+class DjCrudApiRoute:
 
 
     def invoke(

@@ -3,15 +3,15 @@ from gen.helpers.helper_print import camel_to_kebab, camel_to_snake, print_cyan,
 from gen.helpers.helper_string import normalize_project_name
 from gen.helpers.helpers import dd
 from gen.python_django.helpers.helper_virtual_env import get_venv_python
-from gen.python_django.to_create_module_crud.dj_generate_api_model import DjGenerateApiModel
-from gen.python_django.to_create_module_crud.dj_generate_api_postman import DjGenerateApiPostman
-from gen.python_django.to_create_module_crud.dj_generate_api_route import DjGenerateApiRoute
-from gen.python_django.to_create_module_crud.dj_generate_api_seeder import DjGenerateApiSeeder
-from gen.python_django.to_create_module_crud.dj_generate_api_serializer import DjGenerateApiSerializer
-from gen.python_django.to_create_module_crud.dj_generate_api_service import DjGenerateApiService
-from gen.python_django.to_create_module_crud.dj_generate_api_viewset import DjGenerateApiViewset
-from gen.python_django.to_create_module_crud.dj_generate_app import DjGenerateApp
-from gen.python_django.to_create_module_crud.dj_update_installed_apps import DjUpdateInstalledApps
+from gen.python_django.to_create_module_crud.dj_crud_api_model import DjCrudApiModel
+from gen.python_django.to_create_module_crud.dj_crud_api_postman import DjCrudApiPostman
+from gen.python_django.to_create_module_crud.dj_crud_api_route import DjCrudApiRoute
+from gen.python_django.to_create_module_crud.dj_crud_api_seeder import DjCrudApiSeeder
+from gen.python_django.to_create_module_crud.dj_crud_api_serializer import DjCrudApiSerializer
+from gen.python_django.to_create_module_crud.dj_crud_api_service import DjCrudApiService
+from gen.python_django.to_create_module_crud.dj_crud_api_viewset import DjCrudApiViewset
+from gen.python_django.to_create_module_crud.dj_crud_app import DjCrudApp
+from gen.python_django.to_create_module_crud.dj_crud_update_installed_apps import DjCrudUpdateInstalledApps
 
 
 def standard_module_crud_python_django(
@@ -72,7 +72,7 @@ def standard_module_crud_python_django(
     print_cyan(f"Instalando MODULE: {singular_name}")
     
     # Update installed apps
-    obj = DjUpdateInstalledApps()
+    obj = DjCrudUpdateInstalledApps()
     obj.invoke(
         full_path, 
         app_main, 
@@ -84,7 +84,7 @@ def standard_module_crud_python_django(
     
     
     # Generate app
-    obj = DjGenerateApp()
+    obj = DjCrudApp()
     obj.invoke(
         full_path,
         plural_name_snake,
@@ -96,7 +96,7 @@ def standard_module_crud_python_django(
     
     ## Generate Route
     if "api_route" in input_menu_checkbox:
-        obj = DjGenerateApiRoute()
+        obj = DjCrudApiRoute()
         obj.invoke(
             full_path,
             project_name,
@@ -115,7 +115,7 @@ def standard_module_crud_python_django(
     
     ## Generate Serializer 
     if "api_serializer" in input_menu_checkbox:
-        obj = DjGenerateApiSerializer()
+        obj = DjCrudApiSerializer()
         obj.invoke(
             full_path,
             project_name,
@@ -133,7 +133,7 @@ def standard_module_crud_python_django(
     
     ## Generate Viewset
     if "api_wiewset" in input_menu_checkbox:
-        obj = DjGenerateApiViewset()
+        obj = DjCrudApiViewset()
         obj.invoke(
             full_path,
             project_name,
@@ -151,7 +151,7 @@ def standard_module_crud_python_django(
     ## Generate Model
     if "api_model" in input_menu_checkbox:
         ## Model
-        obj = DjGenerateApiModel()
+        obj = DjCrudApiModel()
         obj.invoke(
             full_path,
             project_name,
@@ -168,7 +168,7 @@ def standard_module_crud_python_django(
          
         
         ## Seeder
-        obj = DjGenerateApiSeeder()
+        obj = DjCrudApiSeeder()
         obj.invoke(
             full_path,
             project_name,
@@ -188,7 +188,7 @@ def standard_module_crud_python_django(
         
     ## Generate Service
     if "api_service" in input_menu_checkbox:
-        obj = DjGenerateApiService()
+        obj = DjCrudApiService()
         obj.invoke(
             full_path,
             project_name,
@@ -207,7 +207,7 @@ def standard_module_crud_python_django(
     
     ## Generate Postman
     if "api_postman" in input_menu_checkbox:
-        obj = DjGenerateApiPostman()
+        obj = DjCrudApiPostman()
         obj.invoke(
             full_path,
             project_name,

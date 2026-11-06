@@ -4,7 +4,7 @@ from typing import Any
 
 import os
 from dotenv import load_dotenv
-from gen.helpers.helper_columns import parse_columns_input
+from gen.helpers.helper_columns import HelperColumns, parse_columns_input
 from gen.helpers.helpers import dd
 from gen.php_laravel.to_create_project.fake.laravel_fake_data import LaravelFakeData
 from gen.php_laravel.to_create_project.generate_api_controller import generate_api_controller
@@ -67,7 +67,7 @@ def _full_path(base_path: str, project_name: str) -> str:
 
 def _normalize_columns(columns: str | list[dict[str, Any]]) -> list[dict[str, Any]]:
     if isinstance(columns, str):
-        return parse_columns_input(columns)
+        return HelperColumns.parse_columns_input(columns)
     return columns
 
 
@@ -114,6 +114,8 @@ def create_python_django_project_service(
     obj = DjGenerateDjango()
     obj.invoke(full_path, project_name_format, app_main, venv_python)
     
+    
+    obj = Dj
     
     # Faker
     obj = DjGenerateFaker()
