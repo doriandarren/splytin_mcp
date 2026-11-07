@@ -104,20 +104,29 @@ REST_FRAMEWORK = {
         "rest_framework.renderers.JSONRenderer",
     ],
 }""":
-                """# Django REST Framework - Token + JSON:API
+                """# Django REST Framework - Token Authentication + JSON:API
 REST_FRAMEWORK = {
 
-    # Authentication
+    # Authentication - Identifica al usuario mediante un token
+    # El cliente debe enviar: Authorization: Token <token>
     "DEFAULT_AUTHENTICATION_CLASSES": [
         "rest_framework.authentication.TokenAuthentication",
     ],
 
-    # JSON:API - Responses
+    # Permissions - Requiere autenticación por defecto
+    # Los endpoints públicos deben utilizar AllowAny
+    "DEFAULT_PERMISSION_CLASSES": [
+        "rest_framework.permissions.IsAuthenticated",
+    ],
+
+    # Renderers - Formato de las respuestas de la API
+    # Devuelve las respuestas siguiendo el estándar JSON:API
     "DEFAULT_RENDERER_CLASSES": [
         "rest_framework_json_api.renderers.JSONRenderer",
     ],
 
-    # JSON:API - Requests
+    # Parsers - Formatos de datos aceptados en las peticiones
+    # Admite JSON:API, JSON tradicional y formularios
     "DEFAULT_PARSER_CLASSES": [
         "rest_framework_json_api.parsers.JSONParser",
         "rest_framework.parsers.JSONParser",
@@ -125,18 +134,20 @@ REST_FRAMEWORK = {
         "rest_framework.parsers.MultiPartParser",
     ],
 
-    # JSON:API - Metadata
+    # Metadata - Información sobre los recursos de la API
     "DEFAULT_METADATA_CLASS":
         "rest_framework_json_api.metadata.JSONAPIMetadata",
 
-    # JSON:API - Exceptions
+    # Exceptions - Gestiona errores con formato JSON:API
     "EXCEPTION_HANDLER":
         "rest_framework_json_api.exceptions.exception_handler",
 
-    # JSON:API - Pagination
+    # Pagination - Divide los resultados en páginas
+    # Utiliza paginación compatible con JSON:API
     "DEFAULT_PAGINATION_CLASS":
         "rest_framework_json_api.pagination.JsonApiPageNumberPagination",
 
+    # Page Size - Número de registros por página
     "PAGE_SIZE": 10,
 }
 """,

@@ -80,9 +80,18 @@ ALLOWED_HOSTS=localhost,127.0.0.1,{project_name}        # Production: {project_n
 # External Services
 MESSAGE_CHANNEL_URL=https://discord.com/api/webhooks/1457825506153074817/TMV5itefILgSPbdhnaBktU0dmqI7DEk1FAU7ZG6lNqW8tYinmzmhc38R5qZGkVZofYcB
 
-# Internationalization
-LANGUAGE_CODE=es-es
-TIME_ZONE=Europe/Madrid
+# Local Security
+SECURE_SSL_REDIRECT=false
+SESSION_COOKIE_SECURE=false
+CSRF_COOKIE_SECURE=false
+SECURE_HSTS_SECONDS=0
+
+# Production Security
+# DEBUG=false
+# SECURE_SSL_REDIRECT=true
+# SESSION_COOKIE_SECURE=true
+# CSRF_COOKIE_SECURE=true
+# SECURE_HSTS_SECONDS=3600
 
 # Database Settings: [sqlite | postgresql | mysql]
 DB_ENGINE=postgresql
@@ -102,6 +111,12 @@ EMAIL_HOST_PASSWORD="pass"
 DEFAULT_FROM_EMAIL=webmaster@{domain_name}
 EMAIL_TIMEOUT=30
 
+# Internationalization
+LANGUAGE_CODE=es-es
+TIME_ZONE=Europe/Madrid
+
+# CORS
+CORS_ALLOW_ALL_ORIGINS=true
 
 # Seed Users
 SEED_USER_PASSWORD=Tailandia2026
@@ -136,9 +151,18 @@ ALLOWED_HOSTS=localhost,127.0.0.1,{project_name}        # Production: {project_n
 # External Services
 MESSAGE_CHANNEL_URL=
 
-# Internationalization
-LANGUAGE_CODE=es-es
-TIME_ZONE=Europe/Madrid
+# Local Security
+SECURE_SSL_REDIRECT=false
+SESSION_COOKIE_SECURE=false
+CSRF_COOKIE_SECURE=false
+SECURE_HSTS_SECONDS=0
+
+# Production Security
+# DEBUG=false
+# SECURE_SSL_REDIRECT=true
+# SESSION_COOKIE_SECURE=true
+# CSRF_COOKIE_SECURE=true
+# SECURE_HSTS_SECONDS=3600
 
 # Database Settings: [sqlite | postgresql | mysql]
 DB_ENGINE=postgresql
@@ -158,6 +182,12 @@ EMAIL_HOST_PASSWORD="pass"
 DEFAULT_FROM_EMAIL=webmaster@{domain_name}
 EMAIL_TIMEOUT=30
 
+# Internationalization
+LANGUAGE_CODE=es-es
+TIME_ZONE=Europe/Madrid
+
+# CORS
+CORS_ALLOW_ALL_ORIGINS=true
 
 # Seed Users
 SEED_USER_PASSWORD=

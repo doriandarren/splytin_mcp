@@ -29,7 +29,16 @@ class DjAllowedHosts:
             # Buscar la línea que empieza por ALLOWED_HOSTS =
             pattern = r"^[ \t]*ALLOWED_HOSTS\s*=.*$"
 
-            replacement = 'ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "localhost,127.0.0.1").split(",")'
+            replacement = '''ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "localhost,127.0.0.1").split(",")
+
+# Production Security
+SECURE_SSL_REDIRECT = os.getenv("SECURE_SSL_REDIRECT", "False").lower() == "true"
+SESSION_COOKIE_SECURE = os.getenv("SESSION_COOKIE_SECURE", "False").lower() == "true"
+CSRF_COOKIE_SECURE = os.getenv("CSRF_COOKIE_SECURE", "False").lower() == "true"
+
+# HTTP Strict Transport Security
+SECURE_HSTS_SECONDS = int(os.getenv("SECURE_HSTS_SECONDS", "0"))
+'''
 
             # Reemplazar únicamente la primera coincidencia
             new_content, count = re.subn(

@@ -49,13 +49,13 @@ class DjGenerateCors:
         helper_append_content(
             full_path, 
             f"{app_main}/settings.py", 
-            "CORS_ORIGIN_ALLOW_ALL = True"
+            'CORS_ALLOW_ALL_ORIGINS = os.getenv("CORS_ALLOW_ALL_ORIGINS", "False").lower() == "true"'
         )
     
         helper_append_content(
             full_path, 
             f"{app_main}/settings.py", 
-            "CORS_ALLOW_CREDENTIALS = True"
+            "CORS_ALLOW_CREDENTIALS = False"
         )
         
         print_message("settings.py actualizado correctamente.", GREEN)

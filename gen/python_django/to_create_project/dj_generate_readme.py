@@ -26,10 +26,11 @@ python -m pip install -r requirements.txt
 - Carpeta media
 
 # Django
-python manage.py check                         # Chequear dependencias
+python manage.py check                         # Comprueba errores comunes de configuración, modelos y aplicaciones de Django.
+python manage.py check --deploy                # Ejecuta las comprobaciones normales y añade verificaciones de seguridad para producción.
 python manage.py makemigrations                # Migraciones
 python manage.py migrate                       # Aplicar migraciones
-python manage.py collectstatic --noinput        # Recopilar archivos estaticos
+python manage.py collectstatic --noinput       # Recopilar archivos estaticos
 python manage.py seed_users                    # Crear superuser
 python manage.py runserver                     # Ejecutar servidor
 ```
