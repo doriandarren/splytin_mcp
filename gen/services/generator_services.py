@@ -30,6 +30,7 @@ from gen.python_django.to_create_project.dj_generate_cron import DjGenerateCron
 from gen.python_django.to_create_project.dj_generate_faker import DjGenerateFaker
 from gen.python_django.to_create_project.dj_generate_gunicorn_and_whitenoise import DjGenerateGunicornAndWhitenoise
 from gen.python_django.to_create_project.setting_file.dj_allowed_hosts import DjAllowedHosts
+from gen.python_django.to_create_project.setting_file.dj_database import DjDatabase
 from gen.python_django.to_create_project.setting_file.dj_debug import DjDebug
 from gen.python_django.to_create_project.setting_file.dj_secret_key import DjSecretKey
 from gen.python_django.to_create_project.modules.dj_generate_module_auth import DjGenerateModuleAuth
@@ -49,6 +50,7 @@ from gen.python_django.to_create_project.dj_generate_passenger_wsgi import DjGen
 from gen.python_django.to_create_project.dj_generate_readme import DjGenerateReadme
 from gen.python_django.to_create_project.dj_generate_todo_md import DjGenerateTodoMD
 from gen.python_django.to_create_project.dj_generate_static_files import DjGenerateStaticFiles
+from gen.python_django.to_create_project.setting_file.dj_time_zone_language import DjTimeZoneLanguage
 from gen.python_django.to_create_project.statics.dj_generate_media import DjGenerateMedia
 
 
@@ -125,7 +127,7 @@ def create_python_django_project_service(
     
     # Env
     obj = DjGenerateEnv()
-    obj.invoke(full_path, project_name_format, project_name, app_main, venv_python)
+    obj.invoke(full_path, project_name_format, project_name, domain_name, app_main, venv_python)
     
     
     # Secret Key
@@ -143,6 +145,14 @@ def create_python_django_project_service(
     obj.invoke(full_path, app_main)
     
     
+    # Databases
+    obj = DjDatabase()
+    obj.invoke(full_path, app_main, project_name_format)
+    
+    
+    # Time Zone and Language Code
+    obj = DjTimeZoneLanguage()
+    obj.invoke(full_path, app_main)
     
     
     # Media

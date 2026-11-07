@@ -9,13 +9,13 @@ from gen.helpers.helper_file import HelperFile
 class DjGenerateEnv:
     
 
-    def invoke(self, full_path, project_name_format, project_name, app_main, venv_python):
+    def invoke(self, full_path, project_name_format, project_name, domain_name, app_main, venv_python):
         
         self.install_env(full_path, venv_python)
         self.update_settings(full_path, app_main)
         
-        self.create_env(full_path, project_name_format, project_name)
-        self.create_env_example(full_path, project_name_format, project_name)
+        self.create_env(full_path, project_name_format, project_name, domain_name)
+        self.create_env_example(full_path, project_name_format, project_name, domain_name)
 
 
 
@@ -27,12 +27,18 @@ class DjGenerateEnv:
 
 
     def update_settings(self, full_path, app_name):
+        
+        helper_add_import(
+            full_path, 
+            f"{app_name}/settings.py", 
+            "import os"
+        )
+        
         helper_add_import(
             full_path, 
             f"{app_name}/settings.py", 
             "from dotenv import load_dotenv"
         )
-        
         
         helper_append_content(
             full_path,
@@ -53,43 +59,54 @@ MESSAGE_CHANNEL_URL = os.getenv("MESSAGE_CHANNEL_URL")
             f"{app_name}/settings.py", 
             str
         )
-        
-        
-        
-    def create_env(self, full_path, project_name_format, project_name):
+
+
+
+    
+    def create_env(self, full_path, project_name_format, project_name, domain_name):
         """
         Genera el archivo .env
         """
 
-        content = f'''APP_NAME={project_name_format}
+        content = f'''# Application
+APP_NAME={project_name_format}
 APP_ENV=local
+
+# Django Security
 SECRET_KEY=
-ALLOWED_HOSTS={project_name}       # Production: {project_name}
-MESSAGE_CHANNEL_URL=
-
-# DEBUG
 DEBUG=true
+ALLOWED_HOSTS=localhost,127.0.0.1,{project_name}        # Production: {project_name}
 
-# DB
+# External Services
+MESSAGE_CHANNEL_URL=https://discord.com/api/webhooks/1457825506153074817/TMV5itefILgSPbdhnaBktU0dmqI7DEk1FAU7ZG6lNqW8tYinmzmhc38R5qZGkVZofYcB
+
+# Internationalization
+LANGUAGE_CODE=es-es
+TIME_ZONE=Europe/Madrid
+
+# Database Settings: [sqlite | postgresql | mysql]
+DB_ENGINE=postgresql
 DB_NAME={project_name_format}_db
 DB_USER={project_name_format}_user
 DB_PASSWORD={project_name_format}_pass
 DB_HOST=127.0.0.1
 DB_PORT=5432
 
-# EMAIL
+# Email
 EMAIL_HOST=smtp.ionos.es
 EMAIL_PORT=465
 EMAIL_USE_TLS=False
 EMAIL_USE_SSL=True
-EMAIL_HOST_USER=webmaster@{project_name_format}.com
+EMAIL_HOST_USER=webmaster@{domain_name}
 EMAIL_HOST_PASSWORD="pass"
-DEFAULT_FROM_EMAIL=webmaster@{project_name_format}.com
+DEFAULT_FROM_EMAIL=webmaster@{domain_name}
 EMAIL_TIMEOUT=30
 
-# SEED USER
+
+# Seed Users
 SEED_USER_PASSWORD=Tailandia2026
 '''
+
 
         # Crear el archivo
         HelperFile.write(
@@ -102,40 +119,50 @@ SEED_USER_PASSWORD=Tailandia2026
 
 
 
-    def create_env_example(self, full_path, project_name_format, project_name):
+    def create_env_example(self, full_path, project_name_format, project_name, domain_name):
         """
         Genera el archivo .env.example
         """
-
-        content = f'''APP_NAME={project_name_format}
+        
+        content = f'''# Application
+APP_NAME={project_name_format}
 APP_ENV=local
+
+# Django Security
 SECRET_KEY=
-ALLOWED_HOSTS={project_name}       # Production: {project_name}
+DEBUG=true
+ALLOWED_HOSTS=localhost,127.0.0.1,{project_name}        # Production: {project_name}
+
+# External Services
 MESSAGE_CHANNEL_URL=
 
-# DEBUG
-DEBUG=true
+# Internationalization
+LANGUAGE_CODE=es-es
+TIME_ZONE=Europe/Madrid
 
-# DB
+# Database Settings: [sqlite | postgresql | mysql]
+DB_ENGINE=postgresql
 DB_NAME=
 DB_USER=
 DB_PASSWORD=
 DB_HOST=127.0.0.1
 DB_PORT=5432
 
-# EMAIL
+# Email
 EMAIL_HOST=smtp.ionos.es
 EMAIL_PORT=465
 EMAIL_USE_TLS=False
 EMAIL_USE_SSL=True
-EMAIL_HOST_USER=webmaster@{project_name_format}.com
+EMAIL_HOST_USER=webmaster@{domain_name}
 EMAIL_HOST_PASSWORD="pass"
-DEFAULT_FROM_EMAIL=webmaster@{project_name_format}.com
+DEFAULT_FROM_EMAIL=webmaster@{domain_name}
 EMAIL_TIMEOUT=30
 
-# SEED USER
+
+# Seed Users
 SEED_USER_PASSWORD=
 '''
+
 
         # Crear el archivo
         HelperFile.write(

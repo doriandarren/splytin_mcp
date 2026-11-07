@@ -6,14 +6,12 @@ from gen.python_django.helpers.helper_file import helper_add_import, helper_appe
 
 class DjGeneratePostgre:
     
-
     def invoke(self, full_path, project_name_format, app_main, venv_python):
         """
         Genera el archivo
         """
         self.install_dependencies(full_path, venv_python)
-        self.generate_docker_file(full_path, project_name_format)    
-        self.replace_settings(full_path, project_name_format, app_main)
+        self.generate_docker_file(full_path, project_name_format)
         
 
 
@@ -63,42 +61,3 @@ pgdata:
         except Exception as e:
             print_message(f"Error al generar el archivo {file_path}: {e}", CYAN)
 
-
-
-    def replace_settings(self,full_path, project_name_format, app_main):
-        
-        new_databases = f'''
-#####################################
-# Uncomment to use PostgreSQL
-#####################################
-#DATABASES = {{
-#    "default": {{
-#        "ENGINE": "django.db.backends.postgresql",
-#        "NAME": os.getenv("DB_NAME", "{project_name_format}_db"),
-#        "USER": os.getenv("DB_USER", "{project_name_format}_user"),
-#        "PASSWORD": os.getenv("DB_PASSWORD", "{project_name_format}_pass"),
-#        "HOST": os.getenv("DB_HOST", "127.0.0.1"),
-#        "PORT": os.getenv("DB_PORT", "5432"),
-#    }}
-#}}
-        '''
-
-        relative_path = f"{app_main}/settings.py"
-        
-        ok = helper_add_import(full_path, relative_path, "import os")
-        ok = helper_append_content(full_path, relative_path, content_to_append=new_databases, end_line=84)
-        
-        
-        
-        str = """\n# Default primary key field type
-# https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'"""
-    
-        helper_append_content(
-            full_path,
-            f"{app_main}/settings.py", 
-            str
-        )
-        
-
-        print_message(f"Archivo settings.py Reemplazado: {ok}", GREEN)
