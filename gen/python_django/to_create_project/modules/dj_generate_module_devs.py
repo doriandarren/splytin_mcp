@@ -1,5 +1,5 @@
 import os
-from gen.helpers.helper_columns import parse_columns_input
+from gen.helpers.helper_columns import HelperColumns
 from gen.python_django.helpers.helper_file import (
     helper_append_content
 )
@@ -21,7 +21,6 @@ class DjGenerateModuleDevs:
         
         ## Emails
         self.create_email_service(full_path, project_name_format, app_main)
-        self.append_email_settings(full_path, project_name_format, app_main)
         self.create_email_html(full_path, project_name_format, app_main)
 
 
@@ -38,7 +37,7 @@ class DjGenerateModuleDevs:
         plural_name = "Devs"
         columns = "test"
         input_menu_checkbox = ['api_route', 'api_serializer', 'api_wiewset']
-        formatColumns = parse_columns_input(columns)
+        formatColumns = HelperColumns.parse_columns_input(columns)
         
         standard_module_crud_python_django(full_path, app_main, singular_name, plural_name, formatColumns, input_menu_checkbox)
     
@@ -272,26 +271,7 @@ class MailService:
             content=content
         )
     
-    
-    
-    def append_email_settings(self, full_path, project_name_format, app_main):
-        str = f"""\n# EMAIL SETTINGS
-EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
-EMAIL_HOST = os.getenv("EMAIL_HOST", "smtp.ionos.es")
-EMAIL_PORT = int(os.getenv("EMAIL_PORT", 587))
-EMAIL_USE_TLS = os.getenv("EMAIL_USE_TLS", "True") == "True"
-EMAIL_USE_SSL = os.getenv("EMAIL_USE_SSL", "False") == "True"
-EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER")
-EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD")
-DEFAULT_FROM_EMAIL = os.getenv("DEFAULT_FROM_EMAIL", EMAIL_HOST_USER)
-EMAIL_TIMEOUT = int(os.getenv("EMAIL_TIMEOUT", 30))
-"""
-            
-        helper_append_content(
-            full_path, 
-            f"{app_main}/settings.py", 
-            str
-        )
+
     
     
     

@@ -26,12 +26,13 @@ from gen.python_django.to_create_project.core.dj_generate_file_helpers import Dj
 from gen.python_django.to_create_project.core.dj_generate_core_file_init import DjGenerateCoreFileInit
 from gen.python_django.to_create_project.core.dj_generate_custom_logging import DjGenerateCustomLogging
 from gen.python_django.to_create_project.dj_generate_cors import DjGenerateCors
-from gen.python_django.to_create_project.dj_generate_cron import DjGenerateCron
+from gen.python_django.to_create_project.dj_generate_celery import DjGenerateCelery
 from gen.python_django.to_create_project.dj_generate_faker import DjGenerateFaker
 from gen.python_django.to_create_project.dj_generate_gunicorn_and_whitenoise import DjGenerateGunicornAndWhitenoise
 from gen.python_django.to_create_project.setting_file.dj_allowed_hosts import DjAllowedHosts
 from gen.python_django.to_create_project.setting_file.dj_database import DjDatabase
 from gen.python_django.to_create_project.setting_file.dj_debug import DjDebug
+from gen.python_django.to_create_project.setting_file.dj_email import DjEmail
 from gen.python_django.to_create_project.setting_file.dj_secret_key import DjSecretKey
 from gen.python_django.to_create_project.modules.dj_generate_module_auth import DjGenerateModuleAuth
 from gen.python_django.to_create_project.modules.dj_generate_module_devs import DjGenerateModuleDevs
@@ -155,6 +156,11 @@ def create_python_django_project_service(
     obj.invoke(full_path, app_main)
     
     
+    # Emails
+    obj = DjEmail()
+    obj.invoke(full_path, app_main)
+        
+    
     # Media
     obj = DjGenerateMedia()
     obj.invoke(full_path, project_name_format, app_main, venv_python)
@@ -236,7 +242,7 @@ def create_python_django_project_service(
     
     
     # CronJobs
-    obj = DjGenerateCron()
+    obj = DjGenerateCelery()
     obj.invoke(full_path, project_name_format, app_main, venv_python)
     
     

@@ -5,7 +5,7 @@ from gen.helpers.helper_file import HelperFile
 
 
 
-class DjGenerateCron:
+class DjGenerateCelery:
 
     def invoke(self, full_path, project_name_format, app_main, venv_python):
         """
@@ -38,11 +38,11 @@ class DjGenerateCron:
         
         
         str = r"""# Celery
-CELERY_BROKER_URL = "redis://127.0.0.1:6379/0"
-CELERY_BEAT_SCHEDULER = "django_celery_beat.schedulers:DatabaseScheduler"
-CELERY_TIMEZONE = "Europe/Madrid"
-CELERY_ACCEPT_CONTENT = ["json"]
-CELERY_TASK_SERIALIZER = "json"
+CELERY_BROKER_URL = os.getenv("CELERY_BROKER_URL", "redis://127.0.0.1:6379/0")      # Redis connection
+CELERY_BEAT_SCHEDULER = "django_celery_beat.schedulers:DatabaseScheduler"           # Scheduled tasks
+CELERY_TIMEZONE = TIME_ZONE                                                         # Django timezone
+CELERY_ACCEPT_CONTENT = ["json"]                                                    # Accepted content
+CELERY_TASK_SERIALIZER = "json"                                                     # Task serialization
 
 # Celery Beat Schedule
 # CELERY_BEAT_SCHEDULE = {

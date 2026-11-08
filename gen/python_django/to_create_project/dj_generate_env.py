@@ -118,6 +118,9 @@ TIME_ZONE=Europe/Madrid
 # CORS
 CORS_ALLOW_ALL_ORIGINS=true
 
+# Celery
+CELERY_BROKER_URL=redis://127.0.0.1:6379/0
+
 # Seed Users
 SEED_USER_PASSWORD=Tailandia2026
 '''
@@ -188,6 +191,9 @@ TIME_ZONE=Europe/Madrid
 
 # CORS
 CORS_ALLOW_ALL_ORIGINS=true
+
+# Celery
+CELERY_BROKER_URL=redis://127.0.0.1:6379/0
 
 # Seed Users
 SEED_USER_PASSWORD=
