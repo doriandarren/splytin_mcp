@@ -24,7 +24,8 @@ class DjCrudApiViewset:
 
         folder_path = os.path.join(full_path, "apps", plural_name_snake, "api")
 
-        content = f'''from core.api.api_response import BaseModelViewSet
+        content = f'''## apps/{plural_name_snake}/api/views.py
+from core.api.api_response import BaseModelViewSet
 from rest_framework.permissions import IsAuthenticated
 #from django_filters.rest_framework import DjangoFilterBackend
 

@@ -34,7 +34,8 @@ class DjCrudApiSerializer:
         # format_cols = ",\n".join(f"'{col["name"]}'" for col in columns)
         
     
-        content = f'''#from rest_framework.serializers import ModelSerializer
+        content = f'''## apps/{plural_name_snake}/api/serializers.py
+#from rest_framework.serializers import ModelSerializer
 from rest_framework_json_api.serializers import ModelSerializer
 from apps.{plural_name_snake}.models import {singular_name}
 

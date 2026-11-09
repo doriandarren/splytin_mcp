@@ -1,9 +1,9 @@
-
 import os
 import json
 import uuid
-
 from gen.helpers.helper_file import HelperFile
+from gen.python_django.helpers.helper_postman_fields import HelperPostmanFields
+
 
 
 class DjCrudApiPostman:
@@ -58,10 +58,7 @@ class DjCrudApiPostman:
         store_body = {
             "data": {
                 "type": plural_name_kebab,
-                "attributes": {
-                    column: f"New {column}"
-                    for column in column_names
-                }
+                "attributes": HelperPostmanFields.store(columns)
             }
         }
 
@@ -70,10 +67,7 @@ class DjCrudApiPostman:
             "data": {
                 "type": plural_name_kebab,
                 "id": "1",
-                "attributes": {
-                    column: f"Update {column}"
-                    for column in column_names
-                }
+                "attributes": HelperPostmanFields.update(columns)
             }
         }
 

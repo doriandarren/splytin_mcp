@@ -14,9 +14,14 @@ class HelperDataFake:
     @staticmethod
     def createCRUD(full_path: str, app_main: str) -> None:
         
+        ######################
+        # AiPromptCategory
+        ######################
         singular_name = "AiPromptCategory"
         plural_name = "AiPromptCategories"
-        columns = HelperColumns.parse_columns_input("name description slug")
+        columns = HelperColumns.parse_columns_input(
+            "name description slug"
+        )
         
         standard_module_crud_python_django(
             full_path,
@@ -27,9 +32,15 @@ class HelperDataFake:
         )
         
         
+        ######################
+        # AiPromptGeneration
+        ######################
         singular_name = "AiPromptGeneration"
         plural_name = "AiPromptGenerations"
-        columns = HelperColumns.parse_columns_input("ai_prompt_category_id:fk system_role system_message user_role user_message is_text_processed:boolean is_image_processed:boolean is_video_processed:boolean")
+        columns = HelperColumns.parse_columns_input(
+            "ai_prompt_category_id:fk system_role system_message user_role user_message is_text_processed:boolean is_image_processed:boolean is_video_processed:boolean"
+        )
+        
         standard_module_crud_python_django(
             full_path,
             app_main,

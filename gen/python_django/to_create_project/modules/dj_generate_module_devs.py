@@ -49,21 +49,27 @@ class DjGenerateModuleDevs:
 
         folder_path = os.path.join(full_path, "apps", "devs", "api")
 
-        content = r'''from core.api.api_response import BaseAPIView
-from rest_framework.permissions import IsAuthenticatedOrReadOnly
+        content = r'''from django.http import HttpResponse
+from core.api.api_response import BaseAPIView
+from rest_framework.permissions import (
+    IsAuthenticatedOrReadOnly, 
+    AllowAny
+)
 
 from apps.devs.services.email_service import MailService
 from apps.devs.services.pdf_service import PdfService
 from core.messages.message_channel import MessageChannel
 
 class DevApiViewSet(BaseAPIView):
-    permission_classes = [IsAuthenticatedOrReadOnly]
+    permission_classes = [AllowAny]
     
     def get(self, request):
         """
             Dentro del mismo Get
         """
         try:
+            
+            # Your Code
             
             return self.respond_with_data(
                 message="OK"
@@ -76,7 +82,9 @@ class DevApiViewSet(BaseAPIView):
 
 
 
-class DevMessageChannelViewSet(BaseAPIView):    
+class DevMessageChannelViewSet(BaseAPIView):   
+    permission_classes = [AllowAny]
+     
     def get(self, request):
         return self.invoke(request)   
     
@@ -93,7 +101,7 @@ class DevMessageChannelViewSet(BaseAPIView):
 
 
 class DevEmailAPIView(BaseAPIView):
-    permission_classes = [IsAuthenticatedOrReadOnly]
+    permission_classes = [AllowAny]
     
     def get(self, request):
         """
@@ -131,7 +139,7 @@ class DevEmailAPIView(BaseAPIView):
 
  
 class DevPDFAPIView(BaseAPIView):
-    permission_classes = [IsAuthenticatedOrReadOnly]
+    permission_classes = [AllowAny]
     
     
     def get(self, request):

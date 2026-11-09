@@ -37,7 +37,9 @@ class DjCrudApiRoute:
         
         helper_create_init_file(folder_path)
 
-        content = f'''from rest_framework.routers import DefaultRouter
+        content = f'''## apps/{plural_name_snake}/api/router.py
+        
+from rest_framework.routers import DefaultRouter
 from apps.{plural_name_snake}.api.views import {singular_name}ApiViewSet
 
 router = DefaultRouter()

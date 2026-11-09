@@ -82,7 +82,7 @@ class DjCrudApiService:
 class {singular_name}Service:
 
     def list(self):
-        return {singular_name}.objects.all()
+        return {singular_name}.objects.all().order_by("-id")
 
     def show(self, id):
         return {singular_name}.objects.filter(id=id).first()
