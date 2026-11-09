@@ -94,7 +94,7 @@ SECURE_HSTS_SECONDS=0
 # SECURE_HSTS_SECONDS=3600
 
 # Database Settings: [sqlite | postgresql | mysql]
-DB_ENGINE=postgresql
+DB_ENGINE=sqlite
 DB_NAME={project_name_format}_db
 DB_USER={project_name_format}_user
 DB_PASSWORD={project_name_format}_pass
@@ -168,7 +168,7 @@ SECURE_HSTS_SECONDS=0
 # SECURE_HSTS_SECONDS=3600
 
 # Database Settings: [sqlite | postgresql | mysql]
-DB_ENGINE=postgresql
+DB_ENGINE=sqlite
 DB_NAME=
 DB_USER=
 DB_PASSWORD=

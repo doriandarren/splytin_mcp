@@ -88,12 +88,9 @@ LOGGING = {
             "encoding": "utf-8",
         },
     },
-    "loggers": {
-        "django": {
-            "handlers": ["file"],
-            "level": "ERROR",
-            "propagate": True,
-        },
+    "root": {
+        "handlers": ["file"],
+        "level": "ERROR",
     },
 }
 
