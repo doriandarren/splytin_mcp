@@ -1,7 +1,6 @@
 import sys
 import os
 
-from gen.helpers.helpers import dd
 from gen.react_ts.main_react_ts import MainReactTs
 
 BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))

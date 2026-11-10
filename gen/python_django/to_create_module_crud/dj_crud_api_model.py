@@ -2,19 +2,6 @@ from gen.python_django.helpers.helper_dj_file import helper_append_content
 from gen.helpers.helper_print import print_message, GREEN, CYAN
 
 
-
-# def get_str_field(columns):
-#     priority_fields = ["title", "name", "description"]
-
-#     for field in priority_fields:
-#         for column in columns:
-#             if column["name"] == field:
-#                 return f"self.{field}"
-
-#     return "self.id"
-
-
-
 class DjCrudApiModel:
     
     def map_column_type(self, column, plural_name_snake):
@@ -25,10 +12,10 @@ class DjCrudApiModel:
             related_model = column.get("related_model", "")
             field_name = column["name"].replace("_id", "")
             return field_name, f'''models.ForeignKey(
-                "{related_table}.{related_model}", 
-                on_delete=models.CASCADE, 
-                related_name="{plural_name_snake}"
-            )'''
+        "{related_table}.{related_model}", 
+        on_delete=models.CASCADE, 
+        related_name="{plural_name_snake}"
+    )'''
 
         if column_type == "string":
             return column["name"], "models.CharField(max_length=255)"

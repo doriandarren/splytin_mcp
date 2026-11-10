@@ -5,11 +5,14 @@ class HelperDjSerializerFields:
     def get_columns(columns):
         """
         Genera los campos del serializer.
+        Si es FK, utiliza relationship_name.
         """
         return "\n".join(
-            f"            '{column['name']}',"
+            f"            '{column['relationship_name'] if column['is_fk'] else column['name']}',"
             for column in columns
         )
+            
+        
 
     @staticmethod
     def get_extra_kwargs(columns):
@@ -19,7 +22,8 @@ class HelperDjSerializerFields:
         lines = []
 
         for column in columns:
-            name = column["name"]
+            name = column["relationship_name"] if column["is_fk"] else column["name"]
+            
             column_type = column.get("type") or column.get("raw_type")
             is_nullable = column.get("is_nullable", False)
             size = column.get("size")

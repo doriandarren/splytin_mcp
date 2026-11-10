@@ -31,6 +31,8 @@ class DjCrudApiSerializer:
         
         
     
+        
+    
         content = f'''## apps/{plural_name_snake}/api/serializers.py
 #from rest_framework.serializers import ModelSerializer
 from rest_framework_json_api.serializers import ModelSerializer

@@ -1,6 +1,6 @@
 import os
 from dotenv import load_dotenv
-from gen.helpers.helper_columns import parse_columns_input
+from gen.helpers.helper_columns import HelperColumns
 from gen.helpers.helper_menu import menu_checkbox, pause
 from gen.helpers.helper_print import input_with_validation, dd
 from gen.services.generator_services import create_python_django_crud_service
@@ -26,7 +26,7 @@ def start_module_crud_python_django():
     
     singular_name_default = "AgendaUnloading"
     plural_name_default = "AgendaUnloadings"
-    columns_default = "user_id:fk name age:integer description"
+    columns_default = "user_id:fk ability_group_id:fk name:string(30)|unique amount:decimal(10,2) amount_with_tax:float description:varchar(10) note has_active:boolean"
     
 
     input_menu_checkbox = menu_checkbox("Componentes: ", opt)
@@ -37,9 +37,9 @@ def start_module_crud_python_django():
     plural_name = input_with_validation("Nombre plural", plural_name_default)
     input_columns = input_with_validation("Columnas", columns_default)
     
-    columns = parse_columns_input(input_columns)
+    columns = HelperColumns.parse_columns_input(input_columns)
 
-    ##dd(columns)
+    ## dd(columns)
     
     
     create_python_django_crud_service(
