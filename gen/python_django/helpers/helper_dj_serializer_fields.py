@@ -12,6 +12,7 @@ class HelperDjSerializerFields:
             for column in columns
         )
             
+    
         
 
     @staticmethod
@@ -19,11 +20,11 @@ class HelperDjSerializerFields:
         """
         Genera las validaciones extra_kwargs del serializer.
         """
+
         lines = []
 
         for column in columns:
             name = column["relationship_name"] if column["is_fk"] else column["name"]
-            
             column_type = column.get("type") or column.get("raw_type")
             is_nullable = column.get("is_nullable", False)
             size = column.get("size")
@@ -32,8 +33,10 @@ class HelperDjSerializerFields:
             lines.append(f'            "{name}": {{')
 
             # Required
+            required = False if column_type == "boolean" else not is_nullable
+
             lines.append(
-                f'                "required": {not is_nullable},'
+                f'                "required": {required},'
             )
 
             # Nullable
@@ -56,9 +59,11 @@ class HelperDjSerializerFields:
                     )
 
                 lines.append(
-                    '                "allow_blank": False,'
+                    f'                "allow_blank": {is_nullable},'
                 )
 
             lines.append("            },")
 
         return "\n".join(lines)
+    
+
