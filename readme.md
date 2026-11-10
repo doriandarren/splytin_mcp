@@ -7,8 +7,8 @@ Este repositorio ya incluye un servidor MCP por `stdio` en [`mcp_server.py`](/Us
 ### Ejecutar
 
 ```sh
-source .venv/bin/activate           # Activar el entorno virtual venv
-python -m cli.py                    # Ejecutar el modulo en el terminal
+source .venv/bin/activate             # Activar el entorno virtual venv
+python -m cli                         # Ejecutar el modulo en el terminal
 ```
 
 ### Tools disponibles
