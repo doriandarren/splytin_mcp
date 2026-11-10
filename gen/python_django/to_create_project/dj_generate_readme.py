@@ -31,7 +31,7 @@ python manage.py check --deploy                # Ejecuta las comprobaciones norm
 python manage.py makemigrations                # Migraciones
 python manage.py migrate                       # Aplicar migraciones
 python manage.py collectstatic --noinput       # Recopilar archivos estaticos
-python manage.py seed_users                    # Crear superuser
+python manage.py seed_all                      # Lanza todos los seeds
 python manage.py runserver                     # Ejecutar servidor
 ```
 

@@ -36,7 +36,7 @@ from apps.{plural_name_snake}.models import {singular_name}
 class {singular_name}ApiViewSet(BaseModelViewSet):
     permission_classes = [IsAuthenticated] # sin login: [IsAuthenticatedOrReadOnly]
     serializer_class = {singular_name}Serializer
-    queryset = {singular_name}.objects.all()
+    queryset = {singular_name}.objects.all().order_by("-id")
     # Filtros...
     #filter_backends = [DjangoFilterBackend]
     #filterset_fields = ['category', 'active']

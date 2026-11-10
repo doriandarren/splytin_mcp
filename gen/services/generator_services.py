@@ -28,6 +28,7 @@ from gen.python_django.to_create_project.dj_generate_cors import DjGenerateCors
 from gen.python_django.to_create_project.dj_generate_celery import DjGenerateCelery
 from gen.python_django.to_create_project.dj_generate_faker import DjGenerateFaker
 from gen.python_django.to_create_project.dj_generate_gunicorn_and_whitenoise import DjGenerateGunicornAndWhitenoise
+from gen.python_django.to_create_project.modules.dj_module_main import DjModuleMain
 from gen.python_django.to_create_project.setting_file.dj_allowed_hosts import DjAllowedHosts
 from gen.python_django.to_create_project.setting_file.dj_database import DjDatabase
 from gen.python_django.to_create_project.setting_file.dj_debug import DjDebug
@@ -219,6 +220,9 @@ def create_python_django_project_service(
     obj = DjGeneratePageHome()
     obj.invoke(full_path, project_name_format, app_main)
     
+    obj = DjModuleMain()
+    obj.invoke(full_path)
+    
     
     # Module - User
     obj = DjGenerateModuleUsers()
@@ -228,6 +232,7 @@ def create_python_django_project_service(
     # Module - Auth
     obj = DjGenerateModuleAuth()
     obj.invoke(full_path)
+    
     
     
     # Djangorestframework Json API
