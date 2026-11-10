@@ -9,14 +9,14 @@ class HelperDjPostmanFields:
         attributes = {}
 
         for column in columns:
+
+            if column.get("is_fk", False):
+                continue
+
             name = column["name"]
             column_type = column.get("type") or column.get("raw_type")
-            is_fk = column.get("is_fk", False)
 
-            if is_fk:
-                value = 1
-
-            elif column_type in ("string", "text", "varchar"):
+            if column_type in ("string", "text", "varchar"):
                 value = f"New {name}"
 
                 size = column.get("size")
@@ -56,14 +56,14 @@ class HelperDjPostmanFields:
         attributes = {}
 
         for column in columns:
+
+            if column.get("is_fk", False):
+                continue
+
             name = column["name"]
             column_type = column.get("type") or column.get("raw_type")
-            is_fk = column.get("is_fk", False)
 
-            if is_fk:
-                value = 1
-
-            elif column_type in ("string", "text", "varchar"):
+            if column_type in ("string", "text", "varchar"):
                 value = f"Update {name}"
 
                 size = column.get("size")
@@ -94,3 +94,51 @@ class HelperDjPostmanFields:
             attributes[name] = value
 
         return attributes
+
+    @staticmethod
+    def store_relationships(columns):
+        """
+        Genera las relaciones JSON:API para crear un registro.
+        """
+        relationships = {}
+
+        for column in columns:
+
+            if not column.get("is_fk", False):
+                continue
+
+            relationship_name = column["relationship_name"]
+            related_table = column["related_table"]
+
+            relationships[relationship_name] = {
+                "data": {
+                    "type": related_table.replace("_", "-"),
+                    "id": "1"
+                }
+            }
+
+        return relationships
+
+    @staticmethod
+    def update_relationships(columns):
+        """
+        Genera las relaciones JSON:API para actualizar un registro.
+        """
+        relationships = {}
+
+        for column in columns:
+
+            if not column.get("is_fk", False):
+                continue
+
+            relationship_name = column["relationship_name"]
+            related_table = column["related_table"]
+
+            relationships[relationship_name] = {
+                "data": {
+                    "type": related_table.replace("_", "-"),
+                    "id": "1"
+                }
+            }
+
+        return relationships

@@ -1,13 +1,12 @@
-import os
 import json
+import os
 import uuid
+
 from gen.helpers.helper_file import HelperFile
 from gen.python_django.helpers.helper_dj_postman_fields import HelperDjPostmanFields
 
 
-
 class DjCrudApiPostman:
-
     def invoke(
         self,
         full_path,
@@ -28,26 +27,15 @@ class DjCrudApiPostman:
 
         folder_path = os.path.join(full_path, "SCRIPTS")
 
-        # Obtener los nombres de las columnas dinámicamente
-        column_names = [column["name"] for column in columns]
-
         # Encabezados JSON:API
         headers = [
-            {
-                "key": "Accept",
-                "value": "application/vnd.api+json",
-                "type": "text"
-            },
+            {"key": "Accept", "value": "application/vnd.api+json", "type": "text"},
             {
                 "key": "Content-Type",
                 "value": "application/vnd.api+json",
-                "type": "text"
+                "type": "text",
             },
-            {
-                "key": "Authorization",
-                "value": "Token {{token_api}}",
-                "type": "text"
-            }
+            {"key": "Authorization", "value": "Token {{token_api}}", "type": "text"},
         ]
 
         # URL base del módulo
@@ -62,24 +50,36 @@ class DjCrudApiPostman:
             }
         }
 
+        relationships = HelperDjPostmanFields.store_relationships(columns)
+
+        if relationships:
+            store_body["data"]["relationships"] = relationships
+                
+
+
         # Cuerpo de actualización JSON:API
         update_body = {
             "data": {
                 "type": plural_name_kebab,
                 "id": "1",
-                "attributes": HelperDjPostmanFields.update(columns)
+                "attributes": HelperDjPostmanFields.update(columns),
             }
         }
+
+        relationships = HelperDjPostmanFields.update_relationships(columns)
+
+        if relationships:
+            update_body["data"]["relationships"] = relationships
+            
+            
+            
 
         # Construir la colección
         collection = {
             "info": {
                 "_postman_id": str(uuid.uuid4()),
                 "name": singular_name,
-                "schema": (
-                    "https://schema.getpostman.com/json/"
-                    "collection/v2.1.0/collection.json"
-                ),
+                "schema": ("https://schema.getpostman.com/json/collection/v2.1.0/collection.json"),
             },
             "item": [
                 {
@@ -90,18 +90,18 @@ class DjCrudApiPostman:
                             "request": {
                                 "method": "GET",
                                 "header": headers,
-                                "url": base_url
+                                "url": base_url,
                             },
-                            "response": []
+                            "response": [],
                         },
                         {
                             "name": "Show",
                             "request": {
                                 "method": "GET",
                                 "header": headers,
-                                "url": detail_url
+                                "url": detail_url,
                             },
-                            "response": []
+                            "response": [],
                         },
                         {
                             "name": "Store",
@@ -110,18 +110,12 @@ class DjCrudApiPostman:
                                 "header": headers,
                                 "body": {
                                     "mode": "raw",
-                                    "raw": json.dumps(
-                                        store_body,
-                                        indent=4,
-                                        ensure_ascii=False
-                                    ),
-                                    "options": {
-                                        "raw": {"language": "json"}
-                                    }
+                                    "raw": json.dumps(store_body, indent=4, ensure_ascii=False),
+                                    "options": {"raw": {"language": "json"}},
                                 },
-                                "url": base_url
+                                "url": base_url,
                             },
-                            "response": []
+                            "response": [],
                         },
                         {
                             "name": "Update",
@@ -130,43 +124,33 @@ class DjCrudApiPostman:
                                 "header": headers,
                                 "body": {
                                     "mode": "raw",
-                                    "raw": json.dumps(
-                                        update_body,
-                                        indent=4,
-                                        ensure_ascii=False
-                                    ),
-                                    "options": {
-                                        "raw": {"language": "json"}
-                                    }
+                                    "raw": json.dumps(update_body, indent=4, ensure_ascii=False),
+                                    "options": {"raw": {"language": "json"}},
                                 },
-                                "url": detail_url
+                                "url": detail_url,
                             },
-                            "response": []
+                            "response": [],
                         },
                         {
                             "name": "Delete",
                             "request": {
                                 "method": "DELETE",
                                 "header": headers,
-                                "url": detail_url
+                                "url": detail_url,
                             },
-                            "response": []
-                        }
-                    ]
+                            "response": [],
+                        },
+                    ],
                 }
-            ]
+            ],
         }
 
         # Convertir el diccionario Python a JSON
-        content = json.dumps(
-            collection,
-            indent=4,
-            ensure_ascii=False
-        )
+        content = json.dumps(collection, indent=4, ensure_ascii=False)
 
         # Crear el archivo
         HelperFile.write(
             folder_path=folder_path,
             file_name=f"{singular_name}Collection.json",
-            content=content
+            content=content,
         )
