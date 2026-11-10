@@ -1,5 +1,6 @@
 import os
 from gen.helpers.helper_file import HelperFile
+from gen.python_django.helpers.helper_dj_serializer_fields import HelperDjSerializerFields
 
 
 class DjCrudApiSerializer:
@@ -24,14 +25,10 @@ class DjCrudApiSerializer:
 
         folder_path = os.path.join(full_path, "apps", plural_name_snake, "api")
 
-        format_cols = ""
-        for index, col in enumerate(columns):
-            if index == len(columns) - 1:
-                format_cols += f"            '{col['name']}',"
-            else:
-                format_cols += f"            '{col['name']}',\n"
+        format_cols = HelperDjSerializerFields.get_columns(columns)
         
-        # format_cols = ",\n".join(f"'{col["name"]}'" for col in columns)
+        format_extra_kwargs = HelperDjSerializerFields.get_extra_kwargs(columns)
+        
         
     
         content = f'''## apps/{plural_name_snake}/api/serializers.py
@@ -63,7 +60,13 @@ class {singular_name}Serializer(ModelSerializer):
             "updated_by",
         ]
         
+        # Field Validations
+        extra_kwargs = {{
+{format_extra_kwargs}
+        }}
+        
 '''
+
 
         # Crear el archivo
         HelperFile.write(

@@ -3,7 +3,7 @@ from dotenv import load_dotenv
 from gen.helpers.helper_print import input_with_validation
 from gen.helpers.helper_menu import pause
 from gen.helpers.helpers import dd
-from gen.python_django.helpers.helper_data_fake import HelperDataFake
+from gen.python_django.helpers.helper_dj_data_fake import HelperDjDataFake
 from gen.services.generator_services import create_python_django_project_service
 
 
@@ -39,7 +39,7 @@ def start_project_python_django():
     
     ## TODO borrar luego solo para PRuebas:
     full_path = f"{project_path}/{project_name}"
-    HelperDataFake.createCRUD(full_path, app_name)
+    HelperDjDataFake.createCRUD(full_path, app_name)
     
     
 

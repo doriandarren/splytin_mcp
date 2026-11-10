@@ -1,6 +1,6 @@
 import os
 from gen.helpers.helper_print import print_message, GREEN, CYAN, run_command_debug
-from gen.python_django.helpers.helper_file import helper_create_init_file
+from gen.python_django.helpers.helper_dj_file import helper_create_init_file
 
 
 class DjCrudApp:

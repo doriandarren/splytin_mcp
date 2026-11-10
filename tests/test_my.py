@@ -1,9 +1,8 @@
 import os
 
-from gen.helpers.helper_columns import parse_columns_input
+from gen.helpers.helper_columns import HelperColumns
 from gen.helpers.helper_string import normalize_project_name
-from gen.python_django.helpers.helper_virtual_env import get_venv_python
-from gen.python_django.to_create_module_crud.dj_crud_api_seeder import DjGenerateApiSeeder
+from gen.python_django.helpers.helper_dj_virtual_env import HelperDjVirtualEnv
 
 
 
@@ -18,7 +17,7 @@ def app():
     
     
     # Load virtualenv
-    venv_python = get_venv_python(full_path)
+    venv_python = HelperDjVirtualEnv.get_venv_python(full_path)
     manage_py_path = os.path.join(full_path, "manage.py")
     
     # venv_python = "/Users/dorian/PythonProjects/api.app1.com/.venv/bin/python"
@@ -40,7 +39,7 @@ def app():
     plural_first_camel = "agendaUnloadings"
 
 
-    columns = parse_columns_input("name description slug")
+    columns = HelperColumns.parse_columns_input("name description slug")
 
     
     
@@ -48,20 +47,20 @@ def app():
     
     
     
-    obj = DjGenerateApiSeeder()
-    obj.invoke(
-        full_path,
-        project_name,
-        singular_name,
-        plural_name,
-        singular_name_kebab,
-        plural_name_kebab,
-        singular_name_snake,
-        plural_name_snake,
-        singular_first_camel,
-        plural_first_camel,
-        columns
-    )
+    # obj = DjGenerateSee()
+    # obj.invoke(
+    #     full_path,
+    #     project_name,
+    #     singular_name,
+    #     plural_name,
+    #     singular_name_kebab,
+    #     plural_name_kebab,
+    #     singular_name_snake,
+    #     plural_name_snake,
+    #     singular_first_camel,
+    #     plural_first_camel,
+    #     columns
+    # )
     
     
 

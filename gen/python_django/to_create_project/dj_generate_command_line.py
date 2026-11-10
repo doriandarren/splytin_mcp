@@ -1,7 +1,7 @@
 import os
 import platform
 from gen.helpers.helper_print import print_message, GREEN, CYAN, run_command
-from gen.python_django.helpers.helper_virtual_env import get_venv_python
+from gen.python_django.helpers.helper_dj_virtual_env import HelperDjVirtualEnv
 
 
 
@@ -12,7 +12,7 @@ class DjGenerateCommandLine():
 
         # Crear entorno virtual
         self.create_virtualenv(full_path)
-        venv_python = get_venv_python(full_path)
+        venv_python = HelperDjVirtualEnv.get_venv_python(full_path)
         self.update_pip(full_path, venv_python)
         
         # requirements.txt

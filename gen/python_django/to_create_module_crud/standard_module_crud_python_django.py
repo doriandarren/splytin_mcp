@@ -2,7 +2,7 @@ import os
 from gen.helpers.helper_print import camel_to_kebab, camel_to_snake, print_cyan, print_message
 from gen.helpers.helper_string import normalize_project_name
 from gen.helpers.helpers import dd
-from gen.python_django.helpers.helper_virtual_env import get_venv_python
+from gen.python_django.helpers.helper_dj_virtual_env import HelperDjVirtualEnv
 from gen.python_django.to_create_module_crud.dj_crud_api_model import DjCrudApiModel
 from gen.python_django.to_create_module_crud.dj_crud_api_postman import DjCrudApiPostman
 from gen.python_django.to_create_module_crud.dj_crud_api_route import DjCrudApiRoute
@@ -63,7 +63,7 @@ def standard_module_crud_python_django(
     
     
     # Load virtualenv
-    venv_python = get_venv_python(full_path)
+    venv_python = HelperDjVirtualEnv.get_venv_python(full_path)
     manage_py_path = os.path.join(full_path, "manage.py")
     
     

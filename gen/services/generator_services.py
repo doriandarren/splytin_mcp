@@ -4,7 +4,7 @@ from typing import Any
 
 import os
 from dotenv import load_dotenv
-from gen.helpers.helper_columns import HelperColumns, parse_columns_input
+from gen.helpers.helper_columns import HelperColumns
 from gen.helpers.helpers import dd
 from gen.php_laravel.to_create_project.fake.laravel_fake_data import LaravelFakeData
 from gen.php_laravel.to_create_project.generate_api_controller import generate_api_controller
@@ -17,7 +17,7 @@ from gen.php_laravel.to_create_project.traits.generate_trait_tracks_users import
 from gen.php_laravel.to_create_project.updates.update_ability_user_model import update_ability_user_model
 from gen.php_laravel.to_create_project.updates.update_app_service_provider import update_app_service_provider
 from gen.php_laravel.to_create_project.updates.update_role_user_model import update_role_user_model
-from gen.python_django.helpers import helper_domain
+from gen.python_django.helpers.helper_dj_domain import HelperDjDomain
 from gen.python_django.to_create_project.core.dj_generate_api_response import DjGenerateApiResponse
 from gen.python_django.to_create_project.core.dj_generate_core_models import DjGenerateCoreModels
 from gen.python_django.to_create_project.core.dj_generate_message_channel import DjGenerateMessageChannel
@@ -89,7 +89,7 @@ def create_python_django_project_service(
     full_path = _full_path(project_path, project_name)
     project_name_format = normalize_project_name(project_name)
     
-    domain_name = helper_domain.helper_domain_name(project_name)
+    domain_name = HelperDjDomain.helper_domain_name(project_name)
     
     
     # CommandLine & return venv_python
@@ -478,7 +478,7 @@ def create_php_project_service(
 
     full_path = _full_path(project_path, project_name)
     
-    domain_name = helper_domain.helper_domain_name(project_name)
+    domain_name = HelperDjDomain.helper_domain_name(project_name)
     
     password = os.getenv("PASSWORD")
     

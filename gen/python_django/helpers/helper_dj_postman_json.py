@@ -1,5 +1,5 @@
 
-class HelperPostmanJson:
+class HelperDjPostmanJson:
     """
     Helper para construir colecciones JSON de Postman.
     """

@@ -1,5 +1,5 @@
 
-class HelperPostmanFields:
+class HelperDjPostmanFields:
 
     @staticmethod
     def store(columns):

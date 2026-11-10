@@ -1,4 +1,4 @@
-from gen.python_django.helpers.helper_file import helper_update_list
+from gen.python_django.helpers.helper_dj_file import helper_update_list
 
 
 

@@ -1,6 +1,6 @@
 import os
 from gen.helpers.helper_columns import parse_columns_input
-from gen.python_django.helpers.helper_file import (
+from gen.python_django.helpers.helper_dj_file import (
     helper_append_content, 
     helper_insert_after_line
 )

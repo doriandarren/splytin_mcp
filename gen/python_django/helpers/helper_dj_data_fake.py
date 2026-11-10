@@ -1,8 +1,8 @@
-from gen.helpers.helper_columns import HelperColumns, parse_columns_input
+from gen.helpers.helper_columns import HelperColumns
 from gen.python_django.to_create_module_crud.standard_module_crud_python_django import standard_module_crud_python_django
 
 
-class HelperDataFake:
+class HelperDjDataFake:
     """
         Only Test
     """
