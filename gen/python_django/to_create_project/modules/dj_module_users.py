@@ -89,8 +89,10 @@ class Command(BaseCommand):
             raise CommandError(
                 "La variable SEED_USER_PASSWORD no está configurada."
             )
+            
+        count = 0
     
-        self.create_user(
+        count += self.create_user(
             username="admin",
             email="admin@{domain_name}",
             password=password,
@@ -100,7 +102,7 @@ class Command(BaseCommand):
             is_superuser=True,
         )
 
-        self.create_user(
+        count += self.create_user(
             username="manager",
             email="manager@{domain_name}",
             password=password,
@@ -110,7 +112,7 @@ class Command(BaseCommand):
             is_superuser=False,
         )
 
-        self.create_user(
+        count += self.create_user(
             username="user",
             email="user@{domain_name}",
             password=password,
@@ -119,8 +121,25 @@ class Command(BaseCommand):
             is_staff=True,
             is_superuser=False,
         )
+        
+        self.stdout.write(
+            self.style.SUCCESS(
+                f"Seed seed_users. Total: {{count}}"
+            )
+        )
+        
+        
 
-    def create_user(self, username, email, password, first_name, last_name, is_staff=False, is_superuser=False):
+    def create_user(
+        self, 
+        username, 
+        email, 
+        password, 
+        first_name, 
+        last_name, 
+        is_staff=False, 
+        is_superuser=False
+    ) -> int:
         User = get_user_model()
 
         user, created = User.objects.get_or_create(
@@ -138,11 +157,9 @@ class Command(BaseCommand):
         user.save()
 
         if created:
-            self.stdout.write(self.style.SUCCESS(f"Usuario creado: {{user.username}}"))
+            return 1
         else:
-            self.stdout.write(self.style.WARNING(f"Usuario actualizado: {{user.username}}"))
-
-        return user
+            return 0
 '''
 
         # Crear el archivo

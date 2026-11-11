@@ -45,8 +45,8 @@ class Command(BaseCommand):
 
         self.stdout.write(
             self.style.SUCCESS(
-                "Todos los seeders ejecutados correctamente.
-            ")
+                "Todos los seeders ejecutados correctamente."
+            )
         )
 '''
 
