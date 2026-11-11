@@ -84,13 +84,14 @@ class Command(BaseCommand):
 {fields_content}
             }}
 
-            obj = {singular_name}.objects.create(**data)
-
-            self.stdout.write(
-                self.style.SUCCESS(
-                    f"{singular_name} creado: {{obj.pk}}"
-                )
+            {singular_name}.objects.create(**data)
+            
+            
+        self.stdout.write(
+            self.style.SUCCESS(
+                f"Seed seed_{plural_name_snake}. Total: {{count}}"
             )
+        )    
 '''
 
         # Crear el archivo

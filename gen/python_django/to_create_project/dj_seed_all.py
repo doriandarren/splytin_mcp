@@ -34,7 +34,7 @@ class Command(BaseCommand):
             raise CommandError("El número de registros debe ser mayor que cero.")
 
         # Seeders
-        call_command("seed_users", count=count)
+        call_command("seed_users")
         call_command("seed_countries")
         call_command("seed_systems", count=count)
         call_command("seed_quotes", count=count)
@@ -44,7 +44,9 @@ class Command(BaseCommand):
         #call_command("seed_ai_prompt_generations", count=count)
 
         self.stdout.write(
-            self.style.SUCCESS("Todos los seeders ejecutados correctamente.")
+            self.style.SUCCESS(
+                "Todos los seeders ejecutados correctamente.
+            ")
         )
 '''
 
