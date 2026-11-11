@@ -3,7 +3,7 @@ from gen.helpers.helper_print import print_message, GREEN, CYAN, run_command
 #from gen.helpers.helper_file import HelperFile
 
 
-class DjGenerateRequirementsTxt:
+class DjRequirementsTxt:
 
     def invoke(self, full_path, venv_python):
         print_message("Instalando requirements.txt", CYAN)

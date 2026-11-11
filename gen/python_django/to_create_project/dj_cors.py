@@ -5,7 +5,7 @@ from gen.python_django.helpers.helper_dj_file import helper_append_content, help
 
 
 
-class DjGenerateCors:
+class DjCors:
     
 
     def invoke(self, full_path, project_name_format, app_main, venv_python):

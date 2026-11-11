@@ -3,7 +3,7 @@ import os
 from gen.helpers.helper_print import print_cyan, print_green, print_red, run_command
 
 
-class DjGenerateGunicornAndWhitenoise:
+class DjGunicornAndWhitenoise:
 
     
 

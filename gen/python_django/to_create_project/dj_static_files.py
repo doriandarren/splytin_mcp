@@ -2,7 +2,7 @@ import os
 from gen.helpers.helper_print import print_green, print_red
 
 
-class DjGenerateStaticFiles:
+class DjStaticFiles:
     
 
     def invoke(self, full_path, app_main):

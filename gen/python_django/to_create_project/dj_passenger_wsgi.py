@@ -2,7 +2,7 @@ import os
 from gen.helpers.helper_file import HelperFile
 
 
-class DjGeneratePassengerWSGI:
+class DjPassengerWSGI:
 
     def invoke(self, full_path, app_main):
         self.create_passenger_wsgi(full_path, app_main)

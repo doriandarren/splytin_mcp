@@ -4,7 +4,7 @@ from gen.python_django.helpers.helper_dj_file import helper_add_import, helper_a
 
 
 
-class DjGeneratePostgre:
+class DjPostgre:
     
     def invoke(self, full_path, project_name_format, app_main, venv_python):
         """

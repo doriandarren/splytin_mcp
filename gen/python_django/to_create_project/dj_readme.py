@@ -1,7 +1,7 @@
 from gen.helpers.helper_file import HelperFile
 
 
-class DjGenerateReadme:
+class DjReadme:
     
     
     def invoke(self, full_path, project_name, project_name_format, domain_name):

@@ -5,7 +5,7 @@ from gen.helpers.helper_file import HelperFile
 
 
 
-class DjGenerateCelery:
+class DjCelery:
 
     def invoke(self, full_path, project_name_format, app_main, venv_python):
         """

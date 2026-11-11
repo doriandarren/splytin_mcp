@@ -4,7 +4,7 @@ from gen.helpers.helper_print import print_message, GREEN
 from gen.helpers.helper_file import HelperFile
 
 
-class DjGeneratePageHome:
+class DjPageHome:
 
     def invoke(self, full_path, project_name_format, app_main):
         self.update_setting(full_path, app_main)

@@ -9,7 +9,7 @@ from gen.helpers.helper_print import dd, print_message, GREEN, CYAN
 from gen.helpers.helper_file import HelperFile
 
 
-class DjGenerateModuleAuth:
+class DjModuleAuth:
     
     def invoke(self, full_path):
         """

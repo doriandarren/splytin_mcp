@@ -17,40 +17,40 @@ from gen.php_laravel.to_create_project.updates.update_ability_user_model import 
 from gen.php_laravel.to_create_project.updates.update_app_service_provider import update_app_service_provider
 from gen.php_laravel.to_create_project.updates.update_role_user_model import update_role_user_model
 from gen.python_django.helpers.helper_dj_domain import HelperDjDomain
-from gen.python_django.to_create_project.core.dj_generate_api_response import DjGenerateApiResponse
-from gen.python_django.to_create_project.core.dj_generate_core_models import DjGenerateCoreModels
-from gen.python_django.to_create_project.core.dj_generate_message_channel import DjGenerateMessageChannel
-from gen.python_django.to_create_project.core.dj_generate_http import DjGenerateHttp
-from gen.python_django.to_create_project.core.dj_generate_file_helpers import DjGenerateFileHelpers
-from gen.python_django.to_create_project.core.dj_generate_core_file_init import DjGenerateCoreFileInit
-from gen.python_django.to_create_project.core.dj_generate_custom_logging import DjGenerateCustomLogging
-from gen.python_django.to_create_project.dj_generate_cors import DjGenerateCors
-from gen.python_django.to_create_project.dj_generate_celery import DjGenerateCelery
-from gen.python_django.to_create_project.dj_generate_faker import DjGenerateFaker
-from gen.python_django.to_create_project.dj_generate_gunicorn_and_whitenoise import DjGenerateGunicornAndWhitenoise
+from gen.python_django.to_create_project.core.dj_api_response import DjApiResponse
+from gen.python_django.to_create_project.core.dj_core_models import DjCoreModels
+from gen.python_django.to_create_project.core.dj_message_channel import DjMessageChannel
+from gen.python_django.to_create_project.core.dj_http import DjHttp
+from gen.python_django.to_create_project.core.dj_file_helpers import DjFileHelpers
+from gen.python_django.to_create_project.core.dj_core_file_init import DjCoreFileInit
+from gen.python_django.to_create_project.core.dj_custom_logging import DjCustomLogging
+from gen.python_django.to_create_project.dj_cors import DjCors
+from gen.python_django.to_create_project.dj_celery import DjCelery
+from gen.python_django.to_create_project.dj_faker import DjFaker
+from gen.python_django.to_create_project.dj_gunicorn_and_whitenoise import DjGunicornAndWhitenoise
 from gen.python_django.to_create_project.modules.dj_module_main import DjModuleMain
 from gen.python_django.to_create_project.setting_file.dj_allowed_hosts import DjAllowedHosts
 from gen.python_django.to_create_project.setting_file.dj_database import DjDatabase
 from gen.python_django.to_create_project.setting_file.dj_debug import DjDebug
 from gen.python_django.to_create_project.setting_file.dj_email import DjEmail
 from gen.python_django.to_create_project.setting_file.dj_secret_key import DjSecretKey
-from gen.python_django.to_create_project.modules.dj_generate_module_auth import DjGenerateModuleAuth
-from gen.python_django.to_create_project.modules.dj_generate_module_devs import DjGenerateModuleDevs
-from gen.python_django.to_create_project.modules.dj_generate_module_users import DjGenerateModuleUsers
-from gen.python_django.to_create_project.dj_generate_page_home import DjGeneratePageHome
-from gen.python_django.to_create_project.dj_generate_api_doc import DjGenerateApiDoc
-from gen.python_django.to_create_project.dj_generate_djangorestframework_jsonapi import DjGenerateDjangorestframeworkJsonapi
-from gen.python_django.to_create_project.dj_generate_postgres import DjGeneratePostgre
-from gen.python_django.to_create_project.dj_generate_django import DjGenerateDjango
-from gen.python_django.to_create_project.dj_generate_env import DjGenerateEnv
-from gen.python_django.to_create_project.dj_generate_gitignore import DjGenerateIgnore
-from gen.python_django.to_create_project.dj_generate_postman import DjGeneratePostman
-from gen.python_django.to_create_project.dj_generate_requirements_txt import DjGenerateRequirementsTxt
-from gen.python_django.to_create_project.dj_generate_command_line import DjGenerateCommandLine
-from gen.python_django.to_create_project.dj_generate_passenger_wsgi import DjGeneratePassengerWSGI
-from gen.python_django.to_create_project.dj_generate_readme import DjGenerateReadme
-from gen.python_django.to_create_project.dj_generate_todo_md import DjGenerateTodoMD
-from gen.python_django.to_create_project.dj_generate_static_files import DjGenerateStaticFiles
+from gen.python_django.to_create_project.modules.dj_module_auth import DjModuleAuth
+from gen.python_django.to_create_project.modules.dj_module_devs import DjModuleDevs
+from gen.python_django.to_create_project.modules.dj_module_users import DjModuleUsers
+from gen.python_django.to_create_project.dj_page_home import DjPageHome
+from gen.python_django.to_create_project.dj_api_doc import DjApiDoc
+from gen.python_django.to_create_project.dj_djangorestframework_jsonapi import DjDjangorestframeworkJsonapi
+from gen.python_django.to_create_project.dj_postgres import DjPostgre
+from gen.python_django.to_create_project.dj_django import DjDjango
+from gen.python_django.to_create_project.dj_env import DjEnv
+from gen.python_django.to_create_project.dj_gitignore import DjIgnore
+from gen.python_django.to_create_project.dj_postman import DjPostman
+from gen.python_django.to_create_project.dj_requirements_txt import DjRequirementsTxt
+from gen.python_django.to_create_project.dj_command_line import DjCommandLine
+from gen.python_django.to_create_project.dj_passenger_wsgi import DjPassengerWSGI
+from gen.python_django.to_create_project.dj_readme import DjReadme
+from gen.python_django.to_create_project.dj_todo_md import DjTodoMD
+from gen.python_django.to_create_project.dj_static_files import DjStaticFiles
 from gen.python_django.to_create_project.setting_file.dj_time_zone_language import DjTimeZoneLanguage
 from gen.python_django.to_create_project.statics.dj_generate_media import DjGenerateMedia
 
@@ -93,41 +93,42 @@ def create_python_django_project_service(
     
     
     # CommandLine & return venv_python
-    obj = DjGenerateCommandLine()
+    obj = DjCommandLine()
     venv_python = obj.invoke(full_path, project_name_format, app_main)
     
     
     # Gitignore
-    gitignore = DjGenerateIgnore()
+    gitignore = DjIgnore()
     gitignore.invoke(full_path)
     
     
     # PassengerWSGI
-    obj = DjGeneratePassengerWSGI()
+    obj = DjPassengerWSGI()
     obj.invoke(full_path, app_main)
     
     
+    
     # Readme
-    obj = DjGenerateReadme()
+    obj = DjReadme()
     obj.invoke(full_path, project_name, project_name_format, domain_name)
     
     # FileTODO
-    obj = DjGenerateTodoMD()
+    obj = DjTodoMD()
     obj.invoke(full_path, project_name)
     
     
     # Django
-    obj = DjGenerateDjango()
+    obj = DjDjango()
     obj.invoke(full_path, project_name_format, app_main, venv_python)
     
     
     # Faker
-    obj = DjGenerateFaker()
+    obj = DjFaker()
     obj.invoke(full_path, venv_python)
     
     
     # Env
-    obj = DjGenerateEnv()
+    obj = DjEnv()
     obj.invoke(full_path, project_name_format, project_name, domain_name, app_main, venv_python)
     
     
@@ -167,57 +168,57 @@ def create_python_django_project_service(
     
     
     # Static Files
-    obj = DjGenerateStaticFiles()
+    obj = DjStaticFiles()
     obj.invoke(full_path, app_main)
     
     
     # Postgre
-    obj = DjGeneratePostgre()
+    obj = DjPostgre()
     obj.invoke(full_path, project_name_format, app_main, venv_python)
     
     
     # API Doc
-    obj = DjGenerateApiDoc()
+    obj = DjApiDoc()
     obj.invoke(full_path, project_name_format, app_main, venv_python)
     
     
     # Core FileInit
-    obj = DjGenerateCoreFileInit()
+    obj = DjCoreFileInit()
     obj.invoke(full_path)
     
     
     # Cors
-    obj = DjGenerateCors()
+    obj = DjCors()
     obj.invoke(full_path, project_name_format, app_main, venv_python)
     
     
     # Gunicorn Whitenoise
-    obj = DjGenerateGunicornAndWhitenoise()
+    obj = DjGunicornAndWhitenoise()
     obj.invoke(full_path, app_main, venv_python)
     
     
     # File Helpers
-    obj = DjGenerateFileHelpers()
+    obj = DjFileHelpers()
     obj.invoke(full_path)
     
     
     # Core - Http
-    obj = DjGenerateHttp()
+    obj = DjHttp()
     obj.invoke(full_path)
     
     
     # Core - Message Channel
-    obj = DjGenerateMessageChannel()
+    obj = DjMessageChannel()
     obj.invoke(full_path)
     
     
     # Core - Models
-    obj = DjGenerateCoreModels()
+    obj = DjCoreModels()
     obj.invoke(full_path)
     
     
     # Home Page
-    obj = DjGeneratePageHome()
+    obj = DjPageHome()
     obj.invoke(full_path, project_name_format, app_main)
     
     obj = DjModuleMain()
@@ -225,48 +226,48 @@ def create_python_django_project_service(
     
     
     # Module - User
-    obj = DjGenerateModuleUsers()
+    obj = DjModuleUsers()
     obj.invoke(full_path, project_name, project_name_format, app_main, domain_name)
     
 
     # Module - Auth
-    obj = DjGenerateModuleAuth()
+    obj = DjModuleAuth()
     obj.invoke(full_path)
     
     
     
     # Djangorestframework Json API
-    obj = DjGenerateDjangorestframeworkJsonapi()
+    obj = DjDjangorestframeworkJsonapi()
     obj.invoke(full_path, venv_python, app_main)
     
     
     # Module - Devs
-    obj = DjGenerateModuleDevs()
+    obj = DjModuleDevs()
     obj.invoke(full_path, project_name_format, app_main, venv_python)
     
     
     # CronJobs
-    obj = DjGenerateCelery()
+    obj = DjCelery()
     obj.invoke(full_path, project_name_format, app_main, venv_python)
     
     
     # Logging
-    obj = DjGenerateCustomLogging()
+    obj = DjCustomLogging()
     obj.invoke(full_path, project_name_format, app_main, venv_python)
     
     
     # Postman
-    obj = DjGeneratePostman()
+    obj = DjPostman()
     obj.invoke(full_path, project_name, domain_name)
     
     
     # Api - Response
-    obj = DjGenerateApiResponse()
+    obj = DjApiResponse()
     obj.invoke(full_path)
     
     
     # Requirements
-    obj = DjGenerateRequirementsTxt()
+    obj = DjRequirementsTxt()
     obj.invoke(full_path, venv_python)
     
     

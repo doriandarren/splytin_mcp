@@ -16,7 +16,7 @@ import os
 from gen.helpers.helper_file import HelperFile
 
 
-class DjGenerateModuleUsers:
+class DjModuleUsers:
     
     def invoke(self, full_path, project_name, project_name_format, app_main, domain_name):
     

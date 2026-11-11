@@ -2,7 +2,7 @@ import os
 from gen.helpers.helper_file import HelperFile
 
 
-class DjGenerateHttp:
+class DjHttp:
     
     def invoke(self, full_path):
         self.create_file_init(full_path)

@@ -4,7 +4,7 @@ from gen.python_django.helpers.helper_dj_file import helper_update_line, helper_
 
 
 
-class DjGenerateApiDoc:
+class DjApiDoc:
 
     def invoke(self, full_path, project_name_format, app_main, venv_python):
         """

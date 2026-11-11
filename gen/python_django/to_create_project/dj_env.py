@@ -6,7 +6,7 @@ from gen.helpers.helper_file import HelperFile
 
 
 
-class DjGenerateEnv:
+class DjEnv:
     
 
     def invoke(self, full_path, project_name_format, project_name, domain_name, app_main, venv_python):

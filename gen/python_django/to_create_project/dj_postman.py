@@ -11,7 +11,7 @@ from gen.python_django.helpers.helper_dj_postman_json import HelperDjPostmanJson
 load_dotenv()
 
 
-class DjGeneratePostman:
+class DjPostman:
 
     def __init__(self):
         self.helper = HelperDjPostmanJson

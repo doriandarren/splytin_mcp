@@ -4,7 +4,7 @@ from gen.helpers.helper_print import print_message, GREEN, CYAN, run_command
 from gen.python_django.helpers.helper_dj_file import helper_update_list
 
 
-class DjGenerateDjango:
+class DjDjango:
 
 
     def invoke(self, full_path, project_name_format, app_main, venv_python):

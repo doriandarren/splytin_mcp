@@ -5,7 +5,7 @@ from gen.python_django.helpers.helper_dj_virtual_env import HelperDjVirtualEnv
 
 
 
-class DjGenerateCommandLine():
+class DjCommandLine():
 
     def invoke(self, full_path, project_name_format, app_main):
         self.create_folder(full_path)

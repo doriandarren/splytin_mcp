@@ -8,7 +8,7 @@ from gen.helpers.helper_print import print_message, GREEN, CYAN, run_command
 from gen.helpers.helper_file import HelperFile
 
 
-class DjGenerateModuleDevs:
+class DjModuleDevs:
 
     
     def invoke(self, full_path, project_name_format, app_main, venv_python):

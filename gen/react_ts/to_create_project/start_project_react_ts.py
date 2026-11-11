@@ -16,6 +16,7 @@ from gen.react_ts.to_create_project.modules.react_ts_module_home import ReactTsM
 from gen.react_ts.to_create_project.react_ts_env import ReactTsEnv
 from gen.react_ts.to_create_project.react_ts_gitignore import ReactTsGitignore
 from gen.react_ts.to_create_project.react_ts_google_fonts import ReactTsGoogleFonts
+from gen.react_ts.to_create_project.react_ts_index_css import ReactTsIndexCss
 from gen.react_ts.to_create_project.react_ts_react_router import ReactTsReactRouter
 from gen.react_ts.to_create_project.react_ts_sonner import ReactTsSonner
 from gen.react_ts.to_create_project.react_ts_tanstack_query import ReactTsTanstackQuery
@@ -153,7 +154,9 @@ class StartProjectReactTs:
         obj.invoke(full_path)       
         
         
-        
+        # Index css
+        obj = ReactTsIndexCss()
+        obj.invoke(full_path)
         
         
 

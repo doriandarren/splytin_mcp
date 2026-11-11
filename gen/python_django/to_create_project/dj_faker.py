@@ -3,7 +3,7 @@ from gen.helpers.helper_file import HelperFile
 from gen.helpers.helper_print import print_cyan, print_green, run_command
 
 
-class DjGenerateFaker:
+class DjFaker:
 
     def invoke(self, full_path, venv_python):
         """

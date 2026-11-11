@@ -2,7 +2,7 @@ import os
 from gen.helpers.helper_file import HelperFile
 
 
-class DjGenerateApiResponse:
+class DjApiResponse:
 
     def invoke(self, full_path):
         self.create_api_init(full_path)

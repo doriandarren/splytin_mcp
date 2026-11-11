@@ -4,7 +4,7 @@ from gen.helpers.helper_file import HelperFile
 
 
 
-class DjGenerateCustomLogging:
+class DjCustomLogging:
 
     def invoke(self, full_path, project_name_format, app_main, venv_python):
         self.create_file(full_path, project_name_format, app_main, venv_python)

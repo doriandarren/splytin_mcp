@@ -3,7 +3,7 @@ from gen.helpers.helper_print import print_message, GREEN, CYAN, RED, run_comman
 from gen.helpers.helper_file import HelperFile
 
 
-class DjGenerateDjangorestframeworkJsonapi:
+class DjDjangorestframeworkJsonapi:
 
 
     def invoke(self, full_path, venv_python, app_main):
@@ -198,6 +198,6 @@ if __name__ == '__main__':
     venv = '/Users/dorian/PythonProjects/api.app1.com/.venv/bin/python' 
     main = 'main'
     
-    obj = DjGenerateDjangorestframeworkJsonapi()
+    obj = DjDjangorestframeworkJsonapi()
     obj.invoke(full_path, venv, main)
 
