@@ -16,7 +16,6 @@ class DjSeedAll:
 from django.core.management.base import BaseCommand, CommandError
 
 
-
 class Command(BaseCommand):
     help = "Ejecuta todos los seeders del proyecto"
 
@@ -36,6 +35,11 @@ class Command(BaseCommand):
 
         # Seeders
         call_command("seed_users", count=count)
+        call_command("seed_countries")
+        call_command("seed_systems", count=count)
+        call_command("seed_quotes", count=count)
+        call_command("seed_teams", count=count)
+        
         #call_command("seed_ai_prompt_categories", count=count)
         #call_command("seed_ai_prompt_generations", count=count)
 

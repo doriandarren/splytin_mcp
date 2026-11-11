@@ -30,6 +30,7 @@ from gen.python_django.to_create_project.dj_celery import DjCelery
 from gen.python_django.to_create_project.dj_faker import DjFaker
 from gen.python_django.to_create_project.dj_gunicorn_and_whitenoise import DjGunicornAndWhitenoise
 from gen.python_django.to_create_project.dj_seed_all import DjSeedAll
+from gen.python_django.to_create_project.modules.dj_module_country import DjModuleCountry
 from gen.python_django.to_create_project.modules.dj_module_defaults import DjModuleDefaults
 from gen.python_django.to_create_project.modules.dj_module_main import DjModuleMain
 from gen.python_django.to_create_project.setting_file.dj_allowed_hosts import DjAllowedHosts
@@ -223,6 +224,7 @@ def create_python_django_project_service(
     obj = DjPageHome()
     obj.invoke(full_path, project_name_format, app_main)
     
+    # Module Main
     obj = DjModuleMain()
     obj.invoke(full_path)
     
@@ -245,6 +247,11 @@ def create_python_django_project_service(
     # Module - Devs
     obj = DjModuleDevs()
     obj.invoke(full_path, project_name_format, app_main, venv_python)
+    
+    
+    # Module - Devs
+    obj = DjModuleCountry()
+    obj.invoke(full_path, app_main)
     
     
     # Modules Fakes
