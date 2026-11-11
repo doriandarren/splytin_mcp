@@ -17,6 +17,7 @@ from gen.php_laravel.to_create_project.updates.update_ability_user_model import 
 from gen.php_laravel.to_create_project.updates.update_app_service_provider import update_app_service_provider
 from gen.php_laravel.to_create_project.updates.update_role_user_model import update_role_user_model
 from gen.python_django.helpers.helper_dj_domain import HelperDjDomain
+from gen.python_django.to_create_module_crud.standard_module_crud_python_django import StandardModuleCrudPythonDjango
 from gen.python_django.to_create_project.core.dj_api_response import DjApiResponse
 from gen.python_django.to_create_project.core.dj_core_models import DjCoreModels
 from gen.python_django.to_create_project.core.dj_message_channel import DjMessageChannel
@@ -28,6 +29,8 @@ from gen.python_django.to_create_project.dj_cors import DjCors
 from gen.python_django.to_create_project.dj_celery import DjCelery
 from gen.python_django.to_create_project.dj_faker import DjFaker
 from gen.python_django.to_create_project.dj_gunicorn_and_whitenoise import DjGunicornAndWhitenoise
+from gen.python_django.to_create_project.dj_seed_all import DjSeedAll
+from gen.python_django.to_create_project.modules.dj_module_defaults import DjModuleDefaults
 from gen.python_django.to_create_project.modules.dj_module_main import DjModuleMain
 from gen.python_django.to_create_project.setting_file.dj_allowed_hosts import DjAllowedHosts
 from gen.python_django.to_create_project.setting_file.dj_database import DjDatabase
@@ -83,7 +86,6 @@ def create_python_django_project_service(
     app_main: str = "main",
 ) -> dict[str, Any]:
     from gen.helpers.helper_string import normalize_project_name
-
 
 
     full_path = _full_path(project_path, project_name)
@@ -235,15 +237,24 @@ def create_python_django_project_service(
     obj.invoke(full_path)
     
     
-    
     # Djangorestframework Json API
     obj = DjDjangorestframeworkJsonapi()
     obj.invoke(full_path, venv_python, app_main)
     
-    
+
     # Module - Devs
     obj = DjModuleDevs()
     obj.invoke(full_path, project_name_format, app_main, venv_python)
+    
+    
+    # Modules Fakes
+    obj = DjModuleDefaults()
+    obj.invoke(full_path, app_main)
+    
+    
+    # Seed All
+    obj = DjSeedAll()
+    obj.invoke(full_path)
     
     
     # CronJobs
@@ -272,6 +283,7 @@ def create_python_django_project_service(
     
     
     
+    
 
     return {
         "generator": "python_django_project",
@@ -293,14 +305,13 @@ def create_python_django_crud_service(
     columns: str | list[dict[str, Any]],
     components: list[str] | None = None,
 ) -> dict[str, Any]:
-    from gen.python_django.to_create_module_crud.standard_module_crud_python_django import (
-        standard_module_crud_python_django,
-    )
+    
 
     normalized_columns = _normalize_columns(columns)
     selected_components = components or DEFAULT_DJANGO_COMPONENTS
 
-    standard_module_crud_python_django(
+    obj = StandardModuleCrudPythonDjango()
+    obj.invoke(
         full_path,
         app_main,
         singular_name,

@@ -1,11 +1,8 @@
 import os
 from gen.helpers.helper_columns import HelperColumns
-from gen.python_django.helpers.helper_dj_file import (
-    helper_append_content
-)
-from gen.python_django.to_create_module_crud.standard_module_crud_python_django import standard_module_crud_python_django
 from gen.helpers.helper_print import print_message, GREEN, CYAN, run_command
 from gen.helpers.helper_file import HelperFile
+from gen.python_django.to_create_module_crud.standard_module_crud_python_django import StandardModuleCrudPythonDjango
 
 
 class DjModuleDevs:
@@ -39,7 +36,15 @@ class DjModuleDevs:
         input_menu_checkbox = ['api_route', 'api_serializer', 'api_wiewset']
         formatColumns = HelperColumns.parse_columns_input(columns)
         
-        standard_module_crud_python_django(full_path, app_main, singular_name, plural_name, formatColumns, input_menu_checkbox)
+        obj = StandardModuleCrudPythonDjango()
+        obj.invoke(
+            full_path, 
+            app_main, 
+            singular_name, 
+            plural_name, 
+            formatColumns, 
+            input_menu_checkbox
+        )
     
     
     def update_file_api_views(self, full_path, project_name_format, app_main):

@@ -1,19 +1,9 @@
 import os
-from gen.helpers.helper_columns import parse_columns_input
-from gen.python_django.helpers.helper_dj_file import (
-    helper_append_content, 
-    helper_create_init_file, 
-    helper_update_line, 
-    helper_update_list
-)
-from gen.python_django.to_create_module_crud.standard_module_crud_python_django import standard_module_crud_python_django
 from gen.helpers.helper_print import dd, print_green, print_message, GREEN, CYAN, print_red
-
-
-
-
-import os
+from gen.helpers.helper_columns import HelperColumns
 from gen.helpers.helper_file import HelperFile
+from gen.python_django.helpers.helper_dj_file import helper_append_content
+from gen.python_django.to_create_module_crud.standard_module_crud_python_django import StandardModuleCrudPythonDjango
 
 
 class DjModuleUsers:
@@ -37,9 +27,17 @@ class DjModuleUsers:
         singular_name = "User"
         plural_name = "Users"
         input_menu_checkbox=["api_route", "api_serializer", "api_wiewset", "api_model", "api_service", "api_postman"]
-        columns = parse_columns_input("email password")
+        columns = HelperColumns.parse_columns_input("email password")
         
-        standard_module_crud_python_django(full_path, app_main, singular_name, plural_name, columns, input_menu_checkbox)
+        obj = StandardModuleCrudPythonDjango()
+        obj.invoke(
+            full_path, 
+            app_main, 
+            singular_name, 
+            plural_name, 
+            columns, 
+            input_menu_checkbox
+        )
         
     
     

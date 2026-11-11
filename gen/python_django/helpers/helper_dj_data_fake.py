@@ -1,5 +1,5 @@
 from gen.helpers.helper_columns import HelperColumns
-from gen.python_django.to_create_module_crud.standard_module_crud_python_django import standard_module_crud_python_django
+from gen.python_django.to_create_module_crud.standard_module_crud_python_django import StandardModuleCrudPythonDjango
 
 
 class HelperDjDataFake:
@@ -8,11 +8,12 @@ class HelperDjDataFake:
     """
     
     def __init__(self):
-        pass
+        self.module_crud = StandardModuleCrudPythonDjango()
+        
     
     
-    @staticmethod
-    def createCRUD(full_path: str, app_main: str) -> None:
+    
+    def invoke(self, full_path: str, app_main: str) -> None:
         
         ######################
         # AiPromptCategory
@@ -23,7 +24,7 @@ class HelperDjDataFake:
             "name description slug"
         )
         
-        standard_module_crud_python_django(
+        self.module_crud.invoke(
             full_path,
             app_main,
             singular_name,
@@ -41,7 +42,7 @@ class HelperDjDataFake:
             "ai_prompt_category_id:fk system_role system_message user_role user_message is_text_processed:boolean is_image_processed:boolean is_video_processed:boolean"
         )
         
-        standard_module_crud_python_django(
+        self.module_crud.invoke(
             full_path,
             app_main,
             singular_name,

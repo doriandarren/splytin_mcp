@@ -3,7 +3,7 @@ from dotenv import load_dotenv
 from gen.helpers.helper_columns import HelperColumns
 from gen.helpers.helper_menu import menu_checkbox, pause
 from gen.helpers.helper_print import input_with_validation, dd
-from gen.services.generator_services import create_python_django_crud_service
+from gen.python_django.to_create_module_crud.standard_module_crud_python_django import StandardModuleCrudPythonDjango
 
 
 load_dotenv()
@@ -41,8 +41,8 @@ def start_module_crud_python_django():
 
     ## dd(columns)
     
-    
-    create_python_django_crud_service(
+    obj = StandardModuleCrudPythonDjango()
+    obj.invoke(
         full_path,
         app_main,
         singular_name,

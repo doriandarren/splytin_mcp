@@ -1,12 +1,12 @@
 import os
-from gen.helpers.helper_columns import parse_columns_input
+from gen.helpers.helper_columns import HelperColumns
 from gen.python_django.helpers.helper_dj_file import (
     helper_append_content, 
     helper_insert_after_line
 )
-from gen.python_django.to_create_module_crud.standard_module_crud_python_django import standard_module_crud_python_django
-from gen.helpers.helper_print import dd, print_message, GREEN, CYAN
+from gen.helpers.helper_print import dd, print_message, GREEN
 from gen.helpers.helper_file import HelperFile
+from gen.python_django.to_create_module_crud.standard_module_crud_python_django import StandardModuleCrudPythonDjango
 
 
 class DjModuleAuth:
@@ -19,11 +19,18 @@ class DjModuleAuth:
         app_main = "main"
         singular_name = "Authentication"
         plural_name = "Authentications"
-        columns = parse_columns_input("email password")
+        columns = HelperColumns.parse_columns_input("email password")
         input_menu_checkbox=["api_route", "api_serializer", "api_wiewset", "api_model", "api_service"]
         
-        
-        standard_module_crud_python_django(full_path, app_main, singular_name, plural_name, columns, input_menu_checkbox)
+        obj = StandardModuleCrudPythonDjango()
+        obj.invoke(
+            full_path, 
+            app_main, 
+            singular_name, 
+            plural_name, 
+            columns, 
+            input_menu_checkbox
+        )
         
         
         self.update_router(full_path)
