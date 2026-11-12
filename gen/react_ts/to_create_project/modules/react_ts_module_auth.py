@@ -227,15 +227,15 @@ export const LoginPage = () => {
     return (
         <main className="login-page grid min-h-svh lg:grid-cols-2">
             {/* ============================================
-                PANEL IZQUIERDO - BRANDING
-        ============================================ */}
+                        PANEL IZQUIERDO - BRANDING
+                ============================================ */}
             <section className="login-panel hidden min-h-svh items-center justify-center px-12 py-16 lg:flex xl:px-20">
-                <div className="w-full max-w-lg">
+                <div className="flex w-full max-w-lg flex-col justify-center ml-10 mt-5">
                     {/* Logo */}
                     <img
                         src={logo}
                         alt="Logo de la empresa"
-                        className="mb-12 h-auto w-full max-w-md object-contain"
+                        className="mb-5 h-auto w-full max-w-sm object-contain"
                     />
 
                     {/* Título principal */}
@@ -247,13 +247,13 @@ export const LoginPage = () => {
                     <p className="mt-4 text-2xl font-light text-slate-200">ERP Edition</p>
 
                     {/* Línea decorativa */}
-                    <div className="mt-8 h-1 w-16 rounded-full bg-sky-400" />
+                    <div className="mt-8 h-1 w-32 rounded-full bg-sky-400" />
                 </div>
             </section>
 
             {/* ============================================
-                PANEL DERECHO - LOGIN
-        ============================================ */}
+                        PANEL DERECHO - LOGIN
+                ============================================ */}
             <section
                 aria-labelledby="login-title"
                 className="login-form flex min-h-svh items-center justify-center px-6 py-12 sm:px-12 lg:px-16"
@@ -283,8 +283,8 @@ export const LoginPage = () => {
                     </div>
 
                     {/* ============================================
-                        FORMULARIO
-                ============================================ */}
+                                    FORMULARIO
+                            ============================================ */}
                     <form
                         onSubmit={onSubmit}
                         aria-busy={isSubmitting}
@@ -433,8 +433,8 @@ export const LoginPage = () => {
                     </form>
 
                     {/* ============================================
-                        FOOTER
-                    ============================================ */}
+                                    FOOTER
+                                ============================================ */}
                     <div className="mt-12 text-sm leading-relaxed text-muted-foreground">
                         Al iniciar sesión, aceptas nuestros{" "}
                         <a
