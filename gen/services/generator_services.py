@@ -86,7 +86,7 @@ def create_python_django_project_service(
     project_path: str,
     app_main: str = "main",
 ) -> dict[str, Any]:
-    from gen.helpers.helper_string import normalize_project_name
+    from helpers.helper_string import normalize_project_name
 
 
     full_path = _full_path(project_path, project_name)

@@ -1,7 +1,7 @@
 import os
 
 from gen.helpers.helper_columns import HelperColumns
-from gen.helpers.helper_string import normalize_project_name
+from helpers.helper_string import normalize_project_name
 from gen.python_django.helpers.helper_dj_virtual_env import HelperDjVirtualEnv
 
 

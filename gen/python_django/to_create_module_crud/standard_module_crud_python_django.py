@@ -1,6 +1,6 @@
 import os
 from helpers.helper_print import camel_to_kebab, camel_to_snake, print_cyan
-from gen.helpers.helper_string import normalize_project_name
+from helpers.helper_string import normalize_project_name
 from gen.python_django.helpers.helper_dj_virtual_env import HelperDjVirtualEnv
 from gen.python_django.to_create_module_crud.dj_crud_api_model import DjCrudApiModel
 from gen.python_django.to_create_module_crud.dj_crud_api_postman import DjCrudApiPostman

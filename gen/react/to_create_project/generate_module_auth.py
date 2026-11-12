@@ -1,6 +1,6 @@
 import os
 from helpers.helper_print import create_folder
-from gen.helpers.helper_string import normalize_project_name
+from helpers.helper_string import normalize_project_name
 
 
 

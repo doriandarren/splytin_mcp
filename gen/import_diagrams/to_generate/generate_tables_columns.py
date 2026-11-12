@@ -6,7 +6,7 @@ import xml.etree.ElementTree as ET
 from dotenv import load_dotenv
 from gen.helpers.helper_columns import HelperColumns
 from helpers.helper_print import capitalize_camel_case, dd, input_with_validation, print_header_list
-from gen.helpers.helper_string import convert_word
+from helpers.helper_string import convert_word
 from gen.import_diagrams.helpers.helper_table_naming import table_to_classes
 
 from gen.php_laravel.to_module_crud.standard_module_crud_php import standard_module_crud_php

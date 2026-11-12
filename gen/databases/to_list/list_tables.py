@@ -3,7 +3,7 @@ import os
 from gen.databases.settings.connection import get_connection
 from gen.export_diagrams.main_export_diagrams import create_export_diagrams_by_list
 from helpers.helper_print import dd
-from gen.helpers.helper_string import convert_word
+from helpers.helper_string import convert_word
 
 
 def get_foreign_keys(cursor, database, table_name):
