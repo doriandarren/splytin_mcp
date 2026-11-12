@@ -1,5 +1,5 @@
 import os
-from gen.helpers.helper_file import HelperFile
+from helpers.helper_file import HelperFile
 
 
 class DjHttp:

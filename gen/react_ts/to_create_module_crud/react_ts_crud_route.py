@@ -1,7 +1,7 @@
 import os 
 from gen.helpers.helper_print import dd, print_green, print_red
 from gen.react_ts.helpers.helper_react_ts_router import HelperReactTsRouter
-from gen.helpers.helper_file import HelperFile
+from helpers.helper_file import HelperFile
 
 
 

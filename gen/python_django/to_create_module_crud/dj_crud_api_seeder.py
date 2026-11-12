@@ -1,5 +1,5 @@
 import os
-from gen.helpers.helper_file import HelperFile
+from helpers.helper_file import HelperFile
 from gen.python_django.helpers.helper_dj_seeder import HelperDjSeeder
 
 

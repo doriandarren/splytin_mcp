@@ -1,6 +1,6 @@
 import os
 from gen.python_django.helpers.helper_dj_file import helper_append_content
-from gen.helpers.helper_file import HelperFile
+from helpers.helper_file import HelperFile
 
 
 

@@ -2,7 +2,7 @@
 import os
 import json
 
-from gen.helpers.helper_file import HelperFile
+from helpers.helper_file import HelperFile
 from gen.php_laravel.to_module_crud.helpers.helper_laravel_postman import HelperLaravelPostman
 
 

@@ -1,6 +1,6 @@
 import os
 from datetime import datetime
-from gen.helpers.helper_file import HelperFile
+from helpers.helper_file import HelperFile
 from gen.helpers.helper_columns import HelperColumns
 from gen.php_laravel.to_module_crud.helpers.helper_laravel_migrate import HelperLaravelMigrate
 

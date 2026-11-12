@@ -1,6 +1,6 @@
 import os
 from gen.helpers.helper_columns import HelperColumns
-from gen.helpers.helper_file import HelperFile
+from helpers.helper_file import HelperFile
 from gen.python_django.to_create_module_crud.standard_module_crud_python_django import StandardModuleCrudPythonDjango
 
 

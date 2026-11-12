@@ -1,6 +1,6 @@
 import os
-from gen.helpers.helper_file import HelperFile
-from gen.helpers.helper_json import HelperJson
+from helpers.helper_file import HelperFile
+from helpers.helper_json import HelperJson
 from gen.helpers.helper_print import print_green, run_command
 
 

@@ -1,6 +1,6 @@
 import os
 from gen.helpers.helper_columns import HelperColumns
-from gen.helpers.helper_file import HelperFile
+from helpers.helper_file import HelperFile
 from gen.react_ts.to_create_module_crud.standard_module_crud_react_ts import StandardModuleCrudReactTs
 
 
