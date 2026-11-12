@@ -140,7 +140,7 @@ import { useAuthStore } from "@/modules/auth/stores/authStore";
 const menuItems = [
     {
         label: "Mi perfil",
-        path: "/admin/profile",
+        path: "/admin/profiles",
         icon: UserRound,
     },
     {
