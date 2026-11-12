@@ -1,5 +1,5 @@
 import os
-from gen.helpers.helper_print import print_message, GREEN, CYAN
+from helpers.helper_print import print_message, GREEN, CYAN
 
 
 def update_create_users_table(full_path):

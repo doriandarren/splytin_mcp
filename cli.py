@@ -8,7 +8,7 @@ if BASE_DIR not in sys.path:
     sys.path.insert(0, BASE_DIR)
 
 from gen.helpers.helper_menu import clear_screen, menu_list
-from gen.helpers.helper_print import print_header
+from helpers.helper_print import print_header
 from gen.export_diagrams.main_export_diagrams import main_export_diagrams
 from gen.import_diagrams.main_import_diagrams import main_import_diagrams
 from gen.react.main_react import main_react

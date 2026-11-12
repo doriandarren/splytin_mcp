@@ -1,5 +1,5 @@
 import os
-from gen.helpers.helper_print import print_message, GREEN, CYAN, run_command, create_folder
+from helpers.helper_print import print_message, GREEN, CYAN, run_command, create_folder
 
 
 def generate_module_dashboard(project_path):

@@ -1,5 +1,5 @@
 import os 
-from gen.helpers.helper_print import dd, print_green, print_red
+from helpers.helper_print import dd, print_green, print_red
 from gen.react_ts.helpers.helper_react_ts_router import HelperReactTsRouter
 from helpers.helper_file import HelperFile
 

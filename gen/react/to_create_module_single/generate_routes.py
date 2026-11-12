@@ -1,5 +1,5 @@
 import os
-from gen.helpers.helper_print import print_message, GREEN, CYAN
+from helpers.helper_print import print_message, GREEN, CYAN
 
 def generate_routes(full_path, singular_name, plural_name_snake):
     """

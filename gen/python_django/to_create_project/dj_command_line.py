@@ -1,6 +1,6 @@
 import os
 import platform
-from gen.helpers.helper_print import print_message, GREEN, CYAN, run_command
+from helpers.helper_print import print_message, GREEN, CYAN, run_command
 from gen.python_django.helpers.helper_dj_virtual_env import HelperDjVirtualEnv
 
 

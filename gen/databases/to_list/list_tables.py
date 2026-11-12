@@ -2,7 +2,7 @@ import os
 
 from gen.databases.settings.connection import get_connection
 from gen.export_diagrams.main_export_diagrams import create_export_diagrams_by_list
-from gen.helpers.helper_print import dd
+from helpers.helper_print import dd
 from gen.helpers.helper_string import convert_word
 
 

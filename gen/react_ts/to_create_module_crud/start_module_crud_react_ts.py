@@ -3,7 +3,7 @@ from dotenv import load_dotenv
 from gen.react_ts.to_create_module_crud.standard_module_crud_react_ts import StandardModuleCrudReactTs
 from gen.helpers.helper_columns import HelperColumns
 from gen.helpers.helper_menu import menu_checkbox, pause
-from gen.helpers.helper_print import input_with_validation
+from helpers.helper_print import input_with_validation
 
 
 # Load ENV

@@ -1,4 +1,4 @@
-from gen.helpers.helper_print import print_green, run_command
+from helpers.helper_print import print_green, run_command
 
 
 class ReactTsZodReactHookForm:

@@ -1,5 +1,5 @@
 import os
-from gen.helpers.helper_print import dd, print_green, print_red
+from helpers.helper_print import dd, print_green, print_red
 from gen.react_ts.to_create_project.helpers.helper_react_ts_index_css import HelperReactTsIndexCss
 
 

@@ -6,7 +6,7 @@ if BASE_DIR not in sys.path:
     sys.path.append(BASE_DIR)
 
 from gen.blender.to_create_project.start_assets_blender import start_assets_blender
-from gen.helpers.helper_print import print_header
+from helpers.helper_print import print_header
 from gen.helpers.helper_menu import menu_list, clear_screen
 
 

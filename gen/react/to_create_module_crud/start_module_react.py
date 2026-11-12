@@ -2,7 +2,7 @@ import os
 from dotenv import load_dotenv
 from gen.helpers.helper_columns import HelperColumns
 from gen.helpers.helper_menu import menu_checkbox, pause
-from gen.helpers.helper_print import input_with_validation
+from helpers.helper_print import input_with_validation
 from gen.react.to_create_module_crud.standard_module_crud_react import standard_module_crud_react
 
 

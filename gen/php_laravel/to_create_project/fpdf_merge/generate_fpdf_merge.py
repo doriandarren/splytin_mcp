@@ -1,6 +1,6 @@
 import os
 
-from gen.helpers.helper_print import print_message, GREEN, CYAN, run_command
+from helpers.helper_print import print_message, GREEN, CYAN, run_command
 
 
 def generate_fpdf_merge(full_path):

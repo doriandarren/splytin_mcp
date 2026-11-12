@@ -2,7 +2,7 @@ import os
 from dotenv import load_dotenv
 from gen.helpers.helper_columns import HelperColumns
 from gen.helpers.helper_menu import menu_checkbox, pause
-from gen.helpers.helper_print import input_with_validation, dd
+from helpers.helper_print import input_with_validation, dd
 from gen.python_django.to_create_module_crud.standard_module_crud_python_django import StandardModuleCrudPythonDjango
 
 

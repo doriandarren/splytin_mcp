@@ -1,7 +1,7 @@
 
 from gen.python_django.helpers.helper_dj_file import helper_append_content
 from gen.python_django.helpers.helper_dj_model_fields import HelperDjModelFields
-from gen.helpers.helper_print import print_green 
+from helpers.helper_print import print_green 
 
 
 class DjCrudApiModel:

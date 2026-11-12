@@ -1,5 +1,5 @@
 import os
-from gen.helpers.helper_print import create_folder
+from helpers.helper_print import create_folder
 
 from gen.react.to_create_module_crud.helpers.helper_list import (
     clean_name,

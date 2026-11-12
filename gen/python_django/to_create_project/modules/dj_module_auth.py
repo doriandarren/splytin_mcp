@@ -4,7 +4,7 @@ from gen.python_django.helpers.helper_dj_file import (
     helper_append_content, 
     helper_insert_after_line
 )
-from gen.helpers.helper_print import dd, print_message, GREEN
+from helpers.helper_print import dd, print_message, GREEN
 from helpers.helper_file import HelperFile
 from gen.python_django.to_create_module_crud.standard_module_crud_python_django import StandardModuleCrudPythonDjango
 

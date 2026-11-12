@@ -1,5 +1,5 @@
 import os
-from gen.helpers.helper_print import print_message, GREEN, CYAN
+from helpers.helper_print import print_message, GREEN, CYAN
 
 def generate_auth_route(full_path):
     create_auth_route(full_path)

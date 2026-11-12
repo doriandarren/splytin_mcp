@@ -1,7 +1,7 @@
 import os
 from dotenv import load_dotenv
 from gen.helpers.helper_menu import pause
-from gen.helpers.helper_print import input_with_validation
+from helpers.helper_print import input_with_validation
 from gen.react_ts.to_create_project.components.react_ts_component_private import ReactTsComponentPrivate
 from gen.react_ts.to_create_project.components.react_ts_component_public import ReactTsComponentPublic
 from gen.react_ts.to_create_project.components.react_ts_pagination_components import ReactTsPaginationComponents

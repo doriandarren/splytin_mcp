@@ -1,5 +1,5 @@
 import os
-from gen.helpers.helper_print import print_cyan, print_green, print_message, GREEN, CYAN, run_command
+from helpers.helper_print import print_cyan, print_green, print_message, GREEN, CYAN, run_command
 from gen.python_django.helpers.helper_dj_file import helper_add_import, helper_append_content, helper_replace_block
 
 from helpers.helper_file import HelperFile

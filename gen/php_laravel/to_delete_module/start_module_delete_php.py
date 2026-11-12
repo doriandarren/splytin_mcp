@@ -1,5 +1,5 @@
 from gen.helpers.helper_menu import menu_checkbox, pause
-from gen.helpers.helper_print import input_with_validation
+from helpers.helper_print import input_with_validation
 
 
 def start_module_delete_php():

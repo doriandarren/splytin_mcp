@@ -1,6 +1,6 @@
 import os
 from gen.python_django.helpers.helper_dj_file import helper_add_import, helper_append_content
-from gen.helpers.helper_print import print_message, GREEN, CYAN
+from helpers.helper_print import print_message, GREEN, CYAN
 
 
 class DjGenerateMedia:

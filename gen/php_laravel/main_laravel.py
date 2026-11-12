@@ -6,7 +6,7 @@ BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 if BASE_DIR not in sys.path:
     sys.path.append(BASE_DIR)
 
-from gen.helpers.helper_print import print_header
+from helpers.helper_print import print_header
 from gen.helpers.helper_menu import menu_list, clear_screen
 from gen.php_laravel.to_module_crud.start_module_php import start_module_php
 from gen.php_laravel.to_create_project.start_project_php import start_project_php

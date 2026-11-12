@@ -5,7 +5,7 @@ import xml.etree.ElementTree as ET
 
 from dotenv import load_dotenv
 from gen.helpers.helper_columns import HelperColumns
-from gen.helpers.helper_print import capitalize_camel_case, dd, input_with_validation, print_header_list
+from helpers.helper_print import capitalize_camel_case, dd, input_with_validation, print_header_list
 from gen.helpers.helper_string import convert_word
 from gen.import_diagrams.helpers.helper_table_naming import table_to_classes
 

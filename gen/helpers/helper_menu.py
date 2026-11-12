@@ -3,7 +3,7 @@ try:
     import questionary
 except ModuleNotFoundError:
     questionary = None
-from gen.helpers.helper_print import print_header
+from helpers.helper_print import print_header
 
 
 def clear_screen():

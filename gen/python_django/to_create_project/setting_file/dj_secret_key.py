@@ -3,7 +3,7 @@ import os
 import re
 import subprocess
 
-from gen.helpers.helper_print import print_green, print_red, print_cyan
+from helpers.helper_print import print_green, print_red, print_cyan
 
 
 class DjSecretKey:

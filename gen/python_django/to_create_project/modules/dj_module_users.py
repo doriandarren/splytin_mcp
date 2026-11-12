@@ -1,5 +1,5 @@
 import os
-from gen.helpers.helper_print import dd, print_green, print_message, GREEN, CYAN, print_red
+from helpers.helper_print import dd, print_green, print_message, GREEN, CYAN, print_red
 from gen.helpers.helper_columns import HelperColumns
 from helpers.helper_file import HelperFile
 from gen.python_django.helpers.helper_dj_file import helper_append_content

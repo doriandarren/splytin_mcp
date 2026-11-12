@@ -1,6 +1,6 @@
 import os
 
-from gen.helpers.helper_print import print_message, GREEN, CYAN
+from helpers.helper_print import print_message, GREEN, CYAN
 
 
 class HelperLaravelRoute:

@@ -1,5 +1,5 @@
 import os
-from gen.helpers.helper_print import print_message, GREEN, CYAN
+from helpers.helper_print import print_message, GREEN, CYAN
 from gen.react.to_create_module_crud.standard_module_crud_react import standard_module_crud_react
 
 

@@ -1,5 +1,5 @@
 import os
-from gen.helpers.helper_print import print_green, print_red
+from helpers.helper_print import print_green, print_red
 
 
 class DjDebug:

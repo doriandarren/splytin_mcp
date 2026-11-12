@@ -1,6 +1,6 @@
 import os
 from gen.python_django.helpers.helper_dj_file import helper_update_line, helper_update_list
-from gen.helpers.helper_print import print_message, GREEN
+from helpers.helper_print import print_message, GREEN
 from helpers.helper_file import HelperFile
 
 
