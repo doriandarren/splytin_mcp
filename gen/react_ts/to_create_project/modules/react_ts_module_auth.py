@@ -111,7 +111,7 @@ export const LoginPage = () => {
 
     // Estados del formulario
     const [credentials, setCredentials] = useState<LoginRequest>({
-        email: "admin@app1.com",
+        email: "admin@splytin.com",
         password: "__PASSWORD__",
     });
 
