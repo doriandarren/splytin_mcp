@@ -8,7 +8,7 @@ class HelperResource:
     """
 
     # Ruta absoluta a la carpeta resources del proyecto
-    BASE_PATH = Path(__file__).resolve().parents[2] / "resources"
+    BASE_PATH = Path(__file__).resolve().parents[1] / "resources"
 
 
     @classmethod
