@@ -78,385 +78,384 @@ export const AuthLayout = () => {
     
         content = r'''import { useEffect, useRef, useState } from "react";
 import type { SubmitEvent } from "react";
+
 import { Link, useLocation, useNavigate } from "react-router";
-import "./LoginPage.css";
-import {
-  ArrowRight,
-  Eye,
-  EyeOff,
-  LoaderCircle,
-  PanelsTopLeft,
-} from "lucide-react";
+
+import { ArrowRight, Eye, EyeOff, LoaderCircle } from "lucide-react";
+
+import logo from "@/assets/images/logo.png";
+
 import { ApiError } from "@/api/api-error";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+
 import { authTokenStorage } from "../../services/authTokenStorage";
 import { useAuthStore } from "../../stores/authStore";
 import { login } from "../services/loginService";
 import type { LoginRequest } from "../types/login.types";
-type LoginFieldErrors = Partial<
-    Record<keyof LoginRequest, string[]>
->;
 
+import "./LoginPage.css";
+
+type LoginFieldErrors = Partial<Record<keyof LoginRequest, string[]>>;
 
 export const LoginPage = () => {
-  const navigate = useNavigate();
-  const location = useLocation();
+    const navigate = useNavigate();
+    const location = useLocation();
 
-  // Zustand
-  const setAuthenticated = useAuthStore(
-    (state) => state.setAuthenticated
-  );
+    // Zustand
+    const setAuthenticated = useAuthStore((state) => state.setAuthenticated);
 
-  // Estados del formulario
-  const [credentials, setCredentials] = useState<LoginRequest>({
-    email: "admin@splytin.com",
-    password: "Tailandia2026",
-  });
-
-  const [showPassword, setShowPassword] = useState(false);
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [errorMessage, setErrorMessage] = useState("");
-  const [fieldErrors, setFieldErrors] = useState<LoginFieldErrors>({});
-
-  // Control de peticiones
-  const activeRequest = useRef<AbortController | null>(null);
-
-  // Cancelar la petición al desmontar el componente
-  useEffect(() => {
-    return () => {
-      activeRequest.current?.abort();
-    };
-  }, []);
-
-  // Actualizar campos
-  const updateField = (
-    field: keyof LoginRequest,
-    value: string
-  ) => {
-    setCredentials((previous) => ({
-      ...previous,
-      [field]: value,
-    }));
-
-    setFieldErrors((previous) => ({
-      ...previous,
-      [field]: undefined,
-    }));
-
-    setErrorMessage("");
-  };
-
-  // Enviar formulario
-  const onSubmit = async (
-    event: SubmitEvent<HTMLFormElement>
-  ) => {
-    event.preventDefault();
-
-    // Evitar peticiones duplicadas
-    if (activeRequest.current) return;
-
-    const controller = new AbortController();
-    activeRequest.current = controller;
-
-    setIsSubmitting(true);
-    setErrorMessage("");
-    setFieldErrors({});
-
-    try {
-      // 1. Login contra Django
-      const response = await login(
-        {
-          email: credentials.email.trim(),
-          password: credentials.password,
-        },
-        controller.signal
-      );
-
-      if (controller.signal.aborted) return;
-
-      // 2. Guardar el token
-      try {
-        authTokenStorage.set(response.data.attributes.token);
-      } catch {
-        setErrorMessage(
-          "No se pudo guardar la sesión en este navegador. " +
-          "Comprueba que el almacenamiento esté permitido."
-        );
-        return;
-      }
-
-      // 3. Actualizar autenticación en Zustand
-      setAuthenticated(true);
-
-      // 4. Limpiar formulario
-      setCredentials({
+    // Estados del formulario
+    const [credentials, setCredentials] = useState<LoginRequest>({
         email: "",
         password: "",
-      });
+    });
 
-      // 5. Recuperar ruta original
-      const from = location.state?.from;
+    const [showPassword, setShowPassword] = useState(false);
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [errorMessage, setErrorMessage] = useState("");
+    const [fieldErrors, setFieldErrors] = useState<LoginFieldErrors>({});
 
-      const destination =
-        typeof from?.pathname === "string" &&
-        from.pathname.startsWith("/admin") &&
-        !from.pathname.startsWith("//")
-          ? `${from.pathname}${from.search ?? ""}${from.hash ?? ""}`
-          : "/admin";
+    // Control de peticiones
+    const activeRequest = useRef<AbortController | null>(null);
 
-      // 6. Redirigir
-      void navigate(destination, { replace: true });
+    // Cancelar la petición al desmontar el componente
+    useEffect(() => {
+        return () => {
+            activeRequest.current?.abort();
+        };
+    }, []);
 
-    } catch (error) {
-      if (controller.signal.aborted) return;
+    // Actualizar campos
+    const updateField = (field: keyof LoginRequest, value: string) => {
+        setCredentials((previous) => ({
+            ...previous,
+            [field]: value,
+        }));
 
-      if (error instanceof ApiError) {
-        const errors = error.getFieldErrors();
+        setFieldErrors((previous) => ({
+            ...previous,
+            [field]: undefined,
+        }));
 
-        setFieldErrors({
-          email: errors.email,
-          password: errors.password,
-        });
+        setErrorMessage("");
+    };
 
-        setErrorMessage(error.message);
-      } else {
-        setErrorMessage(
-          "No se pudo iniciar sesión. Inténtalo de nuevo."
-        );
-      }
-    } finally {
-      activeRequest.current = null;
+    // Enviar formulario
+    const onSubmit = async (event: SubmitEvent<HTMLFormElement>) => {
+        event.preventDefault();
 
-      if (!controller.signal.aborted) {
-        setIsSubmitting(false);
-      }
-    }
-  };
+        // Evitar peticiones duplicadas
+        if (activeRequest.current) return;
 
-  return (
-    <main className="grid min-h-svh lg:grid-cols-2">
-      {/* Panel izquierdo */}
-      <section className="login-panel hidden flex-col justify-between p-12 lg:flex xl:p-20">
-        <div className="flex items-center gap-3 text-xl font-semibold">
-          <PanelsTopLeft
-            aria-hidden="true"
-            className="size-7"
-          />
+        const controller = new AbortController();
+        activeRequest.current = controller;
 
-          <span>Splytin ERP</span>
-        </div>
+        setIsSubmitting(true);
+        setErrorMessage("");
+        setFieldErrors({});
 
-        <div className="max-w-lg space-y-6">
-          <p className="text-sm font-medium uppercase tracking-widest text-slate-400">
-            Tu espacio de trabajo
-          </p>
+        try {
+            // 1. Login contra Django
+            const response = await login(
+                {
+                    email: credentials.email.trim(),
+                    password: credentials.password,
+                },
+                controller.signal,
+            );
 
-          <h1 className="text-4xl font-semibold leading-tight xl:text-5xl">
-            Todo lo que necesitas para gestionar tu empresa.
-          </h1>
+            if (controller.signal.aborted) return;
 
-          <p className="text-lg leading-relaxed text-slate-300">
-            Accede a tus herramientas y continúa donde lo dejaste.
-          </p>
-        </div>
+            // 2. Guardar el token
+            try {
+                authTokenStorage.set(response.data.attributes.token);
+            } catch {
+                setErrorMessage(
+                    "No se pudo guardar la sesión en este navegador. " +
+                        "Comprueba que el almacenamiento esté permitido.",
+                );
+                return;
+            }
 
-        <p className="text-sm text-slate-400">
-          Sistema de gestión empresarial
-        </p>
-      </section>
+            // 3. Actualizar autenticación en Zustand
+            setAuthenticated(true);
 
-      {/* Panel derecho */}
-      <section
-        aria-labelledby="login-title"
-        className="login-form flex items-center justify-center px-6 py-12 sm:px-12"
-      >
-        <div className="w-full max-w-sm">
-          {/* Logo móvil */}
-          <div className="mb-10 flex items-center gap-2 font-semibold lg:hidden">
-            <PanelsTopLeft
-              aria-hidden="true"
-              className="size-6"
-            />
-            Splytin ERP
-          </div>
+            // 4. Limpiar formulario
+            setCredentials({
+                email: "",
+                password: "",
+            });
 
-          {/* Título */}
-          <div className="mb-8 space-y-2">
-            <h2
-              id="login-title"
-              className="text-3xl font-semibold tracking-tight"
+            // 5. Recuperar ruta original
+            const from = location.state?.from;
+
+            const destination =
+                typeof from?.pathname === "string" &&
+                from.pathname.startsWith("/admin") &&
+                !from.pathname.startsWith("//")
+                    ? `${from.pathname}${from.search ?? ""}${from.hash ?? ""}`
+                    : "/admin";
+
+            // 6. Redirigir
+            void navigate(destination, { replace: true });
+        } catch (error) {
+            if (controller.signal.aborted) return;
+
+            if (error instanceof ApiError) {
+                const errors = error.getFieldErrors();
+
+                setFieldErrors({
+                    email: errors.email,
+                    password: errors.password,
+                });
+
+                setErrorMessage(error.message);
+            } else {
+                setErrorMessage("No se pudo iniciar sesión. Inténtalo de nuevo.");
+            }
+        } finally {
+            activeRequest.current = null;
+
+            if (!controller.signal.aborted) {
+                setIsSubmitting(false);
+            }
+        }
+    };
+
+    return (
+        <main className="login-page grid min-h-svh lg:grid-cols-2">
+            {/* ============================================
+                PANEL IZQUIERDO - BRANDING
+        ============================================ */}
+            <section className="login-panel hidden min-h-svh items-center justify-center px-12 py-16 lg:flex xl:px-20">
+                <div className="w-full max-w-lg">
+                    {/* Logo */}
+                    <img
+                        src={logo}
+                        alt="Logo de la empresa"
+                        className="mb-12 h-auto w-full max-w-md object-contain"
+                    />
+
+                    {/* Título principal */}
+                    <h1 className="max-w-md text-4xl font-light leading-tight tracking-tight text-white xl:text-2xl">
+                        Sistema de Gestión Empresarial
+                    </h1>
+
+                    {/* Subtítulo */}
+                    <p className="mt-4 text-2xl font-light text-slate-200">ERP Edition</p>
+
+                    {/* Línea decorativa */}
+                    <div className="mt-8 h-1 w-16 rounded-full bg-sky-400" />
+                </div>
+            </section>
+
+            {/* ============================================
+                PANEL DERECHO - LOGIN
+        ============================================ */}
+            <section
+                aria-labelledby="login-title"
+                className="login-form flex min-h-svh items-center justify-center px-6 py-12 sm:px-12 lg:px-16"
             >
-              Iniciar sesión
-            </h2>
+                <div className="w-full max-w-md">
+                    {/* Logo móvil */}
+                    <div className="mb-12 lg:hidden">
+                        <img
+                            src={logo}
+                            alt="Logo de la empresa"
+                            className="h-16 w-auto max-w-full object-contain"
+                        />
+                    </div>
 
-            <p className="text-sm text-muted-foreground">
-              Introduce tus credenciales para acceder al panel.
-            </p>
-          </div>
+                    {/* Título */}
+                    <div className="mb-10 space-y-3">
+                        <h2
+                            id="login-title"
+                            className="text-3xl font-semibold tracking-tight text-primary"
+                        >
+                            Iniciar sesión
+                        </h2>
 
-          {/* Formulario */}
-          <form
-            onSubmit={onSubmit}
-            aria-busy={isSubmitting}
-            className="space-y-5"
-          >
-            {/* Error general */}
-            {errorMessage && (
-              <div
-                role="alert"
-                className="rounded-lg border border-destructive/30 bg-destructive/5 p-3 text-sm text-destructive"
-              >
-                {errorMessage}
-              </div>
-            )}
+                        <p className="text-sm text-muted-foreground">
+                            Introduce tus credenciales para acceder al sistema.
+                        </p>
+                    </div>
 
-            {/* Email */}
-            <div className="space-y-2">
-              <Label htmlFor="login-email">
-                Correo electrónico
-              </Label>
+                    {/* ============================================
+                        FORMULARIO
+                ============================================ */}
+                    <form
+                        onSubmit={onSubmit}
+                        aria-busy={isSubmitting}
+                        className="space-y-5"
+                    >
+                        {/* Error general */}
+                        {errorMessage && (
+                            <div
+                                role="alert"
+                                className="rounded-lg border border-destructive/30 bg-destructive/5 p-3 text-sm text-destructive"
+                            >
+                                {errorMessage}
+                            </div>
+                        )}
 
-              <Input
-                id="login-email"
-                name="email"
-                type="email"
-                autoComplete="username"
-                autoCapitalize="none"
-                spellCheck={false}
-                placeholder="tu@empresa.com"
-                value={credentials.email}
-                onChange={(event) =>
-                  updateField("email", event.target.value)
-                }
-                required
-                disabled={isSubmitting}
-                aria-invalid={Boolean(
-                  fieldErrors.email?.length
-                )}
-                aria-describedby={
-                  fieldErrors.email?.length
-                    ? "login-email-error"
-                    : undefined
-                }
-                className="h-11"
-              />
+                        {/* Email */}
+                        <div className="space-y-2">
+                            <Label htmlFor="login-email">Correo electrónico</Label>
 
-              {Boolean(fieldErrors.email?.length) && (
-                <p
-                  id="login-email-error"
-                  className="text-sm text-destructive"
-                >
-                  {fieldErrors.email?.join(" ")}
-                </p>
-              )}
-            </div>
+                            <Input
+                                id="login-email"
+                                name="email"
+                                type="email"
+                                autoComplete="username"
+                                autoCapitalize="none"
+                                spellCheck={false}
+                                placeholder="Email"
+                                value={credentials.email}
+                                onChange={(event) => updateField("email", event.target.value)}
+                                required
+                                disabled={isSubmitting}
+                                aria-invalid={Boolean(fieldErrors.email?.length)}
+                                aria-describedby={
+                                    fieldErrors.email?.length ? "login-email-error" : undefined
+                                }
+                                className="h-12"
+                            />
 
-            {/* Contraseña */}
-            <div className="space-y-2">
-              <Label htmlFor="login-password">
-                Contraseña
-              </Label>
+                            {Boolean(fieldErrors.email?.length) && (
+                                <p id="login-email-error" className="text-sm text-destructive">
+                                    {fieldErrors.email?.join(" ")}
+                                </p>
+                            )}
+                        </div>
 
-              <div className="relative">
-                <Input
-                  id="login-password"
-                  name="password"
-                  type={showPassword ? "text" : "password"}
-                  autoComplete="current-password"
-                  value={credentials.password}
-                  onChange={(event) =>
-                    updateField(
-                      "password",
-                      event.target.value
-                    )
-                  }
-                  required
-                  disabled={isSubmitting}
-                  aria-invalid={Boolean(
-                    fieldErrors.password?.length
-                  )}
-                  aria-describedby={
-                    fieldErrors.password?.length
-                      ? "login-password-error"
-                      : undefined
-                  }
-                  className="h-11 pr-12"
-                />
+                        {/* Contraseña */}
+                        <div className="space-y-2">
+                            <Label htmlFor="login-password">Contraseña</Label>
 
-                {/* Mostrar / ocultar contraseña */}
-                <Button
-                  type="button"
-                  variant="ghost"
-                  size="icon"
-                  className="absolute right-1.5 top-1.5"
-                  onClick={() =>
-                    setShowPassword((previous) => !previous)
-                  }
-                  disabled={isSubmitting}
-                  aria-label={
-                    showPassword
-                      ? "Ocultar contraseña"
-                      : "Mostrar contraseña"
-                  }
-                  aria-pressed={showPassword}
-                  aria-controls="login-password"
-                >
-                  {showPassword ? (
-                    <EyeOff aria-hidden="true" />
-                  ) : (
-                    <Eye aria-hidden="true" />
-                  )}
-                </Button>
-              </div>
+                            <div className="relative">
+                                <Input
+                                    id="login-password"
+                                    name="password"
+                                    type={showPassword ? "text" : "password"}
+                                    autoComplete="current-password"
+                                    placeholder="Contraseña"
+                                    value={credentials.password}
+                                    onChange={(event) =>
+                                        updateField("password", event.target.value)
+                                    }
+                                    required
+                                    disabled={isSubmitting}
+                                    aria-invalid={Boolean(fieldErrors.password?.length)}
+                                    aria-describedby={
+                                        fieldErrors.password?.length
+                                            ? "login-password-error"
+                                            : undefined
+                                    }
+                                    className="h-12 pr-12"
+                                />
 
-              {Boolean(fieldErrors.password?.length) && (
-                <p
-                  id="login-password-error"
-                  className="text-sm text-destructive"
-                >
-                  {fieldErrors.password?.join(" ")}
-                </p>
-              )}
-            </div>
+                                {/* Mostrar / ocultar contraseña */}
+                                <Button
+                                    type="button"
+                                    variant="ghost"
+                                    size="icon"
+                                    className="absolute right-1.5 top-1.5"
+                                    onClick={() => setShowPassword((previous) => !previous)}
+                                    disabled={isSubmitting}
+                                    aria-label={
+                                        showPassword ? "Ocultar contraseña" : "Mostrar contraseña"
+                                    }
+                                    aria-pressed={showPassword}
+                                    aria-controls="login-password"
+                                >
+                                    {showPassword ? (
+                                        <EyeOff aria-hidden="true" />
+                                    ) : (
+                                        <Eye aria-hidden="true" />
+                                    )}
+                                </Button>
+                            </div>
 
-            {/* Botón */}
-            <Button
-              type="submit"
-              disabled={isSubmitting}
-              className="h-11 w-full"
-            >
-              {isSubmitting ? (
-                <>
-                  <LoaderCircle
-                    aria-hidden="true"
-                    className="animate-spin"
-                  />
-                  Iniciando sesión…
-                </>
-              ) : (
-                <>
-                  Entrar
-                  <ArrowRight aria-hidden="true" />
-                </>
-              )}
-            </Button>
-          </form>
+                            {Boolean(fieldErrors.password?.length) && (
+                                <p
+                                    id="login-password-error"
+                                    className="text-sm text-destructive"
+                                >
+                                    {fieldErrors.password?.join(" ")}
+                                </p>
+                            )}
+                        </div>
 
-          {/* Volver al inicio */}
-          <div className="mt-8 text-center">
-            <Link
-              to="/"
-              className="text-sm text-muted-foreground underline-offset-4 hover:text-foreground hover:underline"
-            >
-              Volver al inicio
-            </Link>
-          </div>
-        </div>
-      </section>
-    </main>
-  );
+                        {/* Recordarme / Recuperar contraseña */}
+                        <div className="flex flex-wrap items-center justify-between gap-3">
+                            <label
+                                htmlFor="remember-me"
+                                className="flex cursor-pointer items-center gap-2 text-sm text-muted-foreground"
+                            >
+                                <input
+                                    id="remember-me"
+                                    type="checkbox"
+                                    className="size-4 accent-primary"
+                                />
+                                Recordarme
+                            </label>
+
+                            <Link
+                                to="/reset"
+                                className="text-sm font-medium text-primary hover:underline"
+                            >
+                                ¿Olvidaste tu contraseña?
+                            </Link>
+                        </div>
+
+                        {/* Botón */}
+                        <div className="pt-3">
+                            <Button
+                                type="submit"
+                                disabled={isSubmitting}
+                                className="h-12 w-full sm:w-40"
+                            >
+                                {isSubmitting ? (
+                                    <>
+                                        <LoaderCircle aria-hidden="true" className="animate-spin" />
+                                        Iniciando sesión…
+                                    </>
+                                ) : (
+                                    <>
+                                        Entrar
+                                        <ArrowRight aria-hidden="true" />
+                                    </>
+                                )}
+                            </Button>
+                        </div>
+                    </form>
+
+                    {/* ============================================
+                        FOOTER
+                    ============================================ */}
+                    <div className="mt-12 text-sm leading-relaxed text-muted-foreground">
+                        Al iniciar sesión, aceptas nuestros{" "}
+                        <a
+                            href="/terms"
+                            className="font-medium text-primary hover:underline"
+                        >
+                            Términos y condiciones
+                        </a>{" "}
+                        y nuestra{" "}
+                        <a
+                            href="/privacy"
+                            className="font-medium text-primary hover:underline"
+                        >
+                            Política de privacidad
+                        </a>
+                        .
+                    </div>
+                </div>
+            </section>
+        </main>
+    );
 };
 '''
     
