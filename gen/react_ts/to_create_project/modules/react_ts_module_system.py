@@ -1,5 +1,5 @@
 import os
-from gen.helpers.helper_columns import parse_columns_input
+from gen.helpers.helper_columns import HelperColumns
 from gen.react_ts.to_create_module_crud.standard_module_crud_react_ts import StandardModuleCrudReactTs
 
 
@@ -14,8 +14,7 @@ class ReactTsModuleSystem:
         """
         Genera CRUD
         """
-        
-        columns = parse_columns_input("name status version")
+        columns = HelperColumns.parse_columns_input("name status version")
 
         obj = StandardModuleCrudReactTs()
         obj.invoke(

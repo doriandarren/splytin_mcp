@@ -1,7 +1,7 @@
 import os
 from dotenv import load_dotenv
 from gen.react_ts.to_create_module_crud.standard_module_crud_react_ts import StandardModuleCrudReactTs
-from gen.helpers.helper_columns import parse_columns_input
+from gen.helpers.helper_columns import HelperColumns
 from gen.helpers.helper_menu import menu_checkbox, pause
 from gen.helpers.helper_print import input_with_validation
 
@@ -43,7 +43,7 @@ class StartModuleCrudReactTs:
         
         
 
-        columns = parse_columns_input(input_columns)
+        columns = HelperColumns.parse_columns_input(input_columns)
 
         obj = StandardModuleCrudReactTs()
         obj.invoke(

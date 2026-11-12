@@ -93,7 +93,7 @@ import {{ {singular_name}Page }} from "../pages/{singular_name}Page";
 import {{ {singular_name}CreatePage }} from "../pages/{singular_name}CreatePage";
 import {{ {singular_name}UpdatePage }} from "../pages/{singular_name}UpdatePage";
 
-export const systemRoutes: RouteObject[] = [
+export const {singular_name_camel}Routes: RouteObject[] = [
     {{
         path: "{plural_name_kebab}",
         element: <{singular_name}Page />,

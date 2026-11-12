@@ -1,6 +1,6 @@
 import os
 from dotenv import load_dotenv
-from gen.helpers.helper_columns import parse_columns_input
+from gen.helpers.helper_columns import HelperColumns
 from gen.helpers.helper_menu import menu_checkbox, pause
 from gen.helpers.helper_print import dd, input_with_validation
 from gen.php_laravel.to_module_crud.standard_module_crud_php import standard_module_crud_php
@@ -49,7 +49,7 @@ def start_module_php():
         "user_id:fk ability_group_id:fk name:string(30)|unique amount:decimal(10,2) amount_with_tax:float description:varchar(10) note has_active:boolean"
     )
     
-    columns = parse_columns_input(input_columns)
+    columns = HelperColumns.parse_columns_input(input_columns)
     
     ## dd(columns)
     

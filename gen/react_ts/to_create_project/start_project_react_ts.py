@@ -2,9 +2,11 @@ import os
 from dotenv import load_dotenv
 from gen.helpers.helper_menu import pause
 from gen.helpers.helper_print import input_with_validation
+from gen.react_ts.to_create_project.components.react_ts_component_private import ReactTsComponentPrivate
 from gen.react_ts.to_create_project.components.react_ts_component_public import ReactTsComponentPublic
 from gen.react_ts.to_create_project.components.react_ts_pagination_components import ReactTsPaginationComponents
 from gen.react_ts.to_create_project.components.react_ts_table_component import ReactTsTableComponent
+from gen.react_ts.to_create_project.media.react_ts_images import ReactTsImages
 from gen.react_ts.to_create_project.modules.react_ts_module_dashboard import ReactTsModuleDashboard
 from gen.react_ts.to_create_project.modules.react_ts_module_system import ReactTsModuleSystem
 from gen.react_ts.to_create_project.modules.react_ts_profile import ReactTsProfile
@@ -46,9 +48,6 @@ class StartProjectReactTs:
         full_path = f"{project_path}/{project_name}"
         
         
-        
-        
-        
         # Command Line
         obj = ReactTsCommandLine()
         obj.invoke(full_path)
@@ -63,24 +62,16 @@ class StartProjectReactTs:
         obj = ReactTsGitignore()
         obj.invoke(full_path)
         
-    
-        
-        
-        # Module Auth
-        obj = ReactTsModuleAuth()
-        obj.invoke(full_path)
-        
         
         # Components Public
         obj = ReactTsComponentPublic()
         obj.invoke(full_path)
         
         
-        # Module Home
-        obj = ReactTsModuleHome()
+        
+        # Components Private
+        obj = ReactTsComponentPrivate()
         obj.invoke(full_path)
-        
-        
         
         
         # Components Pagination
@@ -90,11 +81,6 @@ class StartProjectReactTs:
         
         # Components Table
         obj = ReactTsTableComponent()
-        obj.invoke(full_path)
-        
-        
-        # Module Dashboard
-        obj = ReactTsModuleDashboard()
         obj.invoke(full_path)
         
         
@@ -118,11 +104,9 @@ class StartProjectReactTs:
         obj.invoke(full_path)
         
         
-        
         # Zustand
         obj = ReactTsZustand()
         obj.invoke(full_path)
-        
         
         
         # @tanstack/react-query
@@ -135,14 +119,26 @@ class StartProjectReactTs:
         obj.invoke(full_path)
         
         
-        
         # Sonner - Toast
         obj = ReactTsSonner()
         obj.invoke(full_path)
         
         
         
-                
+        # Module Auth
+        obj = ReactTsModuleAuth()
+        obj.invoke(full_path)
+        
+        
+        # Module Dashboard
+        obj = ReactTsModuleDashboard()
+        obj.invoke(full_path)
+        
+        
+        # Module Home
+        obj = ReactTsModuleHome()
+        obj.invoke(full_path)
+
         
         # Module Profile
         obj = ReactTsProfile()
@@ -156,6 +152,11 @@ class StartProjectReactTs:
         
         # Index css
         obj = ReactTsIndexCss()
+        obj.invoke(full_path)
+        
+        
+        # Images
+        obj = ReactTsImages()
         obj.invoke(full_path)
         
         

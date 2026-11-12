@@ -1,17 +1,35 @@
 import os
+from gen.helpers.helper_columns import HelperColumns
 from gen.helpers.helper_file import HelperFile
+from gen.react_ts.to_create_module_crud.standard_module_crud_react_ts import StandardModuleCrudReactTs
 
 
 class ReactTsProfile:
     
     def invoke(self, full_path):
-        self.create_file_profie(full_path)
+        self.create_module(full_path)
+        self.update_file_profie(full_path)
 
 
 
+    def create_module(self, full_path):
+        columns = HelperColumns.parse_columns_input("name email roles")
+
+        obj = StandardModuleCrudReactTs()
+        obj.invoke(
+            full_path=full_path,
+            namespace="private",
+            singular_name="Profile",
+            plural_name="Profiles",
+            columns=columns,
+            input_menu_checkbox=None,
+            version_api="V1",
+            folder_group="api"
+        )
 
 
-    def create_file_profie(self, full_path):
+
+    def update_file_profie(self, full_path):
         """
         Genera el archivo.
         """
@@ -140,3 +158,4 @@ export const ProfilePage = () => {
             file_name="ProfilePage.tsx",
             content=content
         )
+

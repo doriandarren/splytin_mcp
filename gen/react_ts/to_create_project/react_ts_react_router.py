@@ -39,9 +39,7 @@ import { AuthLayout } from "./modules/auth/layouts/AuthLayout";
 import { LoginPage } from "./modules/auth/login/pages/LoginPage";
 import { RegisterPage } from "./modules/auth/register/pages/RegisterPage";
 // Private Roures
-import { DashboardPage } from "./modules/private/dashboard/pages/DashboardPage";
 import { ProtectedRoute } from "./modules/auth/components/ProtectedRoute";
-import { ProfilePage } from "./modules/private/profiles/pages/ProfilePage";
 // CRUD IMPORTS
 
 
@@ -86,14 +84,6 @@ export const appRouter = createBrowserRouter([
         path: "/admin",
         element: <AdminLayout />,
         children: [
-          {
-            index: true,
-            element: <DashboardPage />,
-          },
-          {
-            path: "profile",
-            element: <ProfilePage />,
-          },
           // CRUD ROUTES
         ],
       },

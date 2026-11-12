@@ -1,7 +1,6 @@
 import time
 
 from gen.blender.to_create_project.standard_aseets_blender import standard_aseets_blender
-from gen.helpers.helper_columns import parse_columns_input
 from gen.helpers.helper_menu import menu_checkbox, pause
 from gen.helpers.helper_print import input_with_validation
 

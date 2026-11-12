@@ -1,4 +1,4 @@
-from gen.helpers.helper_columns import parse_columns_input
+from gen.helpers.helper_columns import HelperColumns
 from gen.helpers.helper_menu import menu_checkbox, pause
 from gen.helpers.helper_print import input_with_validation
 
@@ -23,7 +23,7 @@ def start_module_kotlin():
     plural_name = input_with_validation("Nombre plural", "AgendaUnloadings")
     input_columns = input_with_validation("Columnas: ", "user_id:fk name age:integer description")
 
-    columns = parse_columns_input(input_columns)
+    columns = HelperColumns.parse_columns_input(input_columns)
 
     # TODO refactor
     # standard_module_crud_XXXXXX(full_path, singular_name, plural_name, columns, input_menu_checkbox)

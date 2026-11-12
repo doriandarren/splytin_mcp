@@ -7,8 +7,15 @@ class ReactTsModuleAuth:
 
     def invoke(self, full_path):
         self.create_file_auth_layout_tsx(full_path)
+        
+        # Pages Login
         self.create_file_login_page_tsx(full_path)
+        self.create_file_login_page_css(full_path)
+        
+        
+        # Pages Register
         self.create_file_register_page_tsx(full_path)
+        
         
         self.create_service(full_path)
         self.create_type(full_path)
@@ -72,7 +79,7 @@ export const AuthLayout = () => {
         content = r'''import { useEffect, useRef, useState } from "react";
 import type { SubmitEvent } from "react";
 import { Link, useLocation, useNavigate } from "react-router";
-
+import "./LoginPage.css";
 import {
   ArrowRight,
   Eye,
@@ -80,20 +87,18 @@ import {
   LoaderCircle,
   PanelsTopLeft,
 } from "lucide-react";
-
 import { ApiError } from "@/api/api-error";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-
 import { authTokenStorage } from "../../services/authTokenStorage";
 import { useAuthStore } from "../../stores/authStore";
 import { login } from "../services/loginService";
 import type { LoginRequest } from "../types/login.types";
-
 type LoginFieldErrors = Partial<
-  Record<keyof LoginRequest, string[]>
+    Record<keyof LoginRequest, string[]>
 >;
+
 
 export const LoginPage = () => {
   const navigate = useNavigate();
@@ -231,9 +236,9 @@ export const LoginPage = () => {
   };
 
   return (
-    <main className="grid min-h-svh bg-background lg:grid-cols-2">
+    <main className="grid min-h-svh lg:grid-cols-2">
       {/* Panel izquierdo */}
-      <section className="hidden flex-col justify-between bg-slate-950 p-12 text-white lg:flex xl:p-20">
+      <section className="login-panel hidden flex-col justify-between p-12 lg:flex xl:p-20">
         <div className="flex items-center gap-3 text-xl font-semibold">
           <PanelsTopLeft
             aria-hidden="true"
@@ -265,7 +270,7 @@ export const LoginPage = () => {
       {/* Panel derecho */}
       <section
         aria-labelledby="login-title"
-        className="flex items-center justify-center px-6 py-12 sm:px-12"
+        className="login-form flex items-center justify-center px-6 py-12 sm:px-12"
       >
         <div className="w-full max-w-sm">
           {/* Logo móvil */}
@@ -1177,5 +1182,55 @@ export const isAdmin = (user: AuthUser | null): boolean => {
         HelperFile.write(
             folder_path=folder_path,
             file_name="authPermissions.ts",
+            content=content
+        )
+
+
+
+
+    def create_file_login_page_css(self, full_path):
+        """
+        Genera el archivo.
+        """
+    
+        folder_path = os.path.join(full_path, "src", "modules", "auth", "login", "pages")
+    
+        content = r'''
+/* ============================================
+    LOGIN
+============================================ */
+
+@layer components {
+    /* Panel izquierdo */
+    .login-panel {
+        background: linear-gradient(
+            145deg,
+            #071625 0%,
+            #0b1f33 55%,
+            #125c80 100%
+        );
+        color: #ffffff;
+    }
+
+
+    /* Panel derecho */
+    .login-form {
+        background-color: #ffffff;
+        color: #0b1f33;
+    }
+
+
+    /* Modo oscuro - Panel derecho */
+    .dark .login-form {
+        background-color: #0e2235;
+        color: #f0f8fc;
+    }
+}
+'''
+    
+        # Crear el archivo
+        HelperFile.write(
+            folder_path=folder_path,
+            file_name="LoginPage.css",
             content=content
         )
