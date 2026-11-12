@@ -1,6 +1,6 @@
 import os
 import shutil
-from gen.helpers.helper_menu import pause
+from helpers.helper_menu import pause
 
 
 def standard_module_migrate_proyect_php(

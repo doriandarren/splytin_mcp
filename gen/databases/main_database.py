@@ -2,7 +2,7 @@ import sys
 import os
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
-from gen.helpers.helper_menu import pause
+from helpers.helper_menu import pause
 from helpers.helper_print import print_header, input_with_validation, print_header_list
 from gen.databases.to_list.list_tables import list_tables_and_columns
 from gen.databases.to_generate.generate_tables_columns import list_tables_and_columns_and_generate

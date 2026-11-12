@@ -1,7 +1,7 @@
 import os
 from dotenv import load_dotenv
 from gen.helpers.helper_columns import HelperColumns
-from gen.helpers.helper_menu import menu_checkbox, pause
+from helpers.helper_menu import menu_checkbox, pause
 from helpers.helper_print import dd, input_with_validation
 from gen.php_laravel.to_module_crud.standard_module_crud_php import standard_module_crud_php
 

@@ -1,4 +1,4 @@
-from gen.helpers.helper_menu import menu_checkbox, pause
+from helpers.helper_menu import menu_checkbox, pause
 from helpers.helper_print import input_with_validation
 
 

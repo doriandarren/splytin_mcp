@@ -1,7 +1,7 @@
 import os
 from dotenv import load_dotenv
 from helpers.helper_print import input_with_validation
-from gen.helpers.helper_menu import pause
+from helpers.helper_menu import pause
 from gen.services.generator_services import create_python_django_project_service
 
 

@@ -7,7 +7,7 @@ if BASE_DIR not in sys.path:
     sys.path.append(BASE_DIR)
 
 from helpers.helper_print import print_header
-from gen.helpers.helper_menu import menu_list, clear_screen
+from helpers.helper_menu import menu_list, clear_screen
 from gen.php_laravel.to_module_crud.start_module_php import start_module_php
 from gen.php_laravel.to_create_project.start_project_php import start_project_php
 from gen.php_laravel.to_delete_module.start_module_delete_php import start_module_delete_php

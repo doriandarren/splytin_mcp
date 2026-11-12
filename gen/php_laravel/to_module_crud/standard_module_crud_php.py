@@ -1,5 +1,5 @@
 import os
-from gen.helpers.helper_menu import pause
+from helpers.helper_menu import pause
 from helpers.helper_print import camel_to_first_letter_lower, camel_to_kebab, camel_to_snake, dd, print_cyan
 from gen.helpers.helper_string import normalize_project_name
 from gen.php_laravel.to_module_crud.laravel_crud_filter import LaravelCrudFilter

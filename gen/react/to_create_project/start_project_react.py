@@ -1,6 +1,6 @@
 import os
 from dotenv import load_dotenv
-from gen.helpers.helper_menu import pause
+from helpers.helper_menu import pause
 from helpers.helper_print import RED, dd, print_message, GREEN, CYAN, input_with_validation
 from gen.services.generator_services import create_react_project_service
 

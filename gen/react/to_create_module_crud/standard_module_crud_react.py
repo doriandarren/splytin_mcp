@@ -1,5 +1,5 @@
 import os
-from gen.helpers.helper_menu import pause
+from helpers.helper_menu import pause
 from helpers.helper_print import camel_to_kebab, camel_to_snake
 from gen.helpers.helper_string import normalize_project_name
 from gen.react.to_create_module_crud.generate_list_page import generate_list_page

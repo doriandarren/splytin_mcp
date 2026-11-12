@@ -8,7 +8,7 @@ if BASE_DIR not in sys.path:
     sys.path.append(BASE_DIR)
 
 from helpers.helper_print import print_header
-from gen.helpers.helper_menu import menu_list, clear_screen
+from helpers.helper_menu import menu_list, clear_screen
 
 
 def main_python():

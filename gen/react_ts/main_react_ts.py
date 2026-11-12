@@ -1,5 +1,5 @@
 from helpers.helper_print import print_header
-from gen.helpers.helper_menu import menu_list, clear_screen
+from helpers.helper_menu import menu_list, clear_screen
 from gen.react_ts.to_create_module_crud.start_module_crud_react_ts import StartModuleCrudReactTs
 from gen.react_ts.to_create_project.start_project_react_ts import StartProjectReactTs
 

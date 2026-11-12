@@ -1,7 +1,7 @@
 import os
 import shutil
 from helpers.helper_file import HelperFile
-from gen.helpers.helper_resource import HelperResource
+from helpers.helper_resource import HelperResource
 
 
 

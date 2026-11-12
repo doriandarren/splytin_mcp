@@ -1,6 +1,6 @@
 import os
 import xml.etree.ElementTree as ET
-from gen.helpers.helper_menu import clear_screen
+from helpers.helper_menu import clear_screen
 from helpers.helper_print import print_header
 
 

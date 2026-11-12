@@ -7,7 +7,7 @@ BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 if BASE_DIR not in sys.path:
     sys.path.insert(0, BASE_DIR)
 
-from gen.helpers.helper_menu import clear_screen, menu_list
+from helpers.helper_menu import clear_screen, menu_list
 from helpers.helper_print import print_header
 from gen.export_diagrams.main_export_diagrams import main_export_diagrams
 from gen.import_diagrams.main_import_diagrams import main_import_diagrams

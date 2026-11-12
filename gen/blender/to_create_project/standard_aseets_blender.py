@@ -4,7 +4,7 @@ from gen.blender.to_create_project.barrels.generate_barrel_wood import generate_
 from gen.blender.to_create_project.generate_door import generate_door
 from gen.blender.to_create_project.generate_tree import generate_tree
 from gen.blender.to_create_project.generate_wall import generate_wall
-from gen.helpers.helper_menu import pause
+from helpers.helper_menu import pause
 
 
 def standard_aseets_blender(full_path, input_menu_checkbox=None):

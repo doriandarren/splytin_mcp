@@ -1,5 +1,5 @@
 import os
-from gen.helpers.helper_menu import clear_screen, menu_list
+from helpers.helper_menu import clear_screen, menu_list
 from helpers.helper_print import print_header
 from gen.import_diagrams.to_generate.generate_tables_columns import generate_tables_columns
 from gen.import_diagrams.to_list.list_diagrams import list_diagrams
