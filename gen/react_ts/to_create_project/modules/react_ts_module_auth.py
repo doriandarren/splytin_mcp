@@ -1,6 +1,9 @@
 import os
+from dotenv import load_dotenv
 from helpers.helper_file import HelperFile
 
+
+load_dotenv()
 
 class ReactTsModuleAuth:
 
@@ -108,8 +111,8 @@ export const LoginPage = () => {
 
     // Estados del formulario
     const [credentials, setCredentials] = useState<LoginRequest>({
-        email: "",
-        password: "",
+        email: "admin@app1.com",
+        password: "__PASSWORD__",
     });
 
     const [showPassword, setShowPassword] = useState(false);
@@ -458,6 +461,8 @@ export const LoginPage = () => {
     );
 };
 '''
+  
+        content = content.replace("__PASSWORD__", os.getenv("PASSWORD", ""))
     
         # Crear el archivo
         HelperFile.write(
