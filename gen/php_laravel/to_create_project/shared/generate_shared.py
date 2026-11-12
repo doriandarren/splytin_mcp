@@ -1,5 +1,5 @@
 import os
-from gen.helpers.helper_columns import HelperColumns, parse_columns_input
+from helpers.helper_columns import HelperColumns, parse_columns_input
 from helpers.helper_print import print_message, GREEN, CYAN
 
 from gen.php_laravel.to_create_project.shared.generate_migrations.generate_ability_groups_table import generate_ability_groups_table

@@ -1,4 +1,4 @@
-from gen.helpers.helper_columns import HelperColumns
+from helpers.helper_columns import HelperColumns
 from gen.python_django.helpers.helper_dj_data_fake import HelperDjDataFake
 from gen.python_django.to_create_module_crud.standard_module_crud_python_django import StandardModuleCrudPythonDjango
 

@@ -1,5 +1,5 @@
 import os
-from gen.helpers.helper_columns import HelperColumns
+from helpers.helper_columns import HelperColumns
 from gen.php_laravel.to_module_crud.standard_module_crud_php import standard_module_crud_php
 
 
