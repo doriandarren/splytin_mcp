@@ -1,6 +1,7 @@
 import os
 import shutil
 from gen.helpers.helper_file import HelperFile
+from gen.helpers.helper_resource import HelperResource
 
 
 
@@ -59,43 +60,20 @@ class ReactTsImages:
     
     
     def create_logo_png(self, full_path):
-        """
-        Copia logo.png desde los recursos al proyecto React TS.
-        """
-        source_path = os.path.join(
-            "gen", "resources", "images", "logo.png"
-        )
-
-        folder_path = os.path.join(
-            full_path, "src", "assets", "images"
-        )
-
+        folder_path = os.path.join(full_path, "src", "assets", "images")
         os.makedirs(folder_path, exist_ok=True)
 
-        destination_path = os.path.join(folder_path, "logo.png")
+        source_path = HelperResource.image("logo.png")
+        shutil.copy2(source_path, os.path.join(folder_path, "logo.png"))
 
-        shutil.copy2(source_path, destination_path)
-        
-        
 
 
 
     def create_logo_small_png(self, full_path):
-        """
-        Copia logo_small.png desde los recursos al proyecto React TS.
-        """
-        source_path = os.path.join(
-            "gen", "resources", "images", "logo_small.png"
-        )
-
-        folder_path = os.path.join(
-            full_path, "src", "assets", "images"
-        )
-
+        folder_path = os.path.join(full_path, "src", "assets", "images")
         os.makedirs(folder_path, exist_ok=True)
 
-        destination_path = os.path.join(folder_path, "logo_small.png")
-
-        shutil.copy2(source_path, destination_path)
+        source_path = HelperResource.image("logo_small.png")
+        shutil.copy2(source_path, os.path.join(folder_path, "logo_small.png"))
 
      

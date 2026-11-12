@@ -1,7 +1,6 @@
 from gen.php_laravel.to_migrate_project.standard_module_migrate_proyect_php import standard_module_migrate_proyect_php
-from helpers.helper_columns import parse_columns_input
-from helpers.helper_menu import menu_checkbox, pause
-from helpers.helper_print import input_with_validation
+from gen.helpers.helper_menu import pause
+from gen.helpers.helper_print import input_with_validation
 
 
 def start_module_migrate_project_php():
