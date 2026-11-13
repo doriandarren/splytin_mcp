@@ -16,6 +16,7 @@ class ReactTsModuleDashboard:
         self.create_dashboard_activity_chart_tsx(full_path)
         self.update_app_router_tsx(full_path)
         self.replace_dashboards_routes_tsx(full_path)
+        self.delete_files(full_path)
     
     
     
@@ -496,19 +497,21 @@ export const DashboardActivityChart = () => {
             with open(main_path, "r", encoding="utf-8") as f:
                 content = f.read()
     
+    
+
             # Reemplazos
             replacements = {
                 ## New Item -> KEY : VALUE
-                """...dashboardRoutes,""":
-                """{
-                        index: true,
-                        element: <DashboardPage />,
-                        },""",
+                """            ...dashboardRoutes,""":
+                """       {
+            index: true,
+            element: <DashboardPage />,
+          },""",
                 """// CRUD IMPORTS""":
                 """import { DashboardPage } from "./modules/private/dashboards/pages/DashboardPage";
 // CRUD IMPORTS""",
                 """import { ProtectedRoute } from "./modules/auth/components/ProtectedRoute";
-                import { dashboardRoutes } from "./modules/private/dashboards/routes/dashboards.routes";""":
+import { dashboardRoutes } from "./modules/private/dashboards/routes/dashboards.routes";""":
                 """import { ProtectedRoute } from "./modules/auth/components/ProtectedRoute";"""
             }
     
@@ -574,6 +577,26 @@ export const dashboardRoutes: RouteObject[] = [
             content=content
         )
     
-        
+
+
+
+    def delete_files(self, full_path):
+        """
+        Elimina un archivo del proyecto.
+        """
+        # Delete file
+        folder_path = os.path.join(full_path, "src", "modules", "private", "dashboards", "pages")
+        file_path = os.path.join(folder_path, "DashboardCreatePage.tsx")
     
-    
+        if os.path.isfile(file_path):
+            os.remove(file_path)
+            
+            
+        # Delete file
+        folder_path = os.path.join(full_path, "src", "modules", "private", "dashboards", "pages")
+        file_path = os.path.join(folder_path, "DashboardUpdatePage.tsx")
+
+        if os.path.isfile(file_path):
+            os.remove(file_path)
+
+
