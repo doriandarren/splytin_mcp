@@ -1,5 +1,6 @@
 import os
 from dotenv import load_dotenv
+from gen.react_ts.to_create_project.react_ts_i18n import ReactTsI18n
 from helpers.helper_menu import pause
 from helpers.helper_print import input_with_validation
 from gen.react_ts.to_create_project.components.react_ts_component_private import ReactTsComponentPrivate
@@ -55,6 +56,11 @@ class StartProjectReactTs:
         
         # Env
         obj = ReactTsEnv()
+        obj.invoke(full_path)
+        
+        
+        # i18next
+        obj = ReactTsI18n()
         obj.invoke(full_path)
         
         

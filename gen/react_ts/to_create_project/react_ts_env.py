@@ -19,8 +19,7 @@ class ReactTsEnv:
         folder_path = os.path.join(full_path)
 
         content = r'''VITE_API_URL=http://api.splytin.test/api/v1/
-VITE_AUTH_SCHEME=Bearer ## Token | Bearer
-'''
+VITE_AUTH_SCHEME=Bearer ## Token | Bearer'''
 
         # Crear el archivo
         HelperFile.write(

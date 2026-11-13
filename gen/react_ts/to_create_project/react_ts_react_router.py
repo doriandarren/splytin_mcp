@@ -18,7 +18,7 @@ class ReactTsReactRouter:
             cwd=full_path
         )
         
-        print_green("Proyecto creado correctamente.")
+        print_green("react-router instalado.")
 
 
 
