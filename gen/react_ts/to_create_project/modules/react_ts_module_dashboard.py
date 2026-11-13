@@ -2,6 +2,7 @@ import os
 from helpers.helper_columns import HelperColumns
 from helpers.helper_file import HelperFile
 from gen.react_ts.to_create_module_crud.standard_module_crud_react_ts import StandardModuleCrudReactTs
+from helpers.helper_print import dd, print_green, print_red
 
 
 class ReactTsModuleDashboard:
@@ -9,9 +10,12 @@ class ReactTsModuleDashboard:
     def invoke(self, full_path):
         self.create_module(full_path)
         self.replace_dashboard_page_tsx(full_path)
+        self.create_dashboard_page_css(full_path)
         self.create_dashboard_stats_tsx(full_path)
         self.create_dashboard_stat_card_tsx(full_path)
         self.create_dashboard_activity_chart_tsx(full_path)
+        self.update_app_router_tsx(full_path)
+        self.replace_dashboards_routes_tsx(full_path)
     
     
     
@@ -78,6 +82,110 @@ export const DashboardPage = () => {
             content=content
         )
 
+
+    
+    def create_dashboard_page_css(self, full_path):
+        """
+        Genera el archivo.
+        """
+
+        folder_path = os.path.join(full_path, "src", "modules", "private", "dashboards", "pages")
+
+        content = r'''@reference "../../../../index.css";
+        
+@layer components {
+
+    /* ============================================
+        DASHBOARD - PAGE
+    ============================================ */
+
+    .dashboard-page {
+        @apply flex flex-col gap-6;
+    }
+
+    .dashboard-header {
+        @apply flex items-center justify-between;
+    }
+
+    .dashboard-title {
+        @apply text-2xl font-semibold tracking-tight text-foreground;
+    }
+
+    .dashboard-subtitle {
+        @apply mt-1 text-sm text-muted-foreground;
+    }
+
+    /* ============================================
+        DASHBOARD - STATS
+    ============================================ */
+
+    .dashboard-stats-grid {
+        @apply grid grid-cols-1 gap-4 sm:grid-cols-3;
+    }
+
+    .dashboard-stat-card {
+        @apply rounded-xl border border-border bg-card p-5;
+        @apply text-card-foreground shadow-sm;
+        @apply transition-shadow duration-300 hover:shadow-md;
+    }
+
+    .dashboard-stat-header {
+        @apply flex items-center justify-between;
+        @apply text-sm font-medium text-muted-foreground;
+    }
+
+    .dashboard-stat-icon {
+        @apply text-primary;
+    }
+
+    .dashboard-stat-value {
+        @apply mt-3 text-3xl font-semibold tracking-tight;
+    }
+
+    .dashboard-stat-description {
+        @apply mt-1 text-xs text-muted-foreground;
+    }
+
+    /* ============================================
+        DASHBOARD - CHART
+    ============================================ */
+
+    .dashboard-chart {
+        @apply rounded-xl border border-border bg-card p-5 md:p-6;
+        @apply text-card-foreground shadow-sm;
+    }
+
+    .dashboard-chart-header {
+        @apply mb-6 flex flex-wrap items-center justify-between gap-3;
+    }
+
+    .dashboard-chart-title {
+        @apply text-base font-semibold;
+    }
+
+    .dashboard-chart-description {
+        @apply mt-1 text-sm text-muted-foreground;
+    }
+
+    .dashboard-chart-period {
+        @apply rounded-md bg-secondary px-3 py-1.5;
+        @apply text-xs font-medium text-secondary-foreground;
+    }
+
+    .dashboard-chart-container {
+        @apply h-[280px] w-full md:h-[340px];
+    }
+
+}'''
+
+        # Crear el archivo
+        HelperFile.write(
+            folder_path=folder_path,
+            file_name="DashboardPage.css",
+            content=content
+        )
+    
+    
     
     
     def create_dashboard_stats_tsx(self, full_path):
@@ -369,5 +477,103 @@ export const DashboardActivityChart = () => {
     
     
     
+    
+    
+    def update_app_router_tsx(self, full_path):
+        """
+        Actualiza el archivo
+        """
+        main_path = os.path.join(full_path, "src", "app.router.tsx")
+    
+        # Verificar si el archivo existe
+        if not os.path.exists(main_path):
+            print_red(f"Error: {main_path} no existe.")
+            dd(f"Error: {main_path} no existe.")
+            return False
+    
+        try:
+            # Leer el contenido del archivo
+            with open(main_path, "r", encoding="utf-8") as f:
+                content = f.read()
+    
+            # Reemplazos
+            replacements = {
+                ## New Item -> KEY : VALUE
+                """...dashboardRoutes,""":
+                """{
+                        index: true,
+                        element: <DashboardPage />,
+                        },""",
+                """// CRUD IMPORTS""":
+                """import { DashboardPage } from "./modules/private/dashboards/pages/DashboardPage";
+// CRUD IMPORTS""",
+                """import { ProtectedRoute } from "./modules/auth/components/ProtectedRoute";
+                import { dashboardRoutes } from "./modules/private/dashboards/routes/dashboards.routes";""":
+                """import { ProtectedRoute } from "./modules/auth/components/ProtectedRoute";"""
+            }
+    
+            # Validar y aplicar los reemplazos
+            new_content = content
+    
+            for old_text, new_text in replacements.items():
+                if old_text not in new_content:
+                    raise ValueError(f"No se encontró el texto esperado: {old_text}")
+    
+                new_content = new_content.replace(old_text, new_text, 1)
+    
+            if new_content == content:
+                raise ValueError("No se realizó ningún reemplazo.")
+    
+            # Escribir el contenido actualizado
+            with open(main_path, "w", encoding="utf-8") as f:
+                f.write(new_content)
+    
+            print_green(f"{main_path} actualizado correctamente.")
+    
+            return True
+    
+        except Exception as e:
+            print_red(f"Error al actualizar {main_path}: {e}")
+            return False
+
+
+
+    def replace_dashboards_routes_tsx(self, full_path):
+        """
+        Genera el archivo.
+        """
+    
+        folder_path = os.path.join(full_path, "src", "modules", "private", "dashboards", "routes")
+    
+        content = r'''// src/modules/private/dashboards/routes/dashboards.routes.tsx
+import type { RouteObject } from "react-router";
+
+// import { DashboardPage } from "../pages/DashboardPage";
+// import { DashboardCreatePage } from "../pages/DashboardCreatePage";
+// import { DashboardUpdatePage } from "../pages/DashboardUpdatePage";
+
+export const dashboardRoutes: RouteObject[] = [
+    // {
+    //     path: "dashboards",
+    //     element: <DashboardPage />,
+    // },
+    // {
+    //     path: "dashboards/create",
+    //     element: <DashboardCreatePage />,
+    // },
+    // {
+    //     path: "dashboards/:id/edit",
+    //     element: <DashboardUpdatePage />,
+    // },
+];'''
+    
+        # Crear el archivo
+        HelperFile.write(
+            folder_path=folder_path,
+            file_name="dashboards.routes.tsx",
+            content=content
+        )
+    
+        
     
     
