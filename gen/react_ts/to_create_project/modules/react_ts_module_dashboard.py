@@ -503,7 +503,7 @@ export const DashboardActivityChart = () => {
             replacements = {
                 ## New Item -> KEY : VALUE
                 """            ...dashboardRoutes,""":
-                """       {
+                """     {
             index: true,
             element: <DashboardPage />,
           },""",
@@ -590,6 +590,8 @@ export const dashboardRoutes: RouteObject[] = [
     
         if os.path.isfile(file_path):
             os.remove(file_path)
+            print_green(f"Archivo Eliminado: {file_path}")
+            
             
             
         # Delete file
@@ -598,5 +600,6 @@ export const dashboardRoutes: RouteObject[] = [
 
         if os.path.isfile(file_path):
             os.remove(file_path)
+            print_green(f"Archivo Eliminado: {file_path}")
 
 

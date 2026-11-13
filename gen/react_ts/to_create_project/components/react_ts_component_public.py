@@ -20,102 +20,47 @@ class ReactTsComponentPublic:
 
         folder_path = os.path.join(full_path, "src", "modules", "public", "components")
 
-        content = r'''import { useState } from "react";
-import { Search, ShoppingBag, Menu, LogIn } from "lucide-react";
+        content = r'''// src/modules/public/components/CustomHeader.tsx
+import { Link } from "react-router";
+import { ArrowRight, PanelsTopLeft } from "lucide-react";
+
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { useNavigate } from "react-router";
 
 const CustomHeader = () => {
-  const [cartCount] = useState(3);
+    return (
+        <header className="sticky top-0 z-50 w-full border-b border-border bg-background/95 backdrop-blur-md">
+            <div className="mx-auto flex h-18 w-full max-w-7xl items-center justify-between px-6 lg:px-10">
 
-  const navigate = useNavigate();
+                {/* Logo y nombre */}
+                <Link
+                    to="/"
+                    className="flex items-center gap-3 text-foreground"
+                >
+                    <div className="flex size-9 items-center justify-center rounded-lg bg-primary text-primary-foreground">
+                        <PanelsTopLeft className="size-5" />
+                    </div>
 
-  return (
-    <header className="sticky top-0 z-50 w-full border-b backdrop-blur bg-slate-50">
-      <div className="container mx-auto px-4 lg:px-8">
-        <div className="flex h-16 items-center justify-between">
-          {/* Logo */}
-          <div className="flex items-center space-x-4">
-            <Button variant="ghost" size="icon" className="md:hidden">
-              <Menu className="h-5 w-5" />
-            </Button>
-            <h1 className="text-xl font-semibold tracking-tight">
-              TESLA STYLE
-            </h1>
-          </div>
+                    <span className="text-lg font-semibold tracking-tight">
+                        Splytin ERP
+                    </span>
+                </Link>
 
-          {/* Navigation - Desktop */}
-          <nav className="hidden md:flex items-center space-x-8">
-            <a
-              href="#"
-              className="text-sm font-medium transition-colors hover:text-primary"
-            >
-              Camisetas
-            </a>
-            <a
-              href="#"
-              className="text-sm font-medium transition-colors hover:text-primary"
-            >
-              Sudaderas
-            </a>
-            <a
-              href="#"
-              className="text-sm font-medium transition-colors hover:text-primary"
-            >
-              Chaquetas
-            </a>
-            <a
-              href="#"
-              className="text-sm font-medium transition-colors hover:text-primary"
-            >
-              Accesorios
-            </a>
-          </nav>
+                {/* Acceso */}
+                <Button
+                    nativeButton={false}
+                    render={<Link to="/auth/login" />}
+                    className="gap-2"
+                >
+                    Iniciar sesión
+                    <ArrowRight className="size-4" />
+                </Button>
 
-          {/* Search and Cart */}
-          <div className="flex items-center space-x-4">
-            <div className="hidden md:flex items-center space-x-2">
-              <div className="relative">
-                <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-                <Input
-                  placeholder="Buscar productos..."
-                  className="pl-9 w-64 h-9"
-                />
-              </div>
             </div>
-
-            <Button variant="ghost" size="icon" className="md:hidden">
-              <Search className="h-5 w-5" />
-            </Button>
-
-            <Button variant="ghost" size="icon" className="relative">
-              <ShoppingBag className="h-5 w-5" />
-              {cartCount > 0 && (
-                <span className="absolute -top-1 -right-1 h-5 w-5 rounded-full bg-primary text-primary-foreground text-xs flex items-center justify-center">
-                  {cartCount}
-                </span>
-              )}
-            </Button>
-
-            <Button 
-              variant="ghost" 
-              size="icon" 
-              className="relative" 
-              onClick={ () => navigate("auth/login")}
-              aria-label="Iniciar sesión"
-            >
-              <LogIn  />
-            </Button>
-          </div>
-        </div>
-      </div>
-    </header>
-  );
+        </header>
+    );
 };
-export default CustomHeader;
 
-'''
+export default CustomHeader;'''
 
         # Crear el archivo
         HelperFile.write(
@@ -123,11 +68,8 @@ export default CustomHeader;
             file_name="CustomHeader.tsx",
             content=content
         )  
-        
-    
-    
-    
-    
+
+
     
     def create_file_custom_footer_tsx(self, full_path):
             """
@@ -136,108 +78,42 @@ export default CustomHeader;
     
             folder_path = os.path.join(full_path, "src", "modules", "public", "components")
     
-            content = r'''export const CustomFooter = () => {
-  return (
-    <footer className="border-t py-12 px-4 lg:px-8 mt-16">
-      <div className="container mx-auto">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-          <div>
-            <h3 className="font-semibold mb-4">TESLA STYLE</h3>
-            <p className="text-sm text-muted-foreground">
-              Ropa inspirada en el diseño minimalista y la innovación de Tesla.
-            </p>
-          </div>
+            content = r'''// src/modules/public/components/CustomFooter.tsx
+import { PanelsTopLeft } from "lucide-react";
 
-          <div>
-            <h4 className="font-medium mb-4">Productos</h4>
-            <ul className="space-y-2 text-sm text-muted-foreground">
-              <li>
-                <a href="#" className="hover:text-foreground">
-                  Camisetas
-                </a>
-              </li>
-              <li>
-                <a href="#" className="hover:text-foreground">
-                  Sudaderas
-                </a>
-              </li>
-              <li>
-                <a href="#" className="hover:text-foreground">
-                  Chaquetas
-                </a>
-              </li>
-              <li>
-                <a href="#" className="hover:text-foreground">
-                  Accesorios
-                </a>
-              </li>
-            </ul>
-          </div>
+export const CustomFooter = () => {
+    return (
+        <footer className="border-t border-border bg-background">
+            <div className="mx-auto max-w-7xl px-6 py-8 lg:px-10">
 
-          <div>
-            <h4 className="font-medium mb-4">Ayuda</h4>
-            <ul className="space-y-2 text-sm text-muted-foreground">
-              <li>
-                <a href="#" className="hover:text-foreground">
-                  Contacto
-                </a>
-              </li>
-              <li>
-                <a href="#" className="hover:text-foreground">
-                  Envíos
-                </a>
-              </li>
-              <li>
-                <a href="#" className="hover:text-foreground">
-                  Devoluciones
-                </a>
-              </li>
-              <li>
-                <a href="#" className="hover:text-foreground">
-                  Guía de Tallas
-                </a>
-              </li>
-            </ul>
-          </div>
+                <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
 
-          <div>
-            <h4 className="font-medium mb-4">Empresa</h4>
-            <ul className="space-y-2 text-sm text-muted-foreground">
-              <li>
-                <a href="#" className="hover:text-foreground">
-                  Sobre Nosotros
-                </a>
-              </li>
-              <li>
-                <a href="#" className="hover:text-foreground">
-                  Sustentabilidad
-                </a>
-              </li>
-              <li>
-                <a href="#" className="hover:text-foreground">
-                  Carreras
-                </a>
-              </li>
-              <li>
-                <a href="#" className="hover:text-foreground">
-                  Prensa
-                </a>
-              </li>
-            </ul>
-          </div>
-        </div>
+                    {/* Marca */}
+                    <div className="flex items-center gap-3">
+                        <PanelsTopLeft className="size-5 text-primary" />
 
-        <div className="border-t mt-8 pt-8 text-center text-sm text-muted-foreground">
-          <p>
-            &copy; {new Date().getFullYear()} Teslo Style. Todos los derechos
-            reservados.
-          </p>
-        </div>
-      </div>
-    </footer>
-  );
-};
-'''
+                        <div>
+                            <h3 className="text-sm font-semibold text-foreground">
+                                Splytin ERP
+                            </h3>
+
+                            <p className="text-xs text-muted-foreground">
+                                Gestión empresarial inteligente
+                            </p>
+                        </div>
+                    </div>
+
+                    {/* Copyright */}
+                    <p className="text-center text-xs text-muted-foreground">
+                        © {new Date().getFullYear()} Splytin ERP.
+                        Todos los derechos reservados.
+                    </p>
+
+                </div>
+            </div>
+        </footer>
+    );
+};'''
     
             # Crear el archivo
             HelperFile.write(
@@ -255,28 +131,63 @@ export default CustomHeader;
     
             folder_path = os.path.join(full_path, "src", "modules", "public", "components")
     
-            content = r'''interface Props {
-    title: string;
+            content = r'''// src/modules/public/components/CustomJumbotron.tsx
+import { Link } from "react-router";
+import { ArrowRight } from "lucide-react";
+
+import { Button } from "@/components/ui/button";
+
+interface Props {
+    title?: string;
     subTitle?: string;
 }
 
-export const CustomJumbotron = ( {title, subTitle}: Props ) => {
+export const CustomJumbotron = ({
+    title = "Todo tu negocio. Un solo lugar.",
+    subTitle = "Organiza tus procesos, centraliza tu información y gestiona tu empresa de forma sencilla y eficiente.",
+}: Props) => {
+    return (
+        <section className="relative overflow-hidden bg-background px-6 py-20 md:py-28 lg:px-10">
 
-  const defaultSubTitle = 'Ropa minimalista y elegante inspirada en el diseño futurista de Tesla. Calidad premium para un estilo atemporal.';
+            {/* Fondo decorativo suave */}
+            <div
+                aria-hidden="true"
+                className="pointer-events-none absolute inset-0 bg-linear-to-b from-secondary/60 via-background to-background"
+            />
 
-  return (
-    <section className="py-16 px-4 lg:px-8 bg-muted/30">
-      {/* Hero Section */}
-      <div className="container mx-auto text-center">
-        <h1 className="font-montserrat text-5xl lg:text-7xl font-light tracking-tight mb-6">
-          {title}
-        </h1>
-        <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
-          {subTitle || defaultSubTitle}
-        </p>
-      </div>
-    </section>
-  );
+            <div className="relative mx-auto flex max-w-4xl flex-col items-center text-center">
+
+                {/* Etiqueta superior */}
+                <span className="mb-7 rounded-full border border-primary/15 bg-secondary px-4 py-2 text-xs font-semibold tracking-widest text-secondary-foreground">
+                    GESTIÓN EMPRESARIAL INTELIGENTE
+                </span>
+
+                {/* Título */}
+                <h1 className="max-w-3xl text-4xl font-semibold tracking-tight text-foreground sm:text-5xl lg:text-6xl">
+                    {title}
+                </h1>
+
+                {/* Subtítulo */}
+                <p className="mt-7 max-w-2xl text-base leading-8 text-muted-foreground md:text-lg">
+                    {subTitle}
+                </p>
+
+                {/* Botón principal */}
+                <div className="mt-9">
+                    <Button
+                        nativeButton={false}
+                        render={<Link to="/auth/login" />}
+                        size="lg"
+                        className="gap-2 px-7"
+                    >
+                        Acceder a Splytin ERP
+                        <ArrowRight className="size-4" />
+                    </Button>
+                </div>
+
+            </div>
+        </section>
+    );
 };
 '''
     

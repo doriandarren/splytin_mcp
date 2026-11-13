@@ -131,6 +131,11 @@ class StartProjectReactTs:
         obj.invoke(full_path)
         
         
+        # Module Home
+        obj = ReactTsModuleHome()
+        obj.invoke(full_path)
+        
+        
         
         # Module Auth
         obj = ReactTsModuleAuth()
@@ -139,11 +144,6 @@ class StartProjectReactTs:
         
         # Module Dashboard
         obj = ReactTsModuleDashboard()
-        obj.invoke(full_path)
-        
-        
-        # Module Home
-        obj = ReactTsModuleHome()
         obj.invoke(full_path)
 
         
