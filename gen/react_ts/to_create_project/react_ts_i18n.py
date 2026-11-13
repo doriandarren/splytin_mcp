@@ -160,8 +160,27 @@ export default i18n;
     
         folder_path = os.path.join(full_path, "src", "i18n", "locales", "en")
     
-        content = r'''# 
-    '''
+        content = r'''{
+    "logo_alt": "Company logo",
+    "app_title": "Business Management System",
+    "app_subtitle": "ERP Edition",
+    "login_title": "Sign in",
+    "login_description": "Enter your credentials to access the system.",
+    "email_label": "Email address",
+    "email_placeholder": "Email",
+    "password_label": "Password",
+    "password_placeholder": "Password",
+    "show_password": "Show password",
+    "hide_password": "Hide password",
+    "remember_me": "Remember me",
+    "forgot_password": "Forgot your password?",
+    "logging_in": "Signing in…",
+    "submit": "Sign in",
+    "terms_prefix": "By signing in, you agree to our",
+    "terms_link": "Terms and Conditions",
+    "terms_connector": "and our",
+    "privacy_link": "Privacy Policy"
+}'''
     
         # Crear el archivo
         HelperFile.write(
@@ -178,8 +197,27 @@ export default i18n;
     
         folder_path = os.path.join(full_path, "src", "i18n", "locales", "es")
     
-        content = r'''# 
-    '''
+        content = r'''{
+    "logo_alt": "Logo de la empresa",
+    "app_title": "Sistema de Gestión Empresarial",
+    "app_subtitle": "ERP Edition",
+    "login_title": "Iniciar sesión",
+    "login_description": "Introduce tus credenciales para acceder al sistema.",
+    "email_label": "Correo electrónico",
+    "email_placeholder": "Email",
+    "password_label": "Contraseña",
+    "password_placeholder": "Contraseña",
+    "show_password": "Mostrar contraseña",
+    "hide_password": "Ocultar contraseña",
+    "remember_me": "Recordarme",
+    "forgot_password": "¿Olvidaste tu contraseña?",
+    "logging_in": "Iniciando sesión…",
+    "submit": "Entrar",
+    "terms_prefix": "Al iniciar sesión, aceptas nuestros",
+    "terms_link": "Términos y condiciones",
+    "terms_connector": "y nuestra",
+    "privacy_link": "Política de privacidad"
+}'''
     
         # Crear el archivo
         HelperFile.write(

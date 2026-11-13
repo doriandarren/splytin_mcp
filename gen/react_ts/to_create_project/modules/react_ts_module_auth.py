@@ -81,23 +81,18 @@ export const AuthLayout = () => {
     
         content = r'''import { useEffect, useRef, useState } from "react";
 import type { SubmitEvent } from "react";
-
+import { useTranslation } from "react-i18next";
 import { Link, useLocation, useNavigate } from "react-router";
-
 import { ArrowRight, Eye, EyeOff, LoaderCircle } from "lucide-react";
-
 import logo from "@/assets/images/logo.png";
-
 import { ApiError } from "@/api/api-error";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-
 import { authTokenStorage } from "../../services/authTokenStorage";
 import { useAuthStore } from "../../stores/authStore";
 import { login } from "../services/loginService";
 import type { LoginRequest } from "../types/login.types";
-
 import "./LoginPage.css";
 
 type LoginFieldErrors = Partial<Record<keyof LoginRequest, string[]>>;
@@ -105,6 +100,7 @@ type LoginFieldErrors = Partial<Record<keyof LoginRequest, string[]>>;
 export const LoginPage = () => {
     const navigate = useNavigate();
     const location = useLocation();
+    const { t } = useTranslation("auth");
 
     // Zustand
     const setAuthenticated = useAuthStore((state) => state.setAuthenticated);
@@ -112,7 +108,7 @@ export const LoginPage = () => {
     // Estados del formulario
     const [credentials, setCredentials] = useState<LoginRequest>({
         email: "admin@splytin.com",
-        password: "__PASSWORD__",
+        password: "Tailandia2026",
     });
 
     const [showPassword, setShowPassword] = useState(false);
@@ -230,24 +226,26 @@ export const LoginPage = () => {
     return (
         <main className="login-page grid min-h-svh lg:grid-cols-2">
             {/* ============================================
-                        PANEL IZQUIERDO - BRANDING
+                            PANEL IZQUIERDO - BRANDING
                 ============================================ */}
             <section className="login-panel hidden min-h-svh items-center justify-center px-12 py-16 lg:flex xl:px-20">
                 <div className="flex w-full max-w-lg flex-col justify-center ml-10 mt-5">
                     {/* Logo */}
                     <img
                         src={logo}
-                        alt="Logo de la empresa"
+                        alt={t("logo_alt")}
                         className="mb-5 h-auto w-full max-w-sm object-contain"
                     />
 
                     {/* Título principal */}
                     <h1 className="max-w-md text-4xl font-light leading-tight tracking-tight text-white xl:text-2xl">
-                        Sistema de Gestión Empresarial
+                        {t("app_title")}
                     </h1>
 
                     {/* Subtítulo */}
-                    <p className="mt-4 text-2xl font-light text-slate-200">ERP Edition</p>
+                    <p className="mt-4 text-2xl font-light text-slate-200">
+                        {t("app_subtitle")}
+                    </p>
 
                     {/* Línea decorativa */}
                     <div className="mt-8 h-1 w-32 rounded-full bg-sky-400" />
@@ -255,7 +253,7 @@ export const LoginPage = () => {
             </section>
 
             {/* ============================================
-                        PANEL DERECHO - LOGIN
+                            PANEL DERECHO - LOGIN
                 ============================================ */}
             <section
                 aria-labelledby="login-title"
@@ -266,7 +264,7 @@ export const LoginPage = () => {
                     <div className="mb-12 lg:hidden">
                         <img
                             src={logo}
-                            alt="Logo de la empresa"
+                            alt={t("logo_alt")}
                             className="h-16 w-auto max-w-full object-contain"
                         />
                     </div>
@@ -277,16 +275,16 @@ export const LoginPage = () => {
                             id="login-title"
                             className="text-3xl font-semibold tracking-tight text-primary"
                         >
-                            Iniciar sesión
+                            {t("login_title")}
                         </h2>
 
                         <p className="text-sm text-muted-foreground">
-                            Introduce tus credenciales para acceder al sistema.
+                            {t("login_description")}
                         </p>
                     </div>
 
                     {/* ============================================
-                                    FORMULARIO
+                                            FORMULARIO
                             ============================================ */}
                     <form
                         onSubmit={onSubmit}
@@ -305,7 +303,7 @@ export const LoginPage = () => {
 
                         {/* Email */}
                         <div className="space-y-2">
-                            <Label htmlFor="login-email">Correo electrónico</Label>
+                            <Label htmlFor="login-email">{t("email_label")}</Label>
 
                             <Input
                                 id="login-email"
@@ -314,7 +312,7 @@ export const LoginPage = () => {
                                 autoComplete="username"
                                 autoCapitalize="none"
                                 spellCheck={false}
-                                placeholder="Email"
+                                placeholder={t("email_placeholder")}
                                 value={credentials.email}
                                 onChange={(event) => updateField("email", event.target.value)}
                                 required
@@ -335,7 +333,7 @@ export const LoginPage = () => {
 
                         {/* Contraseña */}
                         <div className="space-y-2">
-                            <Label htmlFor="login-password">Contraseña</Label>
+                            <Label htmlFor="login-password">{t("password_label")}</Label>
 
                             <div className="relative">
                                 <Input
@@ -343,7 +341,7 @@ export const LoginPage = () => {
                                     name="password"
                                     type={showPassword ? "text" : "password"}
                                     autoComplete="current-password"
-                                    placeholder="Contraseña"
+                                    placeholder={t("password_placeholder")}
                                     value={credentials.password}
                                     onChange={(event) =>
                                         updateField("password", event.target.value)
@@ -368,7 +366,7 @@ export const LoginPage = () => {
                                     onClick={() => setShowPassword((previous) => !previous)}
                                     disabled={isSubmitting}
                                     aria-label={
-                                        showPassword ? "Ocultar contraseña" : "Mostrar contraseña"
+                                        showPassword ? t("hide_password") : t("show_password")
                                     }
                                     aria-pressed={showPassword}
                                     aria-controls="login-password"
@@ -402,14 +400,14 @@ export const LoginPage = () => {
                                     type="checkbox"
                                     className="size-4 accent-primary"
                                 />
-                                Recordarme
+                                {t("remember_me")}
                             </label>
 
                             <Link
                                 to="/reset"
                                 className="text-sm font-medium text-primary hover:underline"
                             >
-                                ¿Olvidaste tu contraseña?
+                                {t("forgot_password")}
                             </Link>
                         </div>
 
@@ -423,11 +421,11 @@ export const LoginPage = () => {
                                 {isSubmitting ? (
                                     <>
                                         <LoaderCircle aria-hidden="true" className="animate-spin" />
-                                        Iniciando sesión…
+                                        {t("logging_in")}
                                     </>
                                 ) : (
                                     <>
-                                        Entrar
+                                        {t("submit")}
                                         <ArrowRight aria-hidden="true" />
                                     </>
                                 )}
@@ -436,22 +434,22 @@ export const LoginPage = () => {
                     </form>
 
                     {/* ============================================
-                                    FOOTER
-                                ============================================ */}
+                                            FOOTER
+                            ============================================ */}
                     <div className="mt-12 text-sm leading-relaxed text-muted-foreground">
-                        Al iniciar sesión, aceptas nuestros{" "}
+                        {t("terms_prefix")}{" "}
                         <a
                             href="/terms"
                             className="font-medium text-primary hover:underline"
                         >
-                            Términos y condiciones
+                            {t("terms_link")}
                         </a>{" "}
-                        y nuestra{" "}
+                        {t("terms_connector")}{" "}
                         <a
                             href="/privacy"
                             className="font-medium text-primary hover:underline"
                         >
-                            Política de privacidad
+                            {t("privacy_link")}
                         </a>
                         .
                     </div>
