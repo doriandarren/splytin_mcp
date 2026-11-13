@@ -13,6 +13,7 @@ class ReactTsI18n:
         self.create_en_auth_json(full_path)
         self.create_es_auth_json(full_path)
         self.update_main_tsx(full_path)
+        self.create_component_language_selector_tsx(full_path)
         
     
     
@@ -102,16 +103,33 @@ export default i18n;
     "app_name": "Sistema de Gestión Empresarial",
     "dashboard": "Panel de control",
     "systems": "Sistemas",
-    "customers": "Clientes",
-    "washes": "Lavados",
+    "quotes": "Presupuestos",
+    "teams": "Equipos",
     "settings": "Configuración",
-    "logout": "Cerrar sesión",
-    "save": "Guardar",
-    "cancel": "Cancelar",
-    "delete": "Eliminar",
-    "edit": "Editar",
-    "create": "Crear",
-    "loading": "Cargando..."
+    "auth": {
+        "profile": "Perfil",
+        "logout": "Cerrar sesión"
+    },
+    "actions": {
+        "create": "Crear",
+        "save": "Guardar",
+        "edit": "Editar",
+        "update": "Actualizar",
+        "delete": "Eliminar",
+        "cancel": "Cancelar",
+        "close": "Cerrar",
+        "search": "Buscar",
+        "filter": "Filtrar",
+        "refresh": "Actualizar datos",
+        "back": "Volver",
+        "confirm": "Confirmar"
+    },
+    "status": {
+        "loading": "Cargando...",
+        "success": "Operación realizada correctamente",
+        "error": "Ha ocurrido un error",
+        "no_results": "No se encontraron resultados"
+    }
 }'''
     
         # Crear el archivo
@@ -134,16 +152,33 @@ export default i18n;
     "app_name": "Business Management System",
     "dashboard": "Dashboard",
     "systems": "Systems",
-    "customers": "Customers",
-    "washes": "Washes",
+    "quotes": "Quotes",
+    "teams": "Teams",
     "settings": "Settings",
-    "logout": "Log out",
-    "save": "Save",
-    "cancel": "Cancel",
-    "delete": "Delete",
-    "edit": "Edit",
-    "create": "Create",
-    "loading": "Loading..."
+    "auth": {
+        "profile": "Profile",
+        "logout": "Log out"
+    },
+    "actions": {
+        "create": "Create",
+        "save": "Save",
+        "edit": "Edit",
+        "update": "Update",
+        "delete": "Delete",
+        "cancel": "Cancel",
+        "close": "Close",
+        "search": "Search",
+        "filter": "Filter",
+        "refresh": "Refresh data",
+        "back": "Back",
+        "confirm": "Confirm"
+    },
+    "status": {
+        "loading": "Loading...",
+        "success": "Operation completed successfully",
+        "error": "An error occurred",
+        "no_results": "No results found"
+    }
 }'''
     
         # Crear el archivo
@@ -152,6 +187,9 @@ export default i18n;
             file_name="common.json",
             content=content
         )
+
+
+
 
 
 
@@ -279,8 +317,81 @@ import { App } from './App';""",
         except Exception as e:
             print_red(f"Error al actualizar {main_path}: {e}")
             return False
+
+
+
+
+
+    def create_component_language_selector_tsx(self, full_path):
+        """
+        Genera el archivo.
+        """
     
-        
+        folder_path = os.path.join(full_path, "src", "components", "languages")
     
+        content = r'''// src/components/languages/LanguageSelector.tsx
+import { useTranslation } from "react-i18next";
+import { Globe } from "lucide-react";
+
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from "@/components/ui/select";
+
+interface LanguageSelectorProps {
+    className?: string;
+}
+
+export function LanguageSelector({
+    className = "w-36",
+}: LanguageSelectorProps) {
+    const { i18n } = useTranslation();
+
+    const languages = [
+        { value: "es", label: "Español" },
+        { value: "en", label: "English" },
+    ];
+
+    const handleLanguageChange = (language: string| null) => {
+        if(!language) return;
+        void i18n.changeLanguage(language);
+    };
+
+    return (
+        <Select
+            value={i18n.resolvedLanguage ?? "es"}
+            onValueChange={handleLanguageChange}
+        >
+            <SelectTrigger
+                className={className}
+                aria-label="Select language"
+            >
+                <Globe className="size-4" />
+                <SelectValue placeholder="Idioma" />
+            </SelectTrigger>
+
+            <SelectContent>
+                {languages.map((language) => (
+                    <SelectItem
+                        key={language.value}
+                        value={language.value}
+                    >
+                        {language.label}
+                    </SelectItem>
+                ))}
+            </SelectContent>
+        </Select>
+    );
+}'''
     
-    
+        # Crear el archivo
+        HelperFile.write(
+            folder_path=folder_path,
+            file_name="LanguageSelector.tsx",
+            content=content
+        )
+
+

@@ -94,6 +94,7 @@ import { useAuthStore } from "../../stores/authStore";
 import { login } from "../services/loginService";
 import type { LoginRequest } from "../types/login.types";
 import "./LoginPage.css";
+import { LanguageSelector } from "@/components/languages/LanguageSelector";
 
 type LoginFieldErrors = Partial<Record<keyof LoginRequest, string[]>>;
 
@@ -260,6 +261,12 @@ export const LoginPage = () => {
                 className="login-form flex min-h-svh items-center justify-center px-6 py-12 sm:px-12 lg:px-16"
             >
                 <div className="w-full max-w-md">
+                
+                    {/* Selector de idioma */}
+                    <div className="mb-8 flex justify-end">
+                        <LanguageSelector />
+                    </div>
+                    
                     {/* Logo móvil */}
                     <div className="mb-12 lg:hidden">
                         <img

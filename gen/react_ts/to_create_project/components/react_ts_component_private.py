@@ -5,46 +5,62 @@ from helpers.helper_file import HelperFile
 class ReactTsComponentPrivate:
 
     def invoke(self, full_path):
-        # Layout
-        self.create_file_layout_tsx(full_path)
+        # Admin Layout
+        self.create_admin_layout_tsx(full_path)
 
+        #--------  Components -------------
         # Header
         self.create_file_custom_admin_header(full_path)
-
-
-        # Components Menu
+        
+        # Menu
         self.create_user_menu_tsx(full_path)
         
+        # SideBar
+        self.create_custom_admin_sidebar_tsx(full_path)
         
         
-    
+        
 
-    def create_file_layout_tsx(self, full_path):
+    def create_admin_layout_tsx(self, full_path):
         """
         Genera el archivo.
         """
 
         folder_path = os.path.join(full_path, "src", "modules", "private", "layouts")
 
-        content = r'''import { Outlet } from "react-router";
+        content = r'''// src/modules/private/layouts/AdminLayout.tsx
+import { Outlet } from "react-router";
 import { CustomAdminHeader } from "../components/CustomAdminHeader";
+import { CustomAdminSidebar } from "../components/CustomAdminSidebar";
 
+import {
+    SidebarProvider,
+    SidebarInset,
+} from "@/components/ui/sidebar";
 
 const AdminLayout = () => {
 
     return (
 
-        <div className="min-h-screen bg-background">
+        <SidebarProvider defaultOpen={true}>
 
-            {/* Header */}
-            <CustomAdminHeader />
+            {/* Sidebar izquierdo */}
+            <CustomAdminSidebar />
 
-            {/* Content */}
-            <main className="p-6">
-                <Outlet />
-            </main>
+            {/* Contenido principal */}
+            <SidebarInset className="min-w-0 bg-background">
 
-        </div>
+                {/* Header */}
+                <CustomAdminHeader />
+
+                {/* Content */}
+                <main className="flex flex-1 flex-col p-6">
+                    <Outlet />
+                </main>
+
+            </SidebarInset>
+
+        </SidebarProvider>
 
     );
 };
@@ -71,7 +87,7 @@ export default AdminLayout;
         content = r'''// src/modules/private/components/CustomAdminHeader.tsx
 import { PanelsTopLeft } from "lucide-react";
 import { Link } from "react-router";
-
+import { LanguageSelector } from "@/components/languages/LanguageSelector";
 import { UserMenu } from "@/modules/private/components/UserMenu";
 
 export const CustomAdminHeader = () => {
@@ -89,6 +105,9 @@ export const CustomAdminHeader = () => {
 
             {/* Menú del usuario */}
             <div className="flex items-center justify-end">
+                <div className="mr-5">
+                    <LanguageSelector />
+                </div>
                 <UserMenu />
             </div>
 
@@ -114,16 +133,13 @@ export const CustomAdminHeader = () => {
 
         content = r'''// src/modules/private/components/UserMenu.tsx
 import { Link, useNavigate } from "react-router";
-
+import { useTranslation } from "react-i18next";
 import {
     ChevronDown,
     LogOut,
-    Settings,
     UserRound,
 } from "lucide-react";
-
 import { Button } from "@/components/ui/button";
-
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -133,25 +149,21 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-
 import { useAuthStore } from "@/modules/auth/stores/authStore";
+
 
 // Opciones del menú
 const menuItems = [
     {
-        label: "Mi perfil",
+        key: "auth.profile",
         path: "/admin/profiles",
         icon: UserRound,
-    },
-    {
-        label: "Sistemas",
-        path: "/admin/systems",
-        icon: Settings,
-    },
+    }
 ];
 
 export const UserMenu = () => {
     const navigate = useNavigate();
+    const { t } = useTranslation("common");
 
     const user = useAuthStore((state) => state.user);
     const logout = useAuthStore((state) => state.logout);
@@ -171,7 +183,7 @@ export const UserMenu = () => {
                 <UserRound className="size-5" />
 
                 <span className="hidden sm:inline">
-                    {user?.attributes.name ?? "Mi cuenta"}
+                    {user?.attributes.name ?? t("auth.account")}
                 </span>
 
                 <ChevronDown className="size-4" />
@@ -184,7 +196,7 @@ export const UserMenu = () => {
                     <DropdownMenuLabel>
                         <div className="flex flex-col gap-1">
                             <span>
-                                {user?.attributes.name ?? "Mi cuenta"}
+                                {user?.attributes.name ?? t("auth.account")}
                             </span>
 
                             {user?.attributes.email && (
@@ -209,7 +221,7 @@ export const UserMenu = () => {
                                 render={<Link to={item.path} />}
                             >
                                 <Icon className="size-4" />
-                                <span>{item.label}</span>
+                                <span>{t(item.key)}</span>
                             </DropdownMenuItem>
                         );
                     })}
@@ -224,7 +236,7 @@ export const UserMenu = () => {
                         onClick={handleLogout}
                     >
                         <LogOut className="size-4" />
-                        Cerrar sesión
+                        {t("auth.logout")}
                     </DropdownMenuItem>
                 </DropdownMenuGroup>
 
@@ -240,3 +252,151 @@ export const UserMenu = () => {
             file_name="UserMenu.tsx",
             content=content
         )
+    
+    
+
+    def create_custom_admin_sidebar_tsx(self, full_path):
+        """
+        Genera el archivo.
+        """
+
+        folder_path = os.path.join(full_path, "src", "modules", "private", "components")
+
+        content = r'''// src/modules/private/components/CustomAdminSidebar.tsx
+import { Link, useLocation } from "react-router";
+import { useTranslation } from "react-i18next";
+import {
+    LayoutDashboard,
+    Server,
+    Users,
+    Droplets,
+    Settings,
+    PanelsTopLeft,
+} from "lucide-react";
+
+import {
+    Sidebar,
+    SidebarHeader,
+    SidebarContent,
+    SidebarFooter,
+    SidebarGroup,
+    SidebarGroupLabel,
+    SidebarGroupContent,
+    SidebarMenu,
+    SidebarMenuItem,
+    SidebarMenuButton,
+    SidebarRail,
+} from "@/components/ui/sidebar";
+
+const menuItems = [
+    {
+        key: "dashboard",
+        path: "/admin",
+        icon: LayoutDashboard,
+    },
+    {
+        key: "systems",
+        path: "/admin/systems",
+        icon: Server,
+    },
+    {
+        key: "teams",
+        path: "/admin/teams",
+        icon: Users,
+    },
+    {
+        key: "quotes",
+        path: "/admin/quotes",
+        icon: Droplets,
+    },
+    {
+        key: "settings",
+        path: "/admin/settings",
+        icon: Settings,
+    },
+] as const;
+
+export const CustomAdminSidebar = () => {
+    const { t } = useTranslation("common");
+    const { pathname } = useLocation();
+
+    const isActive = (path: string) => {
+        if (path === "/admin") {
+            return pathname === "/admin" || pathname === "/admin/";
+        }
+
+        return pathname === path || pathname.startsWith(`${path}/`);
+    };
+
+    return (
+        <Sidebar collapsible="icon" variant="sidebar">
+            {/* Logo */}
+            <SidebarHeader>
+                <SidebarMenu>
+                    <SidebarMenuItem>
+                        <SidebarMenuButton
+                            render={<Link to="/admin" />}
+                            tooltip="Splytin ERP"
+                            size="lg"
+                        >
+                            <PanelsTopLeft className="size-5" />
+                            <span className="font-semibold">
+                                Splytin ERP
+                            </span>
+                        </SidebarMenuButton>
+                    </SidebarMenuItem>
+                </SidebarMenu>
+            </SidebarHeader>
+
+            {/* Navegación */}
+            <SidebarContent>
+                <SidebarGroup>
+                    <SidebarGroupLabel>
+                        {t("navigation")}
+                    </SidebarGroupLabel>
+
+                    <SidebarGroupContent>
+                        <SidebarMenu>
+                            {menuItems.map((item) => {
+                                const Icon = item.icon;
+
+                                return (
+                                    <SidebarMenuItem key={item.key}>
+                                        <SidebarMenuButton
+                                            render={<Link to={item.path} />}
+                                            isActive={isActive(item.path)}
+                                            tooltip={t(item.key)}
+                                        >
+                                            <Icon className="size-4" />
+                                            <span>{t(item.key)}</span>
+                                        </SidebarMenuButton>
+                                    </SidebarMenuItem>
+                                );
+                            })}
+                        </SidebarMenu>
+                    </SidebarGroupContent>
+                </SidebarGroup>
+            </SidebarContent>
+
+            {/* Pie */}
+            <SidebarFooter>
+                <div className="px-2 py-2 text-xs text-muted-foreground group-data-[collapsible=icon]:hidden">
+                    ERP Edition
+                </div>
+            </SidebarFooter>
+
+            <SidebarRail />
+        </Sidebar>
+    );
+};
+'''
+
+        # Crear el archivo
+        HelperFile.write(
+            folder_path=folder_path,
+            file_name="CustomAdminSidebar.tsx",
+            content=content
+        )
+
+    
+    

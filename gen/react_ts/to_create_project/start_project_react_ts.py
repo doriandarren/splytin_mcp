@@ -1,5 +1,6 @@
 import os
 from dotenv import load_dotenv
+from gen.react_ts.to_create_project.components.react_ts_component_chart import ReactTsComponentChart
 from gen.react_ts.to_create_project.react_ts_i18n import ReactTsI18n
 from helpers.helper_menu import pause
 from helpers.helper_print import input_with_validation
@@ -9,7 +10,7 @@ from gen.react_ts.to_create_project.components.react_ts_pagination_components im
 from gen.react_ts.to_create_project.components.react_ts_table_component import ReactTsTableComponent
 from gen.react_ts.to_create_project.media.react_ts_images import ReactTsImages
 from gen.react_ts.to_create_project.modules.react_ts_module_dashboard import ReactTsModuleDashboard
-from gen.react_ts.to_create_project.modules.react_ts_module_system import ReactTsModuleSystem
+from gen.react_ts.to_create_project.modules.react_ts_module_fake import ReactTsModuleFake
 from gen.react_ts.to_create_project.modules.react_ts_profile import ReactTsProfile
 from gen.react_ts.to_create_project.react_ts_api import ReactTsApi
 from gen.react_ts.to_create_project.react_ts_chadcn import ReactTsChadcn
@@ -152,7 +153,7 @@ class StartProjectReactTs:
         
         
         # Module Systems (Fake)
-        obj = ReactTsModuleSystem()
+        obj = ReactTsModuleFake()
         obj.invoke(full_path)       
         
         
@@ -163,6 +164,11 @@ class StartProjectReactTs:
         
         # Images
         obj = ReactTsImages()
+        obj.invoke(full_path)
+        
+        
+        # Chart
+        obj = ReactTsComponentChart()
         obj.invoke(full_path)
         
         
