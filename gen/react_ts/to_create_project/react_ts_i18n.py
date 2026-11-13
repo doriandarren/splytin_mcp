@@ -10,6 +10,8 @@ class ReactTsI18n:
         self.create_index_ts(full_path)
         self.create_es_common_json(full_path)
         self.create_en_common_json(full_path)
+        self.create_en_auth_json(full_path)
+        self.create_es_auth_json(full_path)
         self.update_main_tsx(full_path)
         
     
