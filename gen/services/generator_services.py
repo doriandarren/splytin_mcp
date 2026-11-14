@@ -5,6 +5,7 @@ from typing import Any
 import os
 from dotenv import load_dotenv
 from gen.php_laravel.to_create_project.auth.laravel_module_auth import LaravelModuleAuth
+from gen.php_laravel.to_create_project.modules.laravel_dashboard import LaravelDashboard
 from gen.php_laravel.to_create_project.shared.laravel_shared import LaravelShared
 from gen.php_laravel.to_create_project.updates.laravel_update_route_api_php import LaravelUpdateRouteApiPhp
 from helpers.helper_columns import HelperColumns
@@ -444,9 +445,6 @@ def create_php_project_service(
     project_name: str,
     project_path: str,
 ) -> dict[str, Any]:
-    from gen.php_laravel.to_create_project.dashboards.generate_dashboard import (
-        generate_dashboard,
-    )
     from gen.php_laravel.to_create_project.dev.generate_execute_controller import (
         generate_execute_controller,
     )
@@ -546,13 +544,18 @@ def create_php_project_service(
     obj.invoke(full_path)
     
     
-    
+    # Shared
     obj = LaravelShared()
     obj.invoke(full_path)
     
     
+    # Module Dashboard
+    obj = LaravelDashboard()
+    obj.invoke(full_path)
     
-    generate_dashboard(full_path)
+    
+    
+    
     generate_utilities(full_path)
     update_model_user(full_path)
     update_role_user_model(full_path)
