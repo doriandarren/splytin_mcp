@@ -5,9 +5,11 @@ from typing import Any
 import os
 from dotenv import load_dotenv
 from gen.php_laravel.to_create_project.auth.laravel_module_auth import LaravelModuleAuth
-from gen.php_laravel.to_create_project.modules.laravel_dashboard import LaravelDashboard
+from gen.php_laravel.to_create_project.modules.laravel_module_dev import LaravelModuleDev
+from gen.php_laravel.to_create_project.modules.laravel_module_report_summary import LaravelModuleReportSummary
 from gen.php_laravel.to_create_project.shared.laravel_shared import LaravelShared
 from gen.php_laravel.to_create_project.updates.laravel_update_route_api_php import LaravelUpdateRouteApiPhp
+from gen.php_laravel.to_create_project.utilities.laravel_utilities import LaravelUtilities
 from helpers.helper_columns import HelperColumns
 from gen.php_laravel.to_create_project.laravel_batch_processes import LaravelBatchProcesses
 from gen.php_laravel.to_create_project.laravel_enums import LaravelEnums
@@ -15,7 +17,7 @@ from gen.php_laravel.to_create_project.laravel_maatwebsite_excel import LaravelM
 from gen.php_laravel.to_create_project.laravel_fpdf_merge import LaravelFpdfMerge
 from gen.php_laravel.to_create_project.laravel_by_command_line import LaravelByCommandLine
 from gen.php_laravel.to_create_project.laravel_snappy import LaravelSnappy
-from gen.php_laravel.to_create_project.fake.laravel_fake_data import LaravelFakeData
+from gen.php_laravel.to_create_project.modules.laravel_module_fake_data import LaravelModuleFakeData
 from gen.php_laravel.to_create_project.generate_api_controller import generate_api_controller
 from gen.php_laravel.to_create_project.laravel_default_role_permissions import LaravelDefaultRolePermissions
 from gen.php_laravel.to_create_project.generate_query_filter import generate_query_filter
@@ -445,14 +447,6 @@ def create_php_project_service(
     project_name: str,
     project_path: str,
 ) -> dict[str, Any]:
-    from gen.php_laravel.to_create_project.dev.generate_execute_controller import (
-        generate_execute_controller,
-    )
-    from gen.php_laravel.to_create_project.dev.generate_route_test import generate_route_test
-    from gen.php_laravel.to_create_project.dev.generate_test_controller import (
-        generate_test_controller,
-    )
-    
     from gen.php_laravel.to_create_project.images.generate_company_logos import (
         generate_company_logos,
     )
@@ -477,9 +471,6 @@ def create_php_project_service(
     
     from gen.php_laravel.to_create_project.updates.update_envs import (
         update_envs,
-    )
-    from gen.php_laravel.to_create_project.utilities.generate_utilities import (
-        generate_utilities,
     )
     
     from gen.php_laravel.to_create_project.exceptions.generate_exception_handler_response import (
@@ -549,14 +540,15 @@ def create_php_project_service(
     obj.invoke(full_path)
     
     
-    # Module Dashboard
-    obj = LaravelDashboard()
+    
+    
+    
+    # Utilities
+    obj = LaravelUtilities()
     obj.invoke(full_path)
     
     
     
-    
-    generate_utilities(full_path)
     update_model_user(full_path)
     update_role_user_model(full_path)
     update_ability_user_model(full_path)
@@ -564,9 +556,18 @@ def create_php_project_service(
     update_bootstrap_app_php(full_path)
     update_readme(full_path)
     update_gitignore(full_path)
-    generate_execute_controller(full_path)
-    generate_test_controller(full_path)
-    generate_route_test(full_path)
+    
+    
+    # Module Report Summary
+    obj = LaravelModuleReportSummary()
+    obj.invoke(full_path)
+    
+    # Module Dev
+    obj = LaravelModuleDev()
+    obj.invoke(full_path)
+    
+    
+    
     generate_company_logos(full_path)
     update_welcome_blade(full_path, project_name, domain_name)
     generate_shared_postman_collections(full_path, project_name, domain_name, password)
@@ -581,7 +582,7 @@ def create_php_project_service(
     
     
     # Fake Data
-    obj = LaravelFakeData()
+    obj = LaravelModuleFakeData()
     obj.invoke(full_path)
     
 

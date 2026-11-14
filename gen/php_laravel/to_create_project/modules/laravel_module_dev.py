@@ -1,26 +1,128 @@
 import os
-from helpers.helper_print import print_message, GREEN, CYAN, run_command
+from helpers.helper_print import print_green, print_red
 
 
-def generate_test_controller(full_path):
-    """
-    Genera un archivo
+class LaravelModuleDev:
 
-    Args:
-        full_path (str): Ruta completa del proyecto.
-    """
-    styles_path = os.path.join(full_path, "app", "Http", "Controllers", "Dev", "V1")
+    def invoke(self, full_path):
+        self.generate_execute_controller(full_path)
+        self.generate_route_test(full_path)
+        self.generate_test_controller(full_path)
+    
+    
+        
+    def generate_execute_controller(self, full_path):
+        """
+        Genera un archivo
 
-    # Crear la carpeta si no existe
-    if not os.path.exists(styles_path):
-        os.makedirs(styles_path)
-        print_message(f"Carpeta creada: {styles_path}", GREEN)
+        Args:
+            full_path (str): Ruta completa del proyecto.
+        """
+        styles_path = os.path.join(full_path, "app", "Http", "Controllers", "Dev", "V1")
 
-    # Ruta completa del archivo
-    file_path = os.path.join(styles_path, "TestController.php")
+        # Crear la carpeta si no existe
+        if not os.path.exists(styles_path):
+            os.makedirs(styles_path)
+            print_green(f"Carpeta creada: {styles_path}")
 
-    # Contenido por defecto
-    content = r"""<?php
+        # Ruta completa del archivo
+        file_path = os.path.join(styles_path, "ExecuteController.php")
+
+        # Contenido por defecto
+        content = """<?php
+
+namespace App\\Http\\Controllers\\Dev\\V1;
+
+use App\\Http\\Controllers\\Controller;
+use Illuminate\\Http\\Request;
+
+class ExecuteController extends Controller
+{
+
+    public function __invoke(Request $request)
+    {
+
+        dd("pasa");
+
+    }
+
+}"""
+
+        try:
+            # Crear o sobrescribir el archivo con el contenido
+            with open(file_path, "w") as f:
+                f.write(content)
+            print_green(f"Archivo generado: {file_path}")
+        except Exception as e:
+            print_red(f"Error al generar el archivo {file_path}: {e}")
+            
+    
+    
+    def generate_route_test(self, full_path):
+        """
+        Genera un archivo
+
+        Args:
+            full_path (str): Ruta completa del proyecto.
+        """
+        styles_path = os.path.join(full_path, "routes", "API", "V1")
+
+        # Crear la carpeta si no existe
+        if not os.path.exists(styles_path):
+            os.makedirs(styles_path)
+            print_green(f"Carpeta creada: {styles_path}")
+
+        # Ruta completa del archivo
+        file_path = os.path.join(styles_path, "dev.php")
+
+        # Contenido por defecto
+        content = """<?php
+
+use Illuminate\\Support\\Facades\\Route;
+use App\\Http\\Controllers\\Dev\\V1\\ExecuteController;
+use App\\Http\\Controllers\\Dev\\V1\\TestController;
+
+/*
+|--------------------------------------------------------------------------
+| DEV
+|--------------------------------------------------------------------------
+|
+*/
+
+Route::get('dev/execute', ExecuteController::class . '@__invoke')->name('dev/execute');
+
+Route::get('dev/test', TestController::class . '@__invoke')->name('dev/test');
+"""
+
+        try:
+            # Crear o sobrescribir el archivo con el contenido
+            with open(file_path, "w") as f:
+                f.write(content)
+            print_green(f"Archivo generado: {file_path}")
+        except Exception as e:
+            print_red(f"Error al generar el archivo {file_path}: {e}")
+            
+    
+    
+    def generate_test_controller(self, full_path):
+        """
+        Genera un archivo
+
+        Args:
+            full_path (str): Ruta completa del proyecto.
+        """
+        styles_path = os.path.join(full_path, "app", "Http", "Controllers", "Dev", "V1")
+
+        # Crear la carpeta si no existe
+        if not os.path.exists(styles_path):
+            os.makedirs(styles_path)
+            print_green(f"Carpeta creada: {styles_path}")
+
+        # Ruta completa del archivo
+        file_path = os.path.join(styles_path, "TestController.php")
+
+        # Contenido por defecto
+        content = r"""<?php
 
 namespace App\Http\Controllers\Dev\V1;
 
@@ -52,7 +154,7 @@ use stdClass;
 
 class TestController extends Controller
 {
-    
+
 
     public function __invoke()
     {
@@ -62,10 +164,9 @@ class TestController extends Controller
 
 
 
-
     /*******************************************
-     * ONLY VERSIONS BASE
-     ******************************************/
+    * ONLY VERSIONS BASE
+    ******************************************/
 
 
     public function __invokeDISCORD()
@@ -77,19 +178,19 @@ class TestController extends Controller
 
 
         MessageChannel::send('Hola Mundo!!!!', 'Titulo');
-        
+
     }
 
 
 
     /**
-     * Email
-     */
+    * Email
+    */
     public function __invokeEMAIL()
     {
-        // Example: 
+        // Example:
         // php artisan make:mail TestMail
-        
+
         try{
 
             Mail::to('doriandarren1@gmail.com')->send(new TestMail('Prueba de email', 'Mensaje de prueba.'));
@@ -105,8 +206,8 @@ class TestController extends Controller
 
 
     /**
-     * Snappy
-     */
+    * Snappy
+    */
     public function __invokeSNAPPY()
     {
         $snappy = new Pdf();
@@ -135,14 +236,14 @@ class TestController extends Controller
 
 
     /**
-     * Laravel Excel
-     */
+    * Laravel Excel
+    */
     public function __invokeEXCEL()
     {
         /**
-         * IMPORTANTE!!! -> Si todo va bien el archivo estara en storage/app/private/exampleExport.xlsx
-         */
-         
+        * IMPORTANTE!!! -> Si todo va bien el archivo estara en storage/app/private/exampleExport.xlsx
+        */
+
         // Data Fake replace by Collection
         $arrData = [];
         $data = new stdClass();
@@ -165,13 +266,13 @@ class TestController extends Controller
         //dd("pasa");
 
     }
-    
+
 
 
 
     /**
-     * PDF Merge
-     */
+    * PDF Merge
+    */
     public function __invokeFPDI()
     {
 
@@ -209,8 +310,8 @@ class TestController extends Controller
 
 
     /**
-     * Read Products
-     */
+    * Read Products
+    */
     public function __invokeREADFILE()
     {
 
@@ -250,18 +351,18 @@ class TestController extends Controller
 
 
     /*********************************************************
-     *
-     * GENERATE ABILITIES OF THE EnumAbilityGroups
-     *
-     *********************************************************/
+    *
+    * GENERATE ABILITIES OF THE EnumAbilityGroups
+    *
+    *********************************************************/
 
     /**
-     * 1.- No borrar sirve para actualizar las Abilities de la DB
-     *
-     * 2.- Recarga las abilidades de los usuarios
-     *
-     * @return void
-     */
+    * 1.- No borrar sirve para actualizar las Abilities de la DB
+    *
+    * 2.- Recarga las abilidades de los usuarios
+    *
+    * @return void
+    */
     public function __invokeABILITIES()
     {
 
@@ -281,8 +382,8 @@ class TestController extends Controller
     }
 
     /**
-     * *******************************************************
-     */
+    * *******************************************************
+    */
 
 
 
@@ -290,8 +391,8 @@ class TestController extends Controller
 
 
     /*******************************
-     * Create User
-     */
+    * Create User
+    */
 
     public function __invokeCREATEUSER()
     {
@@ -323,12 +424,12 @@ class TestController extends Controller
 
 
     /**
-     * @param $name
-     * @param $email
-     * @param $password
-     * @param $roleName
-     * @return void
-     */
+    * @param $name
+    * @param $email
+    * @param $password
+    * @param $roleName
+    * @return void
+    */
     private function createUser($name, $email, $password, $roleName): void
     {
 
@@ -372,7 +473,7 @@ class TestController extends Controller
             $user->assignRole($role);
 
         }
-        
+
         if($roleName == EnumRole::USER){
             $role = Role::where('name', EnumRole::USER)->first();
             $user->assignRole($role);
@@ -389,8 +490,8 @@ class TestController extends Controller
 
 
     /**********************
-     * Create All Abilities
-     **********************/
+    * Create All Abilities
+    **********************/
     private function createAbilities($user, $roleName): void
     {
 
@@ -406,11 +507,11 @@ class TestController extends Controller
             $this->createAbilityByRol($user, EnumAbilityGroups::ABILITIES_GROUP_BY_MANAGER);
 
         }
-        
+
         if($roleName == EnumRole::USER){
-        
+
             $this->createAbilityByRol($user, EnumAbilityGroups::ABILITIES_GROUP_BY_USER);
-            
+
         }
 
         if($roleName == EnumRole::ERP){
@@ -418,8 +519,8 @@ class TestController extends Controller
             $this->createAbilityByRol($user, EnumAbilityGroups::ABILITIES_GROUP_BY_ERP);
 
         }
-        
-        
+
+
 
     }
 
@@ -469,18 +570,18 @@ class TestController extends Controller
 
 
     /**
-     * END Create User
-     *******************************/
-     
-     
-     
-     
-     
-     /*********************************************************
-     *
-     * GENERATE ABILITIES OF THE EnumAbilityGroups
-     *
-     *********************************************************/
+    * END Create User
+    *******************************/
+
+
+
+
+
+    /*********************************************************
+    *
+    * GENERATE ABILITIES OF THE EnumAbilityGroups
+    *
+    *********************************************************/
 
     // Crear para abstract class UserPermissions
     public function __invokeABILITIESPERMISION(Request $request)
@@ -547,28 +648,20 @@ class TestController extends Controller
 
 
     /**
-     * *******************************************************
-     */
- 
+    * *******************************************************
+    */
 
-}
-"""
+}"""
+
+
+        try:
+            # Crear o sobrescribir el archivo con el contenido
+            with open(file_path, "w") as f:
+                f.write(content)
+            print_green(f"Archivo generado: {file_path}")
+        except Exception as e:
+            print_red(f"Error al generar el archivo {file_path}: {e}")
 
     
     
-    try:
-        # Crear o sobrescribir el archivo con el contenido
-        with open(file_path, "w") as f:
-            f.write(content)
-        print_message(f"Archivo generado: {file_path}", GREEN)
-    except Exception as e:
-        print_message(f"Error al generar el archivo {file_path}: {e}", CYAN)
-
-
-
-
-
-
-
-
-
+    

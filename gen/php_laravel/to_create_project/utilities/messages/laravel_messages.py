@@ -3,6 +3,7 @@ from helpers.helper_print import print_message, GREEN, CYAN, run_command
 
 
 
+
 def generate_messages(full_path):
     """
     Genera un archivo
