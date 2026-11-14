@@ -21,7 +21,7 @@ class ReactTsModuleDashboard:
     
     
     def create_module(self, full_path):
-        columns = HelperColumns.parse_columns_input("name")
+        columns = HelperColumns.parse_columns_input("total_customers:int total_invoices:int total_income:decimal total_expenses:decimal")
 
         obj = StandardModuleCrudReactTs()
         obj.invoke(

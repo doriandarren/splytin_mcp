@@ -1,3 +1,5 @@
+from sqlalchemy import null
+
 from gen.php_laravel.to_module_crud.standard_module_crud_php import standard_module_crud_php
 from helpers.helper_columns import HelperColumns
 
@@ -32,7 +34,7 @@ class LaravelModuleReportSummary:
 
 
         namespace = "API"
-        folder_group = "SHARED"
+        folder_group = None
 
 
         # Report Summary
