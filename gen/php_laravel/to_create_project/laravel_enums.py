@@ -1,0 +1,437 @@
+import os
+from helpers.helper_print import print_cyan, print_green, print_message, GREEN, print_red
+
+
+
+class LaravelEnums:
+
+    def invoke(self, full_path, project_name, domain_name, password):
+        self.create_dev(full_path, project_name, domain_name, password)
+        self.create_exclude_table(full_path)
+        self.create_role(full_path)
+        self.create_user(full_path, domain_name, password)
+        self.create_user_status(full_path)
+        self.create_ability_suffix(full_path)
+        self.create_api_setup(full_path)
+        self.create_setting_paginate(full_path)
+
+
+
+    def create_dev(self, full_path, project_name, domain_name, password):
+        """
+        Genera un archivo
+
+        Args:
+            full_path (str): Ruta completa del proyecto.
+        """
+        styles_path = os.path.join(full_path, "app", "Enums", "Dev")
+
+        # Crear la carpeta si no existe
+        if not os.path.exists(styles_path):
+            os.makedirs(styles_path)
+            print_message(f"Carpeta creada: {styles_path}", GREEN)
+
+        # Ruta completa del archivo
+        file_path = os.path.join(styles_path, "EnumDefaultCompany.php")
+
+        # Contenido por defecto
+        content = r"""<?php
+
+namespace App\Enums\Dev;
+
+class EnumDefaultCompany
+{
+
+    /**
+     * User Admin
+     */
+    const MY_COMPANY_ID = 1;
+    const MY_COMPANY_DOMAIN = '__DOMAIN_NAME__';
+    const PASSWORD = '__PASSWORD__';
+
+
+    /**
+     * System
+     */
+    const SYSTEM_ID = 1;
+    const SYSTEM_NAME = 'System';
+    const SYSTEM_EMAIL = 'system@__DOMAIN_NAME__';
+    
+
+    /**
+     * Admin
+     */
+    const ADMIN_NAME = 'Admin';
+    const ADMIN_EMAIL = 'admin@__DOMAIN_NAME__';
+
+
+    /**
+     * Manager
+     */
+    const MANAGER_NAME = 'Manager';
+    const MANAGER_EMAIL = 'manager@__DOMAIN_NAME__';
+
+
+    /**
+     * User
+     */
+    const USER_NAME = 'User';
+    const USER_EMAIL = 'user@__DOMAIN_NAME__';
+
+}
+"""
+        content = content.replace('__DOMAIN_NAME__', domain_name)
+        content = content.replace('__PASSWORD__', password)
+        
+
+        try:
+            # Crear o sobrescribir el archivo con el contenido
+            with open(file_path, "w") as f:
+                f.write(content)
+            print_green(f"Archivo generado: {file_path}")
+        except Exception as e:
+            print_red(f"Error al generar el archivo {file_path}: {e}")
+
+
+
+
+
+    def create_exclude_table(self, full_path):
+        """
+        Genera un archivo
+
+        Args:
+            full_path (str): Ruta completa del proyecto.
+        """
+        styles_path = os.path.join(full_path, "app", "Enums", "Dev")
+
+        # Crear la carpeta si no existe
+        if not os.path.exists(styles_path):
+            os.makedirs(styles_path)
+            print_message(f"Carpeta creada: {styles_path}", GREEN)
+
+        # Ruta completa del archivo
+        file_path = os.path.join(styles_path, "EnumExcludeTable.php")
+
+        # Contenido por defecto
+        content = r"""<?php
+
+namespace App\Enums\Dev;
+
+enum EnumExcludeTable
+{
+
+    const EXCLUDE_TABLE = [
+        'migrations',
+        'failed_jobs',
+        'jobs',
+        'job_batches',
+        'cache',
+        'cache_locks',
+        'password_resets',
+        'personal_access_tokens',
+        'password_reset_tokens',
+        'sessions',
+    ];
+
+
+}
+"""
+        try:
+            # Crear o sobrescribir el archivo con el contenido
+            with open(file_path, "w") as f:
+                f.write(content)
+            print_cyan(f"Archivo generado: {file_path}")
+        except Exception as e:
+            print_red(f"Error al generar el archivo {file_path}: {e}")
+
+
+
+
+
+    def create_role(self, full_path):
+        """
+        Genera un archivo
+
+        Args:
+            full_path (str): Ruta completa del proyecto.
+        """
+        styles_path = os.path.join(full_path, "app", "Enums", "Roles")
+
+        # Crear la carpeta si no existe
+        if not os.path.exists(styles_path):
+            os.makedirs(styles_path)
+            print_message(f"Carpeta creada: {styles_path}", GREEN)
+
+        # Ruta completa del archivo
+        file_path = os.path.join(styles_path, "EnumRole.php")
+
+        # Contenido por defecto
+        content = """<?php
+
+namespace App\\Enums\\Roles;
+
+class EnumRole
+{
+    const ADMIN = 'admin';
+    const MANAGER = 'manager';
+    const USER = 'user';
+    const ERP = 'erp'; // role API connect
+
+    //Description
+    const ADMIN_DESCRIPTION = 'Admin';
+    const MANAGER_DESCRIPTION = 'Manager';
+    const USER_DESCRIPTION = 'User';
+    const ERP_DESCRIPTION = 'Erp'; // role API connect
+
+
+    // ID's
+    const ADMIN_ID = 1;
+    const MANAGER_ID = 2;
+    const USER_ID = 3;
+    const ERP_ID = 4;
+
+}
+"""
+        try:
+            # Crear o sobrescribir el archivo con el contenido
+            with open(file_path, "w") as f:
+                f.write(content)
+            print_green(f"Archivo generado: {file_path}")
+        except Exception as e:
+            print_red(f"Error al generar el archivo {file_path}: {e}")
+
+
+
+
+    def create_user(self, full_path, domain_name, password):
+        """
+        Genera un archivo
+
+        Args:
+            full_path (str): Ruta completa del proyecto.
+        """
+        styles_path = os.path.join(full_path, "app", "Enums", "Users")
+
+        # Crear la carpeta si no existe
+        if not os.path.exists(styles_path):
+            os.makedirs(styles_path)
+            print_message(f"Carpeta creada: {styles_path}", GREEN)
+
+        # Ruta completa del archivo
+        file_path = os.path.join(styles_path, "EnumUser.php")
+
+        # Contenido por defecto
+        content = r"""<?php
+
+namespace App\Enums\Users;
+
+enum EnumUser
+{
+
+    const WEBMASTER_EMAIL = 'webmaster@__DOMAIN_NAME__';
+    const WEBMASTER_PASSWORD = '__PASSWORD__';
+    
+}
+"""
+
+        content = content.replace('__DOMAIN_NAME__', domain_name)
+        content = content.replace('__PASSWORD__', password)
+        
+
+        try:
+            # Crear o sobrescribir el archivo con el contenido
+            with open(file_path, "w") as f:
+                f.write(content)
+            print_green(f"Archivo generado: {file_path}")
+        except Exception as e:
+            print_red(f"Error al generar el archivo {file_path}: {e}")
+
+
+
+
+    def create_user_status(self, full_path):
+        """
+        Genera un archivo
+
+        Args:
+            full_path (str): Ruta completa del proyecto.
+        """
+        styles_path = os.path.join(full_path, "app", "Enums", "UserStatuses")
+
+        # Crear la carpeta si no existe
+        if not os.path.exists(styles_path):
+            os.makedirs(styles_path)
+            print_message(f"Carpeta creada: {styles_path}", GREEN)
+
+        # Ruta completa del archivo
+        file_path = os.path.join(styles_path, "EnumUserStatus.php")
+
+        # Contenido por defecto
+        content = """<?php
+
+namespace App\\Enums\\UserStatuses;
+
+class EnumUserStatus
+{
+    const ACTIVE_ID = 1;
+    const INACTIVE_ID = 2;
+    const BLOCKED_ID = 3;
+
+    const ACTIVE_NAME = 'Active';
+    const INACTIVE_NAME = 'Inactive';
+    const BLOCKED_NAME = 'Blocked';
+}
+"""
+
+        try:
+            # Crear o sobrescribir el archivo con el contenido
+            with open(file_path, "w") as f:
+                f.write(content)
+            print_green(f"Archivo generado: {file_path}")
+        except Exception as e:
+            print_red(f"Error al generar el archivo {file_path}: {e}")
+
+
+
+
+    def create_ability_suffix(self, full_path):
+        """
+        Genera un archivo
+
+        Args:
+            full_path (str): Ruta completa del proyecto.
+        """
+        styles_path = os.path.join(full_path, "app", "Enums")
+
+        # Crear la carpeta si no existe
+        if not os.path.exists(styles_path):
+            os.makedirs(styles_path)
+            print_message(f"Carpeta creada: {styles_path}", GREEN)
+
+        # Ruta completa del archivo
+        file_path = os.path.join(styles_path, "EnumAbilitySuffix.php")
+
+        # Contenido por defecto
+        content = """<?php
+
+namespace App\\Enums;
+
+abstract class EnumAbilitySuffix
+{
+    /**
+     * Suffix for ability name
+     */
+    const ALL = ':all';
+    const INDEX = ':index';
+    const SHOW = ':show';
+    const STORE = ':store';
+    const UPDATE = ':update';
+    const DELETE = ':delete';
+    
+    const UPDATE_OWN = ':own:update';
+    const DELETE_OWN = ':own:delete';
+}
+"""
+        try:
+            # Crear o sobrescribir el archivo con el contenido
+            with open(file_path, "w") as f:
+                f.write(content)
+            print_green(f"Archivo generado: {file_path}")
+        except Exception as e:
+            print_red(f"Error al generar el archivo {file_path}: {e}")
+
+
+
+
+
+    def create_api_setup(self, full_path):
+        """
+        Genera un archivo
+
+        Args:
+            full_path (str): Ruta completa del proyecto.
+        """
+        styles_path = os.path.join(full_path, "app", "Enums")
+
+        # Crear la carpeta si no existe
+        if not os.path.exists(styles_path):
+            os.makedirs(styles_path)
+            print_message(f"Carpeta creada: {styles_path}", GREEN)
+
+        # Ruta completa del archivo
+        file_path = os.path.join(styles_path, "EnumApiSetup.php")
+
+        # Contenido por defecto
+        content = """<?php
+
+namespace App\\Enums;
+
+abstract class EnumApiSetup
+{
+    // QUERIES
+    const QUERY_DEFAULT_LIMIT = 15;
+    const QUERY_MAX_LIMIT = 2000;
+
+
+    // API SETTINGS
+    const API_VERSION = 'v1/';
+    const API_NAME = 'api/';
+
+    // const API_DRIVER = 'driver-app/';
+    // const API_OFFICE = 'office/';
+
+}
+"""
+        try:
+            # Crear o sobrescribir el archivo con el contenido
+            with open(file_path, "w") as f:
+                f.write(content)
+            print_green(f"Archivo generado: {file_path}")
+        except Exception as e:
+            print_red(f"Error al generar el archivo {file_path}: {e}")
+
+
+
+
+
+    def create_setting_paginate(self, full_path):
+        """
+        Genera un archivo
+
+        Args:
+            full_path (str): Ruta completa del proyecto.
+        """
+        styles_path = os.path.join(full_path, "app", "Enums")
+
+        # Crear la carpeta si no existe
+        if not os.path.exists(styles_path):
+            os.makedirs(styles_path)
+            print_message(f"Carpeta creada: {styles_path}", GREEN)
+
+        # Ruta completa del archivo
+        file_path = os.path.join(styles_path, "EnumSettingPaginate.php")
+
+        # Contenido por defecto
+        content = """<?php
+
+namespace App\\Enums;
+
+abstract class EnumSettingPaginate
+{
+
+    const PER_PAGE = '10';
+
+}
+"""
+        try:
+            # Crear o sobrescribir el archivo con el contenido
+            with open(file_path, "w") as f:
+                f.write(content)
+            print_green(f"Archivo generado: {file_path}")
+        except Exception as e:
+            print_red(f"Error al generar el archivo {file_path}: {e}")
+
+
+
+

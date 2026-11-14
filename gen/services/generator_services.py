@@ -4,6 +4,11 @@ from typing import Any
 
 import os
 from dotenv import load_dotenv
+from gen.php_laravel.to_create_project.laravel_enums import LaravelEnums
+from gen.php_laravel.to_create_project.laravel_maatwebsite_excel import LaravelMaatwebsiteExcel
+from gen.php_laravel.to_create_project.laravel_fpdf_merge import LaravelFpdfMerge
+from gen.php_laravel.to_create_project.laravel_by_command_line import LaravelByCommandLine
+from gen.php_laravel.to_create_project.laravel_snappy import LaravelSnappy
 from helpers.helper_columns import HelperColumns
 from gen.php_laravel.to_create_project.fake.laravel_fake_data import LaravelFakeData
 from gen.php_laravel.to_create_project.generate_api_controller import generate_api_controller
@@ -451,16 +456,7 @@ def create_php_project_service(
     from gen.php_laravel.to_create_project.dev.generate_test_controller import (
         generate_test_controller,
     )
-    from gen.php_laravel.to_create_project.excel.generate_maatwebsite_excel import (
-        generate_maatwebsite_excel,
-    )
-    from gen.php_laravel.to_create_project.fpdf_merge.generate_fpdf_merge import (
-        generate_fpdf_merge,
-    )
-    from gen.php_laravel.to_create_project.generate_by_command_line import (
-        generate_by_command_line as generate_php_by_command_line,
-    )
-    from gen.php_laravel.to_create_project.generate_enums import generate_enums
+    
     from gen.php_laravel.to_create_project.images.generate_company_logos import (
         generate_company_logos,
     )
@@ -468,7 +464,6 @@ def create_php_project_service(
         generate_shared_postman_collections,
     )
     from gen.php_laravel.to_create_project.shared.generate_shared import generate_shared
-    from gen.php_laravel.to_create_project.snappy.generate_snappy import generate_snappy
     from gen.php_laravel.to_create_project.updates.update_app_php import update_app_php
     from gen.php_laravel.to_create_project.updates.update_bootstrap_app_php import (
         update_bootstrap_app_php,
@@ -500,17 +495,35 @@ def create_php_project_service(
     )
 
     full_path = _full_path(project_path, project_name)
-    
     domain_name = HelperDjDomain.helper_domain_name(project_name)
-    
     password = os.getenv("PASSWORD")
     
+    # Command Line
+    obj = LaravelByCommandLine()
+    obj.invoke(full_path)
     
-    generate_php_by_command_line(full_path)
-    generate_snappy(full_path)
-    generate_fpdf_merge(full_path)
-    generate_maatwebsite_excel(full_path)
-    generate_enums(full_path, project_name, domain_name, password)
+    # Snappy
+    obj = LaravelSnappy()
+    obj.invoke(full_path)
+    
+    
+    # FpdfMerge
+    obj = LaravelFpdfMerge()
+    obj.invoke(full_path)
+    
+    
+    # MaatwebsiteExcel
+    obj = LaravelMaatwebsiteExcel()
+    obj.invoke(full_path)
+    
+    
+    # LaravelEnums
+    obj = LaravelEnums()
+    obj.invoke(full_path, project_name, domain_name, password)
+    
+    
+    
+    
     generate_batch_processes(full_path)
     generate_default_role_permissions(full_path)
     generate_trait_api_response(full_path)
