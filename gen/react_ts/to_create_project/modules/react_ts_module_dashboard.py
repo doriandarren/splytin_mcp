@@ -93,89 +93,201 @@ export const DashboardPage = () => {
         folder_path = os.path.join(full_path, "src", "modules", "private", "dashboards", "pages")
 
         content = r'''@reference "../../../../index.css";
-        
+
+
 @layer components {
+
 
     /* ============================================
         DASHBOARD - PAGE
     ============================================ */
 
+
     .dashboard-page {
         @apply flex flex-col gap-6;
     }
+
 
     .dashboard-header {
         @apply flex items-center justify-between;
     }
 
+
     .dashboard-title {
         @apply text-2xl font-semibold tracking-tight text-foreground;
     }
+
 
     .dashboard-subtitle {
         @apply mt-1 text-sm text-muted-foreground;
     }
 
+
     /* ============================================
         DASHBOARD - STATS
     ============================================ */
 
+
     .dashboard-stats-grid {
-        @apply grid grid-cols-1 gap-4 sm:grid-cols-3;
+        @apply grid grid-cols-1 gap-4;
+        @apply sm:grid-cols-2 xl:grid-cols-4;
     }
+
 
     .dashboard-stat-card {
         @apply rounded-xl border border-border bg-card p-5;
-        @apply text-card-foreground shadow-sm;
-        @apply transition-shadow duration-300 hover:shadow-md;
+        @apply text-foreground shadow-sm;
+        @apply transition-all duration-300 ease-out;
     }
+
+
+    .dashboard-stat-card:hover {
+        @apply -translate-y-1 shadow-md;
+    }
+
 
     .dashboard-stat-header {
         @apply flex items-center justify-between;
         @apply text-sm font-medium text-muted-foreground;
     }
 
+
     .dashboard-stat-icon {
         @apply text-primary;
+        @apply transition-transform duration-300;
     }
+
+
+    .dashboard-stat-card:hover .dashboard-stat-icon {
+        @apply scale-110;
+    }
+
 
     .dashboard-stat-value {
         @apply mt-3 text-3xl font-semibold tracking-tight;
+        @apply text-primary;
     }
+
 
     .dashboard-stat-description {
         @apply mt-1 text-xs text-muted-foreground;
     }
 
+
+    /* ============================================
+        DASHBOARD - STAT COLORS
+    ============================================ */
+
+
+    /* Clientes - Verde */
+
+
+    .dashboard-stat-customers {
+        border-top: 3px solid #10b981;
+    }
+
+
+    .dashboard-stat-customers .dashboard-stat-icon {
+        color: #10b981;
+    }
+
+
+    /* Facturas - Azul corporativo */
+
+
+    .dashboard-stat-invoices {
+        border-top: 3px solid var(--primary);
+    }
+
+
+    .dashboard-stat-invoices .dashboard-stat-icon {
+        color: var(--primary);
+    }
+
+
+    /* Ingresos - Azul petróleo */
+
+
+    .dashboard-stat-income {
+        border-top: 3px solid #17618a;
+    }
+
+
+    .dashboard-stat-income .dashboard-stat-icon {
+        color: #17618a;
+    }
+
+
+    /* Gastos - Coral */
+
+
+    .dashboard-stat-expenses {
+        border-top: 3px solid #f97360;
+    }
+
+
+    .dashboard-stat-expenses .dashboard-stat-icon {
+        color: #f97360;
+    }
+
+
     /* ============================================
         DASHBOARD - CHART
     ============================================ */
 
+
     .dashboard-chart {
         @apply rounded-xl border border-border bg-card p-5 md:p-6;
-        @apply text-card-foreground shadow-sm;
+        @apply text-foreground shadow-sm;
     }
+
 
     .dashboard-chart-header {
         @apply mb-6 flex flex-wrap items-center justify-between gap-3;
     }
 
+
     .dashboard-chart-title {
-        @apply text-base font-semibold;
+        @apply text-base font-semibold text-foreground;
     }
+
 
     .dashboard-chart-description {
         @apply mt-1 text-sm text-muted-foreground;
     }
+
 
     .dashboard-chart-period {
         @apply rounded-md bg-secondary px-3 py-1.5;
         @apply text-xs font-medium text-secondary-foreground;
     }
 
+
     .dashboard-chart-container {
         @apply h-[280px] w-full md:h-[340px];
     }
+
+
+    /* ============================================
+        DASHBOARD - ACCESSIBILITY
+    ============================================ */
+
+
+    @media (prefers-reduced-motion: reduce) {
+
+
+        .dashboard-stat-card,
+        .dashboard-stat-icon {
+            transition: none;
+        }
+
+
+        .dashboard-stat-card:hover,
+        .dashboard-stat-card:hover .dashboard-stat-icon {
+            transform: none;
+        }
+    }
+
 
 }'''
 
@@ -197,33 +309,90 @@ export const DashboardPage = () => {
         folder_path = os.path.join(full_path, "src", "modules", "private", "dashboards", "components")
     
         content = r'''// src/modules/private/dashboards/components/DashboardStats.tsx
-import { Users, Server, Droplets } from "lucide-react";
+
+import {
+    Users,
+    ReceiptText,
+    TrendingUp,
+    Wallet,
+} from "lucide-react";
+
 
 import { DashboardStatCard } from "./DashboardStatCard";
+
+
+// Datos ficticios con la estructura de la API
+const dashboardData = {
+    total_customers: 248,
+    total_invoices: 1284,
+    total_income: "26500.00",
+    total_expenses: "8450.00",
+};
+
+
+// Formato numérico español
+const numberFormatter = new Intl.NumberFormat("es-ES");
+
+
+// Formato de moneda
+const currencyFormatter = new Intl.NumberFormat("es-ES", {
+    style: "currency",
+    currency: "EUR",
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+    useGrouping: true,
+});
+
 
 export const DashboardStats = () => {
     return (
         <div className="dashboard-stats-grid">
-            <DashboardStatCard
-                title="Clientes"
-                value={248}
-                description="Total registrados"
-                icon={<Users size={20} />}
-            />
+
 
             <DashboardStatCard
-                title="Sistemas"
-                value={36}
-                description="Total registrados"
-                icon={<Server size={20} />}
+                title="Total clientes"
+                value={numberFormatter.format(
+                    dashboardData.total_customers
+                )}
+                description="Clientes registrados"
+                icon={<Users size={21} />}
+                variant="customers"
             />
 
+
             <DashboardStatCard
-                title="Lavados"
-                value={1284}
-                description="Total realizados"
-                icon={<Droplets size={20} />}
+                title="Total facturas"
+                value={numberFormatter.format(
+                    dashboardData.total_invoices
+                )}
+                description="Facturas registradas"
+                icon={<ReceiptText size={21} />}
+                variant="invoices"
             />
+
+
+            <DashboardStatCard
+                title="Total ingresos"
+                value={currencyFormatter.format(
+                    Number(dashboardData.total_income)
+                )}
+                description="Ingresos acumulados"
+                icon={<TrendingUp size={21} />}
+                variant="income"
+            />
+
+
+            <DashboardStatCard
+                title="Total gastos"
+                value={currencyFormatter.format(
+                    Number(dashboardData.total_expenses)
+                )}
+                description="Gastos acumulados"
+                icon={<Wallet size={21} />}
+                variant="expenses"
+            />
+
+
         </div>
     );
 };'''
@@ -245,25 +414,38 @@ export const DashboardStats = () => {
         folder_path = os.path.join(full_path, "src", "modules", "private", "dashboards", "components")
 
         content = r'''// src/modules/private/dashboards/components/DashboardStatCard.tsx
+
 import type { ReactNode } from "react";
+
+
+type StatVariant =
+    | "customers"
+    | "invoices"
+    | "income"
+    | "expenses";
+
 
 interface DashboardStatCardProps {
     title: string;
     value: string | number;
     description?: string;
     icon?: ReactNode;
+    variant?: StatVariant;
 }
+
 
 export const DashboardStatCard = ({
     title,
     value,
     description,
     icon,
+    variant = "invoices",
 }: DashboardStatCardProps) => {
     return (
-        <div className="dashboard-stat-card">
+        <div className={dashboard-stat-card dashboard-stat-${variant}}>
             <div className="dashboard-stat-header">
                 <span>{title}</span>
+
 
                 {icon && (
                     <span className="dashboard-stat-icon">
@@ -272,9 +454,11 @@ export const DashboardStatCard = ({
                 )}
             </div>
 
+
             <div className="dashboard-stat-value">
                 {value}
             </div>
+
 
             {description && (
                 <p className="dashboard-stat-description">

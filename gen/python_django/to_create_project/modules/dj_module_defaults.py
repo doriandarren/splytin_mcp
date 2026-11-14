@@ -23,6 +23,24 @@ class DjModuleDefaults:
         
         
         ######################
+        # ReportSummary
+        ######################
+        singular_name = "ReportSummary"
+        plural_name = "ReportSummaries"
+        columns = HelperColumns.parse_columns_input(
+            "total_customers:int total_invoices:int total_income:decimal total_expenses:decimal"
+        )
+        self.module_crud.invoke(
+            full_path,
+            app_main,
+            singular_name,
+            plural_name,
+            columns
+        )
+        
+        
+        
+        ######################
         # Systems
         ######################
         singular_name = "System"

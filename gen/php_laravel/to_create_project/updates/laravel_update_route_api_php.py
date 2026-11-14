@@ -68,7 +68,6 @@ use App\\Enums\\EnumApiSetup;"""
 Route::prefix(EnumApiSetup::API_VERSION )->group(function () {
     // Auth
     require base_path('routes/API/V1/auth.php');
-    require base_path('routes/API/V1/dashboards.php');
     
     // Shared
     require base_path('routes/API/V1/dev.php');
