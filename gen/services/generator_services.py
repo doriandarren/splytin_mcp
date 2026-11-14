@@ -4,20 +4,24 @@ from typing import Any
 
 import os
 from dotenv import load_dotenv
+from gen.php_laravel.to_create_project.auth.laravel_module_auth import LaravelModuleAuth
+from gen.php_laravel.to_create_project.shared.laravel_shared import LaravelShared
+from gen.php_laravel.to_create_project.updates.laravel_update_route_api_php import LaravelUpdateRouteApiPhp
+from helpers.helper_columns import HelperColumns
+from gen.php_laravel.to_create_project.laravel_batch_processes import LaravelBatchProcesses
 from gen.php_laravel.to_create_project.laravel_enums import LaravelEnums
 from gen.php_laravel.to_create_project.laravel_maatwebsite_excel import LaravelMaatwebsiteExcel
 from gen.php_laravel.to_create_project.laravel_fpdf_merge import LaravelFpdfMerge
 from gen.php_laravel.to_create_project.laravel_by_command_line import LaravelByCommandLine
 from gen.php_laravel.to_create_project.laravel_snappy import LaravelSnappy
-from helpers.helper_columns import HelperColumns
 from gen.php_laravel.to_create_project.fake.laravel_fake_data import LaravelFakeData
 from gen.php_laravel.to_create_project.generate_api_controller import generate_api_controller
-from gen.php_laravel.to_create_project.generate_default_role_permissions import generate_default_role_permissions
+from gen.php_laravel.to_create_project.laravel_default_role_permissions import LaravelDefaultRolePermissions
 from gen.php_laravel.to_create_project.generate_query_filter import generate_query_filter
 from gen.php_laravel.to_create_project.generate_test_email import generate_test_mail
 from gen.php_laravel.to_create_project.requests.generate_base_api_request import generate_base_api_request
-from gen.php_laravel.to_create_project.traits.generate_trait_api_response import generate_trait_api_response
-from gen.php_laravel.to_create_project.traits.generate_trait_tracks_users import generate_trait_tracks_users
+from gen.php_laravel.to_create_project.traits.laravel_trait_api_response import LaravelTraitApiResponse
+from gen.php_laravel.to_create_project.traits.laravel_trait_tracks_users import LaravelTraitTracksUsers
 from gen.php_laravel.to_create_project.updates.update_ability_user_model import update_ability_user_model
 from gen.php_laravel.to_create_project.updates.update_app_service_provider import update_app_service_provider
 from gen.php_laravel.to_create_project.updates.update_role_user_model import update_role_user_model
@@ -440,12 +444,6 @@ def create_php_project_service(
     project_name: str,
     project_path: str,
 ) -> dict[str, Any]:
-    from gen.php_laravel.to_create_project.auth.generate_module_auth import (
-        generate_module_auth as generate_php_module_auth,
-    )
-    from gen.php_laravel.to_create_project.batch_processes.generate_batch_processes import (
-        generate_batch_processes,
-    )
     from gen.php_laravel.to_create_project.dashboards.generate_dashboard import (
         generate_dashboard,
     )
@@ -463,7 +461,6 @@ def create_php_project_service(
     from gen.php_laravel.to_create_project.scripts.generate_shared_postman_collections import (
         generate_shared_postman_collections,
     )
-    from gen.php_laravel.to_create_project.shared.generate_shared import generate_shared
     from gen.php_laravel.to_create_project.updates.update_app_php import update_app_php
     from gen.php_laravel.to_create_project.updates.update_bootstrap_app_php import (
         update_bootstrap_app_php,
@@ -473,9 +470,6 @@ def create_php_project_service(
         update_model_user,
     )
     from gen.php_laravel.to_create_project.updates.update_readme import update_readme
-    from gen.php_laravel.to_create_project.updates.update_route_api_php import (
-        update_route_api_php,
-    )
     from gen.php_laravel.to_create_project.updates.update_welcome_blade import (
         update_welcome_blade,
     )
@@ -502,6 +496,7 @@ def create_php_project_service(
     obj = LaravelByCommandLine()
     obj.invoke(full_path)
     
+    
     # Snappy
     obj = LaravelSnappy()
     obj.invoke(full_path)
@@ -517,20 +512,46 @@ def create_php_project_service(
     obj.invoke(full_path)
     
     
-    # LaravelEnums
+    # Enums
     obj = LaravelEnums()
     obj.invoke(full_path, project_name, domain_name, password)
     
     
+    # BatchProcesses
+    obj = LaravelBatchProcesses()
+    obj.invoke(full_path)
     
     
-    generate_batch_processes(full_path)
-    generate_default_role_permissions(full_path)
-    generate_trait_api_response(full_path)
-    generate_trait_tracks_users(full_path)
-    generate_php_module_auth(full_path)
-    update_route_api_php(full_path)
-    generate_shared(full_path)
+    # DefaultRolePermissions
+    obj = LaravelDefaultRolePermissions()
+    obj.invoke(full_path)
+    
+    
+    # TraitApiResponse
+    obj = LaravelTraitApiResponse()
+    obj.invoke(full_path)
+    
+    
+    # TraitTracksUsers
+    obj = LaravelTraitTracksUsers()
+    obj.invoke(full_path)
+    
+    # ModuleAuth
+    obj = LaravelModuleAuth()
+    obj.invoke(full_path)
+    
+    
+    # UpdateRouteApiPhp
+    obj = LaravelUpdateRouteApiPhp()
+    obj.invoke(full_path)
+    
+    
+    
+    obj = LaravelShared()
+    obj.invoke(full_path)
+    
+    
+    
     generate_dashboard(full_path)
     generate_utilities(full_path)
     update_model_user(full_path)

@@ -1,19 +1,21 @@
 import os
-from helpers.helper_print import print_message, GREEN, CYAN
+from helpers.helper_print import print_green, print_red
 
 
 
-def generate_trait_tracks_users(full_path):
-    """
-    Genera el archivo
-    """
+class LaravelTraitTracksUsers:
 
-    folder_path = os.path.join(full_path, "app", "Traits")
-    file_path = os.path.join(folder_path, "TracksUsers.php")
+    def invoke(self, full_path):
+        """
+        Genera el archivo
+        """
 
-    os.makedirs(folder_path, exist_ok=True)
+        folder_path = os.path.join(full_path, "app", "Traits")
+        file_path = os.path.join(folder_path, "TracksUsers.php")
 
-    content = r"""<?php
+        os.makedirs(folder_path, exist_ok=True)
+
+        content = r"""<?php
 
 namespace App\Traits;
 
@@ -66,9 +68,9 @@ trait TracksUsers
 }
 """
 
-    try:
-        with open(file_path, "w") as f:
-            f.write(content)
-        print_message(f"Archivo generado: {file_path}", GREEN)
-    except Exception as e:
-        print_message(f"Error al generar el archivo {file_path}: {e}", CYAN)
+        try:
+            with open(file_path, "w") as f:
+                f.write(content)
+            print_green(f"Archivo generado: {file_path}")
+        except Exception as e:
+            print_red(f"Error al generar el archivo {file_path}: {e}")

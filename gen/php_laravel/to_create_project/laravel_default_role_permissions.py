@@ -1,17 +1,22 @@
 import os
-from helpers.helper_print import print_message, GREEN, CYAN
+from helpers.helper_print import print_green, print_red
 
-def generate_default_role_permissions(full_path):
-    """
-    Genera el archivo
-    """
 
-    folder_path = os.path.join(full_path, "app", "Permissions", "V1", "DefaultRolePermissions")
-    file_path = os.path.join(folder_path, "DefaultRolePermissions.php")
 
-    os.makedirs(folder_path, exist_ok=True)
+class LaravelDefaultRolePermissions:
 
-    content = r"""<?php
+
+    def invoke(self, full_path):
+        """
+        Genera el archivo
+        """
+
+        folder_path = os.path.join(full_path, "app", "Permissions", "V1", "DefaultRolePermissions")
+        file_path = os.path.join(folder_path, "DefaultRolePermissions.php")
+
+        os.makedirs(folder_path, exist_ok=True)
+
+        content = r"""<?php
 
 namespace App\Permissions\V1\DefaultRolePermissions;
 
@@ -61,9 +66,9 @@ final class DefaultRolePermissions
 }
 """
 
-    try:
-        with open(file_path, "w") as f:
-            f.write(content)
-        print_message(f"Archivo generado: {file_path}", GREEN)
-    except Exception as e:
-        print_message(f"Error al generar el archivo {file_path}: {e}", CYAN)
+        try:
+            with open(file_path, "w") as f:
+                f.write(content)
+            print_green(f"Archivo generado: {file_path}")
+        except Exception as e:
+            print_red(f"Error al generar el archivo {file_path}: {e}")

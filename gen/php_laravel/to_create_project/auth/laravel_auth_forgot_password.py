@@ -1,26 +1,28 @@
 import os
-from helpers.helper_print import print_message, GREEN, CYAN
-
-def generate_auth_forgot_password(full_path):
-    # Forgot Password
-    create_forgot_password_request(full_path)
-    create_forgot_password(full_path)
+from helpers.helper_print import print_green, print_red
 
 
 
+class LaravelAuthForgotPassword:
+
+    def invoke(self, full_path):
+        # Forgot Password
+        self.create_forgot_password_request(full_path)
+        self.create_forgot_password(full_path)
 
 
-def create_forgot_password_request(full_path):
-    """
-    Genera el archivo
-    """
 
-    folder_path = os.path.join(full_path, "app", "Http", "Requests", "V1", "Auth")
-    file_path = os.path.join(folder_path, "AuthForgotPasswordRequest.php")
+    def create_forgot_password_request(self, full_path):
+        """
+        Genera el archivo
+        """
 
-    os.makedirs(folder_path, exist_ok=True)
+        folder_path = os.path.join(full_path, "app", "Http", "Requests", "V1", "Auth")
+        file_path = os.path.join(folder_path, "AuthForgotPasswordRequest.php")
 
-    content = f'''<?php
+        os.makedirs(folder_path, exist_ok=True)
+
+        content = f'''<?php
 
 namespace App\\Http\\Requests\\V1\\Auth;
 
@@ -55,29 +57,27 @@ class AuthForgotPasswordRequest extends FormRequest
 }}
 '''
 
-    try:
-        with open(file_path, "w") as f:
-            f.write(content)
-        print_message(f"Archivo generado: {file_path}", GREEN)
-    except Exception as e:
-        print_message(f"Error al generar el archivo {file_path}: {e}", CYAN)
-        
+        try:
+            with open(file_path, "w") as f:
+                f.write(content)
+            print_green(f"Archivo generado: {file_path}")
+        except Exception as e:
+            print_red(f"Error al generar el archivo {file_path}: {e}")
+            
    
+   
+    
+    def create_forgot_password(self, full_path):
+        """
+        Genera el archivo
+        """
 
-        
+        folder_path = os.path.join(full_path, "app", "Http", "Controllers", "API", "V1", "Auth")
+        file_path = os.path.join(folder_path, "AuthForgotPasswordController.php")
 
+        os.makedirs(folder_path, exist_ok=True)
 
-def create_forgot_password(full_path):
-    """
-    Genera el archivo
-    """
-
-    folder_path = os.path.join(full_path, "app", "Http", "Controllers", "API", "V1", "Auth")
-    file_path = os.path.join(folder_path, "AuthForgotPasswordController.php")
-
-    os.makedirs(folder_path, exist_ok=True)
-
-    content = f'''<?php
+        content = f'''<?php
 
 namespace App\\Http\\Controllers\\API\\V1\\Auth;
 
@@ -112,10 +112,10 @@ class AuthForgotPasswordController extends ApiController
 }}
 '''
 
-    try:
-        with open(file_path, "w") as f:
-            f.write(content)
-        print_message(f"Archivo generado: {file_path}", GREEN)
-    except Exception as e:
-        print_message(f"Error al generar el archivo {file_path}: {e}", CYAN)
+        try:
+            with open(file_path, "w") as f:
+                f.write(content)
+            print_green(f"Archivo generado: {file_path}")
+        except Exception as e:
+            print_red(f"Error al generar el archivo {file_path}: {e}")
 

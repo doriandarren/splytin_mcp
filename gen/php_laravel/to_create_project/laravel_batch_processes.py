@@ -1,33 +1,35 @@
 import os
-from helpers.helper_print import print_message, GREEN, CYAN, run_command
+from helpers.helper_print import print_green, print_red
 
 
 
-def generate_batch_processes(full_path):
-    create_ability_and_group(full_path)
-    create_reload_database(full_path)
+class LaravelBatchProcesses:
+
+    def invoke(self, full_path):
+        self.create_ability_and_group(full_path)
+        self.create_reload_database(full_path)
 
 
 
-def create_ability_and_group(full_path):
-    """
-    Genera un archivo
+    def create_ability_and_group(self, full_path):
+        """
+        Genera un archivo
 
-    Args:
-        full_path (str): Ruta completa del proyecto.
-    """
-    styles_path = os.path.join(full_path, "app", "Services", "BatchProcesses", "Abilities")
+        Args:
+            full_path (str): Ruta completa del proyecto.
+        """
+        styles_path = os.path.join(full_path, "app", "Services", "BatchProcesses", "Abilities")
 
-    # Crear la carpeta si no existe
-    if not os.path.exists(styles_path):
-        os.makedirs(styles_path)
-        print_message(f"Carpeta creada: {styles_path}", GREEN)
+        # Crear la carpeta si no existe
+        if not os.path.exists(styles_path):
+            os.makedirs(styles_path)
+            print_green(f"Carpeta creada: {styles_path}")
 
-    # Ruta completa del archivo
-    file_path = os.path.join(styles_path, "BatchAbilityAndGroupService.php")
+        # Ruta completa del archivo
+        file_path = os.path.join(styles_path, "BatchAbilityAndGroupService.php")
 
-    # Contenido por defecto
-    content = r"""<?php
+        # Contenido por defecto
+        content = r"""<?php
 
 namespace App\Services\BatchProcesses\Abilities;
 
@@ -169,35 +171,35 @@ class BatchAbilityAndGroupService
 }
 """
 
-    try:
-        # Crear o sobrescribir el archivo con el contenido
-        with open(file_path, "w") as f:
-            f.write(content)
-        print_message(f"Archivo generado: {file_path}", GREEN)
-    except Exception as e:
-        print_message(f"Error al generar el archivo {file_path}: {e}", CYAN)
+        try:
+            # Crear o sobrescribir el archivo con el contenido
+            with open(file_path, "w") as f:
+                f.write(content)
+            print_green(f"Archivo generado: {file_path}")
+        except Exception as e:
+            print_red(f"Error al generar el archivo {file_path}: {e}")
 
 
 
-def create_reload_database(full_path):
-    """
-    Genera un archivo
+    def create_reload_database(self, full_path):
+        """
+        Genera un archivo
 
-    Args:
-        full_path (str): Ruta completa del proyecto.
-    """
-    styles_path = os.path.join(full_path, "app", "Services", "BatchProcesses", "Abilities")
+        Args:
+            full_path (str): Ruta completa del proyecto.
+        """
+        styles_path = os.path.join(full_path, "app", "Services", "BatchProcesses", "Abilities")
 
-    # Crear la carpeta si no existe
-    if not os.path.exists(styles_path):
-        os.makedirs(styles_path)
-        print_message(f"Carpeta creada: {styles_path}", GREEN)
+        # Crear la carpeta si no existe
+        if not os.path.exists(styles_path):
+            os.makedirs(styles_path)
+            print_green(f"Carpeta creada: {styles_path}")
 
-    # Ruta completa del archivo
-    file_path = os.path.join(styles_path, "BatchReloadDatabaseAbilitiesService.php")
+        # Ruta completa del archivo
+        file_path = os.path.join(styles_path, "BatchReloadDatabaseAbilitiesService.php")
 
-    # Contenido por defecto
-    content = r"""<?php
+        # Contenido por defecto
+        content = r"""<?php
 
 namespace App\Services\BatchProcesses\Abilities;
 
@@ -424,10 +426,10 @@ class BatchReloadDatabaseAbilitiesService
 }
 """
 
-    try:
-        # Crear o sobrescribir el archivo con el contenido
-        with open(file_path, "w") as f:
-            f.write(content)
-        print_message(f"Archivo generado: {file_path}", GREEN)
-    except Exception as e:
-        print_message(f"Error al generar el archivo {file_path}: {e}", CYAN)
+        try:
+            # Crear o sobrescribir el archivo con el contenido
+            with open(file_path, "w") as f:
+                f.write(content)
+            print_green(f"Archivo generado: {file_path}")
+        except Exception as e:
+            print_red(f"Error al generar el archivo {file_path}: {e}")

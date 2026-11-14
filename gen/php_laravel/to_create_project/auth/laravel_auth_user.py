@@ -1,33 +1,35 @@
 import os
-from helpers.helper_print import print_message, GREEN, CYAN
+from helpers.helper_print import print_green, print_red
 
 
 
-def generate_auth_user(full_path):
-    create_auth_user(full_path)
-    create_auth_user_resource(full_path)
+class LaravelAuthUser:
+
+    def invoke(self, full_path):
+        self.create_auth_user(full_path)
+        self.create_auth_user_resource(full_path)
 
 
 
-def create_auth_user(full_path):
-    """
-    Genera un archivo
+    def create_auth_user(self, full_path):
+        """
+        Genera un archivo
 
-    Args:
-        full_path (str): Ruta completa del proyecto.
-    """
-    styles_path = os.path.join(full_path, "app", "Http", "Controllers", "API", "V1", "Auth")
+        Args:
+            full_path (str): Ruta completa del proyecto.
+        """
+        styles_path = os.path.join(full_path, "app", "Http", "Controllers", "API", "V1", "Auth")
 
-    # Crear la carpeta si no existe
-    if not os.path.exists(styles_path):
-        os.makedirs(styles_path)
-        print_message(f"Carpeta creada: {styles_path}", GREEN)
+        # Crear la carpeta si no existe
+        if not os.path.exists(styles_path):
+            os.makedirs(styles_path)
+            print_green(f"Carpeta creada: {styles_path}")
 
-    # Ruta completa del archivo
-    file_path = os.path.join(styles_path, "AuthUserController.php")
+        # Ruta completa del archivo
+        file_path = os.path.join(styles_path, "AuthUserController.php")
 
-    # Contenido por defecto
-    content = r"""<?php
+        # Contenido por defecto
+        content = r"""<?php
 
 namespace App\Http\Controllers\API\V1\Auth;
 
@@ -60,37 +62,37 @@ class AuthUserController extends ApiController
 }
 """
 
-    try:
-        # Crear o sobrescribir el archivo con el contenido
-        with open(file_path, "w") as f:
-            f.write(content)
-        print_message(f"Archivo generado: {file_path}", GREEN)
-    except Exception as e:
-        print_message(f"Error al generar el archivo {file_path}: {e}", CYAN)
+        try:
+            # Crear o sobrescribir el archivo con el contenido
+            with open(file_path, "w") as f:
+                f.write(content)
+            print_green(f"Archivo generado: {file_path}")
+        except Exception as e:
+            print_red(f"Error al generar el archivo {file_path}: {e}")
 
 
 
 
 
-def create_auth_user_resource(full_path):
-    """
-    Genera un archivo
+    def create_auth_user_resource(self, full_path):
+        """
+        Genera un archivo
 
-    Args:
-        full_path (str): Ruta completa del proyecto.
-    """
-    styles_path = os.path.join(full_path, "app", "Http", "Resources", "V1", "Auth")
+        Args:
+            full_path (str): Ruta completa del proyecto.
+        """
+        styles_path = os.path.join(full_path, "app", "Http", "Resources", "V1", "Auth")
 
-    # Crear la carpeta si no existe
-    if not os.path.exists(styles_path):
-        os.makedirs(styles_path)
-        print_message(f"Carpeta creada: {styles_path}", GREEN)
+        # Crear la carpeta si no existe
+        if not os.path.exists(styles_path):
+            os.makedirs(styles_path)
+            print_green(f"Carpeta creada: {styles_path}")
 
-    # Ruta completa del archivo
-    file_path = os.path.join(styles_path, "AuthUserResource.php")
+        # Ruta completa del archivo
+        file_path = os.path.join(styles_path, "AuthUserResource.php")
 
-    # Contenido por defecto
-    content = r"""<?php
+        # Contenido por defecto
+        content = r"""<?php
 
 namespace App\Http\Resources\V1\Auth;
 
@@ -140,10 +142,10 @@ class AuthUserResource extends JsonResource
 }
 """
 
-    try:
-        # Crear o sobrescribir el archivo con el contenido
-        with open(file_path, "w") as f:
-            f.write(content)
-        print_message(f"Archivo generado: {file_path}", GREEN)
-    except Exception as e:
-        print_message(f"Error al generar el archivo {file_path}: {e}", CYAN)
+        try:
+            # Crear o sobrescribir el archivo con el contenido
+            with open(file_path, "w") as f:
+                f.write(content)
+            print_green(f"Archivo generado: {file_path}")
+        except Exception as e:
+            print_red(f"Error al generar el archivo {file_path}: {e}")

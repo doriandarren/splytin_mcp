@@ -1,5 +1,5 @@
 import os
-from helpers.helper_print import print_cyan, print_green, print_message, GREEN, print_red
+from helpers.helper_print import print_cyan, print_green, print_red
 
 
 
@@ -29,7 +29,7 @@ class LaravelEnums:
         # Crear la carpeta si no existe
         if not os.path.exists(styles_path):
             os.makedirs(styles_path)
-            print_message(f"Carpeta creada: {styles_path}", GREEN)
+            print_green(f"Carpeta creada: {styles_path}")
 
         # Ruta completa del archivo
         file_path = os.path.join(styles_path, "EnumDefaultCompany.php")
@@ -108,7 +108,7 @@ class EnumDefaultCompany
         # Crear la carpeta si no existe
         if not os.path.exists(styles_path):
             os.makedirs(styles_path)
-            print_message(f"Carpeta creada: {styles_path}", GREEN)
+            print_green(f"Carpeta creada: {styles_path}")
 
         # Ruta completa del archivo
         file_path = os.path.join(styles_path, "EnumExcludeTable.php")
@@ -161,7 +161,7 @@ enum EnumExcludeTable
         # Crear la carpeta si no existe
         if not os.path.exists(styles_path):
             os.makedirs(styles_path)
-            print_message(f"Carpeta creada: {styles_path}", GREEN)
+            print_green(f"Carpeta creada: {styles_path}")
 
         # Ruta completa del archivo
         file_path = os.path.join(styles_path, "EnumRole.php")
@@ -216,7 +216,7 @@ class EnumRole
         # Crear la carpeta si no existe
         if not os.path.exists(styles_path):
             os.makedirs(styles_path)
-            print_message(f"Carpeta creada: {styles_path}", GREEN)
+            print_green(f"Carpeta creada: {styles_path}")
 
         # Ruta completa del archivo
         file_path = os.path.join(styles_path, "EnumUser.php")
@@ -262,7 +262,7 @@ enum EnumUser
         # Crear la carpeta si no existe
         if not os.path.exists(styles_path):
             os.makedirs(styles_path)
-            print_message(f"Carpeta creada: {styles_path}", GREEN)
+            print_green(f"Carpeta creada: {styles_path}")
 
         # Ruta completa del archivo
         file_path = os.path.join(styles_path, "EnumUserStatus.php")
@@ -307,7 +307,7 @@ class EnumUserStatus
         # Crear la carpeta si no existe
         if not os.path.exists(styles_path):
             os.makedirs(styles_path)
-            print_message(f"Carpeta creada: {styles_path}", GREEN)
+            print_green(f"Carpeta creada: {styles_path}")
 
         # Ruta completa del archivo
         file_path = os.path.join(styles_path, "EnumAbilitySuffix.php")
@@ -357,7 +357,7 @@ abstract class EnumAbilitySuffix
         # Crear la carpeta si no existe
         if not os.path.exists(styles_path):
             os.makedirs(styles_path)
-            print_message(f"Carpeta creada: {styles_path}", GREEN)
+            print_green(f"Carpeta creada: {styles_path}")
 
         # Ruta completa del archivo
         file_path = os.path.join(styles_path, "EnumApiSetup.php")
@@ -407,7 +407,7 @@ abstract class EnumApiSetup
         # Crear la carpeta si no existe
         if not os.path.exists(styles_path):
             os.makedirs(styles_path)
-            print_message(f"Carpeta creada: {styles_path}", GREEN)
+            print_green(f"Carpeta creada: {styles_path}")
 
         # Ruta completa del archivo
         file_path = os.path.join(styles_path, "EnumSettingPaginate.php")

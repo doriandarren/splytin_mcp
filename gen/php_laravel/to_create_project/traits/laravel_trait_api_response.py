@@ -1,24 +1,20 @@
 import os
-from helpers.helper_print import print_message, GREEN, CYAN
+from helpers.helper_print import print_green, print_red
 
 
+class LaravelTraitApiResponse:
 
-def generate_trait_api_response(full_path):
-    create_trait_api_response(full_path)
+    def invoke(self, full_path):
+        """
+        Genera el archivo
+        """
 
+        folder_path = os.path.join(full_path, "app", "Traits")
+        file_path = os.path.join(folder_path, "ApiResponses.php")
 
+        os.makedirs(folder_path, exist_ok=True)
 
-def create_trait_api_response(full_path):
-    """
-    Genera el archivo
-    """
-
-    folder_path = os.path.join(full_path, "app", "Traits")
-    file_path = os.path.join(folder_path, "ApiResponses.php")
-
-    os.makedirs(folder_path, exist_ok=True)
-
-    content = r"""<?php
+        content = r"""<?php
 
 namespace App\Traits;
 
@@ -340,10 +336,10 @@ trait ApiResponses
 }
 """
 
-    try:
-        with open(file_path, "w") as f:
-            f.write(content)
-        print_message(f"Archivo generado: {file_path}", GREEN)
-    except Exception as e:
-        print_message(f"Error al generar el archivo {file_path}: {e}", CYAN)
+        try:
+            with open(file_path, "w") as f:
+                f.write(content)
+            print_green(f"Archivo generado: {file_path}")
+        except Exception as e:
+            print_red(f"Error al generar el archivo {file_path}: {e}")
 

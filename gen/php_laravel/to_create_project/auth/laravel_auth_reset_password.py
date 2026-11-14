@@ -1,33 +1,34 @@
 import os
-from helpers.helper_print import print_message, GREEN, CYAN
+from helpers.helper_print import print_green, print_red
 
 
 
-def generate_auth_reset_password(full_path):
-    # Restore Password
-    create_reset_password_request(full_path)
-    create_reset_password(full_path)
+
+class LaravelAuthResetPassword:
+
+    def invoke(self, full_path):
+        # Restore Password
+        self.create_reset_password(full_path)
+        self.create_reset_password_request(full_path)
+        
+        ## Notifications
+        self.create_auth_reset_password_notification(full_path)
+        self.update_model_user(full_path)
+        self.update_config_app(full_path)
+
     
-    ## Notifications
-    create_auth_reset_password_notification(full_path)
-    update_model_user(full_path)
-    update_config_app(full_path)
 
-    
+    def create_reset_password_request(self, full_path):
+        """
+        Genera el archivo
+        """
 
+        folder_path = os.path.join(full_path, "app", "Http", "Requests", "V1", "Auth")
+        file_path = os.path.join(folder_path, "AuthResetPasswordRequest.php")
 
+        os.makedirs(folder_path, exist_ok=True)
 
-def create_reset_password_request(full_path):
-    """
-    Genera el archivo
-    """
-
-    folder_path = os.path.join(full_path, "app", "Http", "Requests", "V1", "Auth")
-    file_path = os.path.join(folder_path, "AuthResetPasswordRequest.php")
-
-    os.makedirs(folder_path, exist_ok=True)
-
-    content = f'''<?php
+        content = f'''<?php
 
 namespace App\\Http\\Requests\\V1\\Auth;
 
@@ -72,28 +73,26 @@ class AuthResetPasswordRequest extends FormRequest
 
 '''
 
-    try:
-        with open(file_path, "w") as f:
-            f.write(content)
-        print_message(f"Archivo generado: {file_path}", GREEN)
-    except Exception as e:
-        print_message(f"Error al generar el archivo {file_path}: {e}", CYAN)
+        try:
+            with open(file_path, "w") as f:
+                f.write(content)
+            print_green(f"Archivo generado: {file_path}")
+        except Exception as e:
+            print_red(f"Error al generar el archivo {file_path}: {e}")
 
 
 
+    def create_reset_password(self, full_path):
+        """
+        Genera el archivo
+        """
 
+        folder_path = os.path.join(full_path, "app", "Http", "Controllers", "API", "V1", "Auth")
+        file_path = os.path.join(folder_path, "AuthResetPasswordController.php")
 
-def create_reset_password(full_path):
-    """
-    Genera el archivo
-    """
+        os.makedirs(folder_path, exist_ok=True)
 
-    folder_path = os.path.join(full_path, "app", "Http", "Controllers", "API", "V1", "Auth")
-    file_path = os.path.join(folder_path, "AuthResetPasswordController.php")
-
-    os.makedirs(folder_path, exist_ok=True)
-
-    content = f"""<?php
+        content = f"""<?php
 
 namespace App\\Http\\Controllers\\API\\V1\\Auth;
 
@@ -149,28 +148,25 @@ class AuthResetPasswordController extends ApiController
 }}
 """
 
-    try:
-        with open(file_path, "w") as f:
-            f.write(content)
-        print_message(f"Archivo generado: {file_path}", GREEN)
-    except Exception as e:
-        print_message(f"Error al generar el archivo {file_path}: {e}", CYAN)
-        
+        try:
+            with open(file_path, "w") as f:
+                f.write(content)
+            print_green(f"Archivo generado: {file_path}")
+        except Exception as e:
+            print_red(f"Error al generar el archivo {file_path}: {e}")
+            
 
 
+    def create_auth_reset_password_notification(self, full_path):
+        """
+        Genera el archivo
+        """
+        folder_path = os.path.join(full_path, "app", "Notifications", "Auth")
+        file_path = os.path.join(folder_path, "AuthResetPasswordNotification.php")
 
+        os.makedirs(folder_path, exist_ok=True)
 
-
-def create_auth_reset_password_notification(full_path):
-    """
-    Genera el archivo
-    """
-    folder_path = os.path.join(full_path, "app", "Notifications", "Auth")
-    file_path = os.path.join(folder_path, "AuthResetPasswordNotification.php")
-
-    os.makedirs(folder_path, exist_ok=True)
-
-    content = r'''<?php
+        content = r'''<?php
 
 namespace App\Notifications\Auth;
 
@@ -212,40 +208,40 @@ class AuthResetPasswordNotification extends Notification
 }
 '''
 
-    try:
-        with open(file_path, "w") as f:
-            f.write(content)
-        print_message(f"Archivo generado: {file_path}", GREEN)
-    except Exception as e:
-        print_message(f"Error al generar el archivo {file_path}: {e}", CYAN)
+        try:
+            with open(file_path, "w") as f:
+                f.write(content)
+            print_green(f"Archivo generado: {file_path}")
+        except Exception as e:
+            print_red(f"Error al generar el archivo {file_path}: {e}")
+            
         
         
-        
-def update_model_user(full_path):
-    """
-    Actualiza el archivo
-    """
-    main_path = os.path.join(full_path, "app", "Models", "User.php")
+    def update_model_user(self, full_path):
+        """
+        Actualiza el archivo
+        """
+        main_path = os.path.join(full_path, "app", "Models", "User.php")
 
-    # Verificar si el archivo existe
-    if not os.path.exists(main_path):
-        print_message(f"Error: {main_path} no existe.", CYAN)
-        return
+        # Verificar si el archivo existe
+        if not os.path.exists(main_path):
+            print_green(f"Error: {main_path} no existe.")
+            return
 
-    try:
-        # Leer el contenido del archivo
-        with open(main_path, "r") as f:
-            content = f.read()
+        try:
+            # Leer el contenido del archivo
+            with open(main_path, "r") as f:
+                content = f.read()
 
-        content = content.replace(
+            content = content.replace(
             """use Laravel\\Sanctum\\HasApiTokens;""",
             """use Laravel\\Sanctum\\HasApiTokens;
 use App\\Notifications\\Auth\\AuthResetPasswordNotification;"""
         )
 
 
-        # Reemplazos
-        content = content.replace(
+            # Reemplazos
+            content = content.replace(
             """    /*********************
     * Relations
     ********************/""",
@@ -261,42 +257,35 @@ use App\\Notifications\\Auth\\AuthResetPasswordNotification;"""
     ********************/"""
         )
 
-        # Escribir el contenido actualizado
-        with open(main_path, "w") as f:
-            f.write(content)
+            # Escribir el contenido actualizado
+            with open(main_path, "w") as f:
+                f.write(content)
 
-        print_message(
-            f"{main_path} actualizado correctamente.",
-            GREEN
-        )
+            print_green(f"{main_path} actualizado correctamente.")
 
-    except Exception as e:
-        print_message(
-            f"Error al actualizar {main_path}: {e}",
-            CYAN
-        )
+        except Exception as e:
+            print_red(f"Error al actualizar {main_path}: {e}")
 
     
 
+    def update_config_app(self, full_path):
+        """
+        Actualiza el archivo
+        """
+        main_path = os.path.join(full_path, "config", "app.php")
 
-def update_config_app(full_path):
-    """
-    Actualiza el archivo
-    """
-    main_path = os.path.join(full_path, "config", "app.php")
+        # Verificar si el archivo existe
+        if not os.path.exists(main_path):
+            print_green(f"Error: {main_path} no existe.")
+            return
 
-    # Verificar si el archivo existe
-    if not os.path.exists(main_path):
-        print_message(f"Error: {main_path} no existe.", CYAN)
-        return
+        try:
+            # Leer el contenido del archivo
+            with open(main_path, "r") as f:
+                content = f.read()
 
-    try:
-        # Leer el contenido del archivo
-        with open(main_path, "r") as f:
-            content = f.read()
-
-        # Reemplazos
-        content = content.replace(
+            # Reemplazos
+            content = content.replace(
             """];""",
             """    ## Reset Password
     'frontend_url' => env('FRONTEND_URL'),
@@ -304,20 +293,13 @@ def update_config_app(full_path):
 ];"""
         )
 
-        # Escribir el contenido actualizado
-        with open(main_path, "w") as f:
-            f.write(content)
+            # Escribir el contenido actualizado
+            with open(main_path, "w") as f:
+                f.write(content)
 
-        print_message(
-            f"{main_path} actualizado correctamente.",
-            GREEN
-        )
+            print_green(f"{main_path} actualizado correctamente.",)
 
-    except Exception as e:
-        print_message(
-            f"Error al actualizar {main_path}: {e}",
-            CYAN
-        )
+        except Exception as e:
+            print_red(f"Error al actualizar {main_path}: {e}")
 
-    
 

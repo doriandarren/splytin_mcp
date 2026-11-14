@@ -1,24 +1,26 @@
 import os
-from helpers.helper_print import print_message, GREEN, CYAN
-
-def generate_auth_register(full_path):
-    create_register_request(full_path)
-    create_register(full_path)
+from helpers.helper_print import print_green, print_red
 
 
 
+class LaravelAuthRegister:
 
-def create_register_request(full_path):
-    """
-    Genera el archivo
-    """
+    def invoke(self, full_path):
+        self.create_register_request(full_path)
+        self.create_register(full_path)
 
-    folder_path = os.path.join(full_path, "app", "Http", "Requests", "V1", "Auth")
-    file_path = os.path.join(folder_path, "AuthRegisterRequest.php")
 
-    os.makedirs(folder_path, exist_ok=True)
+    def create_register_request(self, full_path):
+        """
+        Genera el archivo
+        """
 
-    content = f"""<?php
+        folder_path = os.path.join(full_path, "app", "Http", "Requests", "V1", "Auth")
+        file_path = os.path.join(folder_path, "AuthRegisterRequest.php")
+
+        os.makedirs(folder_path, exist_ok=True)
+
+        content = f"""<?php
 
 namespace App\\Http\\Requests\\V1\\Auth;
 
@@ -68,35 +70,34 @@ class AuthRegisterRequest extends FormRequest
 }}
 """
 
-    try:
-        with open(file_path, "w") as f:
-            f.write(content)
-        print_message(f"Archivo generado: {file_path}", GREEN)
-    except Exception as e:
-        print_message(f"Error al generar el archivo {file_path}: {e}", CYAN)
+        try:
+            with open(file_path, "w") as f:
+                f.write(content)
+            print_green(f"Archivo generado: {file_path}")
+        except Exception as e:
+            print_red(f"Error al generar el archivo {file_path}: {e}")
 
 
 
+    def create_register(self, full_path):
+        """
+        Genera un archivo
 
-def create_register(full_path):
-    """
-    Genera un archivo
+        Args:
+            full_path (str): Ruta completa del proyecto.
+        """
+        styles_path = os.path.join(full_path, "app", "Http", "Controllers", "API", "V1", "Auth")
 
-    Args:
-        full_path (str): Ruta completa del proyecto.
-    """
-    styles_path = os.path.join(full_path, "app", "Http", "Controllers", "API", "V1", "Auth")
+        # Crear la carpeta si no existe
+        if not os.path.exists(styles_path):
+            os.makedirs(styles_path)
+            print_green(f"Carpeta creada: {styles_path}")
 
-    # Crear la carpeta si no existe
-    if not os.path.exists(styles_path):
-        os.makedirs(styles_path)
-        print_message(f"Carpeta creada: {styles_path}", GREEN)
+        # Ruta completa del archivo
+        file_path = os.path.join(styles_path, "AuthRegisterController.php")
 
-    # Ruta completa del archivo
-    file_path = os.path.join(styles_path, "AuthRegisterController.php")
-
-    # Contenido por defecto
-    content = f"""<?php
+        # Contenido por defecto
+        content = f"""<?php
 
 namespace App\\Http\\Controllers\\API\\V1\\Auth;
 
@@ -144,11 +145,11 @@ class AuthRegisterController extends ApiController
 }}
 """
 
-    try:
-        # Crear o sobrescribir el archivo con el contenido
-        with open(file_path, "w") as f:
-            f.write(content)
-        print_message(f"Archivo generado: {file_path}", GREEN)
-    except Exception as e:
-        print_message(f"Error al generar el archivo {file_path}: {e}", CYAN)
+        try:
+            # Crear o sobrescribir el archivo con el contenido
+            with open(file_path, "w") as f:
+                f.write(content)
+            print_green(f"Archivo generado: {file_path}")
+        except Exception as e:
+            print_red(f"Error al generar el archivo {file_path}: {e}")
 
