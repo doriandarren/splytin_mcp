@@ -317,9 +317,7 @@ import {
     Wallet,
 } from "lucide-react";
 
-
 import { DashboardStatCard } from "./DashboardStatCard";
-
 
 // Datos ficticios con la estructura de la API
 const dashboardData = {
@@ -329,10 +327,8 @@ const dashboardData = {
     total_expenses: "8450.00",
 };
 
-
 // Formato numérico español
 const numberFormatter = new Intl.NumberFormat("es-ES");
-
 
 // Formato de moneda
 const currencyFormatter = new Intl.NumberFormat("es-ES", {
@@ -343,11 +339,9 @@ const currencyFormatter = new Intl.NumberFormat("es-ES", {
     useGrouping: true,
 });
 
-
 export const DashboardStats = () => {
     return (
         <div className="dashboard-stats-grid">
-
 
             <DashboardStatCard
                 title="Total clientes"
@@ -359,7 +353,6 @@ export const DashboardStats = () => {
                 variant="customers"
             />
 
-
             <DashboardStatCard
                 title="Total facturas"
                 value={numberFormatter.format(
@@ -369,7 +362,6 @@ export const DashboardStats = () => {
                 icon={<ReceiptText size={21} />}
                 variant="invoices"
             />
-
 
             <DashboardStatCard
                 title="Total ingresos"
@@ -381,7 +373,6 @@ export const DashboardStats = () => {
                 variant="income"
             />
 
-
             <DashboardStatCard
                 title="Total gastos"
                 value={currencyFormatter.format(
@@ -391,7 +382,6 @@ export const DashboardStats = () => {
                 icon={<Wallet size={21} />}
                 variant="expenses"
             />
-
 
         </div>
     );
@@ -417,13 +407,11 @@ export const DashboardStats = () => {
 
 import type { ReactNode } from "react";
 
-
 type StatVariant =
     | "customers"
     | "invoices"
     | "income"
     | "expenses";
-
 
 interface DashboardStatCardProps {
     title: string;
@@ -433,7 +421,6 @@ interface DashboardStatCardProps {
     variant?: StatVariant;
 }
 
-
 export const DashboardStatCard = ({
     title,
     value,
@@ -442,10 +429,9 @@ export const DashboardStatCard = ({
     variant = "invoices",
 }: DashboardStatCardProps) => {
     return (
-        <div className={dashboard-stat-card dashboard-stat-${variant}}>
+        <div className={`dashboard-stat-card dashboard-stat-${variant}`}>
             <div className="dashboard-stat-header">
                 <span>{title}</span>
-
 
                 {icon && (
                     <span className="dashboard-stat-icon">
@@ -454,11 +440,9 @@ export const DashboardStatCard = ({
                 )}
             </div>
 
-
             <div className="dashboard-stat-value">
                 {value}
             </div>
-
 
             {description && (
                 <p className="dashboard-stat-description">
