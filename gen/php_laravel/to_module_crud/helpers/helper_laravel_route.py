@@ -98,8 +98,8 @@ use {controller_path}\\{singular_name}DestroyController;"""
                 return
 
             if string_replace not in content:
-                replacement = f"""    // ...
-    {string_replace}"""
+                replacement = f"""    {string_replace}
+    // ..."""
 
                 content = content.replace(
                     marker,

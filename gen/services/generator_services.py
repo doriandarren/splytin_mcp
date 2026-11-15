@@ -6,7 +6,7 @@ import os
 from dotenv import load_dotenv
 from gen.php_laravel.to_create_project.auth.laravel_module_auth import LaravelModuleAuth
 from gen.php_laravel.to_create_project.modules.laravel_module_dev import LaravelModuleDev
-from gen.php_laravel.to_create_project.modules.laravel_module_report_summary import LaravelModuleReportSummary
+from gen.php_laravel.to_create_project.modules.laravel_module_dashboard import LaravelModuleDashboard
 from gen.php_laravel.to_create_project.shared.laravel_shared import LaravelShared
 from gen.php_laravel.to_create_project.updates.laravel_update_route_api_php import LaravelUpdateRouteApiPhp
 from gen.php_laravel.to_create_project.utilities.laravel_utilities import LaravelUtilities
@@ -559,7 +559,7 @@ def create_php_project_service(
     
     
     # Module Report Summary
-    obj = LaravelModuleReportSummary()
+    obj = LaravelModuleDashboard()
     obj.invoke(full_path)
     
     # Module Dev

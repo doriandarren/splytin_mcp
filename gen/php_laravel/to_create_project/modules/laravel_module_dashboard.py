@@ -3,7 +3,7 @@ from helpers.helper_columns import HelperColumns
 
 
 
-class LaravelModuleReportSummary:
+class LaravelModuleDashboard:
 
     def invoke(self, full_path):
         
@@ -35,8 +35,8 @@ class LaravelModuleReportSummary:
 
 
         # Report Summary
-        singular_name = "ReportSummary"
-        plural_name = "ReportSummaries"
+        singular_name = "Dashboard"
+        plural_name = "Dashboards"
         input_columns = "total_customers:int total_invoices:int total_income:decimal total_expenses:decimal"
 
         columns = HelperColumns.parse_columns_input(input_columns)

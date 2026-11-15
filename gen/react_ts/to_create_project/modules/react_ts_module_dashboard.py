@@ -396,6 +396,7 @@ export const DashboardStats = () => {
     
     
     
+    
     def create_dashboard_stat_card_tsx(self, full_path):
         """
         Genera el archivo.
@@ -459,6 +460,7 @@ export const DashboardStatCard = ({
             file_name="DashboardStatCard.tsx",
             content=content
         )
+    
     
     
     
@@ -647,7 +649,6 @@ export const DashboardActivityChart = () => {
     
     
     
-    
     def update_app_router_tsx(self, full_path):
         """
         Actualiza el archivo
@@ -706,6 +707,7 @@ import { dashboardRoutes } from "./modules/private/dashboards/routes/dashboards.
         except Exception as e:
             print_red(f"Error al actualizar {main_path}: {e}")
             return False
+
 
 
 
