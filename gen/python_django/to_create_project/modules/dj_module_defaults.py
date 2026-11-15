@@ -23,10 +23,10 @@ class DjModuleDefaults:
         
         
         ######################
-        # ReportSummary
+        # Dashboard
         ######################
-        singular_name = "ReportSummary"
-        plural_name = "ReportSummaries"
+        singular_name = "Dasboard"
+        plural_name = "Dasboards"
         columns = HelperColumns.parse_columns_input(
             "total_customers:int total_invoices:int total_income:decimal total_expenses:decimal"
         )

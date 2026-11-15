@@ -270,7 +270,6 @@ import {
     Server,
     Users,
     Droplets,
-    Settings,
     PanelsTopLeft,
 } from "lucide-react";
 
@@ -308,11 +307,6 @@ const menuItems = [
         key: "quotes",
         path: "/admin/quotes",
         icon: Droplets,
-    },
-    {
-        key: "settings",
-        path: "/admin/settings",
-        icon: Settings,
     },
 ] as const;
 

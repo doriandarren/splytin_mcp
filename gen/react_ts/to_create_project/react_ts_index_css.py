@@ -178,37 +178,37 @@ class ReactTsIndexCss:
                 "oklch(0.50055 0.08072 240.684)",
             ],
             "--sidebar": [
-                "oklch(1 0 0)",
-                "oklch(0.23419 0.04671 250.475)",
+                "var(--primary)",
+                "var(--primary)"
             ],
             "--sidebar-foreground": [
-                "oklch(0.23419 0.04671 250.475)",
-                "oklch(0.97427 0.01005 228.886)",
+                "var(--primary-foreground)",
+                "var(--primary-foreground)"
             ],
             "--sidebar-primary": [
-                "oklch(0.50220 0.09947 234.694)",
-                "oklch(0.69198 0.13320 232.282)",
+                "var(--primary-foreground)",
+                "var(--primary-foreground)"
             ],
             "--sidebar-primary-foreground": [
-                "oklch(1 0 0)",
-                "oklch(0.19558 0.03702 249.816)",
+                "var(--primary)",
+                "var(--primary)"
             ],
             "--sidebar-accent": [
-                "oklch(0.96594 0.01507 228.960)",
-                "oklch(0.34802 0.06056 238.977)",
+                "color-mix(in oklch, var(--primary-foreground) 15%, transparent)",
+                "color-mix(in oklch, var(--primary-foreground) 15%, transparent)"
             ],
             "--sidebar-accent-foreground": [
-                "oklch(0.44994 0.08955 236.020)",
-                "oklch(0.96594 0.01507 228.960)",
+                "var(--primary-foreground)",
+                "var(--primary-foreground)"
             ],
             "--sidebar-border": [
-                "oklch(0.91942 0.01437 238.020)",
-                "oklch(0.37093 0.04904 243.076)",
+                "color-mix(in oklch, var(--primary-foreground) 20%, transparent)",
+                "color-mix(in oklch, var(--primary-foreground) 20%, transparent)"
             ],
             "--sidebar-ring": [
-                "oklch(0.68313 0.13756 233.260)",
-                "oklch(0.69198 0.13320 232.282)",
-            ],
+                "var(--ring)",
+                "var(--ring)"
+            ]
         }
 
         try:

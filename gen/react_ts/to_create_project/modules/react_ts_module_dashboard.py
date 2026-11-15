@@ -47,9 +47,32 @@ class ReactTsModuleDashboard:
         content = r'''// src/modules/private/dashboards/pages/DashboardPage.tsx
 import { DashboardActivityChart } from "../components/DashboardActivityChart";
 import { DashboardStats } from "../components/DashboardStats";
+import { useDashboards } from "../hooks/useDashboards";
+import type { DashboardAttributes } from "../types/dashboard.types";
 import "./DashboardPage.css";
 
+
+
+// Valores por defecto
+const defaultStats: DashboardAttributes = {
+    total_customers: 0,
+    total_invoices: 0,
+    total_income: 0,
+    total_expenses: 0,
+    created_at: "",
+    updated_at: "",
+};
+
+
 export const DashboardPage = () => {
+
+    const query = useDashboards();
+
+    const dashboard = query.data?.data?.[0];
+
+    const stats = dashboard?.attributes ?? defaultStats;
+
+
     return (
         <div className="dashboard-page">
 
@@ -66,8 +89,10 @@ export const DashboardPage = () => {
                 </div>
             </div>
 
+
             {/* Tarjetas de estadísticas */}
-            <DashboardStats />
+            <DashboardStats data={stats} />
+
 
             {/* Gráfico de barras */}
             <DashboardActivityChart />
@@ -300,7 +325,6 @@ export const DashboardPage = () => {
     
     
     
-    
     def create_dashboard_stats_tsx(self, full_path):
         """
         Genera el archivo.
@@ -309,7 +333,6 @@ export const DashboardPage = () => {
         folder_path = os.path.join(full_path, "src", "modules", "private", "dashboards", "components")
     
         content = r'''// src/modules/private/dashboards/components/DashboardStats.tsx
-
 import {
     Users,
     ReceiptText,
@@ -318,14 +341,8 @@ import {
 } from "lucide-react";
 
 import { DashboardStatCard } from "./DashboardStatCard";
+import type { DashboardAttributes } from "../types/dashboard.types";
 
-// Datos ficticios con la estructura de la API
-const dashboardData = {
-    total_customers: 248,
-    total_invoices: 1284,
-    total_income: "26500.00",
-    total_expenses: "8450.00",
-};
 
 // Formato numérico español
 const numberFormatter = new Intl.NumberFormat("es-ES");
@@ -339,14 +356,20 @@ const currencyFormatter = new Intl.NumberFormat("es-ES", {
     useGrouping: true,
 });
 
-export const DashboardStats = () => {
+
+interface Props {
+    data: DashboardAttributes;
+}
+
+
+export const DashboardStats = ( {data}: Props ) => {
     return (
         <div className="dashboard-stats-grid">
 
             <DashboardStatCard
                 title="Total clientes"
                 value={numberFormatter.format(
-                    dashboardData.total_customers
+                    data.total_customers
                 )}
                 description="Clientes registrados"
                 icon={<Users size={21} />}
@@ -356,7 +379,7 @@ export const DashboardStats = () => {
             <DashboardStatCard
                 title="Total facturas"
                 value={numberFormatter.format(
-                    dashboardData.total_invoices
+                    data.total_invoices
                 )}
                 description="Facturas registradas"
                 icon={<ReceiptText size={21} />}
@@ -366,7 +389,7 @@ export const DashboardStats = () => {
             <DashboardStatCard
                 title="Total ingresos"
                 value={currencyFormatter.format(
-                    Number(dashboardData.total_income)
+                    Number(data.total_income)
                 )}
                 description="Ingresos acumulados"
                 icon={<TrendingUp size={21} />}
@@ -376,7 +399,7 @@ export const DashboardStats = () => {
             <DashboardStatCard
                 title="Total gastos"
                 value={currencyFormatter.format(
-                    Number(dashboardData.total_expenses)
+                    Number(data.total_expenses)
                 )}
                 description="Gastos acumulados"
                 icon={<Wallet size={21} />}
@@ -386,6 +409,7 @@ export const DashboardStats = () => {
         </div>
     );
 };'''
+
     
         # Crear el archivo
         HelperFile.write(
