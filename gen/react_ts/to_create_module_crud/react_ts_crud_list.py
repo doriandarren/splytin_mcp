@@ -153,6 +153,7 @@ export const useDelete{singular_name} = () => {{
 
         content = f'''// src/modules/{namespace}/{plural_name_snake}/pages/{singular_name}Page.tsx
 import {{ Link, useSearchParams }} from "react-router";
+import {{ useTranslation }} from "react-i18next";
 import {{ Plus, Pencil, Trash2 }} from "lucide-react";
 import {{ alerta }} from "@/components/alerts/alerta";
 import {{ Button }} from "@/components/ui/button";
@@ -173,6 +174,8 @@ const columns = (
 
 export const {singular_name}Page = () => {{
   const [searchParams] = useSearchParams();
+  
+  const {{ t, i18n }} = useTranslation();
 
   const rawPage = Number(searchParams.get("page") ?? "1");
 
@@ -202,8 +205,10 @@ export const {singular_name}Page = () => {{
 
   return (
     <CustomTable<{singular_name}Resource>
-      title="{plural_name}"
-      description={{`Total de {plural_name_snake}: ${{query.data?.meta?.total ?? 0}}`}}
+      title={{t("{plural_name_snake}_module.title")}}
+      description={{t("{plural_name_snake}_module.description", {{
+        total: query.data?.meta?.total ?? 0,
+      }})}}
       columns={{columns(handleDelete, deleteItem.isPending)}}
       data={{query.data?.data ?? []}}
       getRowKey={{(item) => item.id}}
@@ -213,14 +218,14 @@ export const {singular_name}Page = () => {{
       isPlaceholderData={{query.isPlaceholderData}}
       isError={{query.isError || (!query.isPending && !query.data)}}
       onRefresh={{() => void query.refetch()}}
-      emptyMessage="No hay registros."
+      emptyMessage={{t("status.no_results")}}
       headerActions={{
         <Button
           nativeButton={{false}}
           render={{<Link to="/admin/{plural_name_kebab}/create" />}}
         >
           <Plus className="size-4" />
-          Nuevo {singular_name}
+          {{t("actions.create")}}
         </Button>
       }}
     />

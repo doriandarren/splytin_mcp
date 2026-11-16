@@ -1,4 +1,5 @@
 import os
+from gen.react_ts.to_create_module_crud.react_ts_crud_translate import ReactTsCrudTranslate
 from helpers.helper_menu import pause
 from helpers.helper_print import camel_to_first_letter_lower, camel_to_kebab, camel_to_snake
 from helpers.helper_string import normalize_project_name
@@ -227,3 +228,26 @@ class StandardModuleCrudReactTs:
             plural_name_snake,
             columns
         )  
+        
+        
+        # Translate
+        obj = ReactTsCrudTranslate()
+        obj.invoke(
+            full_path,
+            namespace,
+            version_api,
+            folder_group,
+            project_name,
+            singular_name,
+            plural_name,
+            singular_name_camel,
+            plural_name_camel,
+            singular_name_kebab,
+            plural_name_kebab,
+            singular_name_snake,
+            plural_name_snake,
+            columns
+        )
+        
+        
+        

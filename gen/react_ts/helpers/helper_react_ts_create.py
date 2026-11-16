@@ -51,7 +51,7 @@ class HelperReactTsCreate:
 
 
     @staticmethod
-    def generate_form_field(column):
+    def generate_form_field(column, plural_name_snake):
         """
         Genera un campo JSX compatible con
         React Hook Form y Zod.
@@ -67,14 +67,14 @@ class HelperReactTsCreate:
         if column_type == "boolean":
             return f'''          {{/* {name} */}}
             <div className="space-y-2">
-                <Label htmlFor="{name}">{name}</Label>
+                <Label htmlFor="{name}">{{t("{plural_name_snake}_module.fields.{name}")}}</Label>
 
                 <Input
-                id="{name}"
-                type="checkbox"
-                {{...register("{name}")}}
-                aria-invalid={{!!errors.{name}}}
-                className="size-4"
+                    id="{name}"
+                    type="checkbox"
+                    {{...register("{name}")}}
+                    aria-invalid={{!!errors.{name}}}
+                    className="size-4"
                 />
 
                 {{errors.{name} && (
@@ -104,19 +104,19 @@ class HelperReactTsCreate:
 
             return f'''          {{/* {name} */}}
             <div className="space-y-2">
-                <Label htmlFor="{name}">{name}</Label>
+                <Label htmlFor="{name}">{{t("{plural_name_snake}_module.fields.{name}")}}</Label>
 
                 <Input
-                id="{name}"
-                type="number"
-                step="{step}"{min_attribute}
-                {{...register("{name}", {{
-                    setValueAs: (value) =>
-                    value === ""
-                        ? {"null" if is_nullable else "NaN"}
-                        : Number(value),
-                }})}}
-                aria-invalid={{!!errors.{name}}}
+                    id="{name}"
+                    type="number"
+                    step="{step}"{min_attribute}
+                    {{...register("{name}", {{
+                        setValueAs: (value) =>
+                        value === ""
+                            ? {"null" if is_nullable else "NaN"}
+                            : Number(value),
+                    }})}}
+                    aria-invalid={{!!errors.{name}}}
                 />
 
                 {{errors.{name} && (
@@ -155,13 +155,13 @@ class HelperReactTsCreate:
 
         return f'''          {{/* {name} */}}
             <div className="space-y-2">
-                <Label htmlFor="{name}">{name}</Label>
+                <Label htmlFor="{name}">{{t("{plural_name_snake}_module.fields.{name}")}}</Label>
 
                 <Input
-                id="{name}"
-                type="{input_type}"
-                {register_options}
-                aria-invalid={{!!errors.{name}}}{max_length}
+                    id="{name}"
+                    type="{input_type}"
+                    {register_options}
+                    aria-invalid={{!!errors.{name}}}{max_length}
                 />
 
                 {{errors.{name} && (
@@ -174,7 +174,7 @@ class HelperReactTsCreate:
 
 
     @staticmethod
-    def generate_form_fields(columns):
+    def generate_form_fields(columns, plural_name_snake):
         """
         Genera los campos JSX para React Hook Form.
         """
@@ -192,7 +192,7 @@ class HelperReactTsCreate:
             existing_names.add(name)
 
             result.append(
-                HelperReactTsCreate.generate_form_field(column)
+                HelperReactTsCreate.generate_form_field(column, plural_name_snake)
             )
 
         return "\n\n".join(result)

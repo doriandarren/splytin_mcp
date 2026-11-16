@@ -99,18 +99,17 @@ export default i18n;
     
         folder_path = os.path.join(full_path, "src", "i18n", "locales", "es")
     
-        content = r'''{
+        content = r'''
+{
     "app_name": "Sistema de Gestión Empresarial",
     "dashboard": "Panel de control",
     "systems": "Sistemas",
     "quotes": "Presupuestos",
     "teams": "Equipos",
     "settings": "Configuración",
-    "auth": {
-        "profile": "Perfil",
-        "logout": "Cerrar sesión"
-    },
+    "navigation": "Navegación",
     "actions": {
+        "label": "Acciones",
         "create": "Crear",
         "save": "Guardar",
         "edit": "Editar",
@@ -122,15 +121,57 @@ export default i18n;
         "filter": "Filtrar",
         "refresh": "Actualizar datos",
         "back": "Volver",
-        "confirm": "Confirmar"
+        "confirm": "Confirmar",
+        "retry": "Reintentar"
+    },
+    "fields": {
+        "id": "ID",
+        "created_at": "Fecha de creación",
+        "updated_at": "Fecha de actualización"
+    },
+    "messages": {
+        "confirm_delete": "¿Seguro que deseas eliminar este registro?",
+        "deleted": "Registro eliminado correctamente"
     },
     "status": {
         "loading": "Cargando...",
+        "loading_records": "Cargando registros...",
+        "loading_page": "Cargando la nueva página...",
+        "load_error": "No se pudieron cargar los registros.",
         "success": "Operación realizada correctamente",
         "error": "Ha ocurrido un error",
         "no_results": "No se encontraron resultados"
+    },
+    "pagination": {
+        "page_of": "Página {{current}} de {{total}}"
+    },
+    "auth_module": {
+        "profile": "Perfil",
+        "logout": "Cerrar sesión"
+    },
+    "dashboard_module": {
+        "title": "Dashboard",
+        "subtitle": "Bienvenido a tu panel de administración",
+        "stats": {
+            "total_customers": "Total clientes",
+            "total_invoices": "Total facturas",
+            "total_income": "Total ingresos",
+            "total_expenses": "Total gastos",
+            "customers_description": "Clientes registrados",
+            "invoices_description": "Facturas registradas",
+            "income_description": "Ingresos acumulados",
+            "expenses_description": "Gastos acumulados"
+        },
+        "chart": {
+            "title": "Evolución financiera",
+            "description": "Ingresos y gastos mensuales",
+            "period": "Últimos 6 meses",
+            "income": "Ingresos",
+            "expenses": "Gastos"
+        }
     }
-}'''
+}
+'''
     
         # Crear el archivo
         HelperFile.write(
@@ -155,11 +196,9 @@ export default i18n;
     "quotes": "Quotes",
     "teams": "Teams",
     "settings": "Settings",
-    "auth": {
-        "profile": "Profile",
-        "logout": "Log out"
-    },
+    "navigation": "Navigation",
     "actions": {
+        "label": "Actions",
         "create": "Create",
         "save": "Save",
         "edit": "Edit",
@@ -171,13 +210,54 @@ export default i18n;
         "filter": "Filter",
         "refresh": "Refresh data",
         "back": "Back",
-        "confirm": "Confirm"
+        "confirm": "Confirm",
+        "retry": "Retry"
+    },
+    "fields": {
+        "id": "ID",
+        "created_at": "Created at",
+        "updated_at": "Updated at"
+    },
+    "messages": {
+        "confirm_delete": "Are you sure you want to delete this record?",
+        "deleted": "Record deleted successfully"
     },
     "status": {
         "loading": "Loading...",
+        "loading_records": "Loading records...",
+        "loading_page": "Loading the next page...",
+        "load_error": "Unable to load records.",
         "success": "Operation completed successfully",
         "error": "An error occurred",
         "no_results": "No results found"
+    },
+    "pagination": {
+        "page_of": "Page {{current}} of {{total}}"
+    },
+    "auth_module": {
+        "profile": "Profile",
+        "logout": "Log out"
+    },
+    "dashboard_module": {
+        "title": "Dashboard",
+        "subtitle": "Welcome to your administration panel",
+        "stats": {
+            "total_customers": "Total customers",
+            "total_invoices": "Total invoices",
+            "total_income": "Total income",
+            "total_expenses": "Total expenses",
+            "customers_description": "Registered customers",
+            "invoices_description": "Registered invoices",
+            "income_description": "Accumulated income",
+            "expenses_description": "Accumulated expenses"
+        },
+        "chart": {
+            "title": "Financial overview",
+            "description": "Monthly income and expenses",
+            "period": "Last 6 months",
+            "income": "Income",
+            "expenses": "Expenses"
+        }
     }
 }'''
     

@@ -383,7 +383,7 @@ export const {singular_name}UpdatePage = () => {{
           </h2>
 
           <div className="grid gap-6 md:grid-cols-2">
-{HelperReactTsCreate.generate_form_fields(columns)}
+{HelperReactTsCreate.generate_form_fields(columns, plural_name_snake)}
           </div>
         </div>
 

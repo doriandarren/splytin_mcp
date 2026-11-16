@@ -117,6 +117,7 @@ class ReactTsCrudCreate:
 
         content = f'''// src/modules/{namespace}/{plural_name_snake}/pages/{singular_name}CreatePage.tsx
 import {{ useNavigate }} from "react-router";
+import {{ useTranslation }} from "react-i18next";
 import {{ ArrowLeft, Save }} from "lucide-react";
 import {{ alerta }} from "@/components/alerts/alerta";
 import {{ useForm }} from "react-hook-form";
@@ -134,6 +135,7 @@ import {{
 
 export const {singular_name}CreatePage = () => {{
   const navigate = useNavigate();
+  const {{ t }} = useTranslation();
   const createItem = useCreate{singular_name}();
 
   // Formulario y validación
@@ -193,7 +195,7 @@ export const {singular_name}CreatePage = () => {{
           </h2>
 
           <div className="grid gap-6 md:grid-cols-2">
-{HelperReactTsCreate.generate_form_fields(columns)}
+{HelperReactTsCreate.generate_form_fields(columns, plural_name_snake)}
           </div>
         </div>
 

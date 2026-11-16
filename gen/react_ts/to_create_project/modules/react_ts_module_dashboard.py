@@ -45,13 +45,15 @@ class ReactTsModuleDashboard:
         folder_path = os.path.join(full_path, "src", "modules", "private", "dashboards", "pages")
 
         content = r'''// src/modules/private/dashboards/pages/DashboardPage.tsx
+import { useTranslation } from "react-i18next";
+
 import { DashboardActivityChart } from "../components/DashboardActivityChart";
 import { DashboardStats } from "../components/DashboardStats";
 import { useDashboards } from "../hooks/useDashboards";
+
 import type { DashboardAttributes } from "../types/dashboard.types";
+
 import "./DashboardPage.css";
-
-
 
 // Valores por defecto
 const defaultStats: DashboardAttributes = {
@@ -63,15 +65,18 @@ const defaultStats: DashboardAttributes = {
     updated_at: "",
 };
 
-
 export const DashboardPage = () => {
+    // Traducciones
+    const { t } = useTranslation();
 
+    // Obtener información de la API
     const query = useDashboards();
 
+    // Primer registro del listado
     const dashboard = query.data?.data?.[0];
 
+    // Estadísticas
     const stats = dashboard?.attributes ?? defaultStats;
-
 
     return (
         <div className="dashboard-page">
@@ -80,26 +85,30 @@ export const DashboardPage = () => {
             <div className="dashboard-header">
                 <div>
                     <h1 className="dashboard-title">
-                        Dashboard
+                        {t("dashboard_module.title")}
                     </h1>
 
                     <p className="dashboard-subtitle">
-                        Bienvenido a tu panel de administración
+                        {t("dashboard_module.subtitle")}
                     </p>
                 </div>
             </div>
 
 
             {/* Tarjetas de estadísticas */}
-            <DashboardStats data={stats} />
+            {!query.isPending && !query.isError && (
+                <>
+                    <DashboardStats data={stats} />
+                </>
+            )}
 
-
-            {/* Gráfico de barras */}
+            {/* Gráfico financiero */}
             <DashboardActivityChart />
 
         </div>
     );
-};'''
+};
+'''
 
         # Crear el archivo
         HelperFile.write(
@@ -333,6 +342,8 @@ export const DashboardPage = () => {
         folder_path = os.path.join(full_path, "src", "modules", "private", "dashboards", "components")
     
         content = r'''// src/modules/private/dashboards/components/DashboardStats.tsx
+import { useTranslation } from "react-i18next";
+
 import {
     Users,
     ReceiptText,
@@ -342,7 +353,6 @@ import {
 
 import { DashboardStatCard } from "./DashboardStatCard";
 import type { DashboardAttributes } from "../types/dashboard.types";
-
 
 // Formato numérico español
 const numberFormatter = new Intl.NumberFormat("es-ES");
@@ -356,59 +366,52 @@ const currencyFormatter = new Intl.NumberFormat("es-ES", {
     useGrouping: true,
 });
 
-
 interface Props {
     data: DashboardAttributes;
 }
 
+export const DashboardStats = ({ data }: Props) => {
+    const { t } = useTranslation();
 
-export const DashboardStats = ( {data}: Props ) => {
     return (
         <div className="dashboard-stats-grid">
 
             <DashboardStatCard
-                title="Total clientes"
-                value={numberFormatter.format(
-                    data.total_customers
-                )}
-                description="Clientes registrados"
+                title={t("dashboard_module.stats.total_customers")}
+                value={numberFormatter.format(data.total_customers)}
+                description={t("dashboard_module.stats.customers_description")}
                 icon={<Users size={21} />}
                 variant="customers"
             />
 
             <DashboardStatCard
-                title="Total facturas"
-                value={numberFormatter.format(
-                    data.total_invoices
-                )}
-                description="Facturas registradas"
+                title={t("dashboard_module.stats.total_invoices")}
+                value={numberFormatter.format(data.total_invoices)}
+                description={t("dashboard_module.stats.invoices_description")}
                 icon={<ReceiptText size={21} />}
                 variant="invoices"
             />
 
             <DashboardStatCard
-                title="Total ingresos"
-                value={currencyFormatter.format(
-                    Number(data.total_income)
-                )}
-                description="Ingresos acumulados"
+                title={t("dashboard_module.stats.total_income")}
+                value={currencyFormatter.format(Number(data.total_income))}
+                description={t("dashboard_module.stats.income_description")}
                 icon={<TrendingUp size={21} />}
                 variant="income"
             />
 
             <DashboardStatCard
-                title="Total gastos"
-                value={currencyFormatter.format(
-                    Number(data.total_expenses)
-                )}
-                description="Gastos acumulados"
+                title={t("dashboard_module.stats.total_expenses")}
+                value={currencyFormatter.format(Number(data.total_expenses))}
+                description={t("dashboard_module.stats.expenses_description")}
                 icon={<Wallet size={21} />}
                 variant="expenses"
             />
 
         </div>
     );
-};'''
+};
+'''
 
     
         # Crear el archivo
@@ -496,7 +499,14 @@ export const DashboardStatCard = ({
         folder_path = os.path.join(full_path, "src", "modules", "private", "dashboards", "components")
     
         content = r'''// src/modules/private/dashboards/components/DashboardActivityChart.tsx
-import { Area, AreaChart, CartesianGrid, XAxis, YAxis } from "recharts";
+import { useTranslation } from "react-i18next";
+import {
+    Area,
+    AreaChart,
+    CartesianGrid,
+    XAxis,
+    YAxis,
+} from "recharts";
 
 import {
     ChartContainer,
@@ -509,46 +519,92 @@ import {
 
 // Datos de ejemplo
 const chartData = [
-    { month: "Jun", lavados: 125, clientes: 32 },
-    { month: "Jul", lavados: 155, clientes: 45 },
-    { month: "Ago", lavados: 138, clientes: 41 },
-    { month: "Sep", lavados: 220, clientes: 62 },
-    { month: "Oct", lavados: 192, clientes: 75 },
-    { month: "Nov", lavados: 265, clientes: 89 },
+    { month: "Jun", total_customers: 125, total_invoices: 85, total_income: 12000, total_expenses: 6500 },
+    { month: "Jul", total_customers: 155, total_invoices: 110, total_income: 17500, total_expenses: 8200 },
+    { month: "Ago", total_customers: 138, total_invoices: 95, total_income: 14800, total_expenses: 7000 },
+    { month: "Sep", total_customers: 220, total_invoices: 160, total_income: 21500, total_expenses: 9300 },
+    { month: "Oct", total_customers: 192, total_invoices: 145, total_income: 19200, total_expenses: 7800 },
+    { month: "Nov", total_customers: 265, total_invoices: 210, total_income: 26500, total_expenses: 8450 },
 ];
 
-// Colores definidos en index.css
-
+// Colores del gráfico
 const chartConfig = {
-    lavados: {
-        label: "Lavados",
-        color: "var(--chart-1)", // Azul del tema actual
-    },
-    clientes: {
+    total_customers: {
         label: "Clientes",
         color: "#10b981", // Verde esmeralda
     },
+    total_invoices: {
+        label: "Facturas",
+        color: "var(--chart-1)", // Azul corporativo
+    },
+    total_income: {
+        label: "Ingresos",
+        color: "#8b5cf6", // Violeta
+    },
+    total_expenses: {
+        label: "Gastos",
+        color: "#f97360", // Coral
+    },
 } satisfies ChartConfig;
 
+// Formato numérico
+const numberFormatter = new Intl.NumberFormat("es-ES");
+
+// Formato de moneda
+const currencyFormatter = new Intl.NumberFormat("es-ES", {
+    style: "currency",
+    currency: "EUR",
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+    useGrouping: true,
+});
+
 export const DashboardActivityChart = () => {
+    const { t } = useTranslation();
+
+    // Traducciones de las series
+    const translatedChartConfig = {
+        total_customers: {
+            ...chartConfig.total_customers,
+            label: t("dashboard_module.stats.total_customers"),
+        },
+        total_invoices: {
+            ...chartConfig.total_invoices,
+            label: t("dashboard_module.stats.total_invoices"),
+        },
+        total_income: {
+            ...chartConfig.total_income,
+            label: t("dashboard_module.stats.total_income"),
+        },
+        total_expenses: {
+            ...chartConfig.total_expenses,
+            label: t("dashboard_module.stats.total_expenses"),
+        },
+    } satisfies ChartConfig;
+
     return (
         <section className="dashboard-chart">
+
             {/* Encabezado */}
             <div className="dashboard-chart-header">
                 <div>
-                    <h2 className="dashboard-chart-title">Actividad general</h2>
+                    <h2 className="dashboard-chart-title">
+                        {t("dashboard_module.chart.title")}
+                    </h2>
 
                     <p className="dashboard-chart-description">
-                        Evolución de clientes y lavados
+                        {t("dashboard_module.chart.description")}
                     </p>
                 </div>
 
-                <span className="dashboard-chart-period">Últimos 6 meses</span>
+                <span className="dashboard-chart-period">
+                    {t("dashboard_module.chart.period")}
+                </span>
             </div>
 
             {/* Gráfico */}
             <ChartContainer
-                config={chartConfig}
+                config={translatedChartConfig}
                 className="dashboard-chart-container"
             >
                 <AreaChart
@@ -561,44 +617,27 @@ export const DashboardActivityChart = () => {
                         bottom: 0,
                     }}
                 >
+
                     {/* Degradados */}
                     <defs>
-                        <linearGradient
-                            id="dashboardLavadosGradient"
-                            x1="0"
-                            y1="0"
-                            x2="0"
-                            y2="1"
-                        >
-                            <stop
-                                offset="5%"
-                                stopColor="var(--color-lavados)"
-                                stopOpacity={0.55}
-                            />
-                            <stop
-                                offset="95%"
-                                stopColor="var(--color-lavados)"
-                                stopOpacity={0}
-                            />
+                        <linearGradient id="dashboardCustomersGradient" x1="0" y1="0" x2="0" y2="1">
+                            <stop offset="5%" stopColor="var(--color-total_customers)" stopOpacity={0.18} />
+                            <stop offset="95%" stopColor="var(--color-total_customers)" stopOpacity={0} />
                         </linearGradient>
 
-                        <linearGradient
-                            id="dashboardClientesGradient"
-                            x1="0"
-                            y1="0"
-                            x2="0"
-                            y2="1"
-                        >
-                            <stop
-                                offset="5%"
-                                stopColor="var(--color-clientes)"
-                                stopOpacity={0.35}
-                            />
-                            <stop
-                                offset="95%"
-                                stopColor="var(--color-clientes)"
-                                stopOpacity={0}
-                            />
+                        <linearGradient id="dashboardInvoicesGradient" x1="0" y1="0" x2="0" y2="1">
+                            <stop offset="5%" stopColor="var(--color-total_invoices)" stopOpacity={0.18} />
+                            <stop offset="95%" stopColor="var(--color-total_invoices)" stopOpacity={0} />
+                        </linearGradient>
+
+                        <linearGradient id="dashboardIncomeGradient" x1="0" y1="0" x2="0" y2="1">
+                            <stop offset="5%" stopColor="var(--color-total_income)" stopOpacity={0.28} />
+                            <stop offset="95%" stopColor="var(--color-total_income)" stopOpacity={0} />
+                        </linearGradient>
+
+                        <linearGradient id="dashboardExpensesGradient" x1="0" y1="0" x2="0" y2="1">
+                            <stop offset="5%" stopColor="var(--color-total_expenses)" stopOpacity={0.22} />
+                            <stop offset="95%" stopColor="var(--color-total_expenses)" stopOpacity={0} />
                         </linearGradient>
                     </defs>
 
@@ -609,7 +648,7 @@ export const DashboardActivityChart = () => {
                         strokeDasharray="3 3"
                     />
 
-                    {/* Ejes */}
+                    {/* Eje horizontal */}
                     <XAxis
                         dataKey="month"
                         tickLine={false}
@@ -617,21 +656,86 @@ export const DashboardActivityChart = () => {
                         tickMargin={12}
                     />
 
-                    <YAxis tickLine={false} axisLine={false} tickMargin={8} width={35} />
+                    {/* Eje izquierdo: cantidades */}
+                    <YAxis
+                        yAxisId="quantity"
+                        orientation="left"
+                        tickLine={false}
+                        axisLine={false}
+                        tickMargin={8}
+                        width={42}
+                        tickFormatter={(value: number) =>
+                            numberFormatter.format(value)
+                        }
+                    />
+
+                    {/* Eje derecho: euros */}
+                    <YAxis
+                        yAxisId="currency"
+                        orientation="right"
+                        tickLine={false}
+                        axisLine={false}
+                        tickMargin={8}
+                        width={55}
+                        tickFormatter={(value: number) =>
+                            `${numberFormatter.format(value / 1000)}k €`
+                        }
+                    />
 
                     {/* Tooltip */}
                     <ChartTooltip
                         cursor={false}
-                        content={<ChartTooltipContent indicator="dot" />}
+                        content={
+                            <ChartTooltipContent
+                                indicator="dot"
+                                formatter={(value, name) => {
+                                    const key = String(name);
+                                    const isCurrency =
+                                        key === "total_income" ||
+                                        key === "total_expenses";
+
+                                    const label =
+                                        translatedChartConfig[
+                                            key as keyof typeof translatedChartConfig
+                                        ]?.label ?? key;
+
+                                    return (
+                                        <span className="text-foreground">
+                                            {label}:{" "}
+                                            {isCurrency
+                                                ? currencyFormatter.format(Number(value))
+                                                : numberFormatter.format(Number(value))}
+                                        </span>
+                                    );
+                                }}
+                            />
+                        }
                     />
 
-                    {/* Lavados */}
+                    {/* Clientes */}
                     <Area
+                        yAxisId="quantity"
                         type="monotone"
-                        dataKey="lavados"
-                        stroke="var(--color-lavados)"
+                        dataKey="total_customers"
+                        stroke="var(--color-total_customers)"
                         strokeWidth={2.5}
-                        fill="url(#dashboardLavadosGradient)"
+                        fill="url(#dashboardCustomersGradient)"
+                        fillOpacity={1}
+                        dot={false}
+                        activeDot={{ r: 5 }}
+                        isAnimationActive
+                        animationBegin={100}
+                        animationDuration={1300}
+                    />
+
+                    {/* Facturas */}
+                    <Area
+                        yAxisId="quantity"
+                        type="monotone"
+                        dataKey="total_invoices"
+                        stroke="var(--color-total_invoices)"
+                        strokeWidth={2.5}
+                        fill="url(#dashboardInvoicesGradient)"
                         fillOpacity={1}
                         dot={false}
                         activeDot={{ r: 5 }}
@@ -640,28 +744,47 @@ export const DashboardActivityChart = () => {
                         animationDuration={1300}
                     />
 
-                    {/* Clientes */}
+                    {/* Ingresos */}
                     <Area
+                        yAxisId="currency"
                         type="monotone"
-                        dataKey="clientes"
-                        stroke="var(--color-clientes)"
+                        dataKey="total_income"
+                        stroke="var(--color-total_income)"
                         strokeWidth={2.5}
-                        fill="url(#dashboardClientesGradient)"
+                        fill="url(#dashboardIncomeGradient)"
                         fillOpacity={1}
                         dot={false}
                         activeDot={{ r: 5 }}
                         isAnimationActive
                         animationBegin={300}
+                        animationDuration={1400}
+                    />
+
+                    {/* Gastos */}
+                    <Area
+                        yAxisId="currency"
+                        type="monotone"
+                        dataKey="total_expenses"
+                        stroke="var(--color-total_expenses)"
+                        strokeWidth={2.5}
+                        fill="url(#dashboardExpensesGradient)"
+                        fillOpacity={1}
+                        dot={false}
+                        activeDot={{ r: 5 }}
+                        isAnimationActive
+                        animationBegin={400}
                         animationDuration={1500}
                     />
 
                     {/* Leyenda */}
                     <ChartLegend content={<ChartLegendContent />} />
+
                 </AreaChart>
             </ChartContainer>
         </section>
     );
-};'''
+};
+'''
     
         # Crear el archivo
         HelperFile.write(

@@ -55,7 +55,7 @@ class HelperReactTsListPage:
 
         return f'''  {{
     key: "actions",
-    header: "actions",
+    header: t("actions.label"),
     render: (item) => (
         <div className="flex items-center gap-2">
             <Button
@@ -67,7 +67,7 @@ class HelperReactTsListPage:
                 }}
             >
                 <Pencil className="size-4" />
-                Editar
+                {{t("actions.edit")}}
             </Button>
 
             <Button
@@ -77,7 +77,7 @@ class HelperReactTsListPage:
                 disabled={{isDeleting}}
             >
                 <Trash2 className="size-4" />
-                Eliminar
+                {{t("actions.delete")}}
             </Button>
         </div>
     ),
@@ -127,10 +127,12 @@ class HelperReactTsListPage:
             result.extend([
                 '  {',
                 '    key: "created_at",',
-                '    header: "created_at",',
+                '    header: t("fields.created_at"),',
                 '    render: (item) =>',
                 '      item.attributes.created_at',
-                '        ? new Date(item.attributes.created_at).toLocaleDateString("es-ES")',
+                '        ? new Date(item.attributes.created_at).toLocaleDateString(',
+                '           i18n.language.startsWith("en") ? "en-US" : "es-ES"',
+                '        )',
                 '        : "-",',
                 '  },'
             ])

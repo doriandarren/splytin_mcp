@@ -19,142 +19,172 @@ class ReactTsTableComponent:
         folder_path = os.path.join(full_path, "src", "components", "table")
 
         content = r'''// src/components/table/CustomTable.tsx
+import { useTranslation } from "react-i18next";
 import { RefreshCw } from "lucide-react";
+
 import { Button } from "@/components/ui/button";
 import { CustomPagination } from "@/components/pagination/CustomPagination";
+
 import type { CustomTableProps } from "./table.types";
 
-
-
 export function CustomTable<T>({
-  title,
-  description,
-  data,
-  headerActions,
-  columns,
-  getRowKey,
-  meta,
-  isLoading = false,
-  isFetching = false,
-  isPlaceholderData = false,
-  isError = false,
-  onRefresh,
-  emptyMessage = "No hay registros.",
+    title,
+    description,
+    data,
+    headerActions,
+    columns,
+    getRowKey,
+    meta,
+    isLoading = false,
+    isFetching = false,
+    isPlaceholderData = false,
+    isError = false,
+    onRefresh,
+    emptyMessage,
 }: CustomTableProps<T>) {
-  if (isError) {
+    const { t } = useTranslation();
+
+    if (isError) {
+        return (
+            <div className="space-y-4 p-6">
+                <p className="text-destructive">
+                    {t("status.load_error")}
+                </p>
+
+                {onRefresh && (
+                    <Button onClick={onRefresh}>
+                        {t("actions.retry")}
+                    </Button>
+                )}
+            </div>
+        );
+    }
+
     return (
-      <div className="space-y-4 p-6">
-        <p className="text-destructive">No se pudieron cargar los registros.</p>
+        <div className="space-y-6 p-6">
+            {/* Cabecera */}
+            <div className="flex flex-wrap items-center justify-between gap-4">
+                <div>
+                    <h1 className="text-3xl font-bold">
+                        {title}
+                    </h1>
 
-        {onRefresh && <Button onClick={onRefresh}>Reintentar</Button>}
-      </div>
+                    {description && (
+                        <p className="text-sm text-muted-foreground">
+                            {description}
+                        </p>
+                    )}
+                </div>
+
+                {/* Acciones de la cabecera */}
+                <div className="flex flex-wrap items-center gap-2">
+                    {/* Botones personalizados */}
+                    {headerActions}
+
+                    {/* Botón actualizar */}
+                    {onRefresh && (
+                        <Button
+                            variant="outline"
+                            onClick={onRefresh}
+                            disabled={isFetching}
+                        >
+                            <RefreshCw
+                                className={
+                                    isFetching
+                                        ? "size-4 animate-spin"
+                                        : "size-4"
+                                }
+                            />
+                            {t("actions.refresh")}
+                        </Button>
+                    )}
+                </div>
+            </div>
+
+            {/* Tabla */}
+            <div
+                className={`overflow-hidden rounded-md border ${
+                    isPlaceholderData ? "opacity-60" : ""
+                }`}
+            >
+                <div className="overflow-x-auto">
+                    <table className="w-full caption-bottom text-sm">
+                        <thead className="border-b bg-muted/50">
+                            <tr>
+                                {columns.map((column) => (
+                                    <th
+                                        key={column.key}
+                                        className="h-12 px-4 text-left font-medium"
+                                    >
+                                        {column.header}
+                                    </th>
+                                ))}
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            {isLoading ? (
+                                <tr>
+                                    <td
+                                        colSpan={columns.length}
+                                        className="h-24 text-center"
+                                    >
+                                        {t("status.loading_records")}
+                                    </td>
+                                </tr>
+                            ) : data.length === 0 ? (
+                                <tr>
+                                    <td
+                                        colSpan={columns.length}
+                                        className="h-24 text-center text-muted-foreground"
+                                    >
+                                        {emptyMessage ?? t("status.no_results")}
+                                    </td>
+                                </tr>
+                            ) : (
+                                data.map((item) => (
+                                    <tr
+                                        key={getRowKey(item)}
+                                        className="border-b transition-colors hover:bg-muted/50 last:border-0"
+                                    >
+                                        {columns.map((column) => (
+                                            <td
+                                                key={column.key}
+                                                className="p-4 align-middle"
+                                            >
+                                                {column.render(item)}
+                                            </td>
+                                        ))}
+                                    </tr>
+                                ))
+                            )}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            {/* Paginación */}
+            {meta && (
+                <div className="flex flex-wrap items-center justify-between gap-4">
+                    <p className="text-sm text-muted-foreground">
+                        {t("pagination.page_of", {
+                            current: meta.current_page,
+                            total: meta.last_page,
+                        })}
+                    </p>
+
+                    <CustomPagination totalPages={meta.last_page} />
+                </div>
+            )}
+
+            {/* Cambio de página */}
+            {isPlaceholderData && (
+                <p className="text-center text-xs text-muted-foreground">
+                    {t("status.loading_page")}
+                </p>
+            )}
+        </div>
     );
-  }
-
-  return (
-    <div className="space-y-6 p-6">
-      {/* Cabecera */}
-      <div className="flex flex-wrap items-center justify-between gap-4">
-        <div>
-          <h1 className="text-3xl font-bold">{title}</h1>
-
-          {description && (
-            <p className="text-sm text-muted-foreground">{description}</p>
-          )}
-        </div>
-
-        {/* Acciones de la cabecera */}
-        <div className="flex flex-wrap items-center gap-2">
-          {/* Botones personalizados */}
-          {headerActions}
-
-          {/* Botón actualizar */}
-          {onRefresh && (
-            <Button variant="outline" onClick={onRefresh} disabled={isFetching}>
-              <RefreshCw
-                className={isFetching ? "size-4 animate-spin" : "size-4"}
-              />
-              Actualizar
-            </Button>
-          )}
-        </div>
-      </div>
-
-      {/* Tabla */}
-      <div
-        className={`overflow-hidden rounded-md border ${
-          isPlaceholderData ? "opacity-60" : ""
-        }`}
-      >
-        <div className="overflow-x-auto">
-          <table className="w-full caption-bottom text-sm">
-            <thead className="border-b bg-muted/50">
-              <tr>
-                {columns.map((column) => (
-                  <th
-                    key={column.key}
-                    className="h-12 px-4 text-left font-medium"
-                  >
-                    {column.header}
-                  </th>
-                ))}
-              </tr>
-            </thead>
-
-            <tbody>
-              {isLoading ? (
-                <tr>
-                  <td colSpan={columns.length} className="h-24 text-center">
-                    Cargando registros...
-                  </td>
-                </tr>
-              ) : data.length === 0 ? (
-                <tr>
-                  <td
-                    colSpan={columns.length}
-                    className="h-24 text-center text-muted-foreground"
-                  >
-                    {emptyMessage}
-                  </td>
-                </tr>
-              ) : (
-                data.map((item) => (
-                  <tr
-                    key={getRowKey(item)}
-                    className="border-b transition-colors hover:bg-muted/50 last:border-0"
-                  >
-                    {columns.map((column) => (
-                      <td key={column.key} className="p-4 align-middle">
-                        {column.render(item)}
-                      </td>
-                    ))}
-                  </tr>
-                ))
-              )}
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-      {/* Paginación */}
-      {meta && (
-        <div className="flex flex-wrap items-center justify-between gap-4">
-          <p className="text-sm text-muted-foreground">
-            Página {meta.current_page} de {meta.last_page}
-          </p>
-
-          <CustomPagination totalPages={meta.last_page} />
-        </div>
-      )}
-
-      {/* Cambio de página */}
-      {isPlaceholderData && (
-        <p className="text-center text-xs text-muted-foreground">
-          Cargando la nueva página...
-        </p>
-      )}
-    </div>
-  );
 }
 '''
 

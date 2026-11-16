@@ -155,7 +155,7 @@ import { useAuthStore } from "@/modules/auth/stores/authStore";
 // Opciones del menú
 const menuItems = [
     {
-        key: "auth.profile",
+        key: "auth_module.profile",
         path: "/admin/profiles",
         icon: UserRound,
     }
@@ -183,7 +183,7 @@ export const UserMenu = () => {
                 <UserRound className="size-5" />
 
                 <span className="hidden sm:inline">
-                    {user?.attributes.name ?? t("auth.account")}
+                    {user?.attributes.name ?? t("auth_module.account")}
                 </span>
 
                 <ChevronDown className="size-4" />
@@ -196,7 +196,7 @@ export const UserMenu = () => {
                     <DropdownMenuLabel>
                         <div className="flex flex-col gap-1">
                             <span>
-                                {user?.attributes.name ?? t("auth.account")}
+                                {user?.attributes.name ?? t("auth_module.account")}
                             </span>
 
                             {user?.attributes.email && (
@@ -236,7 +236,7 @@ export const UserMenu = () => {
                         onClick={handleLogout}
                     >
                         <LogOut className="size-4" />
-                        {t("auth.logout")}
+                        {t("auth_module.logout")}
                     </DropdownMenuItem>
                 </DropdownMenuGroup>
 
