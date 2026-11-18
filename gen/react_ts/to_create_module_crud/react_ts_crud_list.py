@@ -165,12 +165,6 @@ import {{ useDelete{singular_name} }} from "../hooks/useDelete{singular_name}";
 
 
 
-const columns = (
-  onDelete: (id: string) => void,
-  isDeleting: boolean
-): TableColumn<{singular_name}Resource>[] => [
-{HelperReactTsListPage.generate_columns(columns, plural_name_kebab)}
-];
 
 export const {singular_name}Page = () => {{
   const [searchParams] = useSearchParams();
@@ -202,6 +196,14 @@ export const {singular_name}Page = () => {{
       console.error("Error al eliminar el registro:", error);
     }}
   }};
+  
+  
+  const columns = (
+    onDelete: (id: string) => void,
+    isDeleting: boolean
+  ): TableColumn<{singular_name}Resource>[] => [
+{HelperReactTsListPage.generate_columns(columns, plural_name_kebab)}
+  ];
 
   return (
     <CustomTable<{singular_name}Resource>

@@ -97,11 +97,11 @@ class HelperReactTsListPage:
         """
 
         result = [
-            '  {',
-            '    key: "id",',
-            '    header: "id",',
-            '    render: (item) => item.id,',
-            '  },'
+            '    {',
+            '      key: "id",',
+            '      header: "id",',
+            '      render: (item) => item.id,',
+            '    },'
         ]
 
         existing_names = {"id", "actions"}
@@ -115,26 +115,26 @@ class HelperReactTsListPage:
             existing_names.add(name)
 
             result.extend([
-                '  {',
-                f'    key: {json.dumps(name, ensure_ascii=False)},',
-                f'    header: {json.dumps(name, ensure_ascii=False)},',
-                f'    render: (item) => {HelperReactTsListPage.get_column_render(column)},',
-                '  },'
+                '    {',
+                f'      key: {json.dumps(name, ensure_ascii=False)},',
+                f'      header: {json.dumps(name, ensure_ascii=False)},',
+                f'      render: (item) => {HelperReactTsListPage.get_column_render(column)},',
+                '    },'
             ])
 
         # Añadir created_at si no existe
         if "created_at" not in existing_names:
             result.extend([
-                '  {',
-                '    key: "created_at",',
-                '    header: t("fields.created_at"),',
-                '    render: (item) =>',
-                '      item.attributes.created_at',
-                '        ? new Date(item.attributes.created_at).toLocaleDateString(',
-                '           i18n.language.startsWith("en") ? "en-US" : "es-ES"',
-                '        )',
-                '        : "-",',
-                '  },'
+                '    {',
+                '      key: "created_at",',
+                '      header: t("fields.created_at"),',
+                '      render: (item) =>',
+                '        item.attributes.created_at',
+                '          ? new Date(item.attributes.created_at).toLocaleDateString(',
+                '             i18n.language.startsWith("en") ? "en-US" : "es-ES"',
+                '          )',
+                '          : "-",',
+                '    },'
             ])
 
         # Añadir columna actions
@@ -145,5 +145,4 @@ class HelperReactTsListPage:
         )
 
         return "\n".join(result)
-
 

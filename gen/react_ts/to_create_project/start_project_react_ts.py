@@ -50,7 +50,7 @@ class StartProjectReactTs:
         full_path = f"{project_path}/{project_name}"
         
         
-        # Command Line
+        # Command Line 
         obj = ReactTsCommandLine()
         obj.invoke(full_path)
         
@@ -79,6 +79,8 @@ class StartProjectReactTs:
         # Components Private
         obj = ReactTsComponentPrivate()
         obj.invoke(full_path)
+        
+        
         
         
         # Components Pagination
