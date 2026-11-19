@@ -146,6 +146,7 @@ class ReactTsCrudTranslate:
 
         # Agregar traducciones
         data[module_key] = {
+            "title" : singular_name_snake.replace("_", " ").capitalize(),
             "fields": {
                 column["name"]: column["name"].replace("_", " ").capitalize()
                 for column in columns

@@ -21,64 +21,103 @@ class ReactTsPaginationComponents:
         
         folder_path = os.path.join(full_path, "src", "components", "pagination")
     
-        content = r'''import { ChevronLeft, ChevronRight } from 'lucide-react';
-import { Button } from '../ui/button';
-import { useSearchParams } from 'react-router';
+        content = r'''// src/components/pagination/CustomPagination.tsx
+import { ChevronLeft, ChevronRight } from "lucide-react";
+import { useSearchParams } from "react-router";
+import { useTranslation } from "react-i18next";
+
+import { Button } from "@/components/ui/button";
 
 interface Props {
     totalPages: number;
+    total?: number;
 }
 
-export const CustomPagination = ({ totalPages }: Props) => {
+export const CustomPagination = ({
+    totalPages,
+    total = 0,
+}: Props) => {
+    const { t, i18n } = useTranslation("pagination");
     const [searchParams, setSearchParams] = useSearchParams();
 
-    const queryPage = searchParams.get('page') ?? '1';
-    const page = isNaN(+queryPage) ? 1 : +queryPage;
+    // Idioma actual
+    const locale = i18n.resolvedLanguage?.startsWith("en")
+        ? "en-US"
+        : "es-ES";
 
-    const handlePageChange = (page: number) => {
-    if (page < 1 || page > totalPages) return;
+    // Página actual
+    const queryPage = Number(searchParams.get("page") ?? "1");
 
-    searchParams.set('page', page.toString());
+    const page =
+        Number.isSafeInteger(queryPage) && queryPage > 0
+            ? queryPage
+            : 1;
 
-    setSearchParams(searchParams);
+    // Cambiar página
+    const handlePageChange = (newPage: number) => {
+        if (newPage < 1 || newPage > totalPages) return;
+
+        setSearchParams((prev) => {
+            const next = new URLSearchParams(prev);
+            next.set("page", newPage.toString());
+            return next;
+        });
     };
 
     return (
-    <div className="flex items-center justify-center space-x-2">
-        <Button
-        variant="outline"
-        size="sm"
-        disabled={page === 1}
-        onClick={() => handlePageChange(page - 1)}
-        >
-        <ChevronLeft className="h-4 w-4" />
-        Anteriores
-        </Button>
+        <div className="flex flex-wrap items-center justify-between gap-4">
 
-        {Array.from({ length: totalPages }).map((_, index) => (
-        <Button
-            key={index}
-            variant={page === index + 1 ? 'default' : 'outline'}
-            size="sm"
-            onClick={() => handlePageChange(index + 1)}
-        >
-            {index + 1}
-        </Button>
-        ))}
+            {/* Total de registros */}
+            <span className="text-sm text-muted-foreground">
+                {t("total_records", {
+                    total: total.toLocaleString(locale),
+                })}
+            </span>
 
-        <Button
-        variant="outline"
-        size="sm"
-        disabled={page === totalPages}
-        onClick={() => handlePageChange(page + 1)}
-        >
-        Siguientes
-        <ChevronRight className="h-4 w-4" />
-        </Button>
-    </div>
+            {/* Navegación */}
+            <div className="flex flex-wrap items-center justify-center gap-2">
+
+                {/* Anterior */}
+                <Button
+                    variant="outline"
+                    size="sm"
+                    disabled={page <= 1}
+                    onClick={() => handlePageChange(page - 1)}
+                >
+                    <ChevronLeft className="size-4" />
+                    {t("previous")}
+                </Button>
+
+                {/* Números de página */}
+                {Array.from({ length: totalPages }, (_, index) => {
+                    const pageNumber = index + 1;
+
+                    return (
+                        <Button
+                            key={pageNumber}
+                            variant={page === pageNumber ? "default" : "outline"}
+                            size="sm"
+                            onClick={() => handlePageChange(pageNumber)}
+                        >
+                            {pageNumber}
+                        </Button>
+                    );
+                })}
+
+                {/* Siguiente */}
+                <Button
+                    variant="outline"
+                    size="sm"
+                    disabled={totalPages === 0 || page >= totalPages}
+                    onClick={() => handlePageChange(page + 1)}
+                >
+                    {t("next")}
+                    <ChevronRight className="size-4" />
+                </Button>
+            </div>
+        </div>
     );
-};
-    '''
+};'''
         
             # Crear el archivo
         HelperFile.write(

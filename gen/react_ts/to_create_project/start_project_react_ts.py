@@ -81,8 +81,6 @@ class StartProjectReactTs:
         obj.invoke(full_path)
         
         
-        
-        
         # Components Pagination
         obj = ReactTsPaginationComponents()
         obj.invoke(full_path)

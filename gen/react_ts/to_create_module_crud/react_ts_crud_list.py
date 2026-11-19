@@ -208,9 +208,6 @@ export const {singular_name}Page = () => {{
   return (
     <CustomTable<{singular_name}Resource>
       title={{t("{plural_name_snake}_module.title")}}
-      description={{t("{plural_name_snake}_module.description", {{
-        total: query.data?.meta?.total ?? 0,
-      }})}}
       columns={{columns(handleDelete, deleteItem.isPending)}}
       data={{query.data?.data ?? []}}
       getRowKey={{(item) => item.id}}

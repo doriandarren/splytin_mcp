@@ -44,6 +44,7 @@ export function CustomTable<T>({
 }: CustomTableProps<T>) {
     const { t } = useTranslation();
 
+    // Error al cargar los registros
     if (isError) {
         return (
             <div className="space-y-4 p-6">
@@ -167,13 +168,16 @@ export function CustomTable<T>({
             {meta && (
                 <div className="flex flex-wrap items-center justify-between gap-4">
                     <p className="text-sm text-muted-foreground">
-                        {t("pagination.page_of", {
+                        {t("pagination:page_of", {
                             current: meta.current_page,
                             total: meta.last_page,
                         })}
                     </p>
 
-                    <CustomPagination totalPages={meta.last_page} />
+                    <CustomPagination
+                        totalPages={meta.last_page}
+                        total={meta.total}
+                    />
                 </div>
             )}
 

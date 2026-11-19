@@ -8,10 +8,20 @@ class ReactTsI18n:
     def invoke(self, full_path):
         self.install(full_path)
         self.create_index_ts(full_path)
+        
+        # Common
         self.create_es_common_json(full_path)
         self.create_en_common_json(full_path)
+        
+        # Auth
         self.create_en_auth_json(full_path)
         self.create_es_auth_json(full_path)
+        
+        # Pagination
+        self.create_es_pagination_json(full_path)
+        self.create_en_pagination_json(full_path)
+        
+        
         self.update_main_tsx(full_path)
         self.create_component_language_selector_tsx(full_path)
         
@@ -40,21 +50,29 @@ import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
 import LanguageDetector from "i18next-browser-languagedetector";
 
+# Common
 import esCommon from "./locales/es/common.json";
 import enCommon from "./locales/en/common.json";
 
+# Auth
 import esAuth from "./locales/es/auth.json";
 import enAuth from "./locales/en/auth.json";
+
+# Pagination
+import esPagination from "@/locales/es/pagination.json";
+import enPagination from "@/locales/en/pagination.json";
 
 
 const resources = {
     es: {
         common: esCommon,
         auth: esAuth,
+        pagination: esPagination,
     },
     en: {
         common: enCommon,
         auth: enAuth,
+        pagination: enPagination,
     },
 };
 
@@ -67,7 +85,7 @@ i18n
         supportedLngs: ["es", "en"],
 
         defaultNS: "common",
-        ns: ["common", "auth"],
+        ns: ["common", "auth", "pagination"],
 
         detection: {
             order: ["localStorage", "navigator"],
@@ -270,9 +288,6 @@ export default i18n;
 
 
 
-
-
-
     def create_es_auth_json(self, full_path):
         """
         Genera el archivo.
@@ -310,6 +325,7 @@ export default i18n;
         )
         
     
+    
     def create_en_auth_json(self, full_path):
         """
         Genera el archivo.
@@ -345,6 +361,55 @@ export default i18n;
             file_name="auth.json",
             content=content
         )
+
+
+
+    def create_es_pagination_json(self, full_path):
+        """
+        Genera el archivo.
+        """
+    
+        folder_path = os.path.join(full_path, "src", "i18n", "locales", "es")
+    
+        content = r'''{
+    "total_records": "Total de registros: {{total}}",
+    "previous": "Anteriores",
+    "next": "Siguientes",
+    "page_of": "Página {{current}} de {{total}}"
+}'''
+    
+        # Crear el archivo
+        HelperFile.write(
+            folder_path=folder_path,
+            file_name="pagination.json",
+            content=content
+        )
+        
+        
+    def create_en_pagination_json(self, full_path):
+        """
+        Genera el archivo.
+        """
+
+        folder_path = os.path.join(full_path, "src", "i18n", "locales", "es")
+
+        content = r'''{
+    "total_records": "Total records: {{total}}",
+    "previous": "Previous",
+    "next": "Next",
+    "page_of": "Page {{current}} of {{total}}"
+}'''
+
+        # Crear el archivo
+        HelperFile.write(
+            folder_path=folder_path,
+            file_name="pagination.json",
+            content=content
+        )
+        
+        
+        
+        
 
 
 
@@ -420,6 +485,8 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select";
+
+
 
 interface LanguageSelectorProps {
     className?: string;
