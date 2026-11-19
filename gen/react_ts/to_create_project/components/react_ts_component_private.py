@@ -139,7 +139,9 @@ import {
     LogOut,
     UserRound,
 } from "lucide-react";
+
 import { Button } from "@/components/ui/button";
+
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -149,25 +151,26 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { useAuthStore } from "@/modules/auth/stores/authStore";
 
+import { useAuthStore } from "@/modules/auth/stores/authStore";
 
 // Opciones del menú
 const menuItems = [
     {
-        key: "auth_module.profile",
+        key: "profile",
         path: "/admin/profiles",
         icon: UserRound,
-    }
+    },
 ];
 
 export const UserMenu = () => {
     const navigate = useNavigate();
-    const { t } = useTranslation("common");
+    const { t } = useTranslation("auth");
 
     const user = useAuthStore((state) => state.user);
     const logout = useAuthStore((state) => state.logout);
 
+    // Cerrar sesión
     const handleLogout = () => {
         logout();
         void navigate("/auth/login", { replace: true });
@@ -183,7 +186,7 @@ export const UserMenu = () => {
                 <UserRound className="size-5" />
 
                 <span className="hidden sm:inline">
-                    {user?.attributes.name ?? t("auth_module.account")}
+                    {user?.attributes.name ?? t("account")}
                 </span>
 
                 <ChevronDown className="size-4" />
@@ -191,12 +194,12 @@ export const UserMenu = () => {
 
             <DropdownMenuContent align="end" className="w-56">
 
-                {/* Grupo de información del usuario */}
+                {/* Información del usuario */}
                 <DropdownMenuGroup>
                     <DropdownMenuLabel>
                         <div className="flex flex-col gap-1">
                             <span>
-                                {user?.attributes.name ?? t("auth_module.account")}
+                                {user?.attributes.name ?? t("account")}
                             </span>
 
                             {user?.attributes.email && (
@@ -210,7 +213,7 @@ export const UserMenu = () => {
 
                 <DropdownMenuSeparator />
 
-                {/* Grupo de navegación */}
+                {/* Navegación */}
                 <DropdownMenuGroup>
                     {menuItems.map((item) => {
                         const Icon = item.icon;
@@ -229,14 +232,14 @@ export const UserMenu = () => {
 
                 <DropdownMenuSeparator />
 
-                {/* Grupo de sesión */}
+                {/* Sesión */}
                 <DropdownMenuGroup>
                     <DropdownMenuItem
                         variant="destructive"
                         onClick={handleLogout}
                     >
                         <LogOut className="size-4" />
-                        {t("auth_module.logout")}
+                        {t("logout")}
                     </DropdownMenuItem>
                 </DropdownMenuGroup>
 

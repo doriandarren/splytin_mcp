@@ -50,17 +50,17 @@ import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
 import LanguageDetector from "i18next-browser-languagedetector";
 
-# Common
+// Common
 import esCommon from "./locales/es/common.json";
 import enCommon from "./locales/en/common.json";
 
-# Auth
+// Auth
 import esAuth from "./locales/es/auth.json";
 import enAuth from "./locales/en/auth.json";
 
-# Pagination
-import esPagination from "@/locales/es/pagination.json";
-import enPagination from "@/locales/en/pagination.json";
+// Pagination
+import esPagination from "./locales/es/pagination.json";
+import enPagination from "./locales/en/pagination.json";
 
 
 const resources = {
@@ -160,13 +160,6 @@ export default i18n;
         "error": "Ha ocurrido un error",
         "no_results": "No se encontraron resultados"
     },
-    "pagination": {
-        "page_of": "Página {{current}} de {{total}}"
-    },
-    "auth_module": {
-        "profile": "Perfil",
-        "logout": "Cerrar sesión"
-    },
     "dashboard_module": {
         "title": "Dashboard",
         "subtitle": "Bienvenido a tu panel de administración",
@@ -252,10 +245,6 @@ export default i18n;
     "pagination": {
         "page_of": "Page {{current}} of {{total}}"
     },
-    "auth_module": {
-        "profile": "Profile",
-        "logout": "Log out"
-    },
     "dashboard_module": {
         "title": "Dashboard",
         "subtitle": "Welcome to your administration panel",
@@ -293,6 +282,48 @@ export default i18n;
         Genera el archivo.
         """
     
+        folder_path = os.path.join(full_path, "src", "i18n", "locales", "es")
+    
+        content = r'''{
+    "logo_alt": "Logotipo de la empresa",
+    "app_title": "Sistema de Gestión Empresarial",
+    "app_subtitle": "Edición ERP",
+    "login_title": "Iniciar sesión",
+    "login_description": "Introduce tus credenciales para acceder al sistema.",
+    "email_label": "Correo electrónico",
+    "email_placeholder": "Correo electrónico",
+    "password_label": "Contraseña",
+    "password_placeholder": "Contraseña",
+    "show_password": "Mostrar contraseña",
+    "hide_password": "Ocultar contraseña",
+    "remember_me": "Recordarme",
+    "forgot_password": "¿Has olvidado tu contraseña?",
+    "logging_in": "Iniciando sesión…",
+    "submit": "Iniciar sesión",
+    "terms_prefix": "Al iniciar sesión, aceptas nuestros",
+    "terms_link": "Términos y condiciones",
+    "terms_connector": "y nuestra",
+    "privacy_link": "Política de privacidad",
+    "account": "Mi cuenta",
+    "profile": "Perfil",
+    "logout": "Cerrar sesión"
+}
+'''
+    
+        # Crear el archivo
+        HelperFile.write(
+            folder_path=folder_path,
+            file_name="auth.json",
+            content=content
+        )
+        
+    
+    
+    def create_en_auth_json(self, full_path):
+        """
+        Genera el archivo.
+        """
+    
         folder_path = os.path.join(full_path, "src", "i18n", "locales", "en")
     
         content = r'''{
@@ -314,46 +345,12 @@ export default i18n;
     "terms_prefix": "By signing in, you agree to our",
     "terms_link": "Terms and Conditions",
     "terms_connector": "and our",
-    "privacy_link": "Privacy Policy"
-}'''
-    
-        # Crear el archivo
-        HelperFile.write(
-            folder_path=folder_path,
-            file_name="auth.json",
-            content=content
-        )
-        
-    
-    
-    def create_en_auth_json(self, full_path):
-        """
-        Genera el archivo.
-        """
-    
-        folder_path = os.path.join(full_path, "src", "i18n", "locales", "es")
-    
-        content = r'''{
-    "logo_alt": "Logo de la empresa",
-    "app_title": "Sistema de Gestión Empresarial",
-    "app_subtitle": "ERP Edition",
-    "login_title": "Iniciar sesión",
-    "login_description": "Introduce tus credenciales para acceder al sistema.",
-    "email_label": "Correo electrónico",
-    "email_placeholder": "Email",
-    "password_label": "Contraseña",
-    "password_placeholder": "Contraseña",
-    "show_password": "Mostrar contraseña",
-    "hide_password": "Ocultar contraseña",
-    "remember_me": "Recordarme",
-    "forgot_password": "¿Olvidaste tu contraseña?",
-    "logging_in": "Iniciando sesión…",
-    "submit": "Entrar",
-    "terms_prefix": "Al iniciar sesión, aceptas nuestros",
-    "terms_link": "Términos y condiciones",
-    "terms_connector": "y nuestra",
-    "privacy_link": "Política de privacidad"
-}'''
+    "privacy_link": "Privacy Policy",
+    "account": "My account",
+    "profile": "Profile",
+    "logout": "Log out"
+}       
+'''
     
         # Crear el archivo
         HelperFile.write(
@@ -391,7 +388,7 @@ export default i18n;
         Genera el archivo.
         """
 
-        folder_path = os.path.join(full_path, "src", "i18n", "locales", "es")
+        folder_path = os.path.join(full_path, "src", "i18n", "locales", "en")
 
         content = r'''{
     "total_records": "Total records: {{total}}",

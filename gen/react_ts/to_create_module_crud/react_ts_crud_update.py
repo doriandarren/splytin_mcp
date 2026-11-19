@@ -251,9 +251,9 @@ export const useUpdate{singular_name} = () => {{
         )
 
         content = f'''// src/modules/{namespace}/{plural_name_snake}/pages/{singular_name}UpdatePage.tsx
-
 import {{ useEffect }} from "react";
 import {{ useNavigate, useParams }} from "react-router";
+import {{ useTranslation }} from "react-i18next";
 import {{ ArrowLeft, Save }} from "lucide-react";
 import {{ alerta }} from "@/components/alerts/alerta";
 import {{ useForm }} from "react-hook-form";
@@ -272,6 +272,7 @@ import {{
 
 export const {singular_name}UpdatePage = () => {{
   const navigate = useNavigate();
+  const {{ t }} = useTranslation();
   const {{ id }} = useParams<{{ id: string }}>();
 
   const query = use{singular_name}(id);
