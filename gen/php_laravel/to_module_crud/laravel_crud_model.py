@@ -46,6 +46,8 @@ namespace App\\Models\\{namespace}\\{plural_name};
 use Illuminate\\Database\\Eloquent\\Factories\\HasFactory;
 use Illuminate\\Database\\Eloquent\\Model;
 use Illuminate\\Database\\Eloquent\\Builder;
+use Spatie\\Activitylog\\Models\\Concerns\\LogsActivity;
+use Spatie\\Activitylog\\Support\\LogOptions;
 use App\\Traits\\TracksUsers;
 use App\\Http\\Filters\\V1\\QueryFilter;
 {relation_uses}
@@ -54,7 +56,9 @@ class {singular_name} extends Model
 {{
     use HasFactory;
     use TracksUsers;
+    use LogsActivity;
     // use SoftDeletes;
+    
 
     protected $connection = '{namespace.lower()}';
     protected $table = '{plural_name_snake}';
@@ -74,6 +78,20 @@ class {singular_name} extends Model
     {{
         return $filters->apply($builder);
     }}
+    
+
+    /************************
+    * Spatie Laravel Activitylog
+    ************************/
+    public function getActivitylogOptions(): LogOptions
+    {{
+        return LogOptions::defaults()
+            ->logFillable()
+            ->logOnlyDirty()
+            ->dontLogEmptyChanges()
+            ->useLogName('products');
+    }}
+    
 
     /************************
     * RELATIONS

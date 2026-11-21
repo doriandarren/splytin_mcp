@@ -2,7 +2,18 @@
 
 # Dorian tengo que terminar esto:
 
-- Cambiar User en el generador IndexUser - Service en el "use" cuando se importa el user
+
+- Terminar con React TS
+- Spatie para Laravel 
+- En Django tengo que buscar alg parecido a Spatie
+
+
+
+
+
+
+
+
 
 # Ejecutar nodulo:
 

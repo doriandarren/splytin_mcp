@@ -5,8 +5,10 @@ from typing import Any
 import os
 from dotenv import load_dotenv
 from gen.php_laravel.to_create_project.auth.laravel_module_auth import LaravelModuleAuth
+from gen.php_laravel.to_create_project.laravel_spatie import LaravelSpatie
 from gen.php_laravel.to_create_project.modules.laravel_module_dev import LaravelModuleDev
 from gen.php_laravel.to_create_project.modules.laravel_module_dashboard import LaravelModuleDashboard
+from gen.php_laravel.to_create_project.scripts.laravel_postman import LaravelPostman
 from gen.php_laravel.to_create_project.shared.laravel_shared import LaravelShared
 from gen.php_laravel.to_create_project.updates.laravel_update_route_api_php import LaravelUpdateRouteApiPhp
 from gen.php_laravel.to_create_project.utilities.laravel_utilities import LaravelUtilities
@@ -450,9 +452,6 @@ def create_php_project_service(
     from gen.php_laravel.to_create_project.images.generate_company_logos import (
         generate_company_logos,
     )
-    from gen.php_laravel.to_create_project.scripts.generate_shared_postman_collections import (
-        generate_shared_postman_collections,
-    )
     from gen.php_laravel.to_create_project.updates.update_app_php import update_app_php
     from gen.php_laravel.to_create_project.updates.update_bootstrap_app_php import (
         update_bootstrap_app_php,
@@ -479,7 +478,7 @@ def create_php_project_service(
 
     full_path = _full_path(project_path, project_name)
     domain_name = HelperDjDomain.helper_domain_name(project_name)
-    password = os.getenv("PASSWORD")
+    password = os.getenv("PASSWORD", "")
     
     # Command Line
     obj = LaravelByCommandLine()
@@ -570,7 +569,14 @@ def create_php_project_service(
     
     generate_company_logos(full_path)
     update_welcome_blade(full_path, project_name, domain_name)
-    generate_shared_postman_collections(full_path, project_name, domain_name, password)
+    
+    
+    
+    obj = LaravelPostman()
+    obj.invoke(full_path, project_name, domain_name, password)
+    
+    
+    
     update_database(full_path)
     update_envs(full_path, project_name, domain_name)
     generate_exception_handler_response(full_path)
@@ -581,9 +587,18 @@ def create_php_project_service(
     update_app_service_provider(full_path)
     
     
+    
+    # Spatie
+    obj = LaravelSpatie()
+    obj.invoke(full_path)    
+    
+    
     # Fake Data
     obj = LaravelModuleFakeData()
     obj.invoke(full_path)
+    
+    
+    
     
 
     return {

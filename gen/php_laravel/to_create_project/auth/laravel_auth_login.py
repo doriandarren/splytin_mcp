@@ -28,6 +28,7 @@ namespace App\\Http\\Requests\\V1\\Auth;
 
 use Illuminate\\Contracts\\Validation\\ValidationRule;
 use Illuminate\\Foundation\\Http\\FormRequest;
+use Illuminate\\Validation\\Rule;
 
 class AuthLoginRequest extends FormRequest
 {{
@@ -47,9 +48,28 @@ class AuthLoginRequest extends FormRequest
     public function rules(): array
     {{
         return [
-            'email' => ['required', 'string', 'email'],
-            'password' => ['required', 'string', 'min:8'],
+            'data' => ['required', 'array:type,attributes'],
+            'data.type' => ['required', 'string', Rule::in(['login'])],
+            'data.attributes' => ['required', 'array:email,password'],
+            'data.attributes.email' => [
+                'required',
+                'string',
+                'email',
+            ],
+            'data.attributes.password' => [
+                'required',
+                'string',
+                'min:8',
+            ],
         ];
+    }}
+
+    public function credentials(): array
+    {{
+        return $this->safe()->only([
+            'data.attributes.email',
+            'data.attributes.password',
+        ])['data']['attributes'];
     }}
 }}
 """
@@ -110,7 +130,7 @@ class AuthLoginController extends ApiController
     public function __invoke(AuthLoginRequest $request): JsonResponse
     {{
         
-        $credentials = $request->validated();
+        $credentials = $request->validated('data.attributes');
 
         //Response 200 but with error
         if(!Auth::attempt($credentials))
